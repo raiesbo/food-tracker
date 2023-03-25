@@ -28,11 +28,56 @@ model Comment {
   content String
   user    User?   @relation(fields: [userId], references: [id])
   userId  String? @db.ObjectId
+  // answers         Comment[]
+  // parentComment   Comment?  @relation(fields: [parentCommentId], references: [id])
+  // parentCommentId String?   @db.ObjectId
+}
+
+model Restaurant {
+  id        String     @id @default(auto()) @map("_id") @db.ObjectId
+  menu      Dish[]
+  locations Location[]
+  // mainLocation   Location?  @relation("mainLocation", fields: [mainLocationId], references: [id])
+  // mainLocationId String?    @unique @db.ObjectId
 }
 
 model Dish {
-  id          String  @id @default(auto()) @map("_id") @db.ObjectId
-  name        String
-  description String?
-  isVegan     Boolean @default(false)
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  description  String?
+  isVegan      Boolean     @default(false)
+  isGlutenFree Boolean     @default(false)
+  restaurant   Restaurant? @relation(fields: [restaurantId], references: [id])
+  restaurantId String?     @db.ObjectId
+}
+
+enum WeekDay {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURNDAY
+  SUNDAY
+}
+
+model Schedule {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  open_hour  DateTime?
+  close_hour DateTime?
+  day        DateTime?
+}
+
+model Location {
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  streetName   String?
+  streetNumber String?
+  zip          String?
+  city         String?
+  country      String?
+  // restaurant   Restaurant? @relation("mainLocation", fields: [restaurantId], references: [id])
+  // Restaurant   Restaurant? @relation(fields: [restaurantId], references: [id])
+  // restaurantId String?     @db.ObjectId
+  restaurant   Restaurant? @relation(fields: [restaurantId], references: [id])
+  restaurantId String?     @db.ObjectId
 }
