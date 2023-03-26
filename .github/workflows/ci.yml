@@ -7,9 +7,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Get Code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Set up Node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: 16.14
       - name: Cache node modules
@@ -37,15 +37,4 @@ jobs:
     steps:
       - name: Deploy Application
         run: curl -X GET ${{ secrets.DEPLOY_WEBHOOK }}
-  
-
-  # CD:
-  #   needs: CI
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - name: Deploy Stage
-  #     uses: fjogeleit/http-request-action@v1
-  #     with:
-  #       url: ${{ secrets.DEPLOY_WEBHOOK }}
-  #       method: 'POST'
         

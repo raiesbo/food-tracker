@@ -9,7 +9,7 @@ export default function prismaDishClient({ instance }: IDBClient) {
         getDish: (id: Dish['id']) => {
             return instance.dish.findUnique({ where: { id } });
         },
-        getDishs: (properties?: Partial<Dish>) => {
+        getDishes: (properties?: Partial<Dish>) => {
             return instance.dish.findMany({ where: { ...properties } });
         },
         updateDish: (id: Dish['id'], properties: Partial<Dish>) => {
