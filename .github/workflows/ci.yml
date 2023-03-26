@@ -35,9 +35,17 @@ jobs:
     needs: CI
     runs-on: ubuntu-latest
     steps:
-    - name: Deploy Stage
-      uses: fjogeleit/http-request-action@v1
-      with:
-        url: {{ secrets.DEPLOY_WEBHOOK }}
-        method: 'POST'
+      - name: Deploy Application
+        run: curl -X GET ${{ secrets.DEPLOY_WEBHOOK }}
+  
+
+  # CD:
+  #   needs: CI
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - name: Deploy Stage
+  #     uses: fjogeleit/http-request-action@v1
+  #     with:
+  #       url: ${{ secrets.DEPLOY_WEBHOOK }}
+  #       method: 'POST'
         
