@@ -11,12 +11,16 @@ datasource db {
 }
 
 model User {
-  id        String    @id @default(auto()) @map("_id") @db.ObjectId
-  firstName String
-  lastName  String?
-  email     String
-  type      UserType  @default(CUSTOMER)
-  comments  Comment[]
+  id         String       @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  firstName  String
+  lastName   String?
+  email      String
+  role       UserType     @default(CUSTOMER)
+  comments   Comment[]
+  resturants Restaurant[]
+  ratings    Rating[]
 }
 
 enum UserType {
@@ -25,25 +29,32 @@ enum UserType {
 }
 
 model Comment {
-  id      String  @id @default(auto()) @map("_id") @db.ObjectId
-  content String
-  user    User?   @relation(fields: [userId], references: [id])
-  userId  String? @db.ObjectId
-  // answers         Comment[]
-  // parentComment   Comment?  @relation(fields: [parentCommentId], references: [id])
-  // parentCommentId String?   @db.ObjectId
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  content      String
+  user         User?    @relation(fields: [userId], references: [id])
+  userId       String?  @db.ObjectId
+  answers      Comment? @relation("answers")
+  responseToId String?  @unique @db.ObjectId
+  responseTo   Comment? @relation("answers", fields: [responseToId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model Restaurant {
   id        String     @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
   menu      Dish[]
   locations Location[]
-  // mainLocation   Location?  @relation("mainLocation", fields: [mainLocationId], references: [id])
-  // mainLocationId String?    @unique @db.ObjectId
+  user      User?      @relation(fields: [userId], references: [id])
+  userId    String?    @db.ObjectId
+  ratings   Rating[]
 }
 
 model Dish {
   id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
   name         String
   description  String?
   isVegan      Boolean     @default(false)
@@ -76,9 +87,17 @@ model Location {
   zip          String?
   city         String?
   country      String?
-  // restaurant   Restaurant? @relation("mainLocation", fields: [restaurantId], references: [id])
-  // Restaurant   Restaurant? @relation(fields: [restaurantId], references: [id])
-  // restaurantId String?     @db.ObjectId
   restaurant   Restaurant? @relation(fields: [restaurantId], references: [id])
   restaurantId String?     @db.ObjectId
+}
+
+model Rating {
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  value        Int         @default(0)
+  restaurant   Restaurant? @relation(fields: [restaurantId], references: [id])
+  restaurantId String?     @db.ObjectId
+  user         User?       @relation(fields: [userId], references: [id])
+  userId       String?     @db.ObjectId
 }

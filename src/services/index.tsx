@@ -1,5 +1,6 @@
 import prismaClient, { auth0Client } from '../repositories';
 import auth0Service from './auth0.service';
+import restaurantService from "./restaurant.service";
 import userService from "./user.service";
 
 type Props = {
@@ -10,6 +11,7 @@ type Props = {
 function dbServices({ prismaClient, auth0Client }: Props) {
     return {
         auth0Service: auth0Service({ auth0Client }),
+        restaurantService: restaurantService(prismaClient),
         userService: userService(prismaClient)
     }
 }

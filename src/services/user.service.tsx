@@ -14,7 +14,7 @@ export default function userService({ userClient }: typeof prismaClients) {
                     firstName,
                     lastName,
                     email,
-                    type: isSP ? 'SP' : 'CUSTOMER'
+                    role: isSP ? 'SP' : 'CUSTOMER'
                 } as User)
 
                 if (user) return { result: user }

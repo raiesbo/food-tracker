@@ -1,9 +1,15 @@
+import commentClient from './comment.repo';
+import dishClient from './dish.repo';
 import PrismaDBClient, { IDBClient } from './prismaClient';
-import { default as userClient } from './user.repo';
+import restaurantClient from './restaurant.repo';
+import userClient from './user.repo';
 
 function prismaClients(prismaInstance: IDBClient) {
     return {
-        userClient: userClient(prismaInstance)
+        userClient: userClient(prismaInstance),
+        restaurantClient: restaurantClient(prismaInstance),
+        dishClient: dishClient(prismaInstance),
+        commentClient: commentClient(prismaInstance),
     }
 }
 
