@@ -8,3 +8,4 @@ function prismaClients(prismaInstance: IDBClient) {
 }
 
 export default prismaClients(PrismaDBClient);
+export { default as auth0Client } from './auth0.repo';

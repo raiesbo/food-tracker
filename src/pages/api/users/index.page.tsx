@@ -1,18 +1,29 @@
 import dbServices from '@/services';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-const { userService } = dbServices;
+const { userService, auth0Service } = dbServices;
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 
     if (req.method === 'POST') {
-        const user = await userService.createNewUser(req);
+        const {
+            result: createNewUserResult,
+            error: createNewUserError
+        } = await userService.createNewUser(req);
 
-        if (user.error) {
-            return res.status(user.error.statuas).end(user.error.message);
+        if (createNewUserError) {
+            return res.status(createNewUserError.status).end(createNewUserError.message);
         }
 
-        return res.status(201).json(user.result);
+        const {
+            error: createAuth0UserError
+        } = await auth0Service.createAuth0User(req, createNewUserResult.id);
+
+        if (createAuth0UserError) {
+            return res.status(createAuth0UserError.status).end(createAuth0UserError.message);
+        }
+
+        return res.status(201).json(createNewUserResult);
     }
 
     res.status(405).end();

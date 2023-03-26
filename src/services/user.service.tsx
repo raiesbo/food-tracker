@@ -1,3 +1,4 @@
+import { User } from '@prisma/client';
 import { NextApiRequest } from 'next';
 import prismaClients from '../repositories';
 
@@ -7,14 +8,21 @@ export default function userService({ userClient }: typeof prismaClients) {
             const parsedBody = JSON.parse(req.body);
 
             try {
-                const user = await userClient.createUser(parsedBody)
+                const { firstName, lastName, email, isSP } = parsedBody;
+
+                const user = await userClient.createUser({
+                    firstName,
+                    lastName,
+                    email,
+                    type: isSP ? 'SP' : 'CUSTOMER'
+                } as User)
 
                 if (user) return { result: user }
 
                 return {
                     result: {},
                     error: {
-                        statuas: 400,
+                        status: 400,
                         message: 'Unable to create new user'
                     }
                 }
@@ -24,7 +32,7 @@ export default function userService({ userClient }: typeof prismaClients) {
                 return {
                     result: {},
                     error: {
-                        statuas: 400,
+                        status: 400,
                         message: message
                     }
                 }
