@@ -1,9 +1,12 @@
+import { auth0Config } from '@/utils/settings';
 import { NextApiRequest } from 'next';
 import { auth0Client } from '../repositories';
 
 type Props = {
     auth0Client: typeof auth0Client
 }
+
+const { clientId, clientSecret, auth0Domain, connection } = auth0Config;
 
 
 export default function auth0Service({ auth0Client }: Props) {
@@ -13,11 +16,7 @@ export default function auth0Service({ auth0Client }: Props) {
             const parsedBody = JSON.parse(req.body)
 
             try {
-                const response = await getManagementApiToken({
-                    clientId: process.env.AUTH0_CLIENT_ID,
-                    clientSecret: process.env.AUTH0_CLIENT_SECRET,
-                    auth0Domain: process.env.AUTH0_DOMAIN
-                })
+                const response = await getManagementApiToken({ clientId, clientSecret, auth0Domain })
 
                 if (!response.ok) return {
                     result: {},
@@ -27,7 +26,7 @@ export default function auth0Service({ auth0Client }: Props) {
                     }
                 }
 
-                const tokenData = await response.json();
+                const { access_token: accessToken } = await response.json();
 
                 const { email, firstName, lastName, password, isSP } = parsedBody;
 
@@ -40,15 +39,11 @@ export default function auth0Service({ auth0Client }: Props) {
                     given_name: firstName,
                     family_name: lastName,
                     name: `${firstName} ${lastName}`,
-                    connection: `${process.env.AUTH0_CONNECTION}`,
+                    connection,
                     verify_email: false
                 }
 
-                const createUserResponse = await createUser({
-                    auth0Domain: process.env.AUTH0_DOMAIN,
-                    accessToken: tokenData.access_token,
-                    body
-                });
+                const createUserResponse = await createUser({ accessToken, auth0Domain, body });
 
                 if (!createUserResponse.ok) return {
                     result: {},

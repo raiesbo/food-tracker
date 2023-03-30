@@ -3,7 +3,7 @@ import { IDBClient } from './prismaClient';
 
 export default function prismaRatingClient({ instance }: IDBClient) {
     return {
-        createRating: (properties: Rating) => {
+        createRating: (properties: Partial<Rating>) => {
             return instance.rating.create({ data: properties });
         },
         getRating: (id: Rating['id']) => {
