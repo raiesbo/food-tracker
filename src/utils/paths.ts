@@ -11,16 +11,21 @@ export const paths = {
     },
     components: {
         NavigtionMenu: {
-            withoutAuth: [
+            visitor: [
                 { name: 'Home', url: '/' },
                 { name: 'Restaurants', url: '/restaurants' },
                 { name: 'Login', url: '/api/auth/login' },
             ],
-            withAuth: [
+            customer: [
+                { name: 'Home', url: '/' },
+                { name: 'Profile', url: '/profile' },
+                { name: 'My Reviews', url: '/reviews' },
+                { name: 'Logout', url: '/api/auth/logout' }
+            ],
+            serviceProvider: [
                 { name: 'Home', url: '/' },
                 { name: 'Restaurants', url: '/restaurants' },
                 { name: 'Profile', url: '/profile' },
-                { name: 'My Reviews', url: '/reviews' },
                 { name: 'Logout', url: '/api/auth/logout' }
             ]
 
