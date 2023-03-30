@@ -24,11 +24,14 @@ const theme = createTheme();
 export default function Album() {
   const { user } = useUser();
 
-  const userRole = user && user[auth0Config?.metadata] as "SP" | "CUSTOMER" | undefined
+  const userRole = user && user[auth0Config.metadata] as {
+    role: 'SP' | 'CUSTOMER',
+    user_id: string
+  };
 
   return (
     <ThemeProvider theme={theme}>
-      <NavigationMenu role={userRole} />
+      <NavigationMenu role={userRole?.role} />
       <CssBaseline />
       <AppBar position="relative">
         <Toolbar>
