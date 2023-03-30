@@ -1,7 +1,7 @@
-import dbServices from '@/services';
+import services from '@/services';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-const { userService, auth0Service } = dbServices;
+const { userService, auth0Service } = services;
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 
