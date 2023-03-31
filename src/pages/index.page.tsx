@@ -2,36 +2,42 @@ import { NavigationMenu } from '@/components/NavigationMenu';
 import services from '@/services';
 import { auth0Config } from '@/utils/settings';
 import { useUser } from '@auth0/nextjs-auth0/client';
-import CameraIcon from '@mui/icons-material/PhotoCamera';
-import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
 import Stack from '@mui/material/Stack';
-import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Category } from '@prisma/client';
 
-const { categoriesService } = services;
+const { categoriesService, locationsService } = services;
 
 type Props = {
-  categories: Array<Category>
+  categories: Array<Category>,
+  locations: Array<Location>
 }
 
 export async function getServerSideProps() {
-  const { result, error } = await categoriesService.getAllCategories();
+  const {
+    result: categories,
+    error: getAllCategoriesError
+  } = await categoriesService.getAllCategories();
 
-  if (error) return {
-    props: { error }
+  const {
+    result: locations,
+    error: getAllLocationsError
+  } = await locationsService.getAllLocations();
+
+  if (getAllCategoriesError || getAllLocationsError) return {
+    props: { getAllCategoriesError, getAllLocationsError }
   }
 
   return {
-    props: { categories: result }
+    props: { categories, locations }
   }
 }
 
-export default function Home({ categories }: Props) {
+export default function Home({ categories, locations }: Props) {
   const { user } = useUser();
 
   const userRole = user && user[auth0Config.metadata] as {
@@ -39,18 +45,12 @@ export default function Home({ categories }: Props) {
     user_id: string
   };
 
+  console.log({ locations, categories })
+
   return (
     <>
       <NavigationMenu role={userRole?.role} />
       <CssBaseline />
-      <AppBar position="relative">
-        <Toolbar>
-          <CameraIcon sx={{ mr: 2 }} />
-          <Typography variant="h6" color="inherit" noWrap>
-            Album layout
-          </Typography>
-        </Toolbar>
-      </AppBar>
       <main>
         {/* Hero unit */}
         <Box
