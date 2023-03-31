@@ -1,3 +1,4 @@
+import categoryClient from './category.repo';
 import commentClient from './comment.repo';
 import dishClient from './dish.repo';
 import PrismaDBClient, { IDBClient } from './prismaClient';
@@ -11,7 +12,8 @@ function prismaClients(prismaInstance: IDBClient) {
         restaurantClient: restaurantClient(prismaInstance),
         dishClient: dishClient(prismaInstance),
         commentClient: commentClient(prismaInstance),
-        ratingClient: ratingClient(prismaInstance)
+        ratingClient: ratingClient(prismaInstance),
+        categoryClient: categoryClient(prismaInstance)
     }
 }
 
