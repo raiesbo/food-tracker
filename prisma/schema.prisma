@@ -21,6 +21,7 @@ model User {
   comments   Comment[]
   resturants Restaurant[]
   ratings    Rating[]
+  categories Category[]
 }
 
 enum UserType {
@@ -49,21 +50,32 @@ model Restaurant {
   foodType    String?
   menu        Dish[]
   locations   Location[]
+  schedules   Schedule[]
   user        User?      @relation(fields: [userId], references: [id])
   userId      String?    @db.ObjectId
   ratings     Rating[]
+  category    Category?  @relation(fields: [categoryId], references: [id])
+  categoryId  String?    @db.ObjectId
 }
 
 model Dish {
-  id           String      @id @default(auto()) @map("_id") @db.ObjectId
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @updatedAt
+  id           String       @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
   name         String
   description  String?
-  isVegan      Boolean     @default(false)
-  isGlutenFree Boolean     @default(false)
-  restaurant   Restaurant? @relation(fields: [restaurantId], references: [id])
-  restaurantId String?     @db.ObjectId
+  ingredients  Ingredient[]
+  isVegan      Boolean      @default(false)
+  isGlutenFree Boolean      @default(false)
+  restaurant   Restaurant?  @relation(fields: [restaurantId], references: [id])
+  restaurantId String?      @db.ObjectId
+}
+
+model Ingredient {
+  id     String  @id @default(auto()) @map("_id") @db.ObjectId
+  name   String
+  dish   Dish?   @relation(fields: [dishId], references: [id])
+  dishId String? @db.ObjectId
 }
 
 enum WeekDay {
@@ -77,10 +89,12 @@ enum WeekDay {
 }
 
 model Schedule {
-  id         String    @id @default(auto()) @map("_id") @db.ObjectId
-  open_hour  DateTime?
-  close_hour DateTime?
-  day        DateTime?
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  open_hour    DateTime?
+  close_hour   DateTime?
+  day          DateTime?
+  restaurant   Restaurant? @relation(fields: [restaurantId], references: [id])
+  restaurantId String?     @db.ObjectId
 }
 
 model Location {
@@ -103,4 +117,14 @@ model Rating {
   restaurantId String?     @db.ObjectId
   user         User?       @relation(fields: [userId], references: [id])
   userId       String?     @db.ObjectId
+}
+
+model Category {
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  name        String       @unique
+  createdBy   User?        @relation(fields: [createdById], references: [id])
+  createdById String?      @db.ObjectId
+  restaurants Restaurant[]
 }
