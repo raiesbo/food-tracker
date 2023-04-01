@@ -48,6 +48,7 @@ model Restaurant {
   name        String?
   description String?
   foodType    String?
+  isCashOnly  Boolean    @default(false)
   menu        Dish[]
   locations   Location[]
   schedules   Schedule[]
