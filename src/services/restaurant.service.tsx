@@ -8,8 +8,6 @@ export default function userService({ restaurantClient }: typeof prismaClients) 
             try {
                 const restaurants = await restaurantClient.getRestaurants(filters as Restaurant);
 
-                console.log('function', { restaurants })
-
                 if (restaurants) return {
                     result: restaurants.map(restaurant => ({
                         ...restaurant,
@@ -68,7 +66,7 @@ export default function userService({ restaurantClient }: typeof prismaClients) 
                 }
             }
         },
-        getRestaurant: async (req: NextApiRequest) => {
+        getRestaurant: async (req: NextApiRequest | { query: { restaurantId: string } }) => {
             const { restaurantId } = req.query as { restaurantId: string };
 
             try {

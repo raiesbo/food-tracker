@@ -21,7 +21,25 @@ describe('prisma Restaurants client', () => {
 
         restaurantsClient.getRestaurant('6' as Restaurant['id']);
 
-        expect(getRestaurantMock).toHaveBeenCalledWith({ 'where': { 'id': '6' } });
+        expect(getRestaurantMock).toHaveBeenCalledWith({
+            'where': { 'id': '6' },
+            'include': {
+                'locations': true,
+                'menu': {
+                    'include': {
+                        'ingredients': true
+                    }
+                },
+                'ratings': true,
+                'schedules': true,
+                'category': true,
+                comments: {
+                    include: {
+                        answers: true
+                    }
+                }
+            }
+        });
     });
 
     it('can get many restaurants by ids', () => {
@@ -30,7 +48,25 @@ describe('prisma Restaurants client', () => {
 
         restaurantsClient.getRestaurants({ name: 'test_name' } as Restaurant);
 
-        expect(getRestaurantsMock).toHaveBeenCalledWith({ 'where': { 'name': 'test_name' } });
+        expect(getRestaurantsMock).toHaveBeenCalledWith({
+            'where': { 'name': 'test_name' },
+            'include': {
+                'locations': true,
+                'menu': {
+                    'include': {
+                        'ingredients': true
+                    }
+                },
+                'ratings': true,
+                'schedules': true,
+                'category': true,
+                comments: {
+                    include: {
+                        answers: true
+                    }
+                }
+            }
+        });
     });
 
     it('can update a restaurant', () => {
