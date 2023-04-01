@@ -1,7 +1,5 @@
 import { NavigationMenu } from '@/components/NavigationMenu';
 import services from '@/services';
-import { auth0Config } from '@/utils/settings';
-import { useUser } from '@auth0/nextjs-auth0/client';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
@@ -38,18 +36,12 @@ export async function getServerSideProps() {
 }
 
 export default function Home({ categories, locations }: Props) {
-  const { user } = useUser();
-
-  const userRole = user && user[auth0Config.metadata] as {
-    role: 'SP' | 'CUSTOMER',
-    user_id: string
-  };
 
   console.log({ locations, categories })
 
   return (
     <>
-      <NavigationMenu role={userRole?.role} />
+      <NavigationMenu />
       <CssBaseline />
       <main>
         {/* Hero unit */}

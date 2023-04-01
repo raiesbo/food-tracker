@@ -1,23 +1,23 @@
 export const paths = {
-    index: '/',
-    checkout: '/checkout',
-    contact: '/contact',
-    pricing: '/pricing',
-    auth: {
-        auth0: {
-            callback: '/auth/auth/callback',
-            login: '/auth/auth/login'
-        }
+    home: '/',
+    aboutUs: '/about-us',
+    createNewRestaurant: '/my-restaurants/new',
+    login: '/login',
+    auth0: {
+        callback: '/auth/auth/callback',
+        login: '/auth/auth/login'
     },
     components: {
         NavigtionMenu: {
             visitor: [
                 { name: 'Home', url: '/' },
                 { name: 'Restaurants', url: '/restaurants' },
-                { name: 'Login', url: '/api/auth/login' },
+                { name: 'Sign Up', url: '/signup' },
+                { name: 'Login', url: '/api/auth/login' }
             ],
             customer: [
                 { name: 'Home', url: '/' },
+                { name: 'Restaurants', url: '/restaurants' },
                 { name: 'Profile', url: '/profile' },
                 { name: 'My Reviews', url: '/reviews' },
                 { name: 'Logout', url: '/api/auth/logout' }
@@ -26,6 +26,7 @@ export const paths = {
                 { name: 'Home', url: '/' },
                 { name: 'Restaurants', url: '/restaurants' },
                 { name: 'Profile', url: '/profile' },
+                { name: 'My Restaurants', url: '/my-restaurants' },
                 { name: 'Logout', url: '/api/auth/logout' }
             ]
 

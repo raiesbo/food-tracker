@@ -1,16 +1,22 @@
+import { auth0Config } from '@/utils/settings';
+import { useUser } from '@auth0/nextjs-auth0/client';
 import MenuIcon from '@mui/icons-material/Menu';
 import { AppBar, Box, Container, IconButton, Menu, MenuItem, Toolbar, Typography } from '@mui/material';
 import Link from 'next/link';
 import { useState } from 'react';
 import { paths } from '../../utils/paths';
-
-type Props = {
-    role?: 'SP' | 'CUSTOMER'
-};
+import styles from './navigationMenu.module.scss';
 
 const urls = paths.components.NavigtionMenu;
 
-export default function NavigationMenu({ role }: Props) {
+export default function NavigationMenu() {
+    const { user } = useUser();
+
+    const userRole = user && user[auth0Config.metadata] as {
+        role: 'SP' | 'CUSTOMER',
+        user_id: string
+    };
+
     const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -29,7 +35,7 @@ export default function NavigationMenu({ role }: Props) {
                         variant="h6"
                         noWrap
                         component="a"
-                        href="/"
+                        href={paths.home}
                         sx={{
                             mr: 2,
                             display: { xs: 'none', md: 'flex' },
@@ -73,14 +79,14 @@ export default function NavigationMenu({ role }: Props) {
                             }}
                         >
                             {
-                                (urls[role === 'SP'
+                                (urls[userRole?.role === 'SP'
                                     ? 'serviceProvider'
-                                    : role === 'CUSTOMER'
+                                    : userRole?.role === 'CUSTOMER'
                                         ? 'customer'
                                         : 'visitor']).map(({ name, url }) => (
                                             <MenuItem key={name}>
-                                                <Link href={url}>
-                                                    <Typography textAlign="center">
+                                                <Link href={url} className={styles.link}>
+                                                    <Typography textAlign="center" sx={{ color: 'black', display: 'block' }}>
                                                         {name}
                                                     </Typography>
                                                 </Link>
@@ -91,13 +97,13 @@ export default function NavigationMenu({ role }: Props) {
                     </Box>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {
-                            (urls[role === 'SP'
+                            (urls[userRole?.role === 'SP'
                                 ? 'serviceProvider'
-                                : role === 'CUSTOMER'
+                                : userRole?.role === 'CUSTOMER'
                                     ? 'customer'
                                     : 'visitor']).map(({ name, url }) => (
                                         <MenuItem key={name}>
-                                            <Link href={url}>
+                                            <Link href={url} className={styles.link}>
                                                 <Typography textAlign="center" sx={{ color: 'white', display: 'block' }}>
                                                     {name}
                                                 </Typography>

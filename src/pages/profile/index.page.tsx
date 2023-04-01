@@ -9,7 +9,7 @@ export default function RestaurantPage() {
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <div>
-                    Restaurant Page
+                    User Profile
                 </div>
             </Container>
         </>
