@@ -11,6 +11,7 @@ const { clientId, clientSecret, auth0Domain, connection } = auth0Config;
 
 export default function auth0Service({ auth0Client }: Props) {
     const { getManagementApiToken, createUser } = auth0Client();
+
     return {
         createAuth0User: async (req: NextApiRequest, userId: string = '') => {
             const parsedBody = JSON.parse(req.body)

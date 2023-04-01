@@ -1,5 +1,6 @@
 import { NavigationMenu } from '@/components/NavigationMenu';
 import { paths } from '@/utils/paths';
+import { FormControlLabel, FormLabel, Radio, RadioGroup } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
@@ -8,17 +9,34 @@ import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import { FormEvent } from 'react';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
 
 export default function SignIn() {
-    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
-    };
+    const router = useRouter();
+
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [isSP, setIsSp] = useState('SP');
+
+    const handleClickButton = async () => {
+        const response = await fetch('/api/users', {
+            method: 'POST',
+            body: JSON.stringify({
+                firstName,
+                lastName,
+                email,
+                password,
+                isSP: isSP === 'SP'
+            })
+        })
+
+        if (response.ok) {
+            return router.push(paths.home)
+        }
+    }
 
     return (
         <>
@@ -36,7 +54,7 @@ export default function SignIn() {
                     <Typography component="h1" variant="h5">
                         Sign Up
                     </Typography>
-                    <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                    <Box component="form" noValidate sx={{ mt: 1 }}>
                         <TextField
                             margin="normal"
                             required
@@ -46,6 +64,9 @@ export default function SignIn() {
                             name="firstName"
                             autoComplete="name"
                             autoFocus
+                            value={firstName}
+                            onChange={e => setFirstName(e.target.value)}
+                            sx={{ backgroundColor: 'white' }}
                         />
                         <TextField
                             margin="normal"
@@ -56,6 +77,9 @@ export default function SignIn() {
                             name="lastName"
                             autoComplete="name"
                             autoFocus
+                            value={lastName}
+                            onChange={e => setLastName(e.target.value)}
+                            sx={{ backgroundColor: 'white' }}
                         />
                         <TextField
                             margin="normal"
@@ -66,6 +90,9 @@ export default function SignIn() {
                             name="email"
                             autoComplete="email"
                             autoFocus
+                            value={email}
+                            onChange={e => setEmail(e.target.value)}
+                            sx={{ backgroundColor: 'white' }}
                         />
                         <TextField
                             margin="normal"
@@ -76,25 +103,29 @@ export default function SignIn() {
                             type="password"
                             id="password"
                             autoComplete="current-password"
+                            value={password}
+                            onChange={e => setPassword(e.target.value)}
+                            sx={{ backgroundColor: 'white' }}
                         />
-                        {/* <FormControlLabel
-                            control={<Checkbox value="remember" color="primary" />}
-                            label="Remember me"
-                        /> */}
+                        <FormLabel id="demo-row-radio-buttons-group-label">Register as:</FormLabel>
+                        <RadioGroup
+                            row
+                            aria-labelledby="demo-row-radio-buttons-group-label"
+                            name="row-radio-buttons-group"
+                            onChange={(e) => setIsSp(e.target.value)}
+                        >
+                            <FormControlLabel value={"CUSTOMER"} control={<Radio />} label="Client" defaultChecked />
+                            <FormControlLabel value={"SP"} control={<Radio />} label="Restaurant" />
+                        </RadioGroup>
                         <Button
-                            type="submit"
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
+                            onClick={handleClickButton}
                         >
                             Sign Up
                         </Button>
                         <Grid container>
-                            {/* <Grid item xs>
-                                <Link href="#" variant="body2">
-                                    Forgot password?
-                                </Link>
-                            </Grid> */}
                             <Grid item>
                                 <Link href={paths.login} variant="body2">
                                     {"Do have an account? Sign In"}
