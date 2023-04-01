@@ -1,6 +1,7 @@
 export const paths = {
     home: '/',
     aboutUs: '/about-us',
+    restaurants: '/restaurants',
     createNewRestaurant: '/my-restaurants/new',
     login: '/login',
     auth0: {

@@ -1,14 +1,16 @@
 import { NavigationMenu } from '@/components/NavigationMenu';
 import services from '@/services';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
-import CssBaseline from '@mui/material/CssBaseline';
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
-import { Category } from '@prisma/client';
+import { paths } from '@/utils/paths';
+import { Box, Button, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { Category, Location } from '@prisma/client';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+import styles from './Home.module.scss';
 
 const { categoriesService, locationsService } = services;
+
+const bgImageUrl = 'https://images.unsplash.com/photo-1565123409695-7b5ef63a2efb'
 
 type Props = {
   categories: Array<Category>,
@@ -36,63 +38,115 @@ export async function getServerSideProps() {
 }
 
 export default function Home({ categories, locations }: Props) {
+  const router = useRouter();
 
-  console.log({ locations, categories })
+  const [city, setCity] = useState('All');
+  const [category, setCategory] = useState('All');
+
+  const handleButtonClick = () => {
+    const searchParams = new URLSearchParams({
+      city: city.replace('All', ''),
+      category: category.replace('All', '')
+    })
+
+    router.push(`${paths.restaurants}?${searchParams}`);
+  }
 
   return (
     <>
       <NavigationMenu />
-      <CssBaseline />
       <main>
-        {/* Hero unit */}
-        <Box
-          sx={{
-            bgcolor: 'background.paper',
-            pt: 8,
-            pb: 6,
-          }}
-        >
-          <Container maxWidth="sm">
-            <Typography
-              component="h1"
-              variant="h2"
-              align="center"
-              color="text.primary"
-              gutterBottom
+        <div className={styles.searchSectionContainer}>
+          <Image
+            src={bgImageUrl}
+            alt="Food truck background"
+            style={{ objectFit: "cover", opacity: 0.9, filter: 'brightness(15%)' }}
+            priority
+            fill
+            className={styles.backgroundImage}
+          />
+          <div className={styles.headerContent}>
+            <h1>
+              Food Tracker
+            </h1>
+            <div className={styles.headerTextContent}>
+              <p>
+                Your free world wide Street Food registry
+              </p>
+              <p>
+                From the hands of the best cooks around the world
+              </p>
+            </div>
+            <Box
+              sx={{
+                marginTop: 4,
+                display: 'flex',
+                flexDirection: { xs: 'column', md: 'row' },
+                gap: 3,
+                alignItems: 'center',
+              }}
             >
-              Album layout
-            </Typography>
-            <Typography variant="h5" align="center" color="text.secondary" paragraph>
-              Something short and leading about the collection below—its contents,
-              the creator, etc. Make it short and sweet, but not too short so folks
-              don&apos;t simply skip over it entirely.
-            </Typography>
-            <Stack
-              sx={{ pt: 4 }}
-              direction="row"
-              spacing={2}
-              justifyContent="center"
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label" sx={{
+                  color: 'white',
+                  fontWeight: 'bold',
+                  transform: 'translate(10px, -25px)'
+                }}>
+                  City
+                </InputLabel>
+                <Select
+                  labelId="City"
+                  id="location"
+                  value={city}
+                  label="City"
+                  onChange={(e) => setCity(e.target.value)}
+                  sx={{ backgroundColor: 'white' }}
+                >
+                  <MenuItem value={'All'}>All</MenuItem>
+                  {locations.map(({ city }: Location) => (
+                    <MenuItem key={city} value={city || ''}>
+                      {city}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+
+              <FormControl fullWidth >
+                <InputLabel id="demo-simple-select-label" sx={{
+                  color: 'white',
+                  fontWeight: 'bold',
+                  transform: 'translate(10px, -25px)'
+                }}>
+                  Food Type
+                </InputLabel>
+                <Select
+                  labelId="City"
+                  id="category"
+                  value={category}
+                  label="City"
+                  onChange={(e) => setCategory(e.target.value)}
+                  sx={{ backgroundColor: 'white' }}
+                >
+                  <MenuItem value={'All'}>All</MenuItem>
+                  {categories.map(({ name }: Category) => (
+                    <MenuItem key={name} value={name || ''}>
+                      {name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Box>
+            <Button
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              onClick={handleButtonClick}
             >
-              <Button variant="contained">Main call to action</Button>
-              <Button variant="outlined">Secondary action</Button>
-            </Stack>
-          </Container>
-        </Box>
+              Find Your Next Street Food
+            </Button>
+          </div>
+        </div>
       </main>
-      {/* Footer */}
-      <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
-        <Typography variant="h6" align="center" gutterBottom>
-          Footer
-        </Typography>
-        <Typography
-          variant="subtitle1"
-          align="center"
-          color="text.secondary"
-          component="p"
-        >
-          Something here to give the footer a purpose!
-        </Typography>
-      </Box>
     </>
   );
 }

@@ -4,7 +4,7 @@ import { paths } from "@/utils/paths";
 import { auth0Config } from "@/utils/settings";
 import { getSession } from "@auth0/nextjs-auth0";
 import AddIcon from '@mui/icons-material/Add';
-import { Container, CssBaseline, IconButton } from "@mui/material";
+import { Card, Container, CssBaseline, IconButton } from "@mui/material";
 import { Restaurant } from "@prisma/client";
 import { GetServerSidePropsContext } from "next";
 import Link from "next/link";
@@ -54,10 +54,10 @@ export default function MyRestaurants({ restaurants }: Props) {
                 </div>
                 <div>
                     {restaurants.map(restaurant => (
-                        <div key={restaurant.name}>
+                        <Card key={restaurant.id}>
                             <p>{restaurant.name}</p>
                             <p>{restaurant.description}</p>
-                        </div>
+                        </Card>
                     ))}
                     <div>
                         <Link href={paths.createNewRestaurant}>

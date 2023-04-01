@@ -1,5 +1,6 @@
 import { auth0Config } from '@/utils/settings';
 import { useUser } from '@auth0/nextjs-auth0/client';
+import FastfoodIcon from '@mui/icons-material/Fastfood';
 import MenuIcon from '@mui/icons-material/Menu';
 import { AppBar, Box, Container, IconButton, Menu, MenuItem, Toolbar, Typography } from '@mui/material';
 import Link from 'next/link';
@@ -28,27 +29,12 @@ export default function NavigationMenu() {
     };
 
     return (
-        <AppBar position="static">
+        <AppBar position="static" sx={{ backgroundColor: 'white' }}>
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="a"
-                        href={paths.home}
-                        sx={{
-                            mr: 2,
-                            display: { xs: 'none', md: 'flex' },
-                            fontFamily: 'monospace',
-                            fontWeight: 700,
-                            letterSpacing: '.3rem',
-                            color: 'inherit',
-                            textDecoration: 'none',
-                        }}
-                    >
-                        FOOD TRACKER
-                    </Typography>
-
+                    <Link href={paths.home}>
+                        <FastfoodIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, fill: 'black' }} />
+                    </Link>
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
                             size="large"
@@ -104,7 +90,7 @@ export default function NavigationMenu() {
                                     : 'visitor']).map(({ name, url }) => (
                                         <MenuItem key={name}>
                                             <Link href={url} className={styles.link}>
-                                                <Typography textAlign="center" sx={{ color: 'white', display: 'block' }}>
+                                                <Typography textAlign="center" sx={{ color: 'black', display: 'block' }}>
                                                     {name}
                                                 </Typography>
                                             </Link>
