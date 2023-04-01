@@ -1,12 +1,15 @@
 import { NavigationMenu } from "@/components/NavigationMenu";
+import { RestaurantListItem } from "@/components/RestaurantList";
 import services from "@/services";
 import { paths } from "@/utils/paths";
-import { Card, Container, CssBaseline } from "@mui/material";
-import { Restaurant } from "@prisma/client";
+import { Container, CssBaseline, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { Category, Location, Restaurant } from "@prisma/client";
 import { GetServerSidePropsContext } from "next";
-import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import styles from './restaurants.module.scss';
 
-const { restaurantService } = services;
+const { restaurantService, categoriesService, locationsService } = services;
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
     const query = context.query as { city: string, category: string };
@@ -37,36 +40,124 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
     const { result: restaurants, error } = await restaurantService.getAllRestaurantByFilter(filters);
 
-    if (error) return {
-        props: { restaurants: [] }
+    const {
+        result: categories,
+        error: getAllCategoriesError
+    } = await categoriesService.getAllCategories();
+
+    const {
+        result: locations,
+        error: getAllLocationsError
+    } = await locationsService.getAllLocations();
+
+    if (getAllCategoriesError || getAllLocationsError) return {
+        props: { getAllCategoriesError, getAllLocationsError }
+    }
+
+    if (error || getAllCategoriesError || getAllLocationsError) return {
+        props: { restaurants: [], locations: [], categories: [] }
     }
 
     return {
-        props: { restaurants }
+        props: {
+            restaurants,
+            locations,
+            categories,
+            queryCity: query.city || '',
+            queryCategory: query.category || ''
+        }
     }
 }
 
 type Props = {
-    restaurants: Array<Restaurant>
+    restaurants: Array<Restaurant>,
+    locations: Array<Location>,
+    categories: Array<Category>,
+    queryCity: string,
+    queryCategory: string
 }
 
-export default function RestaurantPage({ restaurants }: Props) {
+const imagePlaceholder = 'https://images.unsplash.com/photo-1570441262582-a2d4b9a916a5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2048&q=80'
+
+export default function RestaurantPage({
+    restaurants,
+    locations,
+    categories,
+    queryCity,
+    queryCategory
+}: Props) {
+    const router = useRouter();
+
+    const [city, setCity] = useState(queryCity);
+    const [category, setCategory] = useState(queryCategory);
+
+    const handleButtonClick = () => {
+        const searchParams = new URLSearchParams({
+            city: city.replace('All', ''),
+            category: category.replace('All', '')
+        })
+
+        router.replace(`${paths.restaurants}?${searchParams}`);
+    }
+
+    useEffect(() => {
+        handleButtonClick();
+    }, [city, category])
 
     return (
         <>
             <NavigationMenu />
-            <Container component="main" maxWidth="xs">
+            <Container component="main" className={styles.root}>
                 <CssBaseline />
-                <div>
-                    Restaurant Page
+                <h1>
+                    Restaurants
+                </h1>
+                <div className={styles.filtersContainer}>
+                    <FormControl fullWidth>
+                        <InputLabel id="demo-simple-select-label" sx={{ fontWeight: 'bold' }}>
+                            City
+                        </InputLabel>
+                        <Select
+                            labelId="City"
+                            id="location"
+                            value={city}
+                            label="City"
+                            onChange={(e) => setCity(e.target.value)}
+                            sx={{ backgroundColor: 'white' }}
+                        >
+                            <MenuItem value={'All'}>All</MenuItem>
+                            {locations.map(({ city }: Location) => (
+                                <MenuItem key={city} value={city || ''}>
+                                    {city}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+
+                    <FormControl fullWidth >
+                        <InputLabel id="demo-simple-select-label" sx={{ fontWeight: 'bold' }}>
+                            Food Type
+                        </InputLabel>
+                        <Select
+                            labelId="City"
+                            id="category"
+                            value={category}
+                            label="City"
+                            onChange={(e) => setCategory(e.target.value)}
+                            sx={{ backgroundColor: 'white' }}
+                        >
+                            <MenuItem value={'All'}>All</MenuItem>
+                            {categories.map(({ name }: Category) => (
+                                <MenuItem key={name} value={name || ''}>
+                                    {name}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
                 </div>
-                <div>
+                <div className={styles.listContainer}>
                     {restaurants?.map(restaurant => (
-                        <Card key={restaurant.id}>
-                            <Link href={`${paths.restaurants}/${restaurant.id}`}>
-                                {restaurant.name}
-                            </Link>
-                        </Card>
+                        <RestaurantListItem key={restaurant.id} restaurant={restaurant} />
                     ))}
                 </div>
             </Container>

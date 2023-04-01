@@ -1,0 +1,20 @@
+.root {
+    max-width: 840px;
+    padding: 20px;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.filtersContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+}
+
+.listContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}

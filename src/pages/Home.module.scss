@@ -1,5 +1,9 @@
 .searchSectionContainer {
   position: relative;
+
+  * {
+    z-index: 9;
+  }
 }
 
 .headerContent {
@@ -19,7 +23,7 @@
 }
 
 .backgroundImage {
-  z-index: -1;
+  z-index: 1;
 }
 
 // .main {
