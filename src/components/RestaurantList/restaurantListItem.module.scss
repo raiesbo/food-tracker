@@ -1,0 +1,13 @@
+.root {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+}
+
+.imageContainer {
+    position: relative;
+    width: 100px;
+    height: 100px;
+}

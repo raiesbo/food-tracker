@@ -44,7 +44,7 @@ export default function NavigationMenu() {
                             onClick={handleOpenNavMenu}
                             color="inherit"
                         >
-                            <MenuIcon />
+                            <MenuIcon sx={{ fill: 'black' }} />
                         </IconButton>
                         <Menu
                             id="menu-appbar"
@@ -64,26 +64,7 @@ export default function NavigationMenu() {
                                 display: { xs: 'block', md: 'none' },
                             }}
                         >
-                            {
-                                (urls[userRole?.role === 'SP'
-                                    ? 'serviceProvider'
-                                    : userRole?.role === 'CUSTOMER'
-                                        ? 'customer'
-                                        : 'visitor']).map(({ name, url }) => (
-                                            <MenuItem key={name}>
-                                                <Link href={url} className={styles.link}>
-                                                    <Typography textAlign="center" sx={{ color: 'black', display: 'block' }}>
-                                                        {name}
-                                                    </Typography>
-                                                </Link>
-                                            </MenuItem>
-                                        ))
-                            }
-                        </Menu>
-                    </Box>
-                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                        {
-                            (urls[userRole?.role === 'SP'
+                            {(urls[userRole?.role === 'SP'
                                 ? 'serviceProvider'
                                 : userRole?.role === 'CUSTOMER'
                                     ? 'customer'
@@ -95,8 +76,23 @@ export default function NavigationMenu() {
                                                 </Typography>
                                             </Link>
                                         </MenuItem>
-                                    ))
-                        }
+                                    ))}
+                        </Menu>
+                    </Box>
+                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                        {(urls[userRole?.role === 'SP'
+                            ? 'serviceProvider'
+                            : userRole?.role === 'CUSTOMER'
+                                ? 'customer'
+                                : 'visitor']).map(({ name, url }) => (
+                                    <MenuItem key={name}>
+                                        <Link href={url} className={styles.link}>
+                                            <Typography textAlign="center" sx={{ color: 'black', display: 'block' }}>
+                                                {name}
+                                            </Typography>
+                                        </Link>
+                                    </MenuItem>
+                                ))}
                     </Box>
                 </Toolbar>
             </Container>
