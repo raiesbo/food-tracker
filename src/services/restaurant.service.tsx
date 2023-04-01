@@ -1,22 +1,59 @@
-import { Restaurant } from '@prisma/client';
+import { Restaurant, User } from '@prisma/client';
 import { NextApiRequest } from 'next';
 import prismaClients from '../repositories';
 
 export default function userService({ restaurantClient }: typeof prismaClients) {
     return {
-        getAllRestaurants: async (req: NextApiRequest) => {
-            // const parsedBody = JSON.parse(req.body);
-
+        getAllRestaurantByFilter: async (filters: unknown) => {
             try {
-                const restaurants = await restaurantClient.getRestaurants({} as Restaurant)
+                const restaurants = await restaurantClient.getRestaurants(filters as Restaurant);
 
-                if (restaurants) return { result: restaurants }
+                console.log('function', { restaurants })
+
+                if (restaurants) return {
+                    result: restaurants.map(restaurant => ({
+                        ...restaurant,
+                        createdAt: `${restaurant.createdAt}`,
+                        updatedAt: `${restaurant.updatedAt}`
+                    }))
+                }
 
                 return {
                     result: {},
                     error: {
                         status: 400,
-                        message: 'Unable to create new user'
+                        message: `Unable to get all restaurants with the following filters ${filters}`
+                    }
+                }
+            } catch (e) {
+                const message = e as { message: string };
+                console.error(message)
+                return {
+                    result: {},
+                    error: {
+                        status: 400,
+                        message: message
+                    }
+                }
+            }
+        },
+        getAllRestaurantByUser: async (userId: User['id']) => {
+            try {
+                const restaurants = await restaurantClient.getRestaurants({ userId } as Restaurant)
+
+                if (restaurants) return {
+                    result: restaurants.map(restaurant => ({
+                        ...restaurant,
+                        createdAt: `${restaurant.createdAt}`,
+                        updatedAt: `${restaurant.updatedAt}`
+                    }))
+                }
+
+                return {
+                    result: {},
+                    error: {
+                        status: 400,
+                        message: `Unable to get all restaurants from user with id ${userId}`
                     }
                 }
             } catch (e) {
