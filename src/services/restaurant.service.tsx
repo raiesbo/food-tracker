@@ -12,7 +12,12 @@ export default function userService({ restaurantClient }: typeof prismaClients) 
                     result: restaurants.map(restaurant => ({
                         ...restaurant,
                         createdAt: `${restaurant.createdAt}`,
-                        updatedAt: `${restaurant.updatedAt}`
+                        updatedAt: `${restaurant.updatedAt}`,
+                        category: {
+                            ...restaurant.category,
+                            createdAt: `${restaurant.category?.createdAt}`,
+                            updatedAt: `${restaurant.category?.updatedAt}`,
+                        }
                     }))
                 }
 
@@ -43,7 +48,12 @@ export default function userService({ restaurantClient }: typeof prismaClients) 
                     result: restaurants.map(restaurant => ({
                         ...restaurant,
                         createdAt: `${restaurant.createdAt}`,
-                        updatedAt: `${restaurant.updatedAt}`
+                        updatedAt: `${restaurant.updatedAt}`,
+                        category: {
+                            ...restaurant.category,
+                            createdAt: `${restaurant.category?.createdAt}`,
+                            updatedAt: `${restaurant.category?.updatedAt}`,
+                        }
                     }))
                 }
 
@@ -72,7 +82,18 @@ export default function userService({ restaurantClient }: typeof prismaClients) 
             try {
                 const restaurant = await restaurantClient.getRestaurant(restaurantId)
 
-                if (restaurant) return { result: restaurant }
+                if (restaurant) return {
+                    result: {
+                        ...restaurant,
+                        createdAt: `${restaurant.createdAt}`,
+                        updatedAt: `${restaurant.updatedAt}`,
+                        category: {
+                            ...restaurant.category,
+                            createdAt: `${restaurant.category?.createdAt}`,
+                            updatedAt: `${restaurant.category?.updatedAt}`,
+                        }
+                    }
+                }
 
                 return {
                     result: {},
