@@ -1,7 +1,7 @@
 import { NavigationMenu } from "@/components/NavigationMenu";
 import services from "@/services";
 import { Restaurant } from "@/types";
-import { Container, CssBaseline } from "@mui/material";
+import { CssBaseline } from "@mui/material";
 import { Category } from "@prisma/client";
 import { GetServerSidePropsContext } from "next";
 import styles from './restaurantDetails.module.scss';
@@ -41,7 +41,7 @@ export default function RestaurantDetailsPage({ restaurant, categories }: Props)
     return (
         <>
             <NavigationMenu />
-            <Container component="main" className={styles.root}>
+            <main className={styles.root}>
                 <CssBaseline />
                 <h1>
                     {restaurant.name}
@@ -49,7 +49,7 @@ export default function RestaurantDetailsPage({ restaurant, categories }: Props)
                 <div>
                     {restaurant.description}
                 </div>
-            </Container>
+            </main>
         </>
     )
 }

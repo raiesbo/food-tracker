@@ -1,17 +1,18 @@
 import { NavigationMenu } from "@/components/NavigationMenu";
-import { Container, CssBaseline } from "@mui/material";
+import { CssBaseline } from "@mui/material";
+import styles from './profile.module.scss';
 
 export default function RestaurantPage() {
 
     return (
         <>
             <NavigationMenu />
-            <Container component="main" maxWidth="xs">
+            <main className={styles.root} >
                 <CssBaseline />
                 <div>
                     User Profile
                 </div>
-            </Container>
+            </main>
         </>
     )
 }

@@ -2,7 +2,7 @@ import { NavigationMenu } from "@/components/NavigationMenu";
 import { RestaurantListItem } from "@/components/RestaurantList";
 import services from "@/services";
 import { paths } from "@/utils/paths";
-import { Container, CssBaseline, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { CssBaseline, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { Category, Location, Restaurant } from "@prisma/client";
 import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
@@ -105,7 +105,7 @@ export default function RestaurantPage({
     return (
         <>
             <NavigationMenu />
-            <Container component="main" className={styles.root}>
+            <main className={styles.root}>
                 <CssBaseline />
                 <h1>
                     Restaurants
@@ -158,7 +158,7 @@ export default function RestaurantPage({
                         <RestaurantListItem key={restaurant.id} restaurant={restaurant} />
                     ))}
                 </div>
-            </Container>
+            </main>
         </>
     )
 }

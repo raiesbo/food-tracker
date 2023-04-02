@@ -4,10 +4,11 @@ import { paths } from "@/utils/paths";
 import { auth0Config } from "@/utils/settings";
 import { getSession } from "@auth0/nextjs-auth0";
 import AddIcon from '@mui/icons-material/Add';
-import { Card, Container, CssBaseline, IconButton } from "@mui/material";
+import { Card, CssBaseline, IconButton } from "@mui/material";
 import { Restaurant } from "@prisma/client";
 import { GetServerSidePropsContext } from "next";
 import Link from "next/link";
+import styles from './myRestaurants.module.scss';
 
 const { restaurantService } = services;
 
@@ -47,7 +48,7 @@ export default function MyRestaurants({ restaurants }: Props) {
     return (
         <>
             <NavigationMenu />
-            <Container component="main" maxWidth="xs">
+            <main className={styles.root}>
                 <CssBaseline />
                 <div>
                     My Restaurants Page
@@ -67,7 +68,7 @@ export default function MyRestaurants({ restaurants }: Props) {
                         </Link>
                     </div>
                 </div>
-            </Container>
+            </main>
         </>
     )
 }
