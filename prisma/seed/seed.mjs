@@ -10,13 +10,7 @@ async function main() {
             email: 'alice@prisma.io',
             firstName: 'Alice',
             lastName: 'Muller',
-            role: 'CUSTOMER',
-            resturants: {
-                create: [
-                    { name: 'Alices Burguer', description: 'Best burger in town!' },
-                    { name: 'Alices Sushi', description: 'Best Sushi in town!' }
-                ]
-            }
+            role: 'CUSTOMER'
         },
     })
 
@@ -31,12 +25,316 @@ async function main() {
         },
     })
 
-    const mainUser = await prisma.user.findUnique({ where: { email: 'raiesbo8@gmail.com' } });
+    const mainUser = await prisma.user.upsert({
+        where: { email: 'raiesbo@uoc.edu' },
+        update: {},
+        create: {
+            id: '64255dfceba0b40cc84c7e9e',
+            email: 'raiesbo@uoc.edu',
+            firstName: 'Raimon',
+            lastName: 'Espasa',
+            role: 'SP'
+        },
+    })
 
-    const categorySpanish = await prisma.category.create({ data: { name: 'Spanish', createdById: mainUser.id } });
-    const categoryGerman = await prisma.category.create({ data: { name: 'German', createdById: mainUser.id } });
+    const categorySpanish = await prisma.category.upsert({
+        where: { name: 'Spanish' },
+        update: {},
+        create: {
+            name: 'Spanish',
+            createdById: mainUser.id
+        },
+    })
+
+    const categoryGerman = await prisma.category.upsert({
+        where: { name: 'German' },
+        update: {},
+        create: {
+            name: 'German',
+            createdById: mainUser.id
+        },
+    })
+
+    const categoryFrench = await prisma.category.upsert({
+        where: { name: 'French' },
+        update: {},
+        create: {
+            name: 'French',
+            createdById: mainUser.id
+        },
+    })
+
+    const categoryThai = await prisma.category.upsert({
+        where: { name: 'Thai' },
+        update: {},
+        create: {
+            name: 'Thai',
+            createdById: mainUser.id
+        },
+    })
+
+    const categoryJapanese = await prisma.category.upsert({
+        where: { name: 'Japanese' },
+        update: {},
+        create: {
+            name: 'Japanese',
+            createdById: mainUser.id
+        },
+    })
+
+    const categoryMexican = await prisma.category.upsert({
+        where: { name: 'Mexican' },
+        update: {},
+        create: {
+            name: 'Mexican',
+            createdById: mainUser.id
+        },
+    })
+
+    const categoryAmerican = await prisma.category.upsert({
+        where: { name: 'American' },
+        update: {},
+        create: {
+            name: 'American',
+            createdById: mainUser.id
+        },
+    })
+
 
     const restaurantBurger = await prisma.restaurant.create({
+        data: {
+            name: 'Main Burguer',
+            description: 'Top burger in town!',
+            userId: mainUser.id,
+            categoryId: categoryAmerican.id,
+            isCashOnly: true,
+            menu: {
+                create: [
+                    {
+                        name: 'Cheese burguer',
+                        isGlutenFree: false,
+                        isVegan: false,
+                        ingredients: {
+                            create: [
+                                { name: 'Meet' },
+                                { name: 'Bread' },
+                                { name: 'Ketchup' },
+                                { name: 'Fries' },
+                                { name: 'Letuce' },
+                                { name: 'Tomato' }
+                            ]
+                        }
+                    },
+                    {
+                        name: 'Cheese burguer',
+                        isGlutenFree: false,
+                        isVegan: true,
+                        ingredients: {
+                            create: [
+                                { name: 'Vegan Meet' },
+                                { name: 'Bread' },
+                                { name: 'Ketchup' },
+                                { name: 'Fries' },
+                                { name: 'Letuce' },
+                                { name: 'Tomato' }
+                            ]
+                        }
+                    }
+                ]
+            },
+            locations: {
+                create: [
+                    {
+                        country: "German",
+                        city: 'Berlin',
+                        streetName: 'some street'
+                    },
+                    {
+                        country: "Spain",
+                        city: 'Barcelona',
+                        streetName: 'some other street'
+                    }
+                ]
+            },
+            ratings: {
+                create: [
+                    { value: 5, userId: bob.id },
+                    { value: 5, userId: alice.id },
+                    { value: 3 },
+                    { value: 1 },
+                    { value: 1 }
+                ]
+            },
+            comments: {
+                create: [
+                    { content: 'Really delicious, 100% recomended!', userId: bob.id },
+                    { content: 'The food was good, but the service could improve quite a lot.', userId: alice.id }
+                ]
+            }
+        }
+    })
+
+    const restaurantSpanish = await prisma.restaurant.create({
+        data: {
+            name: 'Paellaland',
+            description: 'The best spanish food to be found in the German capital!',
+            userId: mainUser.id,
+            categoryId: categorySpanish.id,
+            isCashOnly: false,
+            menu: {
+                create: [
+                    {
+                        name: 'Paella Valenciana',
+                        isGlutenFree: true,
+                        isVegan: false,
+                        ingredients: {
+                            create: [
+                                { name: 'Rise' },
+                                { name: 'Meet' },
+                                { name: 'Onion' },
+                                { name: 'Bell pepper' },
+                                { name: 'Garlic' },
+                                { name: 'Peas' }
+                            ]
+                        }
+                    },
+                    {
+                        name: 'Paella de verduras',
+                        isGlutenFree: false,
+                        isVegan: true,
+                        ingredients: {
+                            create: [
+                                { name: 'Rise' },
+                                { name: 'Onion' },
+                                { name: 'Bell pepper' },
+                                { name: 'Garlic' },
+                                { name: 'Peas' }
+                            ]
+                        }
+                    },
+                    {
+                        name: 'Arroz al horno',
+                        isGlutenFree: true,
+                        isVegan: false,
+                        ingredients: {
+                            create: [
+                                { name: 'Rise' },
+                                { name: 'Meet' },
+                                { name: 'Bell pepper' },
+                                { name: 'Garlic' }
+                            ]
+                        }
+                    }
+                ]
+            },
+            locations: {
+                create: [
+                    {
+                        country: "German",
+                        city: 'Berlin',
+                        streetName: 'some street'
+                    },
+                    {
+                        country: "Spain",
+                        city: 'Barcelona',
+                        streetName: 'some other street'
+                    }
+                ]
+            },
+            ratings: {
+                create: [
+                    { value: 5, userId: bob.id },
+                    { value: 5, userId: alice.id },
+                    { value: 3 },
+                    { value: 1 },
+                    { value: 1 }
+                ]
+            },
+            comments: {
+                create: [
+                    { content: 'Really delicious, 100% recomended!', userId: bob.id },
+                    { content: 'The food was good, but the service could improve quite a lot.', userId: alice.id }
+                ]
+            }
+        }
+    })
+
+
+    const restaurantTaps = await prisma.restaurant.create({
+        data: {
+            name: 'Tapas Bar',
+            description: 'The classic tapas as never experienced before!',
+            userId: mainUser.id,
+            categoryId: categoryAmerican.id,
+            isCashOnly: true,
+            menu: {
+                create: [
+                    {
+                        name: 'Tortilla patata',
+                        isGlutenFree: false,
+                        isVegan: false,
+                        ingredients: {
+                            create: [
+                                { name: 'Meet' },
+                                { name: 'Bread' },
+                                { name: 'Ketchup' },
+                                { name: 'Fries' },
+                                { name: 'Letuce' },
+                                { name: 'Tomato' }
+                            ]
+                        }
+                    },
+                    {
+                        name: 'Pimientos del padrón',
+                        isGlutenFree: false,
+                        isVegan: true,
+                        ingredients: {
+                            create: [
+                                { name: 'Vegan Meet' },
+                                { name: 'Bread' },
+                                { name: 'Ketchup' },
+                                { name: 'Fries' },
+                                { name: 'Letuce' },
+                                { name: 'Tomato' }
+                            ]
+                        }
+                    }
+                ]
+            },
+            locations: {
+                create: [
+                    {
+                        country: "German",
+                        city: 'Berlin',
+                        streetName: 'some street'
+                    },
+                    {
+                        country: "Spain",
+                        city: 'Barcelona',
+                        streetName: 'some other street'
+                    }
+                ]
+            },
+            ratings: {
+                create: [
+                    { value: 5, userId: bob.id },
+                    { value: 5, userId: alice.id },
+                    { value: 3 },
+                    { value: 1 },
+                    { value: 1 }
+                ]
+            },
+            comments: {
+                create: [
+                    { content: 'Really delicious, 100% recomended!', userId: bob.id },
+                    { content: 'The food was good, but the service could improve quite a lot.', userId: alice.id }
+                ]
+            }
+        }
+    })
+
+
+    const restaurantBurger4 = await prisma.restaurant.create({
         data: {
             name: 'Main Burguer',
             description: 'Top burger in town!',
@@ -45,12 +343,30 @@ async function main() {
         }
     })
 
-    const restaurantSushi = await prisma.restaurant.create({
+    const restaurantBurger5 = await prisma.restaurant.create({
         data: {
             name: 'Second Sushi',
-            description: 'Second best Sushi in town!',
+            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
             userId: mainUser.id,
             categoryId: categoryGerman.id
+        }
+    })
+
+    const restaurantBurger6 = await prisma.restaurant.create({
+        data: {
+            name: 'Main Burguer',
+            description: 'Top burger in town!',
+            userId: mainUser.id,
+            categoryId: categorySpanish.id
+        }
+    })
+
+    const restaurantBurger7 = await prisma.restaurant.create({
+        data: {
+            name: 'Main Burguer',
+            description: 'Top burger in town!',
+            userId: mainUser.id,
+            categoryId: categorySpanish.id
         }
     })
 
@@ -68,7 +384,7 @@ async function main() {
             country: "German",
             city: 'Munich',
             streetName: 'some other street',
-            restaurantId: restaurantSushi.id
+            restaurantId: restaurantBurger5.id
         }
     })
 }
