@@ -13,10 +13,19 @@ export default function userService({ restaurantClient }: typeof prismaClients) 
                         ...restaurant,
                         createdAt: `${restaurant.createdAt}`,
                         updatedAt: `${restaurant.updatedAt}`,
-                        category: {
-                            ...restaurant.category,
-                            createdAt: `${restaurant.category?.createdAt}`,
-                            updatedAt: `${restaurant.category?.updatedAt}`,
+                        comments: {
+                            ...restaurant.comments.map(comment => ({
+                                ...comment,
+                                createdAt: `${comment?.createdAt}`,
+                                updatedAt: `${comment?.updatedAt}`,
+                            }))
+                        },
+                        menu: {
+                            ...restaurant.menu.map(dish => ({
+                                ...dish,
+                                createdAt: `${dish?.createdAt}`,
+                                updatedAt: `${dish?.updatedAt}`,
+                            }))
                         }
                     }))
                 }
@@ -49,10 +58,19 @@ export default function userService({ restaurantClient }: typeof prismaClients) 
                         ...restaurant,
                         createdAt: `${restaurant.createdAt}`,
                         updatedAt: `${restaurant.updatedAt}`,
-                        category: {
-                            ...restaurant.category,
-                            createdAt: `${restaurant.category?.createdAt}`,
-                            updatedAt: `${restaurant.category?.updatedAt}`,
+                        comments: {
+                            ...restaurant.comments.map(comment => ({
+                                ...comment,
+                                createdAt: `${comment?.createdAt}`,
+                                updatedAt: `${comment?.updatedAt}`,
+                            }))
+                        },
+                        menu: {
+                            ...restaurant.menu.map(dish => ({
+                                ...dish,
+                                createdAt: `${dish?.createdAt}`,
+                                updatedAt: `${dish?.updatedAt}`,
+                            }))
                         }
                     }))
                 }
@@ -87,10 +105,19 @@ export default function userService({ restaurantClient }: typeof prismaClients) 
                         ...restaurant,
                         createdAt: `${restaurant.createdAt}`,
                         updatedAt: `${restaurant.updatedAt}`,
-                        category: {
-                            ...restaurant.category,
-                            createdAt: `${restaurant.category?.createdAt}`,
-                            updatedAt: `${restaurant.category?.updatedAt}`,
+                        comments: {
+                            ...restaurant.comments.map(comment => ({
+                                ...comment,
+                                createdAt: `${comment?.createdAt}`,
+                                updatedAt: `${comment?.updatedAt}`,
+                            }))
+                        },
+                        menu: {
+                            ...restaurant.menu.map(dish => ({
+                                ...dish,
+                                createdAt: `${dish?.createdAt}`,
+                                updatedAt: `${dish?.updatedAt}`,
+                            }))
                         }
                     }
                 }

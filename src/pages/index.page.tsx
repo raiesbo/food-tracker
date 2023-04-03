@@ -2,7 +2,7 @@ import { NavigationMenu } from '@/components/NavigationMenu';
 import services from '@/services';
 import { paths } from '@/utils/paths';
 import { Box, Button, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-import { Category, Location } from '@prisma/client';
+import { Category } from '@prisma/client';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -14,7 +14,7 @@ const bgImageUrl = 'https://images.unsplash.com/photo-1565123409695-7b5ef63a2efb
 
 type Props = {
   categories: Array<Category>,
-  locations: Array<Location>
+  locations: Array<string>
 }
 
 export async function getServerSideProps() {
@@ -26,7 +26,7 @@ export async function getServerSideProps() {
   const {
     result: locations,
     error: getAllLocationsError
-  } = await locationsService.getAllLocations();
+  } = await locationsService.getAllUniqueCities();
 
   if (getAllCategoriesError || getAllLocationsError) return {
     props: { getAllCategoriesError, getAllLocationsError }
@@ -103,7 +103,7 @@ export default function Home({ categories, locations }: Props) {
                   sx={{ backgroundColor: 'white' }}
                 >
                   <MenuItem value={'All'}>All</MenuItem>
-                  {locations.map(({ city }: Location) => (
+                  {locations.map(city => (
                     <MenuItem key={city} value={city || ''}>
                       {city}
                     </MenuItem>

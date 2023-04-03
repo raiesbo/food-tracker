@@ -3,7 +3,7 @@ import { RestaurantListItem } from "@/components/RestaurantList";
 import services from "@/services";
 import { paths } from "@/utils/paths";
 import { CssBaseline, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import { Category, Location, Restaurant } from "@prisma/client";
+import { Category, Restaurant } from "@prisma/client";
 import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -48,7 +48,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     const {
         result: locations,
         error: getAllLocationsError
-    } = await locationsService.getAllLocations();
+    } = await locationsService.getAllUniqueCities();
 
     if (getAllCategoriesError || getAllLocationsError) return {
         props: { getAllCategoriesError, getAllLocationsError }
@@ -71,7 +71,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
 type Props = {
     restaurants: Array<Restaurant>,
-    locations: Array<Location>,
+    locations: Array<string>,
     categories: Array<Category>,
     queryCity: string,
     queryCategory: string
@@ -124,7 +124,7 @@ export default function RestaurantPage({
                             sx={{ backgroundColor: 'white' }}
                         >
                             <MenuItem value={'All'}>All</MenuItem>
-                            {locations.map(({ city }: Location) => (
+                            {locations.map(city => (
                                 <MenuItem key={city} value={city || ''}>
                                     {city}
                                 </MenuItem>

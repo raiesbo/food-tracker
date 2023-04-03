@@ -1,13 +1,13 @@
 import { NextApiRequest } from 'next';
 import prismaClients from '../repositories';
 
-export default function commentsService({ ratingClient }: typeof prismaClients) {
+export default function commentsService({ commentClient }: typeof prismaClients) {
     return {
         createComment: async (req: NextApiRequest) => {
-            const { restaurantId, userId } = req.query as { restaurantId: string, userId: string };
+            const { userId } = req.query as { userId: string };
 
             try {
-                const rating = await ratingClient.getRatings({ restaurantId, userId })
+                const rating = await commentClient.getComments({ userId })
 
                 if (rating) return { result: rating }
 
@@ -15,7 +15,7 @@ export default function commentsService({ ratingClient }: typeof prismaClients) 
                     result: {},
                     error: {
                         status: 400,
-                        message: `Unable to find rating from Restaurant ${restaurantId} and User ${userId}`
+                        message: `Unable to find all comments from User with id ${userId}`
                     }
                 }
             } catch (e) {
@@ -32,12 +32,12 @@ export default function commentsService({ ratingClient }: typeof prismaClients) 
 
         },
         updateRating: async (req: NextApiRequest) => {
-            const { ratingId } = req.query as { ratingId: string };
+            const { commentId } = req.query as { commentId: string };
 
             const newRatings = JSON.parse(req.body);
 
             try {
-                const ratings = await ratingClient.updateRating(ratingId, newRatings)
+                const ratings = await commentClient.updateComment(commentId, newRatings)
 
                 if (ratings) return { result: ratings }
 
@@ -45,7 +45,7 @@ export default function commentsService({ ratingClient }: typeof prismaClients) 
                     result: {},
                     error: {
                         status: 400,
-                        message: `Unable to update ratings with ID ${ratingId}`
+                        message: `Unable to update comment with ID ${commentId}`
                     }
                 }
             } catch (e) {

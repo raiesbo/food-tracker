@@ -2,11 +2,11 @@ import prismaClients from '../repositories';
 
 export default function locationsService({ locationClient }: typeof prismaClients) {
     return {
-        getAllLocations: async () => {
+        getAllUniqueCities: async () => {
             try {
                 const locations = await locationClient.getLocations()
 
-                if (locations) return { result: locations }
+                if (locations) return { result: Array.from(new Set(locations?.map(({ city }) => city))) }
 
                 return {
                     result: {},
