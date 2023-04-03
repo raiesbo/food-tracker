@@ -29,7 +29,7 @@ export default function NavigationMenu() {
     };
 
     return (
-        <AppBar position="static" sx={{ backgroundColor: 'white' }}>
+        <AppBar position="static" className={styles.root}>
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     <Link href={paths.home}>
