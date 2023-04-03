@@ -6,13 +6,7 @@ export default function categoriesService({ categoryClient }: typeof prismaClien
             try {
                 const categories = await categoryClient.getCategories()
 
-                if (categories) return {
-                    result: categories.map(category => ({
-                        ...category,
-                        createdAt: `${category.createdAt}`,
-                        updatedAt: `${category.updatedAt}`
-                    }))
-                }
+                if (categories) return { result: categories }
 
                 return {
                     result: {},
