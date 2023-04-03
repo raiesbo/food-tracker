@@ -1,5 +1,5 @@
 import { NavigationMenu } from "@/components/NavigationMenu";
-import { Container, CssBaseline } from "@mui/material";
+import { CssBaseline } from "@mui/material";
 
 
 export default function MyNewRestaurant() {
@@ -7,12 +7,12 @@ export default function MyNewRestaurant() {
     return (
         <>
             <NavigationMenu />
-            <Container component="main" maxWidth="xs">
+            <main>
                 <CssBaseline />
                 <div>
                     New Restaurant Page
                 </div>
-            </Container>
+            </main>
         </>
     )
 }

@@ -3,7 +3,6 @@ import { paths } from '@/utils/paths';
 import { FormControlLabel, FormLabel, Radio, RadioGroup } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
@@ -11,6 +10,7 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import styles from './signup.module.scss';
 
 export default function SignIn() {
     const router = useRouter();
@@ -41,11 +41,11 @@ export default function SignIn() {
     return (
         <>
             <NavigationMenu />
-            <Container component="main" maxWidth="xs">
+            <main className={styles.root}>
                 <CssBaseline />
                 <Box
                     sx={{
-                        marginTop: 8,
+                        marginTop: 4,
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
@@ -134,7 +134,7 @@ export default function SignIn() {
                         </Grid>
                     </Box>
                 </Box>
-            </Container>
+            </main>
         </>
     );
 }

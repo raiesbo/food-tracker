@@ -8,9 +8,15 @@
 }
 
 .filtersContainer {
+    display: grid;
+    grid-template-columns: 1fr 150px 150px;
+    gap: 15px;
+}
+
+.additionalFilters {
     display: flex;
     flex-direction: row;
-    gap: 15px;
+    justify-content: flex-end;
 }
 
 .listContainer {

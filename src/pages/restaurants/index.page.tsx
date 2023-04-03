@@ -2,7 +2,7 @@ import { NavigationMenu } from "@/components/NavigationMenu";
 import { RestaurantListItem } from "@/components/RestaurantList";
 import services from "@/services";
 import { paths } from "@/utils/paths";
-import { CssBaseline, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { Checkbox, CssBaseline, FormControl, FormControlLabel, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { Category, Restaurant } from "@prisma/client";
 import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
@@ -12,9 +12,32 @@ import styles from './restaurants.module.scss';
 const { restaurantService, categoriesService, locationsService } = services;
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-    const query = context.query as { city: string, category: string };
+    const query = context.query as {
+        city: string,
+        category: string,
+        vegan: string,
+        creditcard: string
+    };
 
     let filters = {}
+
+    if (!!query.vegan) {
+        filters = {
+            ...filters,
+            menu: {
+                some: {
+                    isVegan: true
+                }
+            }
+        }
+    }
+
+    if (!!query.creditcard) {
+        filters = {
+            ...filters,
+            isCashOnly: false
+        }
+    }
 
     if (query.category) {
         filters = {
@@ -88,11 +111,15 @@ export default function RestaurantPage({
 
     const [city, setCity] = useState(queryCity);
     const [category, setCategory] = useState(queryCategory);
+    const [vegan, setVegan] = useState(false);
+    const [creditcard, setCreditcard] = useState(false);
 
     const handleButtonClick = () => {
         const searchParams = new URLSearchParams({
             city: city.replace('All', ''),
-            category: category.replace('All', '')
+            category: category.replace('All', ''),
+            vegan: vegan ? 'true' : '',
+            creditcard: creditcard ? 'true' : ''
         })
 
         router.replace(`${paths.restaurants}?${searchParams}`);
@@ -100,7 +127,7 @@ export default function RestaurantPage({
 
     useEffect(() => {
         handleButtonClick();
-    }, [city, category])
+    }, [city, category, vegan, creditcard])
 
     return (
         <>
@@ -111,8 +138,15 @@ export default function RestaurantPage({
                     Restaurants
                 </h1>
                 <div className={styles.filtersContainer}>
-                    <FormControl fullWidth>
-                        <InputLabel id="demo-simple-select-label" sx={{ fontWeight: 'bold' }}>
+                    <TextField
+                        id="restaurant-name"
+                        label="Restaurant's name"
+                        variant="outlined"
+                        sx={{ backgroundColor: 'white' }}
+                    />
+
+                    <FormControl>
+                        <InputLabel id="demo-simple-select-label">
                             City
                         </InputLabel>
                         <Select
@@ -132,8 +166,8 @@ export default function RestaurantPage({
                         </Select>
                     </FormControl>
 
-                    <FormControl fullWidth >
-                        <InputLabel id="demo-simple-select-label" sx={{ fontWeight: 'bold' }}>
+                    <FormControl>
+                        <InputLabel id="demo-simple-select-label">
                             Food Type
                         </InputLabel>
                         <Select
@@ -152,6 +186,20 @@ export default function RestaurantPage({
                             ))}
                         </Select>
                     </FormControl>
+                </div>
+                <div className={styles.additionalFilters}>
+                    <FormControlLabel
+                        control={
+                            <Checkbox onChange={(e) => setVegan(e.target.checked)} value={vegan} />
+                        }
+                        label="with Vegan options"
+                    />
+                    <FormControlLabel
+                        control={
+                            <Checkbox onChange={(e) => setCreditcard(e.target.checked)} value={creditcard} />
+                        }
+                        label="accepts Credit Card"
+                    />
                 </div>
                 <div className={styles.listContainer}>
                     {restaurants?.map(restaurant => (

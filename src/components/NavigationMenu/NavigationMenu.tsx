@@ -29,8 +29,8 @@ export default function NavigationMenu() {
     };
 
     return (
-        <AppBar position="static" className={styles.root}>
-            <Container maxWidth="xl">
+        <AppBar position="static" sx={{ backgroundColor: 'white' }}>
+            <Container component='div' maxWidth="xl">
                 <Toolbar disableGutters>
                     <Link href={paths.home}>
                         <FastfoodIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, fill: 'black' }} />
