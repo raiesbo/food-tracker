@@ -1,0 +1,18 @@
+.root {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.scheduleList {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.scheduleListItem {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}

@@ -1,9 +1,10 @@
 import { NavigationMenu } from "@/components/NavigationMenu";
 import { RestaurantListItem } from "@/components/RestaurantList";
 import services from "@/services";
+import { Restaurant } from "@/types";
 import { paths } from "@/utils/paths";
 import { Checkbox, CssBaseline, FormControl, FormControlLabel, InputLabel, MenuItem, Select, TextField } from "@mui/material";
-import { Category, Restaurant } from "@prisma/client";
+import { Category } from "@prisma/client";
 import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -11,14 +12,7 @@ import styles from './restaurants.module.scss';
 
 const { restaurantService, categoriesService, locationsService } = services;
 
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-    const query = context.query as {
-        city: string,
-        category: string,
-        vegan: string,
-        creditcard: string
-    };
-
+export async function getServerSideProps({ query }: GetServerSidePropsContext) {
     let filters = {}
 
     if (!!query.vegan) {
@@ -171,10 +165,10 @@ export default function RestaurantPage({
                             Food Type
                         </InputLabel>
                         <Select
-                            labelId="City"
+                            labelId="Food Type"
                             id="category"
                             value={category}
-                            label="City"
+                            label="Food Type"
                             onChange={(e) => setCategory(e.target.value)}
                             sx={{ backgroundColor: 'white' }}
                         >
@@ -190,20 +184,29 @@ export default function RestaurantPage({
                 <div className={styles.additionalFilters}>
                     <FormControlLabel
                         control={
-                            <Checkbox onChange={(e) => setVegan(e.target.checked)} value={vegan} />
+                            <Checkbox
+                                onChange={(e) => setVegan(e.target.checked)}
+                                value={vegan}
+                            />
                         }
                         label="with Vegan options"
                     />
                     <FormControlLabel
                         control={
-                            <Checkbox onChange={(e) => setCreditcard(e.target.checked)} value={creditcard} />
+                            <Checkbox
+                                onChange={(e) => setCreditcard(e.target.checked)}
+                                value={creditcard}
+                            />
                         }
                         label="accepts Credit Card"
                     />
                 </div>
                 <div className={styles.listContainer}>
                     {restaurants?.map(restaurant => (
-                        <RestaurantListItem key={restaurant.id} restaurant={restaurant} />
+                        <RestaurantListItem
+                            key={restaurant.id}
+                            restaurant={restaurant}
+                        />
                     ))}
                 </div>
             </main>

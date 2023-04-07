@@ -15,6 +15,7 @@ model User {
   firstName  String
   lastName   String?
   email      String       @unique
+  phone      String?
   role       UserType     @default(CUSTOMER)
   reviews    Review[]
   resturants Restaurant[]
@@ -65,6 +66,7 @@ model Dish {
   updatedAt    DateTime     @updatedAt
   name         String
   description  String?
+  price        Float?
   ingredients  Ingredient[]
   isVegan      Boolean      @default(false)
   isGlutenFree Boolean      @default(false)
@@ -85,15 +87,16 @@ enum WeekDay {
   WEDNESDAY
   THURSDAY
   FRIDAY
-  SATURNDAY
+  SATURDAY
   SUNDAY
 }
 
 model Schedule {
   id           String      @id @default(auto()) @map("_id") @db.ObjectId
-  open_hour    String?
-  close_hour   String?
-  day          DateTime?
+  opening_hour String?     @default("9:00")
+  closing_hour String?     @default("11:30")
+  day          WeekDay?
+  isOpen       Boolean?    @default(true)
   restaurant   Restaurant? @relation(fields: [restaurantId], references: [id])
   restaurantId String?     @db.ObjectId
 }

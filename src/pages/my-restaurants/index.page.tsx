@@ -63,7 +63,7 @@ export default function MyRestaurants({ restaurants }: Props) {
                             className={styles.card}
                         >
                             <Link
-                                href={'/my-restaurants/' + restaurant.id}
+                                href={`/my-restaurants/${restaurant.id}`}
                                 className={styles.cardLink}
                             >
                                 <div className={styles.imageContainer}>

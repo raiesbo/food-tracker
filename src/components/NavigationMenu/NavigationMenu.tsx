@@ -6,7 +6,7 @@ import { AppBar, Box, Container, IconButton, Menu, MenuItem, Toolbar, Typography
 import Link from 'next/link';
 import { useState } from 'react';
 import { paths } from '../../utils/paths';
-import styles from './navigationMenu.module.scss';
+import styles from './NavigationMenu.module.scss';
 
 const urls = paths.components.NavigtionMenu;
 

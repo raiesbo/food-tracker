@@ -1,7 +1,48 @@
+@use '../../styles/theme.scss' as *;
+
 .root {
-    max-width: 840px;
+    max-width: 1040px;
     padding: 20px;
     margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.bodyContainer {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+
+    @include matchMedium {
+        grid-template-columns: 230px 1fr 270px;
+    }
+}
+
+.column {
+    background-color: red;
+}
+
+.infoCard {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.infoSlot {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.menuList {
     display: flex;
     flex-direction: column;
     gap: 15px;

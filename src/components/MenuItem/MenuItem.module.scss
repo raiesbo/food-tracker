@@ -1,0 +1,44 @@
+.root {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 15px;
+}
+
+.rotateChevron {
+    transform: rotate(180deg);
+}
+
+.imageContainer {
+    position: relative;
+    height: 120px;
+
+    img {
+        object-fit: cover;
+    }
+}
+
+.ingredientList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 5px 15px 15px;
+
+    &_closed {
+        display: none;
+    }
+}
+
+.ingredients {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 5px;
+}

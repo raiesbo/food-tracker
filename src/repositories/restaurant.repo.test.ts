@@ -24,18 +24,18 @@ describe('prisma Restaurants client', () => {
         expect(getRestaurantMock).toHaveBeenCalledWith({
             'where': { 'id': '6' },
             'include': {
-                'locations': true,
-                'menu': {
-                    'include': {
-                        'ingredients': true
+                locations: true,
+                menu: {
+                    include: {
+                        ingredients: true
                     }
                 },
-                'ratings': true,
-                'schedules': true,
-                'category': true,
-                comments: {
+                schedules: true,
+                category: true,
+                user: true,
+                reviews: {
                     include: {
-                        answers: true
+                        user: true
                     }
                 }
             }
@@ -51,18 +51,18 @@ describe('prisma Restaurants client', () => {
         expect(getRestaurantsMock).toHaveBeenCalledWith({
             'where': { 'name': 'test_name' },
             'include': {
-                'locations': true,
-                'menu': {
-                    'include': {
-                        'ingredients': true
+                locations: true,
+                menu: {
+                    include: {
+                        ingredients: true
                     }
                 },
-                'ratings': true,
-                'schedules': true,
-                'category': true,
-                comments: {
+                schedules: true,
+                category: true,
+                user: true,
+                reviews: {
                     include: {
-                        answers: true
+                        user: true
                     }
                 }
             }

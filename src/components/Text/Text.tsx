@@ -18,6 +18,7 @@ type Props = HTMLAttributes<HTMLElement> & {
     children: ReactNode;
     bold?: boolean;
     semiBold?: boolean;
+    italic?: boolean;
     variant?: Variant;
 };
 
@@ -27,6 +28,7 @@ export default function Text({
     className,
     bold = false,
     semiBold = false,
+    italic = false,
     variant = 'body',
     ...rest
 }: Props) {
@@ -48,7 +50,8 @@ export default function Text({
                 mediumVariant && styles['root_variant-medium-' + mediumVariant],
                 largeVariant && styles['root_variant-large-' + largeVariant],
                 semiBold && styles.semiBold,
-                bold && styles.bold
+                bold && styles.bold,
+                italic && styles.italic
             ])}
             {...rest}
         >

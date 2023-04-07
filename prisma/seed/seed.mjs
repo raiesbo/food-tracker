@@ -104,16 +104,18 @@ async function main() {
     const restaurantBurger = await prisma.restaurant.create({
         data: {
             name: 'Main Burguer',
-            description: 'Top burger in town!',
+            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+            slogan: 'Beef burgers like in no other place',
             userId: mainUser.id,
             categoryId: categoryAmerican.id,
             isCashOnly: true,
             menu: {
                 create: [
                     {
-                        name: 'Cheese burguer',
+                        name: 'Cheese Burguer',
                         isGlutenFree: false,
                         isVegan: false,
+                        price: 25.30,
                         ingredients: {
                             create: [
                                 { name: 'Meet' },
@@ -126,9 +128,10 @@ async function main() {
                         }
                     },
                     {
-                        name: 'Cheese burguer',
+                        name: 'Vegan Burguer',
                         isGlutenFree: false,
                         isVegan: true,
+                        price: 10.50,
                         ingredients: {
                             create: [
                                 { name: 'Vegan Meet' },
@@ -148,12 +151,14 @@ async function main() {
                         isMainLocation: true,
                         country: "German",
                         city: 'Berlin',
-                        streetName: 'some street'
+                        streetName: 'Blücherstraße',
+                        streetNumber: '61B'
                     },
                     {
                         country: "Spain",
                         city: 'Barcelona',
-                        streetName: 'some other street'
+                        streetName: 'Blücherstraße',
+                        streetNumber: '61B'
                     }
                 ]
             },
@@ -165,6 +170,17 @@ async function main() {
                     { rating: 4 },
                     { comment: 'Good but expensive...', rating: 3 }
                 ]
+            },
+            schedules: {
+                create: [
+                    { day: 'MONDAY', opening_hour: '12:30', closing_hour: '01:00' },
+                    { day: 'TUESDAY', opening_hour: '10:30', closing_hour: '12:00' },
+                    { day: 'WEDNESDAY', isOpen: false },
+                    { day: 'THURSDAY', opening_hour: '12:30', closing_hour: '01:00' },
+                    { day: 'FRIDAY', opening_hour: '12:30', closing_hour: '01:00' },
+                    { day: 'SATURDAY', opening_hour: '12:30', closing_hour: '01:00' },
+                    { day: 'SUNDAY', opening_hour: '12:30', closing_hour: '01:00' }
+                ]
             }
         }
     })
@@ -172,8 +188,9 @@ async function main() {
     const restaurantSpanish = await prisma.restaurant.create({
         data: {
             name: 'Paellaland',
-            description: 'The best spanish food to be found in the German capital!',
-            userId: mainUser.id,
+            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+            slogan: 'The original Paella Valenciana',
+            userId: alice.id,
             categoryId: categorySpanish.id,
             isCashOnly: false,
             menu: {
@@ -182,6 +199,7 @@ async function main() {
                         name: 'Paella Valenciana',
                         isGlutenFree: true,
                         isVegan: false,
+                        price: 11.30,
                         ingredients: {
                             create: [
                                 { name: 'Rise' },
@@ -211,6 +229,7 @@ async function main() {
                         name: 'Arroz al horno',
                         isGlutenFree: true,
                         isVegan: false,
+                        price: 9.99,
                         ingredients: {
                             create: [
                                 { name: 'Rise' },
@@ -227,23 +246,38 @@ async function main() {
                     {
                         country: "German",
                         city: 'Berlin',
-                        streetName: 'some street'
+                        streetName: 'Oranienstraße',
+                        streetNumber: '110',
+                        zip: '10969'
                     },
                     {
                         isMainLocation: true,
                         country: "Spain",
                         city: 'Barcelona',
-                        streetName: 'some other street'
+                        streetName: 'Travessera de Gràcia',
+                        streetNumber: '289',
+                        zip: '08025'
                     }
                 ]
             },
             reviews: {
                 create: [
-                    { comment: 'Really delicious, 100% recomended!', rating: 1, userId: bob.id },
+                    { comment: 'Really delicious, 100% recomended!', rating: 5, userId: bob.id },
                     { comment: 'The food was good, but the service could improve quite a lot.', rating: 5, userId: alice.id },
                     { rating: 2 },
-                    { rating: 4 },
-                    { comment: 'Good but expensive...', rating: 3 }
+                    { rating: 3 },
+                    { comment: 'Good but expensive...', rating: 5 }
+                ]
+            },
+            schedules: {
+                create: [
+                    { day: 'MONDAY', opening_hour: '12:30', closing_hour: '01:00' },
+                    { day: 'TUESDAY', opening_hour: '10:30', closing_hour: '12:00' },
+                    { day: 'WEDNESDAY', isOpen: false },
+                    { day: 'THURSDAY', opening_hour: '12:30', closing_hour: '01:00' },
+                    { day: 'FRIDAY', opening_hour: '12:30', closing_hour: '01:00' },
+                    { day: 'SATURDAY', opening_hour: '12:30', closing_hour: '01:00' },
+                    { day: 'SUNDAY', opening_hour: '12:30', closing_hour: '01:00' }
                 ]
             }
         }
@@ -253,8 +287,9 @@ async function main() {
     const restaurantTaps = await prisma.restaurant.create({
         data: {
             name: 'Tapas Bar',
-            description: 'The classic tapas as never experienced before!',
-            userId: mainUser.id,
+            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+            slogan: 'Tapas for every moment',
+            userId: bob.id,
             categoryId: categoryAmerican.id,
             isCashOnly: true,
             menu: {
@@ -263,6 +298,7 @@ async function main() {
                         name: 'Tortilla patata',
                         isGlutenFree: false,
                         isVegan: false,
+                        price: 13.30,
                         ingredients: {
                             create: [
                                 { name: 'Meet' },
@@ -278,6 +314,7 @@ async function main() {
                         name: 'Pimientos del padrón',
                         isGlutenFree: false,
                         isVegan: true,
+                        price: 11.30,
                         ingredients: {
                             create: [
                                 { name: 'Vegan Meet' },
@@ -297,12 +334,16 @@ async function main() {
                         isMainLocation: true,
                         country: "German",
                         city: 'Berlin',
-                        streetName: 'some street'
+                        streetName: 'Wassertorstraße',
+                        streetNumber: '19',
+                        zip: '10969'
                     },
                     {
                         country: "Spain",
                         city: 'Barcelona',
-                        streetName: 'some other street'
+                        streetName: 'Carrer de Pi i Margall',
+                        streetNumber: '19',
+                        zip: '08024'
                     }
                 ]
             },
@@ -314,62 +355,18 @@ async function main() {
                     { rating: 1, userId: alice.id },
                     { comment: 'So so...', rating: 3 }
                 ]
+            },
+            schedules: {
+                create: [
+                    { day: 'MONDAY', opening_hour: '12:30', closing_hour: '01:00' },
+                    { day: 'TUESDAY', opening_hour: '10:30', closing_hour: '12:00' },
+                    { day: 'WEDNESDAY', isOpen: false },
+                    { day: 'THURSDAY', opening_hour: '12:30', closing_hour: '01:00' },
+                    { day: 'FRIDAY', opening_hour: '12:30', closing_hour: '01:00' },
+                    { day: 'SATURDAY', opening_hour: '12:30', closing_hour: '01:00' },
+                    { day: 'SUNDAY', opening_hour: '12:30', closing_hour: '01:00' }
+                ]
             }
-        }
-    })
-
-
-    const restaurantBurger4 = await prisma.restaurant.create({
-        data: {
-            name: 'Main Burguer',
-            description: 'Top burger in town!',
-            userId: mainUser.id,
-            categoryId: categorySpanish.id
-        }
-    })
-
-    const restaurantBurger5 = await prisma.restaurant.create({
-        data: {
-            name: 'Second Sushi',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-            userId: mainUser.id,
-            categoryId: categoryGerman.id
-        }
-    })
-
-    const restaurantBurger6 = await prisma.restaurant.create({
-        data: {
-            name: 'Main Burguer',
-            description: 'Top burger in town!',
-            userId: mainUser.id,
-            categoryId: categorySpanish.id
-        }
-    })
-
-    const restaurantBurger7 = await prisma.restaurant.create({
-        data: {
-            name: 'Main Burguer',
-            description: 'Top burger in town!',
-            userId: mainUser.id,
-            categoryId: categorySpanish.id
-        }
-    })
-
-    const locationBerlin = await prisma.location.create({
-        data: {
-            country: "German",
-            city: 'Berlin',
-            streetName: 'some street',
-            restaurantId: restaurantBurger.id
-        }
-    })
-
-    const locationMunich = await prisma.location.create({
-        data: {
-            country: "German",
-            city: 'Munich',
-            streetName: 'some other street',
-            restaurantId: restaurantBurger5.id
         }
     })
 }
