@@ -1,0 +1,120 @@
+@use '../../styles/theme' as *;
+
+@mixin font {
+    font-family: -apple-system, BlinkMacSystemFont, San Francisco, Helvetica Neue, Helvetica, Ubuntu, Roboto, Noto, Segoe UI, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 25.6px;
+    margin-block-start: 37px;
+    margin-block-end: 37px;
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+    margin: 0;
+}
+
+@mixin variants {
+    &-h1 {
+        @include font;
+        font-size: 40px;
+        font-weight: 400;
+        line-height: 52px;
+    }
+
+    &-h2 {
+        @include font;
+        font-size: 32px;
+        font-weight: 400;
+        line-height: 41.6px;
+    }
+
+    &-h3 {
+        @include font;
+        font-size: 24px;
+        font-weight: 400;
+        line-height: 34px;
+    }
+
+    &-h4 {
+        @include font;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 20px;
+    }
+
+    &-h5 {
+        @include font;
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 26px;
+    }
+
+    &-h6 {
+        @include font;
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 25px;
+    }
+
+    &-label {
+        @include font;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 22px;
+    }
+
+    &-p {
+        @include font;
+        font-size: 16px;
+    }
+
+    &-body2 {
+        @include font;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 20px;
+
+        @include matchMedium {
+            font-size: 16px;
+            line-height: 22px;
+        }
+    }
+
+    &-small {
+        @include font;
+        font-size: 13px;
+        line-height: 19px;
+    }
+
+    &-smallest {
+        @include font;
+        font-size: 14px;
+        line-height: 18px;
+    }
+}
+
+.root {
+    &_variant {
+        &-small {
+            @include variants;
+        }
+
+        &-medium {
+            @include matchMedium {
+                @include variants;
+            }
+        }
+
+        &-large {
+            @include matchLarge {
+                @include variants;
+            }
+        }
+    }
+}
+
+.semiBold {
+    font-weight: 500;
+}
+
+.bold {
+    font-weight: 700;
+}

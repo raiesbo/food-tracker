@@ -1,4 +1,6 @@
+import { ErrorMessagePassword } from '@/components/ErrorMessage';
 import { NavigationMenu } from '@/components/NavigationMenu';
+import { validatePassword } from '@/utils';
 import { paths } from '@/utils/paths';
 import { FormControlLabel, FormLabel, Radio, RadioGroup } from '@mui/material';
 import Box from '@mui/material/Box';
@@ -9,7 +11,7 @@ import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import styles from './signup.module.scss';
 
 export default function SignIn() {
@@ -21,7 +23,14 @@ export default function SignIn() {
     const [password, setPassword] = useState('');
     const [isSP, setIsSp] = useState('SP');
 
+    const [isDisabled, setIsDisabled] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
+
+    const [passwordError, setPasswordError] = useState(false);
+
     const handleClickButton = async () => {
+        setIsLoading(true);
+
         const response = await fetch('/api/users', {
             method: 'POST',
             body: JSON.stringify({
@@ -31,12 +40,20 @@ export default function SignIn() {
                 password,
                 isSP: isSP === 'SP'
             })
-        })
+        }).finally(() => setIsLoading(false));
 
         if (response.ok) {
             return router.push(paths.home)
         }
     }
+
+    const onPasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const { value } = e.target;
+
+        setPassword(value);
+        setIsDisabled(!value || !validatePassword(value).isValid);
+        setPasswordError(value === '' ? false : !validatePassword(value).isValid);
+    };
 
     return (
         <>
@@ -62,7 +79,6 @@ export default function SignIn() {
                             id="firstName"
                             label="First Name"
                             name="firstName"
-                            autoComplete="name"
                             autoFocus
                             value={firstName}
                             onChange={e => setFirstName(e.target.value)}
@@ -75,8 +91,6 @@ export default function SignIn() {
                             id="lastName"
                             label="Last Name"
                             name="lastName"
-                            autoComplete="name"
-                            autoFocus
                             value={lastName}
                             onChange={e => setLastName(e.target.value)}
                             sx={{ backgroundColor: 'white' }}
@@ -88,25 +102,30 @@ export default function SignIn() {
                             id="email"
                             label="Email Address"
                             name="email"
-                            autoComplete="email"
-                            autoFocus
                             value={email}
                             onChange={e => setEmail(e.target.value)}
                             sx={{ backgroundColor: 'white' }}
                         />
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            name="password"
-                            label="Password"
-                            type="password"
-                            id="password"
-                            autoComplete="current-password"
-                            value={password}
-                            onChange={e => setPassword(e.target.value)}
-                            sx={{ backgroundColor: 'white' }}
-                        />
+                        <div>
+                            <TextField
+                                margin="normal"
+                                required
+                                fullWidth
+                                name="password"
+                                label="Password"
+                                type="password"
+                                id="password"
+                                autoComplete="current-password"
+                                value={password}
+                                onChange={onPasswordChange}
+                                sx={{ backgroundColor: 'white' }}
+                            />
+                            {passwordError && (
+                                <ErrorMessagePassword
+                                    conditions={validatePassword(password).conditions}
+                                />
+                            )}
+                        </div>
                         <FormLabel id="demo-row-radio-buttons-group-label">Register as:</FormLabel>
                         <RadioGroup
                             row
@@ -115,9 +134,10 @@ export default function SignIn() {
                             onChange={(e) => setIsSp(e.target.value)}
                         >
                             <FormControlLabel value={"CUSTOMER"} control={<Radio />} label="Client" defaultChecked />
-                            <FormControlLabel value={"SP"} control={<Radio />} label="Restaurant" />
+                            <FormControlLabel value={"SP"} control={<Radio />} label="Business" />
                         </RadioGroup>
                         <Button
+                            disabled={isDisabled || isLoading}
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
