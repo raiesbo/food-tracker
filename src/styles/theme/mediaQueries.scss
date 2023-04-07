@@ -1,0 +1,17 @@
+@mixin matchSmall {
+    @media screen and (min-width: 600px) {
+        @content;
+    }
+}
+
+@mixin matchMedium {
+    @media screen and (min-width: 960px) {
+        @content;
+    }
+}
+
+@mixin matchLarge {
+    @media screen and (min-width: 1200px) {
+        @content;
+    }
+}
