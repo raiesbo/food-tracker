@@ -12,15 +12,12 @@ datasource db {
 
 model User {
   id         String       @id @default(auto()) @map("_id") @db.ObjectId
-  createdAt  DateTime     @default(now())
-  updatedAt  DateTime     @updatedAt
   firstName  String
   lastName   String?
   email      String       @unique
   role       UserType     @default(CUSTOMER)
-  comments   Comment[]
+  reviews    Review[]
   resturants Restaurant[]
-  ratings    Rating[]
   categories Category[]
 }
 
@@ -29,16 +26,17 @@ enum UserType {
   CUSTOMER
 }
 
-model Comment {
+model Review {
   id           String      @id @default(auto()) @map("_id") @db.ObjectId
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
-  content      String
+  rating       Int
+  comment      String?
   user         User?       @relation(fields: [userId], references: [id])
   userId       String?     @db.ObjectId
-  answers      Comment[]   @relation("answers")
-  responseToId String?     @db.ObjectId
-  responseTo   Comment?    @relation("answers", fields: [responseToId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  // answers      Comment[]   @relation("answers")
+  // responseToId String?     @db.ObjectId
+  // responseTo   Comment?    @relation("answers", fields: [responseToId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   restaurant   Restaurant? @relation(fields: [restaurantId], references: [id])
   restaurantId String?     @db.ObjectId
 }
@@ -48,18 +46,17 @@ model Restaurant {
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
   name        String?
+  slogan      String?
   description String?
-  foodType    String?
   isCashOnly  Boolean    @default(false)
   menu        Dish[]
   locations   Location[]
   schedules   Schedule[]
   user        User?      @relation(fields: [userId], references: [id])
   userId      String?    @db.ObjectId
-  ratings     Rating[]
   category    Category?  @relation(fields: [categoryId], references: [id])
   categoryId  String?    @db.ObjectId
-  comments    Comment[]
+  reviews     Review[]
 }
 
 model Dish {
@@ -102,23 +99,15 @@ model Schedule {
 }
 
 model Location {
-  id           String      @id @default(auto()) @map("_id") @db.ObjectId
-  streetName   String?
-  streetNumber String?
-  zip          String?
-  city         String?
-  country      String?
-  restaurant   Restaurant? @relation(fields: [restaurantId], references: [id])
-  restaurantId String?     @db.ObjectId
-}
-
-model Rating {
-  id           String      @id @default(auto()) @map("_id") @db.ObjectId
-  value        Int         @default(0)
-  restaurant   Restaurant? @relation(fields: [restaurantId], references: [id])
-  restaurantId String?     @db.ObjectId
-  user         User?       @relation(fields: [userId], references: [id])
-  userId       String?     @db.ObjectId
+  id             String      @id @default(auto()) @map("_id") @db.ObjectId
+  streetName     String?
+  streetNumber   String?
+  zip            String?
+  city           String?
+  country        String?
+  isMainLocation Boolean     @default(false)
+  restaurant     Restaurant? @relation(fields: [restaurantId], references: [id])
+  restaurantId   String?     @db.ObjectId
 }
 
 model Category {

@@ -13,20 +13,20 @@ export default function userService({ restaurantClient }: typeof prismaClients) 
                         ...restaurant,
                         createdAt: `${restaurant.createdAt}`,
                         updatedAt: `${restaurant.updatedAt}`,
-                        comments: {
-                            ...restaurant.comments.map(comment => ({
-                                ...comment,
-                                createdAt: `${comment?.createdAt}`,
-                                updatedAt: `${comment?.updatedAt}`,
+                        reviews: [
+                            ...restaurant.reviews.map(review => ({
+                                ...review,
+                                createdAt: `${review?.createdAt}`,
+                                updatedAt: `${review?.updatedAt}`,
                             }))
-                        },
-                        menu: {
+                        ],
+                        menu: [
                             ...restaurant.menu.map(dish => ({
                                 ...dish,
                                 createdAt: `${dish?.createdAt}`,
                                 updatedAt: `${dish?.updatedAt}`,
                             }))
-                        }
+                        ]
                     }))
                 }
 
@@ -58,20 +58,20 @@ export default function userService({ restaurantClient }: typeof prismaClients) 
                         ...restaurant,
                         createdAt: `${restaurant.createdAt}`,
                         updatedAt: `${restaurant.updatedAt}`,
-                        comments: {
-                            ...restaurant.comments.map(comment => ({
-                                ...comment,
-                                createdAt: `${comment?.createdAt}`,
-                                updatedAt: `${comment?.updatedAt}`,
+                        reviews: [
+                            ...restaurant.reviews.map(review => ({
+                                ...review,
+                                createdAt: `${review?.createdAt}`,
+                                updatedAt: `${review?.updatedAt}`,
                             }))
-                        },
-                        menu: {
+                        ],
+                        menu: [
                             ...restaurant.menu.map(dish => ({
                                 ...dish,
                                 createdAt: `${dish?.createdAt}`,
                                 updatedAt: `${dish?.updatedAt}`,
                             }))
-                        }
+                        ]
                     }))
                 }
 
@@ -105,20 +105,20 @@ export default function userService({ restaurantClient }: typeof prismaClients) 
                         ...restaurant,
                         createdAt: `${restaurant.createdAt}`,
                         updatedAt: `${restaurant.updatedAt}`,
-                        comments: {
-                            ...restaurant.comments.map(comment => ({
-                                ...comment,
-                                createdAt: `${comment?.createdAt}`,
-                                updatedAt: `${comment?.updatedAt}`,
+                        reviews: [
+                            ...restaurant.reviews.map(review => ({
+                                ...review,
+                                createdAt: `${review?.createdAt}`,
+                                updatedAt: `${review?.updatedAt}`,
                             }))
-                        },
-                        menu: {
+                        ],
+                        menu: [
                             ...restaurant.menu.map(dish => ({
                                 ...dish,
                                 createdAt: `${dish?.createdAt}`,
                                 updatedAt: `${dish?.updatedAt}`,
                             }))
-                        }
+                        ]
                     }
                 }
 

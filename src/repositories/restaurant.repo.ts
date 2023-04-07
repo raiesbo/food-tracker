@@ -9,12 +9,12 @@ export const restaurantRelations = Prisma.validator<Prisma.RestaurantInclude>()(
             ingredients: true
         }
     },
-    ratings: true,
     schedules: true,
     category: true,
-    comments: {
+    user: true,
+    reviews: {
         include: {
-            answers: true
+            user: true
         }
     }
 });

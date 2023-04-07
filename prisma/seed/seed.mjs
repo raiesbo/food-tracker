@@ -145,6 +145,7 @@ async function main() {
             locations: {
                 create: [
                     {
+                        isMainLocation: true,
                         country: "German",
                         city: 'Berlin',
                         streetName: 'some street'
@@ -156,19 +157,13 @@ async function main() {
                     }
                 ]
             },
-            ratings: {
+            reviews: {
                 create: [
-                    { value: 5, userId: bob.id },
-                    { value: 5, userId: alice.id },
-                    { value: 3 },
-                    { value: 1 },
-                    { value: 1 }
-                ]
-            },
-            comments: {
-                create: [
-                    { content: 'Really delicious, 100% recomended!', userId: bob.id },
-                    { content: 'The food was good, but the service could improve quite a lot.', userId: alice.id }
+                    { comment: 'Really delicious, 100% recomended!', rating: 1, userId: bob.id },
+                    { comment: 'The food was good, but the service could improve quite a lot.', rating: 5, userId: alice.id },
+                    { rating: 2 },
+                    { rating: 4 },
+                    { comment: 'Good but expensive...', rating: 3 }
                 ]
             }
         }
@@ -235,25 +230,20 @@ async function main() {
                         streetName: 'some street'
                     },
                     {
+                        isMainLocation: true,
                         country: "Spain",
                         city: 'Barcelona',
                         streetName: 'some other street'
                     }
                 ]
             },
-            ratings: {
+            reviews: {
                 create: [
-                    { value: 5, userId: bob.id },
-                    { value: 5, userId: alice.id },
-                    { value: 3 },
-                    { value: 1 },
-                    { value: 1 }
-                ]
-            },
-            comments: {
-                create: [
-                    { content: 'Really delicious, 100% recomended!', userId: bob.id },
-                    { content: 'The food was good, but the service could improve quite a lot.', userId: alice.id }
+                    { comment: 'Really delicious, 100% recomended!', rating: 1, userId: bob.id },
+                    { comment: 'The food was good, but the service could improve quite a lot.', rating: 5, userId: alice.id },
+                    { rating: 2 },
+                    { rating: 4 },
+                    { comment: 'Good but expensive...', rating: 3 }
                 ]
             }
         }
@@ -304,6 +294,7 @@ async function main() {
             locations: {
                 create: [
                     {
+                        isMainLocation: true,
                         country: "German",
                         city: 'Berlin',
                         streetName: 'some street'
@@ -315,19 +306,13 @@ async function main() {
                     }
                 ]
             },
-            ratings: {
+            reviews: {
                 create: [
-                    { value: 5, userId: bob.id },
-                    { value: 5, userId: alice.id },
-                    { value: 3 },
-                    { value: 1 },
-                    { value: 1 }
-                ]
-            },
-            comments: {
-                create: [
-                    { content: 'Really delicious, 100% recomended!', userId: bob.id },
-                    { content: 'The food was good, but the service could improve quite a lot.', userId: alice.id }
+                    { comment: 'Really delicious, 100% recomended!', rating: 1, userId: bob.id },
+                    { comment: 'The food was good, but the service could improve quite a lot.', rating: 5, userId: alice.id },
+                    { rating: 1, userId: alice.id },
+                    { rating: 1, userId: alice.id },
+                    { comment: 'So so...', rating: 3 }
                 ]
             }
         }
