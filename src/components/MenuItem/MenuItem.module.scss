@@ -12,6 +12,13 @@
     padding: 5px 15px;
 }
 
+.headerDetails {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+}
+
 .rotateChevron {
     transform: rotate(180deg);
 }

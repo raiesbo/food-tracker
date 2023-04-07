@@ -5,7 +5,7 @@ import RestaurantDetailsContact from "@/components/RestaurantDetails/RestaurantD
 import RestaurantDetailsHours from "@/components/RestaurantDetails/RestaurantDetailsHours";
 import RestaurantDetailsReview from "@/components/RestaurantDetails/RestaurantDetailsReview";
 import services from "@/services";
-import { Restaurant } from "@/types";
+import { Dish, Restaurant } from "@/types";
 import { calcRating, findMainLocation } from "@/utils";
 import { auth0Config } from "@/utils/settings";
 import { useUser } from "@auth0/nextjs-auth0/client";
@@ -68,7 +68,7 @@ export default function RestaurantDetailsPage({ restaurant, categories }: Props)
                     </Text>
                     {restaurant.slogan && (
                         <Text as='small' semiBold italic>
-                            "{restaurant.slogan}"
+                            {`"${restaurant.slogan}"`}
                         </Text>
                     )}
                 </header>
@@ -97,7 +97,7 @@ export default function RestaurantDetailsPage({ restaurant, categories }: Props)
                             Menu
                         </Text>
                         <div className={styles.menuList}>
-                            {restaurant.menu.map(dish => {
+                            {restaurant.menu.map((dish: Dish) => {
                                 return (
                                     <MenuItem
                                         key={dish.id}
@@ -106,7 +106,6 @@ export default function RestaurantDetailsPage({ restaurant, categories }: Props)
                                 )
                             })}
                         </div>
-
                     </div>
                     <div className={cc([
                         styles.container,

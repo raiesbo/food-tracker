@@ -10,9 +10,9 @@ describe('prisma reviews client', () => {
         const createreviewMock = vi.fn();
         prismaClientMock.instance.review.create = createreviewMock;
 
-        reviewsClient.createReview({ content: 'test_content' } as Review);
+        reviewsClient.createReview({ comment: 'test_comment' } as Review);
 
-        expect(createreviewMock).toHaveBeenCalledWith({ 'data': { 'content': 'test_content' } });
+        expect(createreviewMock).toHaveBeenCalledWith({ 'data': { 'comment': 'test_comment' } });
     });
 
     it('can get a review by id', () => {
@@ -28,20 +28,20 @@ describe('prisma reviews client', () => {
         const getreviewsMock = vi.fn();
         prismaClientMock.instance.review.findMany = getreviewsMock;
 
-        reviewsClient.getReviews({ content: 'test_content' } as Review);
+        reviewsClient.getReviews({ comment: 'test_comment' } as Review);
 
-        expect(getreviewsMock).toHaveBeenCalledWith({ 'where': { 'content': 'test_content' } });
+        expect(getreviewsMock).toHaveBeenCalledWith({ 'where': { 'comment': 'test_comment' } });
     });
 
     it('can update a review', () => {
         const updatereviewMock = vi.fn();
         prismaClientMock.instance.review.update = updatereviewMock;
 
-        reviewsClient.updateReview('4' as Review['id'], { content: 'test_content' } as Review);
+        reviewsClient.updateReview('4' as Review['id'], { comment: 'test_comment' } as Review);
 
         expect(updatereviewMock).toHaveBeenCalledWith({
             'where': { 'id': '4' },
-            'data': { 'content': 'test_content' }
+            'data': { 'comment': 'test_comment' }
         });
     });
 

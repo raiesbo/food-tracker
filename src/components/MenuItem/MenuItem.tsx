@@ -1,6 +1,7 @@
 import { Dish } from "@/types";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Chip, IconButton } from "@mui/material";
+import { Ingredient } from "@prisma/client";
 import cc from 'classcat';
 import Image from "next/image";
 import { useState } from "react";
@@ -23,12 +24,16 @@ export default function MenuItem({ dish }: Props) {
                 <Text variant={'h4'} bold>
                     {dish.name}
                 </Text>
-                <Text>
-                    {dish.price}
-                </Text>
-                <IconButton onClick={() => setIsOpen(!isOpen)} className={cc([isOpen && styles.rotateChevron])} >
-                    <ExpandMoreIcon />
-                </IconButton>
+                <div className={styles.headerDetails}>
+                    {dish.price && (
+                        <Text variant={'smallest'} italic semiBold>
+                            {dish.price} €
+                        </Text>
+                    )}
+                    <IconButton onClick={() => setIsOpen(!isOpen)} className={cc([isOpen && styles.rotateChevron])} >
+                        <ExpandMoreIcon />
+                    </IconButton>
+                </div>
             </header>
             <div className={styles.imageContainer}>
                 <Image
@@ -42,11 +47,11 @@ export default function MenuItem({ dish }: Props) {
                     Ingredients
                 </Text>
                 <div className={styles.ingredients}>
-                    {dish.ingredients.map(ing => {
+                    {dish.ingredients.map((ingredient: Ingredient) => {
                         return (
                             <Chip
-                                key={ing.name}
-                                label={ing.name}
+                                key={ingredient.name}
+                                label={ingredient.name}
                                 size='small'
                             />
                         )

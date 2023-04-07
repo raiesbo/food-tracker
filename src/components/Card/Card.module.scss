@@ -1,10 +1,10 @@
 .root {
-    border-radius: 10px;
-    box-shadow: 0 0 3px rgb(175, 175, 175);
+    border-radius: 10px !important;
+    box-shadow: 0 0 3px rgb(175, 175, 175) !important;
 }
 
 .withHover {
     &:hover {
-        box-shadow: 0 0 8px rgb(175, 175, 175);
+        box-shadow: 0 0 8px rgb(175, 175, 175) !important;
     }
 }

@@ -108,18 +108,18 @@ export default function RestaurantPage({
     const [vegan, setVegan] = useState(false);
     const [creditcard, setCreditcard] = useState(false);
 
-    const handleButtonClick = () => {
-        const searchParams = new URLSearchParams({
-            city: city.replace('All', ''),
-            category: category.replace('All', ''),
-            vegan: vegan ? 'true' : '',
-            creditcard: creditcard ? 'true' : ''
-        })
-
-        router.replace(`${paths.restaurants}?${searchParams}`);
-    }
-
     useEffect(() => {
+        const handleButtonClick = () => {
+            const searchParams = new URLSearchParams({
+                city: city.replace('All', ''),
+                category: category.replace('All', ''),
+                vegan: vegan ? 'true' : '',
+                creditcard: creditcard ? 'true' : ''
+            })
+
+            router.replace(`${paths.restaurants}?${searchParams}`);
+        }
+
         handleButtonClick();
     }, [city, category, vegan, creditcard])
 
@@ -202,7 +202,7 @@ export default function RestaurantPage({
                     />
                 </div>
                 <div className={styles.listContainer}>
-                    {restaurants?.map(restaurant => (
+                    {restaurants?.map((restaurant: Restaurant) => (
                         <RestaurantListItem
                             key={restaurant.id}
                             restaurant={restaurant}

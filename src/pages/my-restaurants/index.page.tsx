@@ -57,7 +57,7 @@ export default function MyRestaurants({ restaurants }: Props) {
                     My Restaurants
                 </h1>
                 <div className={styles.listContainer}>
-                    {restaurants.map(restaurant => (
+                    {restaurants.map((restaurant: Restaurant) => (
                         <Card
                             key={restaurant.id}
                             className={styles.card}

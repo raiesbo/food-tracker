@@ -5,7 +5,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { AppBar, Box, Container, IconButton, Menu, MenuItem, Toolbar, Typography } from '@mui/material';
 import Link from 'next/link';
 import { useState } from 'react';
-import { paths } from '../../utils/paths';
+import { paths } from '@/utils/paths';
 import styles from './NavigationMenu.module.scss';
 
 const urls = paths.components.NavigtionMenu;

@@ -1,4 +1,5 @@
 import { Restaurant } from '@/types';
+import { Schedule } from '@prisma/client';
 import { Card } from '../Card';
 import { Text } from '../Text';
 import styles from './RestaurantDetailsHours.module.scss';
@@ -14,7 +15,7 @@ export default function RestaurantDetailsHours({ schedules }: Props) {
                 Opening Hours
             </Text>
             <div className={styles.scheduleList}>
-                {schedules?.map(schedule => (
+                {schedules?.map((schedule: Schedule) => (
                     <div key={schedule.id} className={styles.scheduleListItem}>
                         <Text bold variant={'smallest'}>
                             {schedule.day}

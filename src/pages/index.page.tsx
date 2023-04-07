@@ -103,7 +103,7 @@ export default function Home({ categories, locations }: Props) {
                   sx={{ backgroundColor: 'white' }}
                 >
                   <MenuItem value={'All'}>All</MenuItem>
-                  {locations.map(city => (
+                  {locations.map((city: string) => (
                     <MenuItem key={city} value={city || ''}>
                       {city}
                     </MenuItem>

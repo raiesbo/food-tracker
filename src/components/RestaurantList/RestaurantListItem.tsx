@@ -5,7 +5,7 @@ import { Chip } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Restaurant } from '../../types';
+import { Dish, Restaurant } from '../../types';
 import { Card } from '../Card';
 import { RatingStars } from "../RatingStars";
 import { Text } from '../Text';
@@ -25,7 +25,7 @@ export default function RestaurantListItem({ restaurant }: Props) {
     }, [restaurant])
 
     const mainLocation = findMainLocation(restaurant.locations);
-    const withVeganOptions = restaurant.menu.some(dish => dish.isVegan);
+    const withVeganOptions = restaurant.menu.some((dish: Dish) => dish.isVegan);
 
     return (
         <Card >
@@ -49,7 +49,7 @@ export default function RestaurantListItem({ restaurant }: Props) {
                             </Text>
                             {restaurant.slogan && (
                                 <Text as='small' semiBold italic>
-                                    "{restaurant.slogan}"
+                                    {`${restaurant.slogan}"`}
                                 </Text>
                             )}
                         </div>
