@@ -1,4 +1,4 @@
-import { Restaurant, Review } from '@/types';
+import { Restaurant } from '@/types';
 import { auth0Config } from '@/utils/settings';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -32,7 +32,7 @@ export default function RestaurantDetailsReview({ reviews, ownerId }: Props) {
                     Reviews
                 </Text>
                 <div className={styles.commentList}>
-                    {reviews?.map((review: Review) => review.comment && (
+                    {reviews?.map(review => review.comment && (
                         <Card key={review.id} className={styles.commentItem}>
                             <div className={styles.commentHeader}>
                                 <p>
