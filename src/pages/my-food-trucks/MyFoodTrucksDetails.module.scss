@@ -40,7 +40,8 @@
     overflow: hidden;
 }
 
-.restaurantInfo {
+.restaurantInfo,
+.sectionContainer {
     display: flex;
     flex-direction: column;
     gap: 15px;

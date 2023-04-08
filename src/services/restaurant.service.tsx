@@ -191,6 +191,17 @@ export default function userService({ restaurantClient }: typeof prismaClients) 
                             }
                         ]
                     },
+                    schedules: {
+                        create: [
+                            { day: 'MONDAY' },
+                            { day: 'TUESDAY' },
+                            { day: 'WEDNESDAY' },
+                            { day: 'THURSDAY' },
+                            { day: 'FRIDAY' },
+                            { day: 'SATURDAY' },
+                            { day: 'SUNDAY' }
+                        ]
+                    }
                 })
 
                 if (restaurant) return { result: restaurant }
@@ -202,6 +213,26 @@ export default function userService({ restaurantClient }: typeof prismaClients) 
                         message: `Unable to create a new restaurant`
                     }
                 }
+            } catch (e) {
+                const message = e as { message: string };
+                console.error(message)
+                return {
+                    result: {},
+                    error: {
+                        status: 400,
+                        message: message
+                    }
+                }
+            }
+        },
+        deleteRestaurant: async (req: NextApiRequest) => {
+            const { restaurantId } = req.query as { restaurantId: string };
+
+            try {
+                await restaurantClient.deleteRestaurant(restaurantId);
+
+                return { result: {} }
+
             } catch (e) {
                 const message = e as { message: string };
                 console.error(message)
