@@ -1,13 +1,4 @@
 .root {
-    max-width: 1040px;
-    padding: 20px;
-    margin-inline: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.listContainer {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 20px;
@@ -37,6 +28,7 @@
     align-items: center;
     justify-content: center;
     height: 100%;
+    width: 100%;
 
     & svg {
         scale: 2;

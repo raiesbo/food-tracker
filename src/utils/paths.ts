@@ -2,7 +2,7 @@ export const paths = {
     home: '/',
     aboutUs: '/about-us',
     restaurants: '/restaurants',
-    createNewRestaurant: '/my-restaurants/new',
+    myFoodTrucks: '/my-food-trucks',
     login: '/login',
     auth0: {
         callback: '/auth/auth/callback',
@@ -27,7 +27,7 @@ export const paths = {
                 { name: 'Home', url: '/' },
                 { name: 'Restaurants', url: '/restaurants' },
                 { name: 'Profile', url: '/profile' },
-                { name: 'My Restaurants', url: '/my-restaurants' },
+                { name: 'My Food Trucks', url: '/my-food-trucks' },
                 { name: 'Logout', url: '/api/auth/logout' }
             ]
 
