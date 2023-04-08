@@ -66,7 +66,7 @@ export default function RestaurantDetailsReview({ reviews, ownerId, restaurantId
                                 </Text>
                                 <Text>{(new Date(review.createdAt)).toDateString()}</Text>
                             </div>
-                            <RatingStars rating={review.rating} />
+                            <RatingStars rating={review.rating} size='small' />
                             <p className={styles.commentBody}>
                                 {review.comment}
                             </p>

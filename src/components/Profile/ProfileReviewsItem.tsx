@@ -81,7 +81,7 @@ export default function ProfileReviewsItem({ review }: Props) {
                         onChange={setRating}
                     />
                 ) : (
-                    <RatingStars rating={rating} />
+                    <RatingStars rating={rating} size='small' />
                 )}
             </div>
             {comment && !isEdit && (
