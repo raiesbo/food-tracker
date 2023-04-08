@@ -1,0 +1,27 @@
+.root {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.rotateChevron {
+    transform: rotate(180deg);
+}
+
+.sectionContent {
+    display: block;
+    transition: opacity 1s ease-out;
+    opacity: 1;
+
+    &_collapsed {
+        overflow: hidden;
+        height: 0;
+        opacity: 0;
+    }
+}
