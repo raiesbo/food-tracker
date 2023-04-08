@@ -6,27 +6,17 @@ const { reviewsService } = services;
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
 
-    if (req.method === 'PUT') {
+    if (req.method === 'POST') {
         const {
             result: review,
             error
-        } = await reviewsService.updateReview(req);
+        } = await reviewsService.createReview(req);
 
         if (error) {
             return res.status(error.status).json({ errorMessage: error.message });
         }
 
         return res.status(201).json({ review });
-    }
-
-    if (req.method === 'DELETE') {
-        const { error } = await reviewsService.deleteReview(req);
-
-        if (error) {
-            return res.status(error.status).json({ errorMessage: error.message });
-        }
-
-        return res.status(204).end();
     }
 
     res.status(405).end();

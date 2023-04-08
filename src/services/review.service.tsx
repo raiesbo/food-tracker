@@ -44,7 +44,11 @@ export default function reviewsService({ reviewClient }: typeof prismaClients) {
             try {
                 const newProps = JSON.parse(req.body);
 
-                const review = await reviewClient.updateReview(reviewId, newProps)
+                console.log({ newProps })
+
+                const review = await reviewClient.updateReview(reviewId, newProps);
+
+                console.log({ review })
 
                 if (review) return {
                     result: {
@@ -87,6 +91,42 @@ export default function reviewsService({ reviewClient }: typeof prismaClients) {
                     error: {
                         status: 400,
                         message: `Unable to delete review with ID ${reviewId}`
+                    }
+                }
+
+            } catch (e) {
+                const { message } = e as { message: string };
+                console.error(message)
+                return {
+                    result: {},
+                    error: {
+                        status: 400,
+                        message: message
+                    }
+                }
+            }
+        },
+        createReview: async (req: NextApiRequest) => {
+            const { reviewId } = req.query as { reviewId: string };
+
+            try {
+                const newProps = JSON.parse(req.body);
+
+                const review = await reviewClient.createReview(newProps)
+
+                if (review) return {
+                    result: {
+                        ...review,
+                        createdAt: new Date(review.createdAt).toDateString(),
+                        updatedAt: new Date(review.updatedAt).toDateString()
+                    }
+                }
+
+                return {
+                    result: {},
+                    error: {
+                        status: 400,
+                        message: `Unable to create a new review`
                     }
                 }
 

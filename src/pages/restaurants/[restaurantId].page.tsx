@@ -122,6 +122,7 @@ export default function RestaurantDetailsPage({ restaurant, categories }: Props)
                         <RestaurantDetailsReview
                             reviews={restaurant.reviews}
                             ownerId={restaurant.userId}
+                            restaurantId={restaurant.id}
                         />
                     </div>
                 </div>

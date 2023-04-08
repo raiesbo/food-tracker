@@ -97,8 +97,8 @@ export default function MyNewRestaurant({ restaurant, categories }: Props) {
                                     />
                                 </Card>
                             </InfoSection>
-                            <InfoSection title="Opening Hours">
-                                <Card className={styles.scheduleList}>
+                            <Card className={styles.scheduleList}>
+                                <InfoSection title="Opening Hours" childrenClassName={styles.item}>
                                     {restaurant.schedules?.map((schedule) => (
                                         <div key={schedule.id} className={styles.scheduleListItem}>
                                             <Text bold variant={'smallest'}>
@@ -115,8 +115,8 @@ export default function MyNewRestaurant({ restaurant, categories }: Props) {
                                             )}
                                         </div>
                                     ))}
-                                </Card>
-                            </InfoSection>
+                                </InfoSection>
+                            </Card>
                             <ProfileReviews
                                 reviews={restaurant.reviews}
                             />

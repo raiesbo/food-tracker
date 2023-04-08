@@ -39,3 +39,16 @@
 .createCommentText {
     width: 100%;
 }
+
+.dialogContent {
+    min-width: 350px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.dialogContentItem {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}

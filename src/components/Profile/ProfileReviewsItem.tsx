@@ -72,7 +72,7 @@ export default function ProfileReviewsItem({ review }: Props) {
                         <strong>{`${review.restaurant?.name}`}</strong>
                     )}
                 </Text>
-                <p>{(new Date(review.createdAt)).toDateString()}</p>
+                <Text>{(new Date(review.createdAt)).toDateString()}</Text>
             </div>
             <div>
                 {isEdit ? (
