@@ -2,21 +2,34 @@ import services from '@/services';
 import { withApiAuthRequired } from '@auth0/nextjs-auth0';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-const { userService } = services;
+const { reviewsService } = services;
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
 
     if (req.method === 'PUT') {
         const {
-            result: user,
+            result: review,
             error
-        } = await userService.updateUser(req);
+        } = await reviewsService.updateReview(req);
 
         if (error) {
             return res.status(error.status).json({ errorMessage: error.message });
         }
 
-        return res.status(201).json({ user });
+        return res.status(201).json({ review });
+    }
+
+    if (req.method === 'DELETE') {
+        const {
+            result,
+            error
+        } = await reviewsService.deleteReview(req);
+
+        if (error) {
+            return res.status(error.status).json({ errorMessage: error.message });
+        }
+
+        return res.status(204).end();
     }
 
     res.status(405).end();

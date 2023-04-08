@@ -30,7 +30,17 @@ describe('prisma reviews client', () => {
 
         reviewsClient.getReviews({ comment: 'test_comment' } as Review);
 
-        expect(getreviewsMock).toHaveBeenCalledWith({ 'where': { 'comment': 'test_comment' } });
+        expect(getreviewsMock).toHaveBeenCalledWith({
+            'where': { 'comment': 'test_comment' },
+            include: {
+                user: true,
+                restaurant: {
+                    select: {
+                        name: true
+                    }
+                }
+            }
+        });
     });
 
     it('can update a review', () => {

@@ -1,9 +1,10 @@
 import services from '@/services';
+import { withApiAuthRequired } from '@auth0/nextjs-auth0';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 const { userService, auth0Service } = services;
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+async function handler(req: NextApiRequest, res: NextApiResponse) {
 
     if (req.method === 'POST') {
         const {
@@ -28,3 +29,5 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     res.status(405).end();
 }
+
+export default withApiAuthRequired(handler);

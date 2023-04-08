@@ -1,9 +1,10 @@
 import { NavigationMenu } from "@/components/NavigationMenu";
 import { RestaurantListItem } from "@/components/RestaurantList";
+import { Text } from "@/components/Text";
 import services from "@/services";
 import { Restaurant } from "@/types";
 import { paths } from "@/utils/paths";
-import { Checkbox, CssBaseline, FormControl, FormControlLabel, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { Category } from "@prisma/client";
 import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
@@ -127,10 +128,9 @@ export default function RestaurantPage({
         <>
             <NavigationMenu />
             <main className={styles.root}>
-                <CssBaseline />
-                <h1>
+                <Text as='h1' variant='h1' bold>
                     Restaurants
-                </h1>
+                </Text>
                 <div className={styles.filtersContainer}>
                     <TextField
                         id="restaurant-name"
@@ -138,7 +138,6 @@ export default function RestaurantPage({
                         variant="outlined"
                         sx={{ backgroundColor: 'white' }}
                     />
-
                     <FormControl>
                         <InputLabel id="demo-simple-select-label">
                             City
@@ -159,7 +158,6 @@ export default function RestaurantPage({
                             ))}
                         </Select>
                     </FormControl>
-
                     <FormControl>
                         <InputLabel id="demo-simple-select-label">
                             Food Type

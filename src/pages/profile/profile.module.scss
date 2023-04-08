@@ -1,7 +1,40 @@
 .root {
-    max-width: 840px;
+    max-width: 1040px;
     padding: 20px;
     margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.pageHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.buttonContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+}
+
+.bodyContainer {
+    display: grid;
+    grid-template-columns: min-content 1fr 300px;
+    gap: 50px;
+}
+
+.imageContainer {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.userInfo {
     display: flex;
     flex-direction: column;
     gap: 15px;

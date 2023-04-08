@@ -3,7 +3,12 @@ import { Prisma } from "@prisma/client";
 import { IDBClient } from './prismaClient';
 
 export const reviewRelations = Prisma.validator<Prisma.ReviewInclude>()({
-    user: true
+    user: true,
+    restaurant: {
+        select: {
+            name: true
+        }
+    }
 });
 
 export default function prismaReviewClient({ instance }: IDBClient) {
@@ -15,7 +20,7 @@ export default function prismaReviewClient({ instance }: IDBClient) {
             return instance.review.findUnique({ where: { id } });
         },
         getReviews: (properties?: Partial<Review>) => {
-            return instance.review.findMany({ where: { ...properties } });
+            return instance.review.findMany({ where: { ...properties }, include: reviewRelations });
         },
         updateReview: (id: Review['id'], properties: Partial<Review>) => {
             return instance.review.update({ where: { id }, data: properties });

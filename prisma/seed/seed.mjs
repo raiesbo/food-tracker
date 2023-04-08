@@ -8,6 +8,7 @@ async function main() {
         update: {},
         create: {
             email: 'alice@prisma.io',
+            phone: '0179408329048',
             firstName: 'Alice',
             lastName: 'Muller',
             role: 'CUSTOMER'
@@ -19,6 +20,7 @@ async function main() {
         update: {},
         create: {
             email: 'bob@prisma.io',
+            phone: '0179408329048',
             firstName: 'Bob',
             lastName: 'Madok',
             role: 'SP'
@@ -31,6 +33,7 @@ async function main() {
         create: {
             id: '64255dfceba0b40cc84c7e9e',
             email: 'raiesbo@uoc.edu',
+            phone: '0179408329048',
             firstName: 'Raimon',
             lastName: 'Espasa',
             role: 'SP'
@@ -166,7 +169,7 @@ async function main() {
                 create: [
                     { comment: 'Really delicious, 100% recomended!', rating: 1, userId: bob.id },
                     { comment: 'The food was good, but the service could improve quite a lot.', rating: 5, userId: alice.id },
-                    { rating: 2 },
+                    { rating: 2, userId: mainUser.id },
                     { rating: 4 },
                     { comment: 'Good but expensive...', rating: 3 }
                 ]
@@ -264,9 +267,9 @@ async function main() {
                 create: [
                     { comment: 'Really delicious, 100% recomended!', rating: 5, userId: bob.id },
                     { comment: 'The food was good, but the service could improve quite a lot.', rating: 5, userId: alice.id },
-                    { rating: 2 },
+                    { rating: 2, userId: mainUser.id },
                     { rating: 3 },
-                    { comment: 'Good but expensive...', rating: 5 }
+                    { comment: 'Good but expensive...', rating: 5, userId: mainUser.id }
                 ]
             },
             schedules: {
@@ -353,7 +356,7 @@ async function main() {
                     { comment: 'The food was good, but the service could improve quite a lot.', rating: 5, userId: alice.id },
                     { rating: 1, userId: alice.id },
                     { rating: 1, userId: alice.id },
-                    { comment: 'So so...', rating: 3 }
+                    { comment: 'So so...', rating: 3, userId: mainUser.id }
                 ]
             },
             schedules: {
