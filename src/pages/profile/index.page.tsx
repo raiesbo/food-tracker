@@ -69,12 +69,12 @@ export default function Profile({ user, auth0User, reviews }: Props) {
     const [phone, setPhone] = useState(user.phone || '');
 
     const onCancel = () => {
-        setFirstName(user.firstName || '')
-        setLastname(user.lastName || '')
-        setEmail(user.email || '')
-        setPhone(user.phone || '')
+        setFirstName(user.firstName || '');
+        setLastname(user.lastName || '');
+        setEmail(user.email || '');
+        setPhone(user.phone || '');
 
-        setIsUpdate(false)
+        setIsUpdate(false);
     }
 
     const onSave = async () => {
@@ -82,14 +82,10 @@ export default function Profile({ user, auth0User, reviews }: Props) {
 
         fetch(`/api/users/${user.id}`, {
             method: 'PUT',
-            body: JSON.stringify({
-                firstName,
-                lastName,
-                email,
-                phone
-            })
+            body: JSON.stringify({ firstName, lastName, email, phone })
         }).then(response => {
-            if (response.ok) return response.json();
+            if (response.ok) return;
+            onCancel();
             alert('There has been server error, please try again later.');
         }).finally(() => {
             setIsLoading(false);
