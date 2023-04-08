@@ -1,6 +1,8 @@
 import { Restaurant } from "@/types";
 import { findMainLocation } from "@/utils";
 import { paths } from "@/utils/paths";
+import { auth0Config } from "@/utils/settings";
+import { useUser } from "@auth0/nextjs-auth0/client";
 import AddIcon from '@mui/icons-material/Add';
 import { IconButton } from "@mui/material";
 import Image from "next/image";
@@ -18,15 +20,17 @@ type Props = {
 
 export default function MyFoodTruckList({ restaurants }: Props) {
     const router = useRouter();
+    const { user } = useUser();
+
+    const userMetadata = user && user?.[auth0Config.metadata] as { user_id: string }
 
     const onCreateNewRestaurant = () => {
-        fetch('/api/restaurants', {
+        fetch(`/api/users/${userMetadata?.user_id}/restaurants`, {
             method: 'POST'
         })
             .then(response => response.json())
-            .then(data => {
-                console.log({ data })
-                // router.push(`/api/restaurants/${data.id}`)
+            .then(({ restaurant }) => {
+                router.push(`${paths.myFoodTrucks}/${restaurant.id}`)
             })
     }
     return (
@@ -67,10 +71,10 @@ export default function MyFoodTruckList({ restaurants }: Props) {
             <Card
                 withHover
                 className={styles.cardLinkPlus}
+                title='Create a new Restaurant'
             >
                 <IconButton
                     className={styles.cardLinkPlus}
-                    title='Create a new Restaurant'
                     onClick={onCreateNewRestaurant}
                 >
                     <AddIcon />

@@ -1,7 +1,9 @@
 import { NavigationMenu } from "@/components/NavigationMenu";
 import services from "@/services";
+import { Restaurant } from "@/types";
 import { paths } from "@/utils/paths";
 import { GetServerSidePropsContext, NextApiRequest } from "next";
+import styles from './MyFoodTrucksDetails.module.scss';
 
 const { restaurantService } = services;
 
@@ -23,15 +25,21 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     return { props: { restaurant } }
 }
 
+type Props = {
+    restaurant: Restaurant
+}
 
-export default function MyNewRestaurant() {
+export default function MyNewRestaurant({ restaurant }: Props) {
 
     return (
         <>
             <NavigationMenu />
-            <main>
+            <main className={styles.root}>
+                <h1>
+                    My Restaurants
+                </h1>
                 <div>
-                    New Restaurant Page
+                    {restaurant.name}
                 </div>
             </main>
         </>

@@ -56,7 +56,10 @@ export async function getServerSideProps({ query }: GetServerSidePropsContext) {
         }
     }
 
-    const { result: restaurants, error } = await restaurantService.getAllRestaurantByFilter(filters);
+    const {
+        result: restaurants,
+        error
+    } = await restaurantService.getAllRestaurantByFilter(filters);
 
     const {
         result: categories,

@@ -1,12 +1,14 @@
-import { Restaurant, User } from '@prisma/client';
+import { Restaurant } from '@/types';
+import { Prisma, User } from '@prisma/client';
 import { NextApiRequest } from 'next';
 import prismaClients from '../repositories';
 
 export default function userService({ restaurantClient }: typeof prismaClients) {
     return {
-        getAllRestaurantByFilter: async (filters: unknown) => {
+        getAllRestaurantByFilter: async (filters: Prisma.RestaurantWhereInput) => {
             try {
-                const restaurants = await restaurantClient.getRestaurants(filters as Restaurant);
+                const restaurants = await restaurantClient
+                    .getRestaurants(filters) as Array<Restaurant>;
 
                 if (restaurants) return {
                     result: restaurants.map(restaurant => ({
@@ -14,7 +16,7 @@ export default function userService({ restaurantClient }: typeof prismaClients) 
                         createdAt: `${restaurant.createdAt}`,
                         updatedAt: `${restaurant.updatedAt}`,
                         reviews: [
-                            ...restaurant.reviews.map(review => ({
+                            ...restaurant.reviews?.map(review => ({
                                 ...review,
                                 createdAt: `${review?.createdAt}`,
                                 updatedAt: `${review?.updatedAt}`,
@@ -51,7 +53,7 @@ export default function userService({ restaurantClient }: typeof prismaClients) 
         },
         getAllRestaurantByUser: async (userId: User['id']) => {
             try {
-                const restaurants = await restaurantClient.getRestaurants({ userId } as Restaurant)
+                const restaurants = await restaurantClient.getRestaurants({ userId });
 
                 if (restaurants) return {
                     result: restaurants.map(restaurant => ({
@@ -98,7 +100,7 @@ export default function userService({ restaurantClient }: typeof prismaClients) 
             const { restaurantId } = req.query as { restaurantId: string };
 
             try {
-                const restaurant = await restaurantClient.getRestaurant(restaurantId)
+                const restaurant = await restaurantClient.getRestaurant(restaurantId);
 
                 if (restaurant) return {
                     result: {
@@ -148,7 +150,7 @@ export default function userService({ restaurantClient }: typeof prismaClients) 
             const restaurantProps = JSON.parse(req.body);
 
             try {
-                const restaurant = await restaurantClient.updateRestaurant(restaurantId, restaurantProps)
+                const restaurant = await restaurantClient.updateRestaurant(restaurantId, restaurantProps);
 
                 if (restaurant) return { result: restaurant }
 
@@ -170,7 +172,47 @@ export default function userService({ restaurantClient }: typeof prismaClients) 
                     }
                 }
             }
+        },
+        createNewRestaurant: async (req: NextApiRequest) => {
+            const { userId } = req.query as { userId: string };
 
+            try {
+                const restaurant = await restaurantClient.createRestaurant({
+                    userId,
+                    name: 'New Food Truck',
+                    locations: {
+                        create: [
+                            {
+                                isMainLocation: true,
+                                country: '',
+                                city: '',
+                                streetName: '',
+                                streetNumber: ''
+                            }
+                        ]
+                    },
+                })
+
+                if (restaurant) return { result: restaurant }
+
+                return {
+                    result: {},
+                    error: {
+                        status: 400,
+                        message: `Unable to create a new restaurant`
+                    }
+                }
+            } catch (e) {
+                const message = e as { message: string };
+                console.error(message)
+                return {
+                    result: {},
+                    error: {
+                        status: 400,
+                        message: message
+                    }
+                }
+            }
         }
     }
 }

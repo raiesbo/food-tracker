@@ -1,4 +1,4 @@
-import { Restaurant } from '.prisma/client';
+import { Restaurant } from "@/types";
 import { Prisma } from "@prisma/client";
 import { IDBClient } from './prismaClient';
 
@@ -21,7 +21,7 @@ export const restaurantRelations = Prisma.validator<Prisma.RestaurantInclude>()(
 
 export default function prismaRestaurantClient({ instance }: IDBClient) {
     return {
-        createRestaurant: (properties: Restaurant) => {
+        createRestaurant: (properties: Prisma.RestaurantUncheckedCreateInput) => {
             return instance.restaurant.create({ data: properties });
         },
         getRestaurant: (id: Restaurant['id']) => {
@@ -30,13 +30,13 @@ export default function prismaRestaurantClient({ instance }: IDBClient) {
                 include: restaurantRelations
             });
         },
-        getRestaurants: (properties?: Partial<Restaurant>) => {
+        getRestaurants: (properties?: Prisma.RestaurantWhereInput) => {
             return instance.restaurant.findMany({
                 where: { ...properties },
                 include: restaurantRelations
             });
         },
-        updateRestaurant: (id: Restaurant['id'], properties: Partial<Restaurant>) => {
+        updateRestaurant: (id: Restaurant['id'], properties: Prisma.RestaurantUncheckedUpdateInput) => {
             return instance.restaurant.update({ where: { id }, data: properties });
         },
         deleteRestaurant: (id: Restaurant['id']) => {
