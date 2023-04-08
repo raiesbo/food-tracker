@@ -92,6 +92,7 @@ export default function ProfileReviewsItem({ review }: Props) {
             {isEdit && (
                 <TextField
                     value={comment}
+                    multiline
                     onChange={(e) => setComment(e.target.value)}
                 />
             )}

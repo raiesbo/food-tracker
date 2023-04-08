@@ -30,7 +30,10 @@ export default function MenuItem({ dish }: Props) {
                             {dish.price} €
                         </Text>
                     )}
-                    <IconButton onClick={() => setIsOpen(!isOpen)} className={cc([isOpen && styles.rotateChevron])} >
+                    <IconButton
+                        onClick={() => setIsOpen(!isOpen)}
+                        className={cc([isOpen && styles.rotateChevron])}
+                    >
                         <ExpandMoreIcon />
                     </IconButton>
                 </div>

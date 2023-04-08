@@ -33,6 +33,7 @@ export default function MyFoodTruckList({ restaurants }: Props) {
                 router.push(`${paths.myFoodTrucks}/${restaurant.id}`)
             })
     }
+
     return (
         <div className={styles.root}>
             {restaurants.map((restaurant: Restaurant) => {

@@ -1,3 +1,4 @@
+import { InfoSection } from "@/components/InfoSection";
 import { NavigationMenu } from "@/components/NavigationMenu";
 import { ProfileReviews } from "@/components/Profile";
 import { Text } from "@/components/Text";
@@ -143,10 +144,10 @@ export default function Profile({ user, auth0User, reviews }: Props) {
                                 className={styles.image}
                             />
                         </div>
-                        <div className={styles.userInfo}>
-                            <Text as='h2' variant='h3' bold>
-                                Personal Information
-                            </Text>
+                        <InfoSection
+                            title='Personal Information'
+                            childrenClassName={styles.userInfo}
+                        >
                             <div>
                                 <Text variant={'h4'} bold>
                                     First Name
@@ -219,13 +220,8 @@ export default function Profile({ user, auth0User, reviews }: Props) {
                                     </Text>
                                 )}
                             </div>
-                        </div>
-                        <div>
-                            <ProfileReviews
-                                reviews={reviews}
-                                ownerId={user.id}
-                            />
-                        </div>
+                        </InfoSection>
+                        <ProfileReviews reviews={reviews} />
                     </div>
                 </section>
             </main>

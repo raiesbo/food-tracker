@@ -1,20 +1,16 @@
 import { Restaurant, Review } from '@/types';
-import { Text } from '../Text';
+import { InfoSection } from '../InfoSection';
 import styles from './ProfileReviews.module.scss';
 import ProfileReviewsItem from './ProfileReviewsItem';
 
 type Props = {
-    reviews: Restaurant['reviews'],
-    ownerId: Restaurant['userId']
+    reviews: Restaurant['reviews']
 }
 
 export default function RestaurantDetailsReview({ reviews }: Props) {
 
     return (
-        <div className={styles.root}>
-            <Text as='h2' variant='h3' bold>
-                Your Reviews
-            </Text>
+        <InfoSection title="Your Reviews">
             <div className={styles.commentList}>
                 {reviews.map((review) => (
                     <ProfileReviewsItem
@@ -23,6 +19,6 @@ export default function RestaurantDetailsReview({ reviews }: Props) {
                     />
                 ))}
             </div>
-        </div>
+        </InfoSection>
     )
 }

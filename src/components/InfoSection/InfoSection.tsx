@@ -25,9 +25,7 @@ export default function InfoSection({ children, title, className, childrenClassN
                     className={cc([isCollapsed && styles.rotateChevron])}
                     onClick={() => setIsCollapsed(!isCollapsed)}
                 >
-                    <ExpandMoreIcon
-
-                    />
+                    <ExpandMoreIcon />
                 </IconButton>
             </header>
             <div className={cc([
