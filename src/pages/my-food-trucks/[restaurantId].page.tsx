@@ -97,8 +97,25 @@ export default function MyNewRestaurant({ restaurant, categories }: Props) {
                                     />
                                 </Card>
                             </InfoSection>
-                            <InfoSection title="Received Reviews">
-                                'hi'
+                            <InfoSection title="Opening Hours">
+                                <Card className={styles.scheduleList}>
+                                    {restaurant.schedules?.map((schedule) => (
+                                        <div key={schedule.id} className={styles.scheduleListItem}>
+                                            <Text bold variant={'smallest'}>
+                                                {schedule.day}
+                                            </Text>
+                                            {schedule.isOpen ? (
+                                                <Text variant={'smallest'}>
+                                                    {`${schedule.opening_hour} ${schedule.closing_hour}`}
+                                                </Text>
+                                            ) : (
+                                                <Text variant={'smallest'}>
+                                                    Closed
+                                                </Text>
+                                            )}
+                                        </div>
+                                    ))}
+                                </Card>
                             </InfoSection>
                             <ProfileReviews
                                 reviews={restaurant.reviews}
