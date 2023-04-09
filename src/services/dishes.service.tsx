@@ -58,6 +58,35 @@ export default function categoriesService({ dishClient }: typeof prismaClients) 
                     }
                 }
             }
-        }
+        },
+        updateDish: async (req: NextApiRequest) => {
+            const { dishId } = req.query as { dishId: string };
+
+            try {
+                const parsedBody = JSON.parse(req.body);
+
+                const dish = await dishClient.updateDish(dishId, parsedBody);
+
+                if (dish) return { result: dish }
+
+                return {
+                    result: {},
+                    error: {
+                        status: 400,
+                        message: `Unable to update dish with ID ${dishId}`
+                    }
+                }
+            } catch (e) {
+                const message = e as { message: string };
+                console.error(message)
+                return {
+                    result: {},
+                    error: {
+                        status: 400,
+                        message: message
+                    }
+                }
+            }
+        },
     }
 }

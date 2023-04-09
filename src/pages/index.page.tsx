@@ -10,7 +10,7 @@ import styles from './Home.module.scss';
 
 const { categoriesService, locationsService } = services;
 
-const bgImageUrl = 'https://images.unsplash.com/photo-1565123409695-7b5ef63a2efb'
+const bgImageUrl = 'https://images.unsplash.com/photo-1565123409695-7b5ef63a2efb?w=1500'
 
 type Props = {
   categories: Array<Category>,

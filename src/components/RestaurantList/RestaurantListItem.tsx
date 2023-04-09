@@ -15,7 +15,7 @@ type Props = {
     restaurant: Restaurant
 }
 
-const imagePlaceholder = 'https://images.unsplash.com/photo-1570441262582-a2d4b9a916a5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2048&q=80'
+const imagePlaceholder = 'https://images.unsplash.com/photo-1570441262582-a2d4b9a916a5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80'
 
 export default function RestaurantListItem({ restaurant }: Props) {
     const [rating, setRating] = useState(0);
@@ -35,7 +35,7 @@ export default function RestaurantListItem({ restaurant }: Props) {
             >
                 <div className={styles.imageContainer}>
                     <Image
-                        src={imagePlaceholder}
+                        src={restaurant.imageUrl || imagePlaceholder}
                         alt='Restaurant image'
                         fill
                         style={{ objectFit: 'cover' }}

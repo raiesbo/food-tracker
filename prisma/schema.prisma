@@ -52,6 +52,7 @@ model Restaurant {
   name        String?
   slogan      String?
   description String?
+  imageUrl    String?
   isCashOnly  Boolean    @default(false)
   menu        Dish[]
   locations   Location[]
@@ -69,6 +70,7 @@ model Dish {
   updatedAt    DateTime     @updatedAt
   name         String
   description  String?
+  imageUrl     String?
   price        Float?
   ingredients  Ingredient[]
   isVegan      Boolean      @default(false)

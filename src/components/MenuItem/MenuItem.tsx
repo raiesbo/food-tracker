@@ -9,7 +9,7 @@ import { Card } from "../Card";
 import { Text } from "../Text";
 import styles from './MenuItem.module.scss';
 
-const mockImg = 'https://images.unsplash.com/photo-1551730707-ae4fde676aae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2770&q=80'
+const mockImg = 'https://images.unsplash.com/photo-1551730707-ae4fde676aae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80'
 
 type Props = {
     dish: Dish
@@ -40,7 +40,7 @@ export default function MenuItem({ dish }: Props) {
             </header>
             <div className={styles.imageContainer}>
                 <Image
-                    src={mockImg}
+                    src={dish.imageUrl || mockImg}
                     alt={dish.name}
                     fill
                 />

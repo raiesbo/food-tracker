@@ -12,8 +12,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
             error
         } = await dishesService.createNewDish(req);
 
-        console.log({ dish, error })
-
         if (error) {
             return res.status(error.status).json({ errorMessage: error.message });
         }

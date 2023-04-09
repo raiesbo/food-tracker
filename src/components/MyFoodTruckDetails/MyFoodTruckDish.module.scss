@@ -1,6 +1,19 @@
-.root {
+.inputsContainer {
     padding: 20px;
     display: flex;
     flex-direction: column;
     gap: 10px;
+}
+
+.buttonContainer {
+    padding: 0 15px 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.editButtonSection {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
 }

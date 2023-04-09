@@ -6,18 +6,18 @@ const { dishesService } = services;
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
 
-    // if (req.method === 'PUT') {
-    //     const {
-    //         result: restaurant,
-    //         error
-    //     } = await restaurantService.updateRestaurant(req);
+    if (req.method === 'PUT') {
+        const {
+            result: dish,
+            error
+        } = await dishesService.updateDish(req);
 
-    //     if (error) {
-    //         return res.status(error.status).json({ errorMessage: error.message });
-    //     }
+        if (error) {
+            return res.status(error.status).json({ errorMessage: error.message });
+        }
 
-    //     return res.status(201).json({ restaurant });
-    // }
+        return res.status(201).json({ dish });
+    }
 
     if (req.method === 'DELETE') {
         const { error } = await dishesService.deleteDish(req);

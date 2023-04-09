@@ -25,7 +25,7 @@ export default function MyFoodTruckMenu({ menu, restaurantid }: Props) {
             }
             alert('Server Error');
         }).then(({ dish }) => {
-            setRestaurantMenu([...restaurantMenu, dish])
+            setRestaurantMenu((state => ([...state, dish])))
         }).finally(() => setIsLoading(false))
     }
 
@@ -35,7 +35,7 @@ export default function MyFoodTruckMenu({ menu, restaurantid }: Props) {
             childrenClassName={styles.root}
         >
             <div className={styles.dishes}>
-                {menu.map((dish) => (
+                {restaurantMenu.map((dish) => (
                     <MyFoodTruckDish key={dish.id} dish={dish} />
                 ))}
             </div>

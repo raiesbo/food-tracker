@@ -109,6 +109,7 @@ async function main() {
             name: 'Main Burguer',
             description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
             slogan: 'Beef burgers like in no other place',
+            imageUrl: 'https://images.unsplash.com/photo-1570441262582-a2d4b9a916a5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80',
             userId: mainUser.id,
             categoryId: categoryAmerican.id,
             isCashOnly: true,
@@ -117,6 +118,7 @@ async function main() {
                     {
                         name: 'Cheese Burguer',
                         isGlutenFree: false,
+                        imageUrl: 'https://images.unsplash.com/photo-1551730707-ae4fde676aae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80',
                         isVegan: false,
                         price: 25.30,
                         ingredients: {
@@ -133,6 +135,7 @@ async function main() {
                     {
                         name: 'Vegan Burguer',
                         isGlutenFree: false,
+                        imageUrl: 'https://images.unsplash.com/photo-1551730707-ae4fde676aae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80',
                         isVegan: true,
                         price: 10.50,
                         ingredients: {
@@ -193,6 +196,7 @@ async function main() {
             name: 'Paellaland',
             description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
             slogan: 'The original Paella Valenciana',
+            imageUrl: 'https://images.unsplash.com/photo-1570441262582-a2d4b9a916a5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80',
             userId: alice.id,
             categoryId: categorySpanish.id,
             isCashOnly: false,
@@ -201,6 +205,7 @@ async function main() {
                     {
                         name: 'Paella Valenciana',
                         isGlutenFree: true,
+                        imageUrl: 'https://images.unsplash.com/photo-1551730707-ae4fde676aae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80',
                         isVegan: false,
                         price: 11.30,
                         ingredients: {
@@ -217,6 +222,7 @@ async function main() {
                     {
                         name: 'Paella de verduras',
                         isGlutenFree: false,
+                        imageUrl: 'https://images.unsplash.com/photo-1551730707-ae4fde676aae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80',
                         isVegan: true,
                         ingredients: {
                             create: [
@@ -231,6 +237,7 @@ async function main() {
                     {
                         name: 'Arroz al horno',
                         isGlutenFree: true,
+                        imageUrl: 'https://images.unsplash.com/photo-1551730707-ae4fde676aae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80',
                         isVegan: false,
                         price: 9.99,
                         ingredients: {
@@ -292,6 +299,7 @@ async function main() {
             name: 'Tapas Bar',
             description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
             slogan: 'Tapas for every moment',
+            imageUrl: 'https://images.unsplash.com/photo-1570441262582-a2d4b9a916a5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80',
             userId: bob.id,
             categoryId: categoryAmerican.id,
             isCashOnly: true,
@@ -300,6 +308,7 @@ async function main() {
                     {
                         name: 'Tortilla patata',
                         isGlutenFree: false,
+                        imageUrl: 'https://images.unsplash.com/photo-1551730707-ae4fde676aae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80',
                         isVegan: false,
                         price: 13.30,
                         ingredients: {
@@ -316,6 +325,7 @@ async function main() {
                     {
                         name: 'Pimientos del padrón',
                         isGlutenFree: false,
+                        imageUrl: 'https://images.unsplash.com/photo-1551730707-ae4fde676aae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80',
                         isVegan: true,
                         price: 11.30,
                         ingredients: {
