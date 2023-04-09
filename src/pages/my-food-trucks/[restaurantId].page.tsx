@@ -1,8 +1,8 @@
 import { Card } from "@/components/Card";
 import { InfoSection } from "@/components/InfoSection";
 import { MyFoodTruckRestaurant } from "@/components/MyFoodTruckDetails";
+import MyFoodTruckReviews from "@/components/MyFoodTruckDetails/MyFoodTruckReviews";
 import { NavigationMenu } from "@/components/NavigationMenu";
-import { ProfileReviews } from "@/components/Profile";
 import services from "@/services";
 import { Restaurant } from "@/types";
 import { paths } from "@/utils/paths";
@@ -117,8 +117,9 @@ export default function MyNewRestaurant({ restaurant, categories }: Props) {
                                     ))}
                                 </InfoSection>
                             </Card>
-                            <ProfileReviews
+                            <MyFoodTruckReviews
                                 reviews={restaurant.reviews}
+                                currentUserId={restaurant.userId}
                             />
                         </div>
                         <div className={styles.sectionContainer}>

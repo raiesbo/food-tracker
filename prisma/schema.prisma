@@ -11,15 +11,17 @@ datasource db {
 }
 
 model User {
-  id         String       @id @default(auto()) @map("_id") @db.ObjectId
-  firstName  String
-  lastName   String?
-  email      String       @unique
-  phone      String?
-  role       UserType     @default(CUSTOMER)
-  reviews    Review[]
-  resturants Restaurant[]
-  categories Category[]
+  id              String       @id @default(auto()) @map("_id") @db.ObjectId
+  firstName       String
+  lastName        String?
+  email           String       @unique
+  phone           String?
+  withVisibleData Boolean?     @default(true)
+  role            UserType     @default(CUSTOMER)
+  reviews         Review[]
+  resturants      Restaurant[]
+  categories      Category[]
+  likes           Like[]
 }
 
 enum UserType {
@@ -40,6 +42,7 @@ model Review {
   // responseTo   Comment?    @relation("answers", fields: [responseToId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   restaurant   Restaurant? @relation(fields: [restaurantId], references: [id])
   restaurantId String?     @db.ObjectId
+  likes        Like[]
 }
 
 model Restaurant {
@@ -119,4 +122,13 @@ model Category {
   createdBy   User?        @relation(fields: [createdById], references: [id])
   createdById String?      @db.ObjectId
   restaurants Restaurant[]
+}
+
+model Like {
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  isLiked  Boolean @default(true)
+  user     User?   @relation(fields: [userId], references: [id])
+  userId   String? @db.ObjectId
+  review   Review? @relation(fields: [reviewId], references: [id])
+  reviewId String? @db.ObjectId
 }

@@ -3,26 +3,33 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import SaveIcon from '@mui/icons-material/Save';
+import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import { IconButton, TextField } from "@mui/material";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { Card } from "../Card";
 import { RatingStars, RatingStarsEdit } from "../RatingStars";
 import { Text } from "../Text";
-import styles from './ProfileReviewsItem.module.scss';
+import styles from './ReviewItem.module.scss';
 
 type Props = {
-    review: Review
+    review: Review,
+    title?: string,
+    currentUserId?: string | null
 }
 
-export default function ProfileReviewsItem({ review }: Props) {
+export default function ProfileReviewsItem({ review, title, currentUserId }: Props) {
     const router = useRouter();
+
+    console.log({ review })
 
     const [rating, setRating] = useState(review.rating)
     const [comment, setComment] = useState(review.comment)
 
     const [isLoading, setIsLoading] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
+
+    const isOwner = review.userId === currentUserId;
 
     const onRemoveReview = (reviewId: Review['id']) => {
         setIsLoading(true);
@@ -68,8 +75,8 @@ export default function ProfileReviewsItem({ review }: Props) {
         <Card key={review.id} className={styles.root}>
             <div className={styles.commentHeader}>
                 <Text>
-                    {review.user?.firstName && (
-                        <strong>{`${review.restaurant?.name}`}</strong>
+                    {(title || review.restaurant?.name) && (
+                        <strong>{title || `${review.restaurant?.name}`}</strong>
                     )}
                 </Text>
                 <Text>{(new Date(review.createdAt)).toDateString()}</Text>
@@ -96,40 +103,53 @@ export default function ProfileReviewsItem({ review }: Props) {
                     onChange={(e) => setComment(e.target.value)}
                 />
             )}
-            <div className={styles.iconsSection}>
-                <div>
-                    {isEdit ? (
-                        <>
-                            <IconButton
-                                disabled={isLoading}
-                                onClick={onSaveUpdate}
-                            >
-                                <SaveIcon color='success' />
-                            </IconButton>
-                            <IconButton
-                                disabled={isLoading}
-                                onClick={onCancelUpdate}
-                            >
-                                <CancelIcon color='error' />
-                            </IconButton>
-                        </>
-                    ) : (
-                        <IconButton
-                            disabled={isLoading}
-                            onClick={() => setIsEdit(true)}
-                        >
-                            <EditIcon />
+            {currentUserId && (
+                <div className={styles.iconsSection}>
+                    <div>
+                        <IconButton>
+                            <ThumbUpOffAltIcon fontSize="small" />
                         </IconButton>
-                    )}
+                        {/* TODO Implement review answer feature */}
+                        {/* <IconButton>
+                            <QuestionAnswerIcon fontSize="small" />
+                        </IconButton> */}
+                    </div>
+                    {isOwner && (
+                        <div>
+                            {isEdit ? (
+                                <>
+                                    <IconButton
+                                        disabled={isLoading}
+                                        onClick={onSaveUpdate}
+                                    >
+                                        <SaveIcon color='success' fontSize="small" />
+                                    </IconButton>
+                                    <IconButton
+                                        disabled={isLoading}
+                                        onClick={onCancelUpdate}
+                                    >
+                                        <CancelIcon color='error' fontSize="small" />
+                                    </IconButton>
+                                </>
+                            ) : (
+                                <IconButton
+                                    disabled={isLoading}
+                                    onClick={() => setIsEdit(true)}
+                                >
+                                    <EditIcon fontSize="small" />
+                                </IconButton>
+                            )}
 
-                    <IconButton
-                        onClick={() => onRemoveReview(review.id)}
-                        disabled={isLoading}
-                    >
-                        <DeleteIcon />
-                    </IconButton>
+                            <IconButton
+                                onClick={() => onRemoveReview(review.id)}
+                                disabled={isLoading}
+                            >
+                                <DeleteIcon fontSize="small" />
+                            </IconButton>
+                        </div>
+                    )}
                 </div>
-            </div>
+            )}
         </Card>
     )
 }

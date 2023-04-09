@@ -1,15 +1,11 @@
-import { Restaurant } from '@/types';
+import { Restaurant, Review } from '@/types';
 import { auth0Config } from '@/utils/settings';
 import { useUser } from '@auth0/nextjs-auth0/client';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
-import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, TextField } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { Card } from '../Card';
-import { RatingStars, RatingStarsEdit } from '../RatingStars';
+import { RatingStarsEdit } from '../RatingStars';
+import { ReviewItem } from '../Review';
 import { Text } from '../Text';
 import styles from './RestaurantDetailsReview.module.scss';
 
@@ -57,44 +53,11 @@ export default function RestaurantDetailsReview({ reviews, ownerId, restaurantId
                 </Text>
                 <div className={styles.commentList}>
                     {reviews?.map(review => review.comment && (
-                        <Card key={review.id} className={styles.commentItem}>
-                            <div className={styles.commentHeader}>
-                                <Text>
-                                    {review.user?.firstName && (
-                                        <strong>{`${review.user?.firstName} ${review.user?.lastName}`}</strong>
-                                    )}
-                                </Text>
-                                <Text>{(new Date(review.createdAt)).toDateString()}</Text>
-                            </div>
-                            <RatingStars rating={review.rating} size='small' />
-                            <p className={styles.commentBody}>
-                                {review.comment}
-                            </p>
-                            {user && (
-                                <div className={styles.iconsSection}>
-                                    <div>
-                                        <IconButton>
-                                            <ThumbUpOffAltIcon />
-                                        </IconButton>
-                                        <IconButton>
-                                            <QuestionAnswerIcon />
-                                        </IconButton>
-                                    </div>
-                                    <div>
-                                        {userMetadata?.user_id === review.userId && (
-                                            <>
-                                                <IconButton>
-                                                    <EditIcon />
-                                                </IconButton>
-                                                <IconButton>
-                                                    <DeleteIcon />
-                                                </IconButton>
-                                            </>
-                                        )}
-                                    </div>
-                                </div>
-                            )}
-                        </Card>
+                        <ReviewItem
+                            review={review as Review}
+                            title={`${review.user?.firstName} ${review.user?.lastName}`}
+                            currentUserId={userMetadata?.user_id}
+                        />
                     ))}
                     {!isYourFoodTruck && (
                         <Button variant="outlined" onClick={() => setIsDialogOpen(true)}>

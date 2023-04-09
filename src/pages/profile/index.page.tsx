@@ -221,7 +221,10 @@ export default function Profile({ user, auth0User, reviews }: Props) {
                                 )}
                             </div>
                         </InfoSection>
-                        <ProfileReviews reviews={reviews} />
+                        <ProfileReviews
+                            reviews={reviews}
+                            currentUserId={user.id}
+                        />
                     </div>
                 </section>
             </main>
