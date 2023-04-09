@@ -111,7 +111,7 @@ export default function MyFoodTruckRestaurant({ restaurant, categories }: Props)
             </div>
             <div>
                 <Text variant={'h4'} bold>
-                    Image URL
+                    Thumbnail URL
                 </Text>
                 <TextField
                     value={imageUrl}

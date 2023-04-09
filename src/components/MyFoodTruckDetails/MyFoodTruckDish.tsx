@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { Card } from '../Card';
 import { Text } from '../Text';
 import styles from './MyFoodTruckDish.module.scss';
+import MyFoodTruckIngredients from './MyFoodTruckIngredients';
 
 type Props = {
     dish: Dish
@@ -176,6 +177,17 @@ export default function MyGoodTruckDish({ dish }: Props) {
                         value={description}
                         multiline
                         onChange={(e) => setDescription(e.target.value)}
+                    />
+                </div>
+                <div className={styles.entryContainer}>
+                    <Text variant={'h4'} bold>
+                        Ingredients
+                    </Text>
+                    <MyFoodTruckIngredients
+                        dishId={dish.id}
+                        isUpdate={isUpdate}
+                        ingredients={ingredients}
+                        onUpdate={setIngredients}
                     />
                 </div>
                 <div className={styles.buttonContainer}>

@@ -1,0 +1,27 @@
+.root {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.chip {
+    display: flex;
+    gap: 5px;
+    padding: 5px 15px;
+    border-radius: 30px;
+    align-items: center;
+    background-color: rgb(235, 235, 235);
+}
+
+.chipIcon {
+    padding: 5px;
+    border-radius: 30px;
+    background-color: rgb(235, 235, 235);
+}
+
+.ingredientInput {
+    background-color: rgb(245, 245, 245);
+    border: none;
+    padding: 3px 5px;
+    border-radius: 30px;
+}
