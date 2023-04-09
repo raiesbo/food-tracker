@@ -1,6 +1,6 @@
 import { Card } from "@/components/Card";
 import { InfoSection } from "@/components/InfoSection";
-import { MyFoodTruckDish, MyFoodTruckRestaurant } from "@/components/MyFoodTruckDetails";
+import { MyFoodTruckMenu, MyFoodTruckRestaurant } from "@/components/MyFoodTruckDetails";
 import MyFoodTruckReviews from "@/components/MyFoodTruckDetails/MyFoodTruckReviews";
 import { NavigationMenu } from "@/components/NavigationMenu";
 import services from "@/services";
@@ -127,11 +127,10 @@ export default function MyNewRestaurant({ restaurant, categories }: Props) {
                                 restaurant={restaurant}
                                 categories={categories}
                             />
-                            <InfoSection title='Menu'>
-                                {restaurant.menu.map((dish) => (
-                                    <MyFoodTruckDish key={dish.id} dish={dish} />
-                                ))}
-                            </InfoSection>
+                            <MyFoodTruckMenu
+                                menu={restaurant.menu}
+                                restaurantid={restaurant.id}
+                            />
                         </div>
                     </div>
                 </section>

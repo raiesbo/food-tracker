@@ -1,6 +1,7 @@
 import prismaClient, { auth0Client } from '../repositories';
 import auth0Service from './auth0.service';
 import categoriesService from "./category.service";
+import dishesService from "./dishes.service";
 import locationsService from "./location.service";
 import restaurantService from "./restaurant.service";
 import reviewsService from "./review.service";
@@ -18,6 +19,7 @@ function services({ prismaClient, auth0Client }: Props) {
         userService: userService(prismaClient),
         reviewsService: reviewsService(prismaClient),
         categoriesService: categoriesService(prismaClient),
+        dishesService: dishesService(prismaClient),
         locationsService: locationsService(prismaClient)
     }
 }

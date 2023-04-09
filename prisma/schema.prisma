@@ -35,7 +35,7 @@ model Review {
   updatedAt    DateTime    @updatedAt
   rating       Int
   comment      String?
-  user         User?       @relation(fields: [userId], references: [id])
+  user         User?       @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId       String?     @db.ObjectId
   // answers      Comment[]   @relation("answers")
   // responseToId String?     @db.ObjectId
@@ -80,7 +80,7 @@ model Dish {
 model Ingredient {
   id     String  @id @default(auto()) @map("_id") @db.ObjectId
   name   String
-  dish   Dish?   @relation(fields: [dishId], references: [id])
+  dish   Dish?   @relation(fields: [dishId], references: [id], onDelete: Cascade)
   dishId String? @db.ObjectId
 }
 
@@ -100,7 +100,7 @@ model Schedule {
   closing_hour String?     @default("11:30")
   day          WeekDay?
   isOpen       Boolean?    @default(true)
-  restaurant   Restaurant? @relation(fields: [restaurantId], references: [id])
+  restaurant   Restaurant? @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   restaurantId String?     @db.ObjectId
 }
 
@@ -112,7 +112,7 @@ model Location {
   city           String?
   country        String?
   isMainLocation Boolean     @default(false)
-  restaurant     Restaurant? @relation(fields: [restaurantId], references: [id])
+  restaurant     Restaurant? @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   restaurantId   String?     @db.ObjectId
 }
 
@@ -127,7 +127,7 @@ model Category {
 model Like {
   id       String  @id @default(auto()) @map("_id") @db.ObjectId
   isLiked  Boolean @default(true)
-  user     User?   @relation(fields: [userId], references: [id])
+  user     User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId   String? @db.ObjectId
   review   Review? @relation(fields: [reviewId], references: [id])
   reviewId String? @db.ObjectId
