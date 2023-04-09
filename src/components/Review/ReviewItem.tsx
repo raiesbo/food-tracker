@@ -21,8 +21,6 @@ type Props = {
 export default function ProfileReviewsItem({ review, title, currentUserId }: Props) {
     const router = useRouter();
 
-    console.log({ review })
-
     const [rating, setRating] = useState(review.rating)
     const [comment, setComment] = useState(review.comment)
 

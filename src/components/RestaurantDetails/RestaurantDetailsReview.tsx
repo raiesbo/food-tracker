@@ -52,8 +52,9 @@ export default function RestaurantDetailsReview({ reviews, ownerId, restaurantId
                     Reviews
                 </Text>
                 <div className={styles.commentList}>
-                    {reviews?.map(review => review.comment && (
+                    {reviews?.map(review => (
                         <ReviewItem
+                            key={review.id}
                             review={review as Review}
                             title={`${review.user?.firstName} ${review.user?.lastName}`}
                             currentUserId={userMetadata?.user_id}
