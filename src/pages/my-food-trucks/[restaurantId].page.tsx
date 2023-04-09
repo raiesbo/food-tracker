@@ -91,7 +91,7 @@ export default function MyNewRestaurant({ restaurant, categories }: Props) {
                                 <Card className={styles.imageContainer}>
                                     <Image
                                         alt='Users image'
-                                        src={imagePlaceholder}
+                                        src={restaurant.imageUrl || imagePlaceholder}
                                         fill
                                         className={styles.image}
                                     />

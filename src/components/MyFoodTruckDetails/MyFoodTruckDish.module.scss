@@ -1,12 +1,39 @@
+.root {
+    padding: 15px;
+}
+
 .inputsContainer {
-    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: opacity 1s ease-out;
+    opacity: 1;
+
+    &_collapsed {
+        overflow: hidden;
+        height: 0;
+        opacity: 0;
+    }
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.rotateChevron {
+    transform: rotate(180deg);
+}
+
+.inputsHeader {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
 .buttonContainer {
-    padding: 0 15px 15px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -15,5 +42,29 @@
 .editButtonSection {
     display: flex;
     flex-direction: row;
+    gap: 5px;
+}
+
+.footerContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.imageContainer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    aspect-ratio: 3/2;
+
+    img {
+        object-fit: cover;
+        border-radius: 15px;
+    }
+}
+
+.entryContainer {
+    display: flex;
+    flex-direction: column;
     gap: 5px;
 }

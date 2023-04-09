@@ -173,8 +173,8 @@ async function main() {
                     { comment: 'Really delicious, 100% recomended!', rating: 1, userId: bob.id },
                     { comment: 'The food was good, but the service could improve quite a lot.', rating: 5, userId: alice.id },
                     { rating: 2, userId: mainUser.id },
-                    { rating: 4 },
-                    { comment: 'Good but expensive...', rating: 3 }
+                    { rating: 4, userId: bob.id },
+                    { comment: 'Good but expensive...', rating: 3, userId: alice.id }
                 ]
             },
             schedules: {
@@ -275,7 +275,7 @@ async function main() {
                     { comment: 'Really delicious, 100% recomended!', rating: 5, userId: bob.id },
                     { comment: 'The food was good, but the service could improve quite a lot.', rating: 5, userId: alice.id },
                     { rating: 2, userId: mainUser.id },
-                    { rating: 3 },
+                    { rating: 3, userId: bob.id },
                     { comment: 'Good but expensive...', rating: 5, userId: mainUser.id }
                 ]
             },

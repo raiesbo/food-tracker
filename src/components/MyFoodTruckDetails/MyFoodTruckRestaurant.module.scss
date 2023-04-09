@@ -4,6 +4,13 @@
     gap: 10px;
 }
 
+.footerContainer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+    align-items: center;
+}
+
 .buttonContainer {
     display: flex;
     flex-direction: row;
