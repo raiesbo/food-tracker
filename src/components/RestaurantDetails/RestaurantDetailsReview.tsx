@@ -60,7 +60,7 @@ export default function RestaurantDetailsReview({ reviews, ownerId, restaurantId
                             currentUserId={userMetadata?.user_id}
                         />
                     ))}
-                    {!isYourFoodTruck && (
+                    {!isYourFoodTruck && user && (
                         <Button variant="outlined" onClick={() => setIsDialogOpen(true)}>
                             Write a Review
                         </Button>

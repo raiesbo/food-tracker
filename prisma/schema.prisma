@@ -16,6 +16,7 @@ model User {
   lastName        String?
   email           String       @unique
   phone           String?
+  imageUrl        String?
   withVisibleData Boolean?     @default(true)
   role            UserType     @default(CUSTOMER)
   reviews         Review[]

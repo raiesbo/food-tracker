@@ -98,6 +98,7 @@ export default function MyFoodTruckCategories({ categories, userId }: Props) {
                                     name={cat.id}
                                     value={cat.name}
                                     onChange={onChange}
+                                    disabled={isLoading}
                                 />
                                 <div>
                                     <IconButton
