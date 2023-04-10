@@ -71,12 +71,12 @@ export default function Home({ categories, locations }: Props) {
               Food Tracker
             </Text>
             <div className={styles.headerTextContent}>
-              <p>
+              <Text>
                 Your free world wide Street Food find tool
-              </p>
-              <p>
+              </Text>
+              <Text>
                 Directly from the hands of the best cooks around the world
-              </p>
+              </Text>
             </div>
             <Box
               sx={{

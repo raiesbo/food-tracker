@@ -17,7 +17,9 @@ type Props = {
 
 export default function RestaurantDetailsReview({ reviews, ownerId, restaurantId }: Props) {
     const { user } = useUser();
-    const router = useRouter()
+    const router = useRouter();
+
+    const [isLoading, setIsLoading] = useState(false);
 
     const [newComment, setNewComment] = useState('');
     const [newRating, setNewRating] = useState(0);
@@ -26,7 +28,9 @@ export default function RestaurantDetailsReview({ reviews, ownerId, restaurantId
     const userMetadata = user && user[auth0Config.metadata] as { user_id: string } | undefined;
     const isYourFoodTruck = userMetadata?.user_id === ownerId
 
-    const onSaveNewRating = () => {
+    const onSaveNewReview = () => {
+        setIsLoading(true);
+
         fetch('/api/reviews', {
             method: 'POST',
             body: JSON.stringify({
@@ -42,7 +46,7 @@ export default function RestaurantDetailsReview({ reviews, ownerId, restaurantId
             } else {
                 router.reload();
             }
-        })
+        }).finally(() => setIsLoading(false));
     }
 
     return (
@@ -95,16 +99,25 @@ export default function RestaurantDetailsReview({ reviews, ownerId, restaurantId
                             autoFocus
                             id="name"
                             value={newComment}
+                            disabled={isLoading}
                             onChange={(e) => setNewComment(e.target.value)}
                             placeholder="Write here your review..."
                             multiline
                         />
                     </div>
                     <DialogActions>
-                        <Button variant="outlined" onClick={() => setIsDialogOpen(false)}>
+                        <Button
+                            variant="outlined"
+                            onClick={() => setIsDialogOpen(false)}
+                            disabled={isLoading}
+                        >
                             Cancel
                         </Button>
-                        <Button variant="contained" onClick={onSaveNewRating}>
+                        <Button
+                            variant="contained"
+                            onClick={onSaveNewReview}
+                            disabled={isLoading}
+                        >
                             Save
                         </Button>
                     </DialogActions>

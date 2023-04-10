@@ -16,7 +16,7 @@ const { restaurantService, categoriesService, locationsService } = services;
 export async function getServerSideProps({ query }: GetServerSidePropsContext) {
     let filters = {}
 
-    if (!!query.vegan) {
+    if (!!query?.vegan) {
         filters = {
             ...filters,
             menu: {
@@ -27,14 +27,24 @@ export async function getServerSideProps({ query }: GetServerSidePropsContext) {
         }
     }
 
-    if (!!query.creditcard) {
+    if (!!query?.creditcard) {
         filters = {
             ...filters,
             isCashOnly: false
         }
     }
 
-    if (query.category) {
+    if (query?.name) {
+        filters = {
+            ...filters,
+            name: {
+                contains: query.name,
+                mode: 'insensitive'
+            }
+        }
+    }
+
+    if (query?.category) {
         filters = {
             ...filters,
             category: {
@@ -45,7 +55,7 @@ export async function getServerSideProps({ query }: GetServerSidePropsContext) {
         }
     }
 
-    if (query.city) {
+    if (query?.city) {
         filters = {
             ...filters,
             locations: {
@@ -84,8 +94,9 @@ export async function getServerSideProps({ query }: GetServerSidePropsContext) {
             restaurants,
             locations,
             categories,
-            queryCity: query.city || '',
-            queryCategory: query.category || ''
+            queryName: query?.name || '',
+            queryCity: query?.city || '',
+            queryCategory: query?.category || ''
         }
     }
 }
@@ -94,6 +105,7 @@ type Props = {
     restaurants: Array<Restaurant>,
     locations: Array<string>,
     categories: Array<Category>,
+    queryName: string,
     queryCity: string,
     queryCategory: string
 }
@@ -102,11 +114,15 @@ export default function RestaurantPage({
     restaurants,
     locations,
     categories,
+    queryName,
     queryCity,
     queryCategory
 }: Props) {
     const router = useRouter();
 
+    const [timeoutId, setTimeoutId] = useState<ReturnType<typeof setTimeout>>();
+
+    const [name, setName] = useState(queryName);
     const [city, setCity] = useState(queryCity);
     const [category, setCategory] = useState(queryCategory);
     const [vegan, setVegan] = useState(false);
@@ -115,17 +131,21 @@ export default function RestaurantPage({
     useEffect(() => {
         const handleButtonClick = () => {
             const searchParams = new URLSearchParams({
+                name: name,
                 city: city.replace('All', ''),
                 category: category.replace('All', ''),
                 vegan: vegan ? 'true' : '',
                 creditcard: creditcard ? 'true' : ''
             })
 
-            router.replace(`${paths.restaurants}?${searchParams}`);
+            clearTimeout(timeoutId);
+            setTimeoutId(setTimeout(() => {
+                router.replace(`${paths.restaurants}?${searchParams}`);
+            }, 500));
         }
 
         handleButtonClick();
-    }, [city, category, vegan, creditcard])
+    }, [city, category, vegan, creditcard, name])
 
     return (
         <>
@@ -140,6 +160,7 @@ export default function RestaurantPage({
                         label="Restaurant's name"
                         variant="outlined"
                         sx={{ backgroundColor: 'white' }}
+                        onChange={(e) => setName(e.target.value)}
                     />
                     <div className={styles.dropdownContainer}>
                         <FormControl>

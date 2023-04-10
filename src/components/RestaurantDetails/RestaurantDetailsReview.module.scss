@@ -1,3 +1,5 @@
+@use '@/styles/theme' as *;
+
 .root {
     display: flex;
     flex-direction: column;
@@ -41,10 +43,13 @@
 }
 
 .dialogContent {
-    min-width: 350px;
     display: flex;
     flex-direction: column;
     gap: 10px;
+
+    @include matchSmall {
+        min-width: 350px;
+    }
 }
 
 .dialogContentItem {

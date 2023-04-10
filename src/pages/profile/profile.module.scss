@@ -6,7 +6,7 @@
     margin-inline: auto;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
 
     @include matchSmall {
         gap: 30px;
@@ -15,9 +15,14 @@
 
 .pageHeader {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    gap: 5px;
+
+    @include matchSmall {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
 }
 
 .buttonContainer {
@@ -33,9 +38,10 @@
         'user'
         'reviews';
     grid-template-columns: 1fr;
-    gap: 30px;
+    gap: 10px;
 
     @include matchSmall {
+        gap: 30px;
         grid-template-areas:
             'image user'
             'image reviews';
@@ -71,8 +77,12 @@
 .userInfo {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 10px;
     grid-area: user;
+
+    @include matchSmall {
+        gap: 15px;
+    }
 }
 
 .reviews {
