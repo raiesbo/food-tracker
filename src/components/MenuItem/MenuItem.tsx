@@ -41,8 +41,9 @@ export default function MenuItem({ dish }: Props) {
             <div className={styles.imageContainer}>
                 <Image
                     src={dish.imageUrl || mockImg}
-                    alt={dish.name}
+                    alt={dish.name + ' | default image from Unsplash'}
                     fill
+                    style={{ objectFit: 'cover' }}
                 />
             </div>
             <div className={cc([styles.ingredientList, !isOpen && styles.ingredientList_closed])}>

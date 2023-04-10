@@ -57,7 +57,7 @@ export default function MyRestaurants({ restaurants, categories, userId }: Props
             <NavigationMenu />
             <main className={styles.root}>
                 <h1>
-                    My Restaurants
+                    My Food Trucks
                 </h1>
                 <MyFoodTruckList restaurants={restaurants} />
                 <div className={styles.bottonSection}>

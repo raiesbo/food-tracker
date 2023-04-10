@@ -37,7 +37,7 @@
     grid-template-areas:
         'mainColumn'
         'sideColumn';
-    gap: 30px;
+    gap: 15px;
 
     @include matchMedium {
         gap: 50px;

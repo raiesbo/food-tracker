@@ -110,7 +110,7 @@ export default function MyGoodTruckDish({ dish }: Props) {
                 styles.inputsContainer,
                 isCollapsed && styles.inputsContainer_collapsed
             ])}>
-                <div className={styles.footerContainer}>
+                <div className={styles.headerContainer}>
                     <div className={styles.inputsHeader}>
                         <div className={styles.entryContainer}>
                             <Text variant={'h4'} bold>
@@ -153,7 +153,7 @@ export default function MyGoodTruckDish({ dish }: Props) {
                             } label="Is Gluten Free" />
                         </div>
                     </div>
-                    <div className={styles.entryContainer}>
+                    <div className={cc([styles.entryContainer, styles.imageHeader])}>
                         <Text variant={'h4'} bold>
                             Thumbnail
                         </Text>

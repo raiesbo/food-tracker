@@ -12,7 +12,6 @@ import cc from 'classcat';
 import { GetServerSidePropsContext, NextApiRequest } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useState } from "react";
 import { Text } from '../../components/Text';
 import styles from './MyFoodTrucksDetails.module.scss';
 
@@ -51,9 +50,6 @@ type Props = {
 export default function MyNewRestaurant({ restaurant, categories }: Props) {
     const router = useRouter();
 
-    const [isUpdate, setIsUpdate] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
-
     const onRemove = () => {
         fetch(`/api/restaurants/${restaurant.id}`, {
             method: 'DELETE'
@@ -78,7 +74,6 @@ export default function MyNewRestaurant({ restaurant, categories }: Props) {
                         <Button
                             variant="outlined"
                             onClick={onRemove}
-                            disabled={isLoading}
                             color='error'
                         >
                             REMOVE
@@ -90,10 +85,11 @@ export default function MyNewRestaurant({ restaurant, categories }: Props) {
                         <InfoSection title="Food Truck Thumbnail">
                             <Card className={styles.imageContainer}>
                                 <Image
-                                    alt='Users image'
+                                    alt='Business image | default image from Unsplash'
                                     src={restaurant.imageUrl || imagePlaceholder}
                                     fill
                                     className={styles.image}
+                                    style={{ objectFit: 'cover' }}
                                 />
                             </Card>
                         </InfoSection>

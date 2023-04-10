@@ -1,3 +1,5 @@
+@use '@/styles/theme' as *;
+
 .root {
     padding: 15px;
 }
@@ -27,10 +29,28 @@
     transform: rotate(180deg);
 }
 
+.headerContainer {
+    display: grid;
+    grid-template-areas: 'imageHeader''inputsHeader';
+    grid-template-columns: 1fr;
+    gap: 10px;
+
+    @include matchSmall {
+        grid-template-areas: 'inputsHeader imageHeader';
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+    }
+}
+
 .inputsHeader {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    grid-area: inputsHeader;
+}
+
+.imageHeader {
+    grid-area: imageHeader;
 }
 
 .buttonContainer {
@@ -46,12 +66,6 @@
     gap: 5px;
 }
 
-.footerContainer {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
-}
-
 .imageContainer {
     position: relative;
     display: flex;
@@ -60,7 +74,7 @@
 
     img {
         object-fit: cover;
-        border-radius: 15px;
+        border-radius: 10px;
     }
 }
 

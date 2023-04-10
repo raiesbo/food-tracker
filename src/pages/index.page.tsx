@@ -6,11 +6,12 @@ import { Category } from '@prisma/client';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import { Text } from '../components/Text';
 import styles from './Home.module.scss';
 
 const { categoriesService, locationsService } = services;
 
-const bgImageUrl = 'https://images.unsplash.com/photo-1565123409695-7b5ef63a2efb?w=1500'
+const bgImageUrl = 'https://images.unsplash.com/photo-1565123409695-7b5ef63a2efb?w=1000'
 
 type Props = {
   categories: Array<Category>,
@@ -59,22 +60,22 @@ export default function Home({ categories, locations }: Props) {
         <div className={styles.searchSectionContainer}>
           <Image
             src={bgImageUrl}
-            alt="Food truck background"
+            alt="Food truck background | default image from Unsplash"
             style={{ objectFit: "cover", opacity: 0.9, filter: 'brightness(15%)' }}
             priority
             fill
             className={styles.backgroundImage}
           />
           <div className={styles.headerContent}>
-            <h1>
+            <Text as='h1' variant='h1' bold>
               Food Tracker
-            </h1>
+            </Text>
             <div className={styles.headerTextContent}>
               <p>
-                Your free world wide Street Food registry
+                Your free world wide Street Food find tool
               </p>
               <p>
-                From the hands of the best cooks around the world
+                Directly from the hands of the best cooks around the world
               </p>
             </div>
             <Box

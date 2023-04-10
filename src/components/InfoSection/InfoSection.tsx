@@ -16,7 +16,11 @@ export default function InfoSection({ children, title, className, childrenClassN
     const [isCollapsed, setIsCollapsed] = useState(false);
 
     return (
-        <section className={cc([styles.root, className])}>
+        <section className={cc([
+            styles.root,
+            isCollapsed && styles.root_collapsed,
+            className
+        ])}>
             <header className={styles.header}>
                 <Text as='h2' variant='h3' bold>
                     {title}

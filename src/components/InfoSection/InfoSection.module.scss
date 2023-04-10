@@ -2,6 +2,10 @@
     display: flex;
     flex-direction: column;
     gap: 15px;
+
+    &_collapsed {
+        gap: 0;
+    }
 }
 
 .header {
