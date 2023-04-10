@@ -1,13 +1,16 @@
+import { InfoSection } from '@/components/InfoSection';
+import { MyFoodTruckCategories } from '@/components/MyFoodtruck';
 import MyFoodTruckList from '@/components/MyFoodtruck/MyFoodTruckList';
 import { NavigationMenu } from "@/components/NavigationMenu";
 import services from "@/services";
-import { Restaurant } from '@/types';
+import { Category, Restaurant } from '@/types';
 import { auth0Config } from "@/utils/settings";
 import { getSession } from "@auth0/nextjs-auth0";
+import { User } from '@prisma/client';
 import { GetServerSidePropsContext } from "next";
 import styles from './MyFoodTrucks.module.scss';
 
-const { restaurantService } = services;
+const { restaurantService, categoriesService } = services;
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
 
@@ -19,28 +22,35 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     };
 
     if (!metadata?.user_id) return {
-        props: { restaurants: [] }
+        props: { restaurants: [], categories: [] }
     }
 
     const {
         result: restaurants,
         error: getRestaurantsError
-    } = await restaurantService.getAllRestaurantByUser(metadata.user_id)
+    } = await restaurantService.getAllRestaurantByUser(metadata.user_id);
 
-    if (getRestaurantsError) return {
-        props: { restaurants: [] }
+    const {
+        result: categories,
+        error: categoriesError
+    } = await categoriesService.getCategoriesByUserId(metadata.user_id);
+
+    if (getRestaurantsError || categoriesError) return {
+        props: { restaurants: [], categories: [] }
     }
 
     return {
-        props: { restaurants }
+        props: { restaurants, categories, userId: metadata?.user_id }
     }
 }
 
 type Props = {
     restaurants: Array<Restaurant>
+    categories: Array<Category>
+    userId: User['id']
 }
 
-export default function MyRestaurants({ restaurants }: Props) {
+export default function MyRestaurants({ restaurants, categories, userId }: Props) {
 
     return (
         <>
@@ -50,6 +60,15 @@ export default function MyRestaurants({ restaurants }: Props) {
                     My Restaurants
                 </h1>
                 <MyFoodTruckList restaurants={restaurants} />
+                <div className={styles.bottonSection}>
+                    <MyFoodTruckCategories
+                        categories={categories}
+                        userId={userId}
+                    />
+                    <InfoSection title='Events'>
+                        {'Coming soon...'}
+                    </InfoSection>
+                </div>
             </main>
         </>
     )

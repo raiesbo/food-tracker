@@ -12,7 +12,14 @@ describe('prisma Categorys client', () => {
 
         categoriesClient.createCategory({ name: 'category test' } as Category);
 
-        expect(createCategoryMock).toHaveBeenCalledWith({ 'data': { 'name': 'category test' } });
+        expect(createCategoryMock).toHaveBeenCalledWith({
+            data: { 'name': 'category test' },
+            include: {
+                _count: {
+                    select: { restaurants: true },
+                },
+            }
+        });
     });
 
     it('can get a Category by id', () => {
@@ -21,7 +28,13 @@ describe('prisma Categorys client', () => {
 
         categoriesClient.getCategory('6' as Category['id']);
 
-        expect(getCategoryMock).toHaveBeenCalledWith({ 'where': { 'id': '6' } });
+        expect(getCategoryMock).toHaveBeenCalledWith({
+            'where': { 'id': '6' }, include: {
+                _count: {
+                    select: { restaurants: true },
+                },
+            }
+        });
     });
 
     it('can get many Categorys by ids', () => {
@@ -30,7 +43,14 @@ describe('prisma Categorys client', () => {
 
         categoriesClient.getCategories({ name: 'category test' } as Category);
 
-        expect(getCategorysMock).toHaveBeenCalledWith({ 'where': { 'name': 'category test' } });
+        expect(getCategorysMock).toHaveBeenCalledWith({
+            'where': { 'name': 'category test', },
+            include: {
+                _count: {
+                    select: { restaurants: true },
+                },
+            }
+        });
     });
 
     it('can update a Category', () => {
@@ -41,7 +61,12 @@ describe('prisma Categorys client', () => {
 
         expect(updateCategoryMock).toHaveBeenCalledWith({
             'where': { 'id': '4' },
-            'data': { 'name': 'category test' }
+            'data': { 'name': 'category test' },
+            include: {
+                _count: {
+                    select: { restaurants: true },
+                },
+            }
         });
     });
 

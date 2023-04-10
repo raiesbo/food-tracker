@@ -45,7 +45,7 @@ async function main() {
         update: {},
         create: {
             name: 'Spanish',
-            createdById: mainUser.id
+            userId: mainUser.id
         },
     })
 
@@ -54,7 +54,7 @@ async function main() {
         update: {},
         create: {
             name: 'German',
-            createdById: mainUser.id
+            userId: mainUser.id
         },
     })
 
@@ -63,7 +63,7 @@ async function main() {
         update: {},
         create: {
             name: 'French',
-            createdById: mainUser.id
+            userId: mainUser.id
         },
     })
 
@@ -72,7 +72,7 @@ async function main() {
         update: {},
         create: {
             name: 'Thai',
-            createdById: mainUser.id
+            userId: mainUser.id
         },
     })
 
@@ -81,7 +81,7 @@ async function main() {
         update: {},
         create: {
             name: 'Japanese',
-            createdById: mainUser.id
+            userId: mainUser.id
         },
     })
 
@@ -90,7 +90,7 @@ async function main() {
         update: {},
         create: {
             name: 'Mexican',
-            createdById: mainUser.id
+            userId: mainUser.id
         },
     })
 
@@ -99,7 +99,7 @@ async function main() {
         update: {},
         create: {
             name: 'American',
-            createdById: mainUser.id
+            userId: mainUser.id
         },
     })
 

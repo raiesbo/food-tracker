@@ -1,3 +1,5 @@
+@use '@/styles/theme' as *;
+
 .root {
     max-width: 1040px;
     padding: 20px;
@@ -5,4 +7,15 @@
     display: flex;
     flex-direction: column;
     gap: 15px;
+}
+
+.bottonSection {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+
+    @include matchMedium {
+        grid-template-columns: 1fr 1fr;
+        gap: 50px;
+    }
 }

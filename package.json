@@ -9,7 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
-    "test": "vitest",
+    "test": "vitest --watch",
     "test:ci": "vitest run --coverage",
     "prisma:generate": "prisma generate",
     "prisma:pull": "prisma db pull --force",

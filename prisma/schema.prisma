@@ -113,9 +113,9 @@ model Location {
 
 model Category {
   id          String       @id @default(auto()) @map("_id") @db.ObjectId
-  name        String       @unique
-  createdBy   User?        @relation(fields: [createdById], references: [id])
-  createdById String?      @db.ObjectId
+  name        String
+  user        User?        @relation(fields: [userId], references: [id])
+  userId      String?      @db.ObjectId
   restaurants Restaurant[]
 }
 
