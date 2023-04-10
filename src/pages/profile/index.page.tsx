@@ -150,73 +150,53 @@ export default function Profile({ user, auth0User, reviews }: Props) {
                             <Text variant={'h4'} bold>
                                 First Name
                             </Text>
-                            {isUpdate ? (
-                                <TextField
-                                    value={firstName}
-                                    label=''
-                                    onChange={(e) => setFirstName(e.target.value)}
-                                    fullWidth
-                                    sx={{ mt: 1, backgroundColor: 'white' }}
-                                />
-                            ) : (
-                                <Text variant={'h2'} thin>
-                                    {firstName}
-                                </Text>
-                            )}
+                            <TextField
+                                value={firstName}
+                                label=''
+                                onChange={(e) => setFirstName(e.target.value)}
+                                fullWidth
+                                sx={{ mt: 1, backgroundColor: 'white' }}
+                                disabled={!isUpdate || isLoading}
+                            />
                         </div>
                         <div>
                             <Text variant={'h4'} bold>
                                 Last Name
                             </Text>
-                            {isUpdate ? (
-                                <TextField
-                                    value={lastName}
-                                    label=''
-                                    onChange={(e) => setLastname(e.target.value)}
-                                    fullWidth
-                                    sx={{ mt: 1, backgroundColor: 'white' }}
-                                />
-                            ) : (
-                                <Text variant={'h2'} thin>
-                                    {lastName}
-                                </Text>
-                            )}
+                            <TextField
+                                value={lastName}
+                                label=''
+                                onChange={(e) => setLastname(e.target.value)}
+                                fullWidth
+                                sx={{ mt: 1, backgroundColor: 'white' }}
+                                disabled={!isUpdate || isLoading}
+                            />
                         </div>
                         <div>
                             <Text variant={'h4'} bold>
                                 Email
                             </Text>
-                            {isUpdate ? (
-                                <TextField
-                                    value={email}
-                                    label=''
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    fullWidth
-                                    sx={{ mt: 1, backgroundColor: 'white' }}
-                                />
-                            ) : (
-                                <Text variant={'h2'} thin>
-                                    {email}
-                                </Text>
-                            )}
+                            <TextField
+                                value={email}
+                                label=''
+                                onChange={(e) => setEmail(e.target.value)}
+                                fullWidth
+                                sx={{ mt: 1, backgroundColor: 'white' }}
+                                disabled={!isUpdate || isLoading}
+                            />
                         </div>
                         <div>
                             <Text variant={'h4'} bold>
                                 Phone Number
                             </Text>
-                            {isUpdate ? (
-                                <TextField
-                                    value={phone}
-                                    label=''
-                                    onChange={(e) => setPhone(e.target.value)}
-                                    fullWidth
-                                    sx={{ mt: 1, backgroundColor: 'white' }}
-                                />
-                            ) : (
-                                <Text variant={'h2'} thin>
-                                    {phone}
-                                </Text>
-                            )}
+                            <TextField
+                                value={phone}
+                                label=''
+                                onChange={(e) => setPhone(e.target.value)}
+                                fullWidth
+                                sx={{ mt: 1, backgroundColor: 'white' }}
+                                disabled={!isUpdate || isLoading}
+                            />
                         </div>
                     </InfoSection>
                     <ProfileReviews
