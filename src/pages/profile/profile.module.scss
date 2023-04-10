@@ -1,3 +1,5 @@
+@use '@/styles/theme' as *;
+
 .root {
     max-width: 1040px;
     padding: 20px;
@@ -22,20 +24,53 @@
 
 .bodyContainer {
     display: grid;
-    grid-template-columns: min-content 1fr 300px;
-    gap: 50px;
+    grid-template-areas:
+        'image'
+        'user'
+        'reviews';
+    grid-template-columns: 1fr;
+    gap: 30px;
+
+    @include matchSmall {
+        grid-template-areas:
+            'image user'
+            'image reviews';
+        grid-template-columns: min-content 1fr;
+    }
+
+    @include matchMedium {
+        gap: 50px;
+        grid-template-areas: 'image user reviews';
+        grid-template-columns: min-content 1fr 300px;
+    }
 }
 
 .imageContainer {
     position: relative;
-    width: 200px;
-    height: 200px;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
     overflow: hidden;
+    grid-area: image;
+
+    @include matchSmall {
+        width: 150px;
+        height: 150px;
+    }
+
+    @include matchMedium {
+        width: 200px;
+        height: 200px;
+    }
 }
 
 .userInfo {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    grid-area: user;
+}
+
+.reviews {
+    grid-area: reviews;
 }

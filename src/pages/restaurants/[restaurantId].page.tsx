@@ -87,7 +87,7 @@ export default function RestaurantDetailsPage({ restaurant, categories }: Props)
                     </div>
                     <div className={cc([
                         styles.container,
-                        styles.mainContainer
+                        styles.middleContainer
                     ])}>
                         <Text>
                             {restaurant.description}

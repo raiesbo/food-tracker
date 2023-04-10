@@ -1,3 +1,5 @@
+@use '@/styles/theme' as *;
+
 .root {
     max-width: 1040px;
     padding: 20px;
@@ -22,8 +24,27 @@
 
 .bodyContainer {
     display: grid;
-    grid-template-columns: 300px 1fr;
-    gap: 50px;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+        'mainColumn'
+        'sideColumn';
+    gap: 30px;
+
+    @include matchMedium {
+        gap: 50px;
+        display: grid;
+        grid-template-columns: 300px 1fr;
+        grid-template-areas:
+            'sideColumn mainColumn';
+    }
+}
+
+.mainColumn {
+    grid-area: mainColumn;
+}
+
+.sideColumn {
+    grid-area: sideColumn;
 }
 
 .section {
@@ -41,7 +62,7 @@
 }
 
 .restaurantInfo,
-.sectionContainer {
+.container {
     display: flex;
     flex-direction: column;
     gap: 15px;

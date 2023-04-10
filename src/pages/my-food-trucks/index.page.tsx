@@ -4,7 +4,6 @@ import services from "@/services";
 import { Restaurant } from '@/types';
 import { auth0Config } from "@/utils/settings";
 import { getSession } from "@auth0/nextjs-auth0";
-import { CssBaseline } from "@mui/material";
 import { GetServerSidePropsContext } from "next";
 import styles from './MyFoodTrucks.module.scss';
 
@@ -47,7 +46,6 @@ export default function MyRestaurants({ restaurants }: Props) {
         <>
             <NavigationMenu />
             <main className={styles.root}>
-                <CssBaseline />
                 <h1>
                     My Restaurants
                 </h1>

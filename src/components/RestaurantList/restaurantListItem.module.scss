@@ -1,3 +1,5 @@
+@use '@/styles/theme' as *;
+
 $imageWidth: 150px;
 
 .cardLink {
@@ -23,7 +25,13 @@ $imageWidth: 150px;
 
 .itemHeader {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: 5px;
+
+    @include matchSmall {
+        flex-direction: row;
+        justify-content: space-between;
+    }
 }
 
 .itemBody {

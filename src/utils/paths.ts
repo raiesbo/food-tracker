@@ -20,7 +20,7 @@ export const paths = {
                 { name: 'Home', url: '/' },
                 { name: 'Restaurants', url: '/restaurants' },
                 { name: 'Profile', url: '/profile' },
-                { name: 'My Reviews', url: '/reviews' },
+                // { name: 'My Reviews', url: '/reviews' },
                 { name: 'Logout', url: '/api/auth/logout' }
             ],
             serviceProvider: [

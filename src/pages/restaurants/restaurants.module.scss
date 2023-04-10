@@ -1,3 +1,5 @@
+@use '@/styles/theme' as *;
+
 .root {
     max-width: 1040px;
     padding: 20px;
@@ -9,8 +11,22 @@
 
 .filtersContainer {
     display: grid;
-    grid-template-columns: 1fr 150px 150px;
+    grid-template-columns: 1fr;
     gap: 15px;
+
+    @include matchSmall {
+        grid-template-columns: 1fr min-content;
+    }
+}
+
+.dropdownContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+
+    @include matchSmall {
+        grid-template-columns: 150px 150px;
+    }
 }
 
 .additionalFilters {

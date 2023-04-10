@@ -133,99 +133,97 @@ export default function Profile({ user, auth0User, reviews }: Props) {
                         )}
                     </div>
                 </header>
-
-                <section>
-                    <div className={styles.bodyContainer}>
-                        <div className={styles.imageContainer}>
-                            <Image
-                                alt='Users image'
-                                src={auth0User?.picture || ""}
-                                fill
-                                className={styles.image}
-                            />
-                        </div>
-                        <InfoSection
-                            title='Personal Information'
-                            childrenClassName={styles.userInfo}
-                        >
-                            <div>
-                                <Text variant={'h4'} bold>
-                                    First Name
-                                </Text>
-                                {isUpdate ? (
-                                    <TextField
-                                        value={firstName}
-                                        label=''
-                                        onChange={(e) => setFirstName(e.target.value)}
-                                        fullWidth
-                                        sx={{ mt: 1, backgroundColor: 'white' }}
-                                    />
-                                ) : (
-                                    <Text variant={'h2'} thin>
-                                        {firstName}
-                                    </Text>
-                                )}
-                            </div>
-                            <div>
-                                <Text variant={'h4'} bold>
-                                    Last Name
-                                </Text>
-                                {isUpdate ? (
-                                    <TextField
-                                        value={lastName}
-                                        label=''
-                                        onChange={(e) => setLastname(e.target.value)}
-                                        fullWidth
-                                        sx={{ mt: 1, backgroundColor: 'white' }}
-                                    />
-                                ) : (
-                                    <Text variant={'h2'} thin>
-                                        {lastName}
-                                    </Text>
-                                )}
-                            </div>
-                            <div>
-                                <Text variant={'h4'} bold>
-                                    Email
-                                </Text>
-                                {isUpdate ? (
-                                    <TextField
-                                        value={email}
-                                        label=''
-                                        onChange={(e) => setEmail(e.target.value)}
-                                        fullWidth
-                                        sx={{ mt: 1, backgroundColor: 'white' }}
-                                    />
-                                ) : (
-                                    <Text variant={'h2'} thin>
-                                        {email}
-                                    </Text>
-                                )}
-                            </div>
-                            <div>
-                                <Text variant={'h4'} bold>
-                                    Phone Number
-                                </Text>
-                                {isUpdate ? (
-                                    <TextField
-                                        value={phone}
-                                        label=''
-                                        onChange={(e) => setPhone(e.target.value)}
-                                        fullWidth
-                                        sx={{ mt: 1, backgroundColor: 'white' }}
-                                    />
-                                ) : (
-                                    <Text variant={'h2'} thin>
-                                        {phone}
-                                    </Text>
-                                )}
-                            </div>
-                        </InfoSection>
-                        <ProfileReviews
-                            reviews={reviews}
-                            currentUserId={user.id}
+                <section className={styles.bodyContainer}>
+                    <div className={styles.imageContainer}>
+                        <Image
+                            alt='Users image'
+                            src={auth0User?.picture || ""}
+                            fill
+                            className={styles.image}
                         />
                     </div>
+                    <InfoSection
+                        title='Personal Information'
+                        childrenClassName={styles.userInfo}
+                    >
+                        <div>
+                            <Text variant={'h4'} bold>
+                                First Name
+                            </Text>
+                            {isUpdate ? (
+                                <TextField
+                                    value={firstName}
+                                    label=''
+                                    onChange={(e) => setFirstName(e.target.value)}
+                                    fullWidth
+                                    sx={{ mt: 1, backgroundColor: 'white' }}
+                                />
+                            ) : (
+                                <Text variant={'h2'} thin>
+                                    {firstName}
+                                </Text>
+                            )}
+                        </div>
+                        <div>
+                            <Text variant={'h4'} bold>
+                                Last Name
+                            </Text>
+                            {isUpdate ? (
+                                <TextField
+                                    value={lastName}
+                                    label=''
+                                    onChange={(e) => setLastname(e.target.value)}
+                                    fullWidth
+                                    sx={{ mt: 1, backgroundColor: 'white' }}
+                                />
+                            ) : (
+                                <Text variant={'h2'} thin>
+                                    {lastName}
+                                </Text>
+                            )}
+                        </div>
+                        <div>
+                            <Text variant={'h4'} bold>
+                                Email
+                            </Text>
+                            {isUpdate ? (
+                                <TextField
+                                    value={email}
+                                    label=''
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    fullWidth
+                                    sx={{ mt: 1, backgroundColor: 'white' }}
+                                />
+                            ) : (
+                                <Text variant={'h2'} thin>
+                                    {email}
+                                </Text>
+                            )}
+                        </div>
+                        <div>
+                            <Text variant={'h4'} bold>
+                                Phone Number
+                            </Text>
+                            {isUpdate ? (
+                                <TextField
+                                    value={phone}
+                                    label=''
+                                    onChange={(e) => setPhone(e.target.value)}
+                                    fullWidth
+                                    sx={{ mt: 1, backgroundColor: 'white' }}
+                                />
+                            ) : (
+                                <Text variant={'h2'} thin>
+                                    {phone}
+                                </Text>
+                            )}
+                        </div>
+                    </InfoSection>
+                    <ProfileReviews
+                        reviews={reviews}
+                        currentUserId={user.id}
+                        className={styles.revews}
+                    />
                 </section>
             </main>
         </>

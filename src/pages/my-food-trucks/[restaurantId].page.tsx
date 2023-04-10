@@ -8,6 +8,7 @@ import { Restaurant } from "@/types";
 import { paths } from "@/utils/paths";
 import { Button } from "@mui/material";
 import { Category, Location } from "@prisma/client";
+import cc from 'classcat';
 import { GetServerSidePropsContext, NextApiRequest } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -84,57 +85,55 @@ export default function MyNewRestaurant({ restaurant, categories }: Props) {
                         </Button>
                     </div>
                 </header>
-                <section>
-                    <div className={styles.bodyContainer}>
-                        <div className={styles.sectionContainer}>
-                            <InfoSection title="Food Truck Thumbnail">
-                                <Card className={styles.imageContainer}>
-                                    <Image
-                                        alt='Users image'
-                                        src={restaurant.imageUrl || imagePlaceholder}
-                                        fill
-                                        className={styles.image}
-                                    />
-                                </Card>
-                            </InfoSection>
-                            <MyFoodTruckLocations
-                                location={restaurant.locations.find(loc => loc.isMainLocation) || {} as Location}
-                            />
-                            <Card className={styles.scheduleList}>
-                                <InfoSection title="Opening Hours" childrenClassName={styles.item}>
-                                    {restaurant.schedules?.map((schedule) => (
-                                        <div key={schedule.id} className={styles.scheduleListItem}>
-                                            <Text bold variant={'smallest'}>
-                                                {schedule.day}
-                                            </Text>
-                                            {schedule.isOpen ? (
-                                                <Text variant={'smallest'}>
-                                                    {`${schedule.opening_hour} ${schedule.closing_hour}`}
-                                                </Text>
-                                            ) : (
-                                                <Text variant={'smallest'}>
-                                                    Closed
-                                                </Text>
-                                            )}
-                                        </div>
-                                    ))}
-                                </InfoSection>
+                <section className={styles.bodyContainer}>
+                    <div className={cc([styles.container, styles.sideColumn])}>
+                        <InfoSection title="Food Truck Thumbnail">
+                            <Card className={styles.imageContainer}>
+                                <Image
+                                    alt='Users image'
+                                    src={restaurant.imageUrl || imagePlaceholder}
+                                    fill
+                                    className={styles.image}
+                                />
                             </Card>
-                            <MyFoodTruckReviews
-                                reviews={restaurant.reviews}
-                                currentUserId={restaurant.userId}
-                            />
-                        </div>
-                        <div className={styles.sectionContainer}>
-                            <MyFoodTruckRestaurant
-                                restaurant={restaurant}
-                                categories={categories}
-                            />
-                            <MyFoodTruckMenu
-                                menu={restaurant.menu}
-                                restaurantid={restaurant.id}
-                            />
-                        </div>
+                        </InfoSection>
+                        <MyFoodTruckLocations
+                            location={restaurant.locations.find(loc => loc.isMainLocation) || {} as Location}
+                        />
+                        <Card className={styles.scheduleList}>
+                            <InfoSection title="Opening Hours" childrenClassName={styles.item}>
+                                {restaurant.schedules?.map((schedule) => (
+                                    <div key={schedule.id} className={styles.scheduleListItem}>
+                                        <Text bold variant={'smallest'}>
+                                            {schedule.day}
+                                        </Text>
+                                        {schedule.isOpen ? (
+                                            <Text variant={'smallest'}>
+                                                {`${schedule.opening_hour} ${schedule.closing_hour}`}
+                                            </Text>
+                                        ) : (
+                                            <Text variant={'smallest'}>
+                                                Closed
+                                            </Text>
+                                        )}
+                                    </div>
+                                ))}
+                            </InfoSection>
+                        </Card>
+                        <MyFoodTruckReviews
+                            reviews={restaurant.reviews}
+                            currentUserId={restaurant.userId}
+                        />
+                    </div>
+                    <div className={cc([styles.container, styles.mainColumn])}>
+                        <MyFoodTruckRestaurant
+                            restaurant={restaurant}
+                            categories={categories}
+                        />
+                        <MyFoodTruckMenu
+                            menu={restaurant.menu}
+                            restaurantid={restaurant.id}
+                        />
                     </div>
                 </section>
             </main>

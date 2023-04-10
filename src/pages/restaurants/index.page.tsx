@@ -141,46 +141,48 @@ export default function RestaurantPage({
                         variant="outlined"
                         sx={{ backgroundColor: 'white' }}
                     />
-                    <FormControl>
-                        <InputLabel id="demo-simple-select-label">
-                            City
-                        </InputLabel>
-                        <Select
-                            labelId="City"
-                            id="location"
-                            value={city}
-                            label="City"
-                            onChange={(e) => setCity(e.target.value)}
-                            sx={{ backgroundColor: 'white' }}
-                        >
-                            <MenuItem value={'All'}>All</MenuItem>
-                            {locations.map(city => (
-                                <MenuItem key={city} value={city || ''}>
-                                    {city}
-                                </MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
-                    <FormControl>
-                        <InputLabel id="demo-simple-select-label">
-                            Food Type
-                        </InputLabel>
-                        <Select
-                            labelId="Food Type"
-                            id="category"
-                            value={category}
-                            label="Food Type"
-                            onChange={(e) => setCategory(e.target.value)}
-                            sx={{ backgroundColor: 'white' }}
-                        >
-                            <MenuItem value={'All'}>All</MenuItem>
-                            {categories.map(({ name }: Category) => (
-                                <MenuItem key={name} value={name || ''}>
-                                    {name}
-                                </MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
+                    <div className={styles.dropdownContainer}>
+                        <FormControl>
+                            <InputLabel id="demo-simple-select-label">
+                                City
+                            </InputLabel>
+                            <Select
+                                labelId="City"
+                                id="location"
+                                value={city}
+                                label="City"
+                                onChange={(e) => setCity(e.target.value)}
+                                sx={{ backgroundColor: 'white' }}
+                            >
+                                <MenuItem value={'All'}>All</MenuItem>
+                                {locations.map(city => (
+                                    <MenuItem key={city} value={city || ''}>
+                                        {city}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                        <FormControl>
+                            <InputLabel id="demo-simple-select-label">
+                                Food Type
+                            </InputLabel>
+                            <Select
+                                labelId="Food Type"
+                                id="category"
+                                value={category}
+                                label="Food Type"
+                                onChange={(e) => setCategory(e.target.value)}
+                                sx={{ backgroundColor: 'white' }}
+                            >
+                                <MenuItem value={'All'}>All</MenuItem>
+                                {categories.map(({ name }: Category) => (
+                                    <MenuItem key={name} value={name || ''}>
+                                        {name}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                    </div>
                 </div>
                 <div className={styles.additionalFilters}>
                     <FormControlLabel
