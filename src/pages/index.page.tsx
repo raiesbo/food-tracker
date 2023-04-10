@@ -72,7 +72,7 @@ export default function Home({ categories, locations }: Props) {
             </Text>
             <div className={styles.headerTextContent}>
               <Text>
-                Your free world wide Street Food find tool
+                Your free world wide Street Food finder tool
               </Text>
               <Text>
                 Directly from the hands of the best cooks around the world
@@ -83,7 +83,7 @@ export default function Home({ categories, locations }: Props) {
                 marginTop: 4,
                 display: 'flex',
                 flexDirection: { xs: 'column', md: 'row' },
-                gap: 3,
+                gap: { xs: 5, md: 3 },
                 alignItems: 'center',
               }}
             >
