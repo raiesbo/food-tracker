@@ -11,12 +11,7 @@ import styles from './Home.module.scss';
 
 const { categoriesService, locationsService } = services;
 
-const bgImageUrl = 'https://images.unsplash.com/photo-1565123409695-7b5ef63a2efb?w=1000'
-
-type Props = {
-  categories: Array<Category>,
-  locations: Array<string>
-}
+const bgImageUrl = 'https://images.unsplash.com/photo-1565123409695-7b5ef63a2efb?w=1000';
 
 export async function getServerSideProps() {
   const {
@@ -36,6 +31,11 @@ export async function getServerSideProps() {
   return {
     props: { categories, locations }
   }
+}
+
+type Props = {
+  categories: Array<Category>,
+  locations: Array<string>
 }
 
 export default function Home({ categories, locations }: Props) {
@@ -111,7 +111,6 @@ export default function Home({ categories, locations }: Props) {
                   ))}
                 </Select>
               </FormControl>
-
               <FormControl fullWidth >
                 <InputLabel id="demo-simple-select-label" sx={{
                   color: 'white',

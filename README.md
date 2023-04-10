@@ -35,7 +35,7 @@ Description here...
 - `AUTH0_CLIENT_SECRET`: Auth0 client secret for the applications authentication.
 - `AUTH0_CLIENT_ID_API`: Auth0 client id for the Matchine-to-Machine Application.
 - `AUTH0_CLIENT_SECRET_API`: Auth0 client secret for the Matchine-to-Machine Application.
-- `DROPBOX_API_TOKEN`: Dropbox connection token to store images and other files. Can be found in the App section. 
+- `DROPBOX_API_TOKEN`: Dropbox connection token to store images and other files. Can be found in the App section (To be implemented).
 
 ## Technologies
 
