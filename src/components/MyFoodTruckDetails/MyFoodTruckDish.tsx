@@ -27,7 +27,10 @@ export default function MyGoodTruckDish({ dish }: Props) {
     const [imageUrl, setImageUrl] = useState(dish.imageUrl || '');
     const [isVegan, setIsVegan] = useState(dish.isVegan || false);
     const [isGlutenFree, setIsGlutenFree] = useState(dish.isGlutenFree || false);
-    const [ingredients, setIngredients] = useState(dish.ingredients?.split(';')?.map(ing => ({ id: id, name: ing })) || []);
+    const [ingredients, setIngredients] = useState(dish.ingredients?.split(';')?.map(ing => ({
+        id: `${(Math.random() * 100000).toFixed(0)}`,
+        name: ing
+    })) || []);
 
     const onCancelUpdate = () => {
         setName(dish.name || '');
@@ -35,7 +38,10 @@ export default function MyGoodTruckDish({ dish }: Props) {
         setDescription(dish.description || '');
         setIsVegan(dish.isVegan || false);
         setIsGlutenFree(dish.isGlutenFree || false);
-        setIngredients(dish.ingredients?.split(';')?.map(ing => ({ id: id, name: ing })) || []);
+        setIngredients(dish.ingredients?.split(';')?.map(ing => ({
+            id: `${(Math.random() * 100000).toFixed(0)}`,
+            name: ing
+        })) || []);
 
         setIsUpdate(false)
     }

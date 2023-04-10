@@ -21,7 +21,7 @@ export default function MyFoodTruckIngredients({ ingredients, isUpdate, isLoadin
     }
 
     const onAddOne = () => {
-        onUpdate([...ingredients, { id: id, name: '' }])
+        onUpdate([...ingredients, { id: `${(Math.random() * 100000).toFixed(0)}`, name: '' }])
     }
 
     const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {

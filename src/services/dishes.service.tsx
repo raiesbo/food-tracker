@@ -11,11 +11,7 @@ export default function categoriesService({ dishClient }: typeof prismaClients) 
                     name: 'New Dish',
                     restaurantId,
                     price: 0.00,
-                    ingredients: {
-                        create: [
-                            { name: 'First ingredient' }
-                        ]
-                    }
+                    ingredients: 'First ingredient'
                 });
 
                 if (dish) return { result: dish }
