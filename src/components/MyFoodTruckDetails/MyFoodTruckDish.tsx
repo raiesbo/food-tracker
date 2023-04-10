@@ -4,7 +4,7 @@ import { Button, Checkbox, FormControlLabel, IconButton, TextField } from '@mui/
 import cc from 'classcat';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useId, useState } from 'react';
 import { Card } from '../Card';
 import { Text } from '../Text';
 import styles from './MyFoodTruckDish.module.scss';
@@ -15,6 +15,7 @@ type Props = {
 }
 
 export default function MyGoodTruckDish({ dish }: Props) {
+    const id = useId()
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
     const [isUpdate, setIsUpdate] = useState(false);
@@ -26,7 +27,7 @@ export default function MyGoodTruckDish({ dish }: Props) {
     const [imageUrl, setImageUrl] = useState(dish.imageUrl || '');
     const [isVegan, setIsVegan] = useState(dish.isVegan || false);
     const [isGlutenFree, setIsGlutenFree] = useState(dish.isGlutenFree || false);
-    const [ingredients, setIngredients] = useState(dish.ingredients || []);
+    const [ingredients, setIngredients] = useState(dish.ingredients?.split(';')?.map(ing => ({ id: id, name: ing })) || []);
 
     const onCancelUpdate = () => {
         setName(dish.name || '');
@@ -34,7 +35,7 @@ export default function MyGoodTruckDish({ dish }: Props) {
         setDescription(dish.description || '');
         setIsVegan(dish.isVegan || false);
         setIsGlutenFree(dish.isGlutenFree || false);
-        setIngredients(dish.ingredients || []);
+        setIngredients(dish.ingredients?.split(';')?.map(ing => ({ id: id, name: ing })) || []);
 
         setIsUpdate(false)
     }

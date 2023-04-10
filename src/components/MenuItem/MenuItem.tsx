@@ -1,10 +1,9 @@
 import { Dish } from "@/types";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Chip, IconButton } from "@mui/material";
-import { Ingredient } from "@prisma/client";
 import cc from 'classcat';
 import Image from "next/image";
-import { useState } from "react";
+import { useId, useState } from "react";
 import { Card } from "../Card";
 import { Text } from "../Text";
 import styles from './MenuItem.module.scss';
@@ -16,6 +15,7 @@ type Props = {
 }
 
 export default function MenuItem({ dish }: Props) {
+    const id = useId()
     const [isOpen, setIsOpen] = useState(false);
 
     return (
@@ -50,11 +50,11 @@ export default function MenuItem({ dish }: Props) {
                     Ingredients
                 </Text>
                 <div className={styles.ingredients}>
-                    {dish.ingredients.map((ingredient: Ingredient) => {
+                    {dish.ingredients?.split(';').map((ingredient) => {
                         return (
                             <Chip
-                                key={ingredient.name}
-                                label={ingredient.name}
+                                key={ingredient}
+                                label={ingredient}
                                 size='small'
                             />
                         )

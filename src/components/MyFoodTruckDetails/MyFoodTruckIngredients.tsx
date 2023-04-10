@@ -2,59 +2,30 @@ import { Dish } from '@/types';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { IconButton } from "@mui/material";
-import { Ingredient } from "@prisma/client";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useId } from "react";
 import { Text } from '../Text';
 import styles from './MyFoodTruckIngredients.module.scss';
 
 type Props = {
-    ingredients: Array<Ingredient>
+    ingredients: Array<{ id: string, name: string }>
     dishId: Dish['id']
     isUpdate?: boolean,
-    onUpdate: (e: Array<Ingredient>) => void
+    isLoading?: boolean,
+    onUpdate: (e: Array<{ id: string, name: string }>) => void
 }
 
-export default function MyFoodTruckIngredients({ dishId, ingredients, isUpdate, onUpdate }: Props) {
-    const [isLoading, setIsLoading] = useState(false);
-
-    const onRemoveOne = (ingredientId: Ingredient['id']) => {
-        setIsLoading(true);
-
-        fetch(`/api/ingredients/${ingredientId}`, {
-            method: 'DELETE'
-        }).then(response => {
-            if (response.ok) {
-                onUpdate([...ingredients.filter(({ id }) => id !== ingredientId)])
-            } else {
-                alert('Server Error')
-            }
-        }).finally(() => setIsLoading(false))
+export default function MyFoodTruckIngredients({ ingredients, isUpdate, isLoading, onUpdate }: Props) {
+    const id = useId();
+    const onRemoveOne = (ingredientId: string) => {
+        onUpdate([...ingredients.filter(({ id }) => id !== ingredientId)])
     }
 
     const onAddOne = () => {
-        setIsLoading(true);
-
-        fetch(`/api/dishes/${dishId}/ingredients`, {
-            method: 'PUT'
-        }).then(response => {
-            if (!response.ok) {
-                alert('Server Error');
-                return;
-            }
-            return response.json()
-        }).then(({ ingredient }) => {
-            onUpdate([...ingredients, ingredient])
-        }).finally(() => setIsLoading(false))
+        onUpdate([...ingredients, { id: id, name: '' }])
     }
 
     const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-
-        const newArray = [...ingredients.map(ingredient => {
-            return ingredient.id === name ? { ...ingredient, name: value } : ingredient
-        })]
-
-        console.log({ name, value, newArray })
 
         onUpdate([...ingredients.map(ingredient => {
             return ingredient.id === name ? { ...ingredient, name: value } : ingredient
@@ -63,7 +34,7 @@ export default function MyFoodTruckIngredients({ dishId, ingredients, isUpdate, 
 
     return (
         <div className={styles.root}>
-            {ingredients.map(ingredient => (
+            {ingredients.map((ingredient, id) => (
                 <div key={ingredient.id} className={styles.chip} >
                     {isUpdate ? (
                         <>
