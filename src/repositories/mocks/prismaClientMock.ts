@@ -63,6 +63,19 @@ const prismaClientMock = {
             deleteMany: vi.fn(),
             count: vi.fn()
         }
+        ,
+        location: {
+            create: vi.fn(),
+            createMany: vi.fn(),
+            findUnique: vi.fn(),
+            findFirst: vi.fn(),
+            findMany: vi.fn(),
+            update: vi.fn(),
+            upsert: vi.fn(),
+            delete: vi.fn(),
+            deleteMany: vi.fn(),
+            count: vi.fn()
+        }
     }
 } as unknown as IDBClient;
 

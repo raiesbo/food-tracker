@@ -25,11 +25,7 @@ describe('prisma Restaurants client', () => {
             'where': { 'id': '6' },
             'include': {
                 locations: true,
-                menu: {
-                    include: {
-                        ingredients: true
-                    }
-                },
+                menu: true,
                 schedules: true,
                 category: true,
                 user: true,
@@ -52,11 +48,7 @@ describe('prisma Restaurants client', () => {
             'where': { 'name': 'test_name' },
             'include': {
                 locations: true,
-                menu: {
-                    include: {
-                        ingredients: true
-                    }
-                },
+                menu: true,
                 schedules: true,
                 category: true,
                 user: true,

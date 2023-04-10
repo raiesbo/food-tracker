@@ -2,9 +2,7 @@ import { Dish } from '.prisma/client';
 import { Prisma } from "@prisma/client";
 import { IDBClient } from './prismaClient';
 
-export const dishRelations = Prisma.validator<Prisma.DishInclude>()({
-    ingredients: true
-});
+export const dishRelations = Prisma.validator<Prisma.DishInclude>()({});
 
 export default function prismaDishClient({ instance }: IDBClient) {
     return {

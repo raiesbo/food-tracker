@@ -65,25 +65,18 @@ model Restaurant {
 }
 
 model Dish {
-  id           String       @id @default(auto()) @map("_id") @db.ObjectId
-  createdAt    DateTime     @default(now())
-  updatedAt    DateTime     @updatedAt
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
   name         String
   description  String?
   imageUrl     String?
   price        Float?
-  ingredients  Ingredient[]
-  isVegan      Boolean      @default(false)
-  isGlutenFree Boolean      @default(false)
-  restaurant   Restaurant?  @relation(fields: [restaurantId], references: [id])
-  restaurantId String?      @db.ObjectId
-}
-
-model Ingredient {
-  id     String  @id @default(auto()) @map("_id") @db.ObjectId
-  name   String
-  dish   Dish?   @relation(fields: [dishId], references: [id], onDelete: Cascade)
-  dishId String? @db.ObjectId
+  ingredients  String?
+  isVegan      Boolean     @default(false)
+  isGlutenFree Boolean     @default(false)
+  restaurant   Restaurant? @relation(fields: [restaurantId], references: [id])
+  restaurantId String?     @db.ObjectId
 }
 
 enum WeekDay {

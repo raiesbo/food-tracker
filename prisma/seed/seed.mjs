@@ -121,16 +121,7 @@ async function main() {
                         imageUrl: 'https://images.unsplash.com/photo-1551730707-ae4fde676aae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80',
                         isVegan: false,
                         price: 25.30,
-                        ingredients: {
-                            create: [
-                                { name: 'Meet' },
-                                { name: 'Bread' },
-                                { name: 'Ketchup' },
-                                { name: 'Fries' },
-                                { name: 'Letuce' },
-                                { name: 'Tomato' }
-                            ]
-                        }
+                        ingredients: 'Meet;Bread;Ketchup;Fries;Letuce;Tomato'
                     },
                     {
                         name: 'Vegan Burguer',
@@ -138,16 +129,7 @@ async function main() {
                         imageUrl: 'https://images.unsplash.com/photo-1551730707-ae4fde676aae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80',
                         isVegan: true,
                         price: 10.50,
-                        ingredients: {
-                            create: [
-                                { name: 'Vegan Meet' },
-                                { name: 'Bread' },
-                                { name: 'Ketchup' },
-                                { name: 'Fries' },
-                                { name: 'Letuce' },
-                                { name: 'Tomato' }
-                            ]
-                        }
+                        ingredients: 'Vegan Meet;Bread;Ketchup;Fries;Letuce;Tomato'
                     }
                 ]
             },
@@ -160,12 +142,12 @@ async function main() {
                         streetName: 'Blücherstraße',
                         streetNumber: '61B'
                     },
-                    {
-                        country: "Spain",
-                        city: 'Barcelona',
-                        streetName: 'Blücherstraße',
-                        streetNumber: '61B'
-                    }
+                    // {
+                    //     country: "Spain",
+                    //     city: 'Barcelona',
+                    //     streetName: 'Blücherstraße',
+                    //     streetNumber: '61B'
+                    // }
                 ]
             },
             reviews: {
@@ -208,31 +190,14 @@ async function main() {
                         imageUrl: 'https://images.unsplash.com/photo-1551730707-ae4fde676aae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80',
                         isVegan: false,
                         price: 11.30,
-                        ingredients: {
-                            create: [
-                                { name: 'Rise' },
-                                { name: 'Meet' },
-                                { name: 'Onion' },
-                                { name: 'Bell pepper' },
-                                { name: 'Garlic' },
-                                { name: 'Peas' }
-                            ]
-                        }
+                        ingredients: 'Rise;MeetOnion;Bell pepper;Garlic;Peas'
                     },
                     {
                         name: 'Paella de verduras',
                         isGlutenFree: false,
                         imageUrl: 'https://images.unsplash.com/photo-1551730707-ae4fde676aae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80',
                         isVegan: true,
-                        ingredients: {
-                            create: [
-                                { name: 'Rise' },
-                                { name: 'Onion' },
-                                { name: 'Bell pepper' },
-                                { name: 'Garlic' },
-                                { name: 'Peas' }
-                            ]
-                        }
+                        ingredients: 'Rise;Onion;Bell pepper;Garlic;Peas'
                     },
                     {
                         name: 'Arroz al horno',
@@ -240,26 +205,19 @@ async function main() {
                         imageUrl: 'https://images.unsplash.com/photo-1551730707-ae4fde676aae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80',
                         isVegan: false,
                         price: 9.99,
-                        ingredients: {
-                            create: [
-                                { name: 'Rise' },
-                                { name: 'Meet' },
-                                { name: 'Bell pepper' },
-                                { name: 'Garlic' }
-                            ]
-                        }
+                        ingredients: 'Rise;Meet;Bell pepper;Garlic'
                     }
                 ]
             },
             locations: {
                 create: [
-                    {
-                        country: "German",
-                        city: 'Berlin',
-                        streetName: 'Oranienstraße',
-                        streetNumber: '110',
-                        zip: '10969'
-                    },
+                    // {
+                    //     country: "German",
+                    //     city: 'Berlin',
+                    //     streetName: 'Oranienstraße',
+                    //     streetNumber: '110',
+                    //     zip: '10969'
+                    // },
                     {
                         isMainLocation: true,
                         country: "Spain",
@@ -311,16 +269,7 @@ async function main() {
                         imageUrl: 'https://images.unsplash.com/photo-1551730707-ae4fde676aae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80',
                         isVegan: false,
                         price: 13.30,
-                        ingredients: {
-                            create: [
-                                { name: 'Meet' },
-                                { name: 'Bread' },
-                                { name: 'Ketchup' },
-                                { name: 'Fries' },
-                                { name: 'Letuce' },
-                                { name: 'Tomato' }
-                            ]
-                        }
+                        ingredients: 'Meet;Bread;Ketchup;Fries;Letuce;Tomato'
                     },
                     {
                         name: 'Pimientos del padrón',
@@ -328,16 +277,7 @@ async function main() {
                         imageUrl: 'https://images.unsplash.com/photo-1551730707-ae4fde676aae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80',
                         isVegan: true,
                         price: 11.30,
-                        ingredients: {
-                            create: [
-                                { name: 'Vegan Meet' },
-                                { name: 'Bread' },
-                                { name: 'Ketchup' },
-                                { name: 'Fries' },
-                                { name: 'Letuce' },
-                                { name: 'Tomato' }
-                            ]
-                        }
+                        ingredients: 'Vegan Meet;Bread;Ketchup;Fries;Letuce;Tomato'
                     }
                 ]
             },
@@ -351,13 +291,13 @@ async function main() {
                         streetNumber: '19',
                         zip: '10969'
                     },
-                    {
-                        country: "Spain",
-                        city: 'Barcelona',
-                        streetName: 'Carrer de Pi i Margall',
-                        streetNumber: '19',
-                        zip: '08024'
-                    }
+                    // {
+                    //     country: "Spain",
+                    //     city: 'Barcelona',
+                    //     streetName: 'Carrer de Pi i Margall',
+                    //     streetNumber: '19',
+                    //     zip: '08024'
+                    // }
                 ]
             },
             reviews: {
