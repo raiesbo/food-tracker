@@ -2,7 +2,7 @@ import { Dish } from '@/types';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { IconButton } from "@mui/material";
-import { ChangeEvent, useId } from "react";
+import { ChangeEvent } from "react";
 import { Text } from '../Text';
 import styles from './MyFoodTruckIngredients.module.scss';
 
@@ -15,7 +15,6 @@ type Props = {
 }
 
 export default function MyFoodTruckIngredients({ ingredients, isUpdate, isLoading, onUpdate }: Props) {
-    const id = useId();
     const onRemoveOne = (ingredientId: string) => {
         onUpdate([...ingredients.filter(({ id }) => id !== ingredientId)])
     }

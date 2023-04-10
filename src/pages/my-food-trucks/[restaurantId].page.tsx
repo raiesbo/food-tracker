@@ -1,13 +1,13 @@
 import { Card } from "@/components/Card";
 import { InfoSection } from "@/components/InfoSection";
-import { MyFoodTruckMenu, MyFoodTruckRestaurant } from "@/components/MyFoodTruckDetails";
+import { MyFoodTruckLocations, MyFoodTruckMenu, MyFoodTruckRestaurant } from "@/components/MyFoodTruckDetails";
 import MyFoodTruckReviews from "@/components/MyFoodTruckDetails/MyFoodTruckReviews";
 import { NavigationMenu } from "@/components/NavigationMenu";
 import services from "@/services";
 import { Restaurant } from "@/types";
 import { paths } from "@/utils/paths";
 import { Button } from "@mui/material";
-import { Category } from "@prisma/client";
+import { Category, Location } from "@prisma/client";
 import { GetServerSidePropsContext, NextApiRequest } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -97,6 +97,9 @@ export default function MyNewRestaurant({ restaurant, categories }: Props) {
                                     />
                                 </Card>
                             </InfoSection>
+                            <MyFoodTruckLocations
+                                location={restaurant.locations.find(loc => loc.isMainLocation) || {} as Location}
+                            />
                             <Card className={styles.scheduleList}>
                                 <InfoSection title="Opening Hours" childrenClassName={styles.item}>
                                     {restaurant.schedules?.map((schedule) => (

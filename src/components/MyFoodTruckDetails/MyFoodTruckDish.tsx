@@ -4,7 +4,7 @@ import { Button, Checkbox, FormControlLabel, IconButton, TextField } from '@mui/
 import cc from 'classcat';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useId, useState } from 'react';
+import { useState } from 'react';
 import { Card } from '../Card';
 import { Text } from '../Text';
 import styles from './MyFoodTruckDish.module.scss';
@@ -15,7 +15,6 @@ type Props = {
 }
 
 export default function MyGoodTruckDish({ dish }: Props) {
-    const id = useId()
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
     const [isUpdate, setIsUpdate] = useState(false);
@@ -65,7 +64,15 @@ export default function MyGoodTruckDish({ dish }: Props) {
 
         fetch(`/api/dishes/${dish.id}`, {
             method: 'PUT',
-            body: JSON.stringify({ name, price, description, isVegan, isGlutenFree, imageUrl })
+            body: JSON.stringify({
+                name,
+                price,
+                description,
+                isVegan,
+                isGlutenFree,
+                imageUrl,
+                ingredients: ingredients.map(ing => ing.name).join(';')
+            })
         }).then(response => {
             if (!response.ok) {
                 alert('Server Error');

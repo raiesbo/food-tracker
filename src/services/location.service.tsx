@@ -1,3 +1,4 @@
+import { NextApiRequest } from 'next';
 import prismaClients from '../repositories';
 
 export default function locationsService({ locationClient }: typeof prismaClients) {
@@ -26,7 +27,35 @@ export default function locationsService({ locationClient }: typeof prismaClient
                     }
                 }
             }
+        },
+        updateLocation: async (req: NextApiRequest) => {
+            const { locationId } = req.query as { locationId: string };
 
+            try {
+                const parsedBody = JSON.parse(req.body);
+
+                const location = await locationClient.updateLocation(locationId, parsedBody)
+
+                if (location) return { result: location }
+
+                return {
+                    result: {},
+                    error: {
+                        status: 400,
+                        message: `Unable to update location with ID: ${locationId}`
+                    }
+                }
+            } catch (e) {
+                const message = e as { message: string };
+                console.error(message)
+                return {
+                    result: {},
+                    error: {
+                        status: 400,
+                        message: message
+                    }
+                }
+            }
         }
     }
 }
