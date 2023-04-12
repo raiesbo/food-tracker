@@ -27,8 +27,6 @@ Description here...
 - `AUTH0_SECRET`: Can be any token generated with `openssl rand -hex 32`.
 - `AUTH0_DOMAIN`: Url of the Auth0 application to handle the user management API.
 - `AUTH0_CONNECTION`: Connection name of the data base where users are found.
-- `AUTH0_CONNECTION_ID`: Connection id of the data base where users are stored in auth0.
-- `AUTH0_DEFAULT_PASSWORD`: Default password for user creation.
 - `AUTH0_BASE_URL`: String telling Auth0 where the application is running like `http://localhost:3000`.
 - `AUTH0_ISSUER_BASE_URL`: Url defined automatically by Auth0 to define and validate the app.
 - `AUTH0_CLIENT_ID`: Auth0 client id for the applications authentication.

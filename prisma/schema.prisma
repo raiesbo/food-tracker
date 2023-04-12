@@ -38,6 +38,7 @@ model Review {
   comment      String?
   user         User?       @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId       String?     @db.ObjectId
+  // TODO To be implemented
   // answers      Comment[]   @relation("answers")
   // responseToId String?     @db.ObjectId
   // responseTo   Comment?    @relation("answers", fields: [responseToId], references: [id], onDelete: NoAction, onUpdate: NoAction)

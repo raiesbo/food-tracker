@@ -7,7 +7,7 @@ async function main() {
         where: { email: 'alice@prisma.io' },
         update: {},
         create: {
-            email: 'alice@prisma.io',
+            email: 'alice@uoc.edu',
             phone: '0179408329048',
             firstName: 'Alice',
             lastName: 'Muller',
@@ -19,7 +19,7 @@ async function main() {
         where: { email: 'bob@prisma.io' },
         update: {},
         create: {
-            email: 'bob@prisma.io',
+            email: 'bob@uoc.edu',
             phone: '0179408329048',
             firstName: 'Bob',
             lastName: 'Madok',
@@ -45,7 +45,7 @@ async function main() {
         update: {},
         create: {
             name: 'Spanish',
-            userId: mainUser.id
+            userId: bob.id
         },
     })
 
@@ -54,7 +54,7 @@ async function main() {
         update: {},
         create: {
             name: 'German',
-            userId: mainUser.id
+            userId: alice.id
         },
     })
 
@@ -63,7 +63,7 @@ async function main() {
         update: {},
         create: {
             name: 'French',
-            userId: mainUser.id
+            userId: bob.id
         },
     })
 
@@ -72,7 +72,7 @@ async function main() {
         update: {},
         create: {
             name: 'Thai',
-            userId: mainUser.id
+            userId: alice.id
         },
     })
 
@@ -90,7 +90,7 @@ async function main() {
         update: {},
         create: {
             name: 'Mexican',
-            userId: mainUser.id
+            userId: bob.id
         },
     })
 
@@ -106,7 +106,7 @@ async function main() {
 
     const restaurantBurger = await prisma.restaurant.create({
         data: {
-            name: 'Main Burguer',
+            name: 'Main Burger',
             description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
             slogan: 'Beef burgers like in no other place',
             imageUrl: 'https://images.unsplash.com/photo-1570441262582-a2d4b9a916a5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80',
@@ -116,7 +116,7 @@ async function main() {
             menu: {
                 create: [
                     {
-                        name: 'Cheese Burguer',
+                        name: 'Cheese Burger',
                         isGlutenFree: false,
                         imageUrl: 'https://images.unsplash.com/photo-1551730707-ae4fde676aae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80',
                         isVegan: false,
@@ -124,7 +124,7 @@ async function main() {
                         ingredients: 'Meet;Bread;Ketchup;Fries;Letuce;Tomato'
                     },
                     {
-                        name: 'Vegan Burguer',
+                        name: 'Vegan Burger',
                         isGlutenFree: false,
                         imageUrl: 'https://images.unsplash.com/photo-1551730707-ae4fde676aae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80',
                         isVegan: true,
