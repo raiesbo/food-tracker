@@ -12,6 +12,7 @@
     "test": "vitest --watch",
     "test:ci": "vitest run --coverage",
     "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev --name init",
     "prisma:pull": "prisma db pull --force",
     "prisma:seed": "prisma db seed",
     "prisma:studio": "prisma studio"
