@@ -141,7 +141,6 @@ export default function userService({ restaurantClient }: typeof prismaClients) 
                     }
                 };
             }
-
         },
         updateRestaurant: async (req: NextApiRequest) => {
             const { restaurantId } = req.query as { restaurantId: string };

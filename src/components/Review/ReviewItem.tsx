@@ -16,7 +16,7 @@ import styles from './ReviewItem.module.scss';
 type Props = {
     review: Review,
     title?: string,
-    currentUserId?: User['id']
+    currentUserId?: User['id'] | null
 }
 
 export default function ProfileReviewsItem({ review, title, currentUserId }: Props) {

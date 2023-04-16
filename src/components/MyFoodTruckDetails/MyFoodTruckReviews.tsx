@@ -6,7 +6,7 @@ import styles from './MyFoodTruckReviews.module.scss';
 
 type Props = {
     reviews: Restaurant['reviews'],
-    currentUserId?: User['id']
+    currentUserId?: User['id'] | null
 }
 
 export default function MyFoodTruckReviews({ reviews, currentUserId }: Props) {

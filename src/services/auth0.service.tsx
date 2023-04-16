@@ -1,4 +1,5 @@
 import { auth0Config } from '@/utils/settings';
+import { User } from '@prisma/client';
 import { NextApiRequest } from 'next';
 import { auth0Client } from '../repositories';
 
@@ -13,7 +14,7 @@ export default function auth0Service({ auth0Client }: Props) {
     const { getManagementApiToken, createUser } = auth0Client();
 
     return {
-        createAuth0User: async (req: NextApiRequest, userId: string = '') => {
+        createAuth0User: async (req: NextApiRequest, userId: User['id']) => {
             const parsedBody = JSON.parse(req.body);
 
             try {
