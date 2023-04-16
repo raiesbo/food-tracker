@@ -58,7 +58,7 @@ export default function categoriesService({ categoryClient }: typeof prismaClien
             const { categoryId } = req.query as { categoryId: string };
 
             try {
-                await categoryClient.deleteCategory(categoryId);
+                await categoryClient.deleteCategory(Number(categoryId));
 
                 return { result: {} }
 
@@ -77,8 +77,6 @@ export default function categoriesService({ categoryClient }: typeof prismaClien
         createNewCategory: async (req: NextApiRequest) => {
             try {
                 const parsedBody = JSON.parse(req.body);
-
-                console.log({ parsedBody })
 
                 const category = await categoryClient.createCategory(parsedBody);
 

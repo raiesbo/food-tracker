@@ -22,7 +22,7 @@ const { restaurantService, categoriesService } = services;
 export async function getServerSideProps(context: GetServerSidePropsContext) {
     const { restaurantId } = context.params as { restaurantId: string };
 
-    const { result: restaurant, error } = await restaurantService.getRestaurant({ query: { restaurantId } });
+    const { result: restaurant, error } = await restaurantService.getRestaurant({ query: { restaurantId: Number(restaurantId) } });
 
     const {
         result: categories,

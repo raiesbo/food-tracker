@@ -7,8 +7,7 @@ export default function userService({ restaurantClient }: typeof prismaClients) 
     return {
         getAllRestaurantByFilter: async (filters: Prisma.RestaurantWhereInput) => {
             try {
-                const restaurants = await restaurantClient
-                    .getRestaurants(filters) as Array<Restaurant>;
+                const restaurants = await restaurantClient.getRestaurants(filters) as Array<Restaurant>;
 
                 if (restaurants) return {
                     result: restaurants.map(restaurant => ({
@@ -96,11 +95,11 @@ export default function userService({ restaurantClient }: typeof prismaClients) 
                 }
             }
         },
-        getRestaurant: async (req: NextApiRequest | { query: { restaurantId: string } }) => {
+        getRestaurant: async (req: NextApiRequest | { query: { restaurantId: Restaurant['id'] } }) => {
             const { restaurantId } = req.query as { restaurantId: string };
 
             try {
-                const restaurant = await restaurantClient.getRestaurant(restaurantId);
+                const restaurant = await restaurantClient.getRestaurant(Number(restaurantId));
 
                 if (restaurant) return {
                     result: {
@@ -150,7 +149,7 @@ export default function userService({ restaurantClient }: typeof prismaClients) 
             const restaurantProps = JSON.parse(req.body);
 
             try {
-                const restaurant = await restaurantClient.updateRestaurant(restaurantId, restaurantProps);
+                const restaurant = await restaurantClient.updateRestaurant(Number(restaurantId), restaurantProps);
 
                 if (restaurant) return { result: restaurant }
 
@@ -178,7 +177,7 @@ export default function userService({ restaurantClient }: typeof prismaClients) 
 
             try {
                 const restaurant = await restaurantClient.createRestaurant({
-                    userId,
+                    userId: Number(userId),
                     name: 'New Food Truck',
                     locations: {
                         create: [
@@ -229,7 +228,7 @@ export default function userService({ restaurantClient }: typeof prismaClients) 
             const { restaurantId } = req.query as { restaurantId: string };
 
             try {
-                await restaurantClient.deleteRestaurant(restaurantId);
+                await restaurantClient.deleteRestaurant(Number(restaurantId));
 
                 return { result: {} }
 

@@ -63,8 +63,8 @@ export default function MyFoodTruckCategories({ categories, userId }: Props) {
     const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
 
-        setCategoryList([...categoryList.map(cat => (
-            cat.id === name ? { ...cat, name: value } : cat
+        setCategoryList([...categoryList.map(category => (
+            category.id === Number(name) ? { ...category, name: value } : category
         ))])
     }
 
@@ -75,15 +75,15 @@ export default function MyFoodTruckCategories({ categories, userId }: Props) {
         >
             <Text>Manage here the food types of categories that later will be shared across all your business</Text>
             <div className={styles.cateogiryList}>
-                {categoryList.map((cat) => {
-                    if (cat?.userId) {
+                {categoryList.map((category) => {
+                    if (category?.userId) {
                         return (
-                            <div className={styles.cateogiryItem} key={cat.id}>
-                                <Text variant={'h4'} bold>{cat.name}</Text>
-                                {!cat._count.restaurants && (
+                            <div className={styles.cateogiryItem} key={category.id}>
+                                <Text variant={'h4'} bold>{category.name}</Text>
+                                {!category._count.restaurants && (
                                     <IconButton
                                         size='small'
-                                        onClick={() => onRemoveCategory(cat.id)}
+                                        onClick={() => onRemoveCategory(Number(category.id))}
                                         disabled={isLoading}
                                     >
                                         <DeleteIcon fontSize='small' />
@@ -93,24 +93,24 @@ export default function MyFoodTruckCategories({ categories, userId }: Props) {
                         )
                     } else {
                         return (
-                            <div className={styles.cateogiryItem} key={cat.id}>
+                            <div className={styles.cateogiryItem} key={category.id}>
                                 <input
-                                    name={cat.id}
-                                    value={cat.name}
+                                    name={`${category.id}`}
+                                    value={category.name}
                                     onChange={onChange}
                                     disabled={isLoading}
                                 />
                                 <div>
                                     <IconButton
                                         size='small'
-                                        onClick={() => onSaveNewCategory(cat.id)}
+                                        onClick={() => onSaveNewCategory(Number(category.id))}
                                         disabled={isLoading}
                                     >
                                         <SaveIcon fontSize='small' color='success' />
                                     </IconButton>
                                     <IconButton
                                         size='small'
-                                        onClick={() => onCancelNewCategory(cat.id)}
+                                        onClick={() => onCancelNewCategory(Number(category.id))}
                                         disabled={isLoading}
                                     >
                                         <CancelIcon fontSize='small' color='error' />

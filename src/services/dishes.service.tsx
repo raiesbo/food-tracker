@@ -9,7 +9,7 @@ export default function categoriesService({ dishClient }: typeof prismaClients) 
             try {
                 const dish = await dishClient.createDish({
                     name: 'New Dish',
-                    restaurantId,
+                    restaurantId: Number(restaurantId),
                     price: 0.00,
                     ingredients: 'First ingredient'
                 });
@@ -39,7 +39,7 @@ export default function categoriesService({ dishClient }: typeof prismaClients) 
             const { dishId } = req.query as { dishId: string };
 
             try {
-                await dishClient.deleteDish(dishId);
+                await dishClient.deleteDish(Number(dishId));
 
                 return { result: {} }
 
@@ -61,7 +61,7 @@ export default function categoriesService({ dishClient }: typeof prismaClients) 
             try {
                 const parsedBody = JSON.parse(req.body);
 
-                const dish = await dishClient.updateDish(dishId, parsedBody);
+                const dish = await dishClient.updateDish(Number(dishId), parsedBody);
 
                 if (dish) return { result: dish }
 

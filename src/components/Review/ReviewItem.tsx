@@ -5,6 +5,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import SaveIcon from '@mui/icons-material/Save';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import { IconButton, TextField } from "@mui/material";
+import { User } from "@prisma/client";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { Card } from "../Card";
@@ -15,7 +16,7 @@ import styles from './ReviewItem.module.scss';
 type Props = {
     review: Review,
     title?: string,
-    currentUserId?: string | null
+    currentUserId?: User['id']
 }
 
 export default function ProfileReviewsItem({ review, title, currentUserId }: Props) {

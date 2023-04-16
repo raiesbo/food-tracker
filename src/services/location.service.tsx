@@ -34,7 +34,7 @@ export default function locationsService({ locationClient }: typeof prismaClient
             try {
                 const parsedBody = JSON.parse(req.body);
 
-                const location = await locationClient.updateLocation(locationId, parsedBody)
+                const location = await locationClient.updateLocation(Number(locationId), parsedBody)
 
                 if (location) return { result: location }
 

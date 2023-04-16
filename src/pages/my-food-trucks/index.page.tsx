@@ -18,7 +18,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
     const metadata = session?.user && session?.user[auth0Config.metadata] as {
         role: 'SP' | 'CUSTOMER',
-        user_id: string
+        user_id: number
     };
 
     if (!metadata?.user_id) return {

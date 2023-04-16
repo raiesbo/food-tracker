@@ -77,7 +77,7 @@ export default function userService({ userClient }: typeof prismaClients) {
 
                 const userProps = validateUserUpdate(parsedBody);
 
-                const user = await userClient.updateUser(userId, userProps);
+                const user = await userClient.updateUser(Number(userId), userProps);
 
                 if (!user?.id) return {
                     result: {},

@@ -2,6 +2,7 @@ import { Restaurant, Review } from '@/types';
 import { auth0Config } from '@/utils/settings';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
+import { User } from '@prisma/client';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { RatingStarsEdit } from '../RatingStars';
@@ -11,7 +12,7 @@ import styles from './RestaurantDetailsReview.module.scss';
 
 type Props = {
     reviews: Restaurant['reviews'],
-    ownerId: Restaurant['userId']
+    ownerId: User['id'] | null,
     restaurantId: Restaurant['id']
 }
 
@@ -25,7 +26,7 @@ export default function RestaurantDetailsReview({ reviews, ownerId, restaurantId
     const [newRating, setNewRating] = useState(0);
     const [isDialogOpen, setIsDialogOpen] = useState(false)
 
-    const userMetadata = user && user[auth0Config.metadata] as { user_id: string } | undefined;
+    const userMetadata = user && user[auth0Config.metadata] as { user_id: number } | undefined;
     const isYourFoodTruck = userMetadata?.user_id === ownerId
 
     const onSaveNewReview = () => {
@@ -40,7 +41,6 @@ export default function RestaurantDetailsReview({ reviews, ownerId, restaurantId
                 restaurantId
             })
         }).then(response => {
-            console.log({ response })
             if (!response.ok) {
                 alert('Server Error')
             } else {

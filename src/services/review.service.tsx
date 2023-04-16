@@ -7,7 +7,7 @@ export default function reviewsService({ reviewClient }: typeof prismaClients) {
             const { userId } = req.query as { userId: string };
 
             try {
-                const review = await reviewClient.getReviews({ userId })
+                const review = await reviewClient.getReviews({ userId: Number(userId) })
 
                 if (review) return {
                     result: review.map(review => ({
@@ -44,11 +44,7 @@ export default function reviewsService({ reviewClient }: typeof prismaClients) {
             try {
                 const newProps = JSON.parse(req.body);
 
-                console.log({ newProps })
-
-                const review = await reviewClient.updateReview(reviewId, newProps);
-
-                console.log({ review })
+                const review = await reviewClient.updateReview(Number(reviewId), newProps);
 
                 if (review) return {
                     result: {
@@ -82,7 +78,7 @@ export default function reviewsService({ reviewClient }: typeof prismaClients) {
             const { reviewId } = req.query as { reviewId: string };
 
             try {
-                const review = await reviewClient.deleteReview(reviewId)
+                const review = await reviewClient.deleteReview(Number(reviewId))
 
                 if (review) return { result: review }
 
@@ -107,8 +103,6 @@ export default function reviewsService({ reviewClient }: typeof prismaClients) {
             }
         },
         createReview: async (req: NextApiRequest) => {
-            const { reviewId } = req.query as { reviewId: string };
-
             try {
                 const newProps = JSON.parse(req.body);
 

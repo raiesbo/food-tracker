@@ -1,4 +1,5 @@
 import { Restaurant, Review } from '@/types';
+import { User } from '@prisma/client';
 import cc from 'classcat';
 import { InfoSection } from '../InfoSection';
 import { ReviewItem } from '../Review';
@@ -6,7 +7,7 @@ import styles from './ProfileReviews.module.scss';
 
 type Props = {
     reviews: Restaurant['reviews'],
-    currentUserId?: string
+    currentUserId?: User['id']
     className?: string
 }
 
