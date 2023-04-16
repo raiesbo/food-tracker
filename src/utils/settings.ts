@@ -8,4 +8,4 @@ export const auth0Config = {
 
 export const dropboxConfig = {
     apiToken: process.env.DROPBOX_API_TOKEN
-}
+};

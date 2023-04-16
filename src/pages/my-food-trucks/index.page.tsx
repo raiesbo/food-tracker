@@ -23,7 +23,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
     if (!metadata?.user_id) return {
         props: { restaurants: [], categories: [] }
-    }
+    };
 
     const {
         result: restaurants,
@@ -37,11 +37,11 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
     if (getRestaurantsError || categoriesError) return {
         props: { restaurants: [], categories: [] }
-    }
+    };
 
     return {
         props: { restaurants, categories, userId: metadata?.user_id }
-    }
+    };
 }
 
 type Props = {
@@ -71,5 +71,5 @@ export default function MyRestaurants({ restaurants, categories, userId }: Props
                 </div>
             </main>
         </>
-    )
+    );
 }

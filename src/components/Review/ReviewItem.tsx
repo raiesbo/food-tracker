@@ -22,8 +22,8 @@ type Props = {
 export default function ProfileReviewsItem({ review, title, currentUserId }: Props) {
     const router = useRouter();
 
-    const [rating, setRating] = useState(review.rating)
-    const [comment, setComment] = useState(review.comment)
+    const [rating, setRating] = useState(review.rating);
+    const [comment, setComment] = useState(review.comment);
 
     const [isLoading, setIsLoading] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
@@ -44,15 +44,15 @@ export default function ProfileReviewsItem({ review, title, currentUserId }: Pro
             alert('There has been server error, please try again later.');
         }).finally(() => {
             setIsLoading(false);
-        })
-    }
+        });
+    };
 
     const onCancelUpdate = () => {
         setRating(review.rating);
         setComment(review.comment);
 
         setIsEdit(false);
-    }
+    };
 
     const onSaveUpdate = () => {
         setIsLoading(true);
@@ -67,8 +67,8 @@ export default function ProfileReviewsItem({ review, title, currentUserId }: Pro
         }).finally(() => {
             setIsLoading(false);
             setIsEdit(false);
-        })
-    }
+        });
+    };
 
     return (
         <Card key={review.id} className={styles.root}>
@@ -150,5 +150,5 @@ export default function ProfileReviewsItem({ review, title, currentUserId }: Pro
                 </div>
             )}
         </Card>
-    )
+    );
 }

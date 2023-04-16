@@ -5,9 +5,9 @@ export default function locationsService({ locationClient }: typeof prismaClient
     return {
         getAllUniqueCities: async () => {
             try {
-                const locations = await locationClient.getLocations()
+                const locations = await locationClient.getLocations();
 
-                if (locations) return { result: Array.from(new Set(locations?.map(({ city }) => city))) }
+                if (locations) return { result: Array.from(new Set(locations?.map(({ city }) => city))) };
 
                 return {
                     result: {},
@@ -15,17 +15,17 @@ export default function locationsService({ locationClient }: typeof prismaClient
                         status: 400,
                         message: `Unable to get all locations`
                     }
-                }
+                };
             } catch (e) {
                 const message = e as { message: string };
-                console.error(message)
+                console.error(message);
                 return {
                     result: {},
                     error: {
                         status: 400,
                         message: message
                     }
-                }
+                };
             }
         },
         updateLocation: async (req: NextApiRequest) => {
@@ -34,9 +34,9 @@ export default function locationsService({ locationClient }: typeof prismaClient
             try {
                 const parsedBody = JSON.parse(req.body);
 
-                const location = await locationClient.updateLocation(Number(locationId), parsedBody)
+                const location = await locationClient.updateLocation(Number(locationId), parsedBody);
 
-                if (location) return { result: location }
+                if (location) return { result: location };
 
                 return {
                     result: {},
@@ -44,18 +44,18 @@ export default function locationsService({ locationClient }: typeof prismaClient
                         status: 400,
                         message: `Unable to update location with ID: ${locationId}`
                     }
-                }
+                };
             } catch (e) {
                 const message = e as { message: string };
-                console.error(message)
+                console.error(message);
                 return {
                     result: {},
                     error: {
                         status: 400,
                         message: message
                     }
-                }
+                };
             }
         }
-    }
+    };
 }

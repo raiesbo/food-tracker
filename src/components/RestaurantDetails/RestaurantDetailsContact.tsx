@@ -68,5 +68,5 @@ export default function RestaurantDetailsContact({ user, location }: Props) {
                 </div>
             )}
         </Card>
-    )
+    );
 }

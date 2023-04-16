@@ -22,7 +22,7 @@ export default function MyFoodTruckList({ restaurants }: Props) {
     const router = useRouter();
     const { user } = useUser();
 
-    const userMetadata = user && user?.[auth0Config.metadata] as { user_id: string }
+    const userMetadata = user && user?.[auth0Config.metadata] as { user_id: string };
 
     const onCreateNewRestaurant = () => {
         fetch(`/api/users/${userMetadata?.user_id}/restaurants`, {
@@ -30,9 +30,9 @@ export default function MyFoodTruckList({ restaurants }: Props) {
         })
             .then(response => response.json())
             .then(({ restaurant }) => {
-                router.push(`${paths.myFoodTrucks}/${restaurant.id}`)
-            })
-    }
+                router.push(`${paths.myFoodTrucks}/${restaurant.id}`);
+            });
+    };
 
     return (
         <div className={styles.root}>
@@ -67,7 +67,7 @@ export default function MyFoodTruckList({ restaurants }: Props) {
                             </div>
                         </Link>
                     </Card>
-                )
+                );
             })}
             <Card
                 withHover
@@ -82,5 +82,5 @@ export default function MyFoodTruckList({ restaurants }: Props) {
                 </IconButton>
             </Card>
         </div>
-    )
+    );
 }

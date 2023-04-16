@@ -8,9 +8,9 @@ export default function createGoogleMapsUrl({ streetName = '', streetNumber, cit
     baseUrl.searchParams.append('api', '1');
 
     let query = streetName;
-    if (streetNumber) query += `+${streetNumber}`
-    if (city) query += `+${city}`
-    if (zip) query += `+${zip}`
+    if (streetNumber) query += `+${streetNumber}`;
+    if (city) query += `+${city}`;
+    if (zip) query += `+${zip}`;
 
     baseUrl.searchParams.append('query', query);
 

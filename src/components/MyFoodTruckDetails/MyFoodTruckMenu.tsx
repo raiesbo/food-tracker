@@ -25,9 +25,9 @@ export default function MyFoodTruckMenu({ menu, restaurantid }: Props) {
             }
             alert('Server Error');
         }).then(({ dish }) => {
-            setRestaurantMenu((state => ([...state, dish])))
-        }).finally(() => setIsLoading(false))
-    }
+            setRestaurantMenu((state => ([...state, dish])));
+        }).finally(() => setIsLoading(false));
+    };
 
     return (
         <InfoSection
@@ -47,5 +47,5 @@ export default function MyFoodTruckMenu({ menu, restaurantid }: Props) {
                 ADD NEW DISH
             </Button>
         </InfoSection>
-    )
+    );
 }

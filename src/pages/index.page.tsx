@@ -26,11 +26,11 @@ export async function getServerSideProps() {
 
   if (getAllCategoriesError || getAllLocationsError) return {
     props: { getAllCategoriesError, getAllLocationsError }
-  }
+  };
 
   return {
     props: { categories, locations }
-  }
+  };
 }
 
 type Props = {
@@ -48,10 +48,10 @@ export default function Home({ categories, locations }: Props) {
     const searchParams = new URLSearchParams({
       city: city.replace('All', ''),
       category: category.replace('All', '')
-    })
+    });
 
     router.push(`${paths.restaurants}?${searchParams}`);
-  }
+  };
 
   return (
     <>

@@ -22,8 +22,8 @@ export default function MyFoodTruckCategories({ categories, userId }: Props) {
         setCategoryList(state => ([
             ...state,
             { id: `${(Math.random() * 100000).toFixed(0)}`, name: 'New Category' }
-        ] as Array<Category>))
-    }
+        ] as Array<Category>));
+    };
 
     const onRemoveCategory = (catId: Category['id']) => {
         setIsLoading(true);
@@ -32,12 +32,12 @@ export default function MyFoodTruckCategories({ categories, userId }: Props) {
             method: 'DELETE'
         }).then(response => {
             if (response.ok) {
-                setCategoryList([...categoryList.filter(({ id }) => id !== catId)])
+                setCategoryList([...categoryList.filter(({ id }) => id !== catId)]);
             } else {
-                alert('Server Error')
+                alert('Server Error');
             }
         }).finally(() => setIsLoading(false));
-    }
+    };
 
     const onSaveNewCategory = (catId: Category['id']) => {
         setIsLoading(true);
@@ -49,24 +49,24 @@ export default function MyFoodTruckCategories({ categories, userId }: Props) {
             body: JSON.stringify({ name: catToSave?.name, userId })
         }).then(response => response.json()).then(({ category }) => {
             if (category.id) {
-                setCategoryList([...categoryList.map(cat => cat.name === category.name ? category : cat)])
+                setCategoryList([...categoryList.map(cat => cat.name === category.name ? category : cat)]);
             } else {
-                alert('Server Error')
+                alert('Server Error');
             }
         }).finally(() => setIsLoading(false));
-    }
+    };
 
     const onCancelNewCategory = (catId: Category['id']) => {
-        setCategoryList([...categoryList.filter(({ id }) => id !== catId)])
-    }
+        setCategoryList([...categoryList.filter(({ id }) => id !== catId)]);
+    };
 
     const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
 
         setCategoryList([...categoryList.map(category => (
             category.id === Number(name) ? { ...category, name: value } : category
-        ))])
-    }
+        ))]);
+    };
 
     return (
         <InfoSection
@@ -90,7 +90,7 @@ export default function MyFoodTruckCategories({ categories, userId }: Props) {
                                     </IconButton>
                                 )}
                             </div>
-                        )
+                        );
                     } else {
                         return (
                             <div className={styles.cateogiryItem} key={category.id}>
@@ -117,7 +117,7 @@ export default function MyFoodTruckCategories({ categories, userId }: Props) {
                                     </IconButton>
                                 </div>
                             </div>
-                        )
+                        );
                     }
                 })}
             </div>
@@ -129,5 +129,5 @@ export default function MyFoodTruckCategories({ categories, userId }: Props) {
                 Add new category
             </Button>
         </InfoSection>
-    )
+    );
 }

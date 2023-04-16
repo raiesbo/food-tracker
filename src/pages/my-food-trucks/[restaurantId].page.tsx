@@ -37,9 +37,9 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
             permanent: true,
             destination: paths.myFoodTrucks
         }
-    }
+    };
 
-    return { props: { restaurant, categories } }
+    return { props: { restaurant, categories } };
 }
 
 type Props = {
@@ -55,12 +55,12 @@ export default function MyNewRestaurant({ restaurant, categories }: Props) {
             method: 'DELETE'
         }).then(response => {
             if (response.ok) {
-                return router.push(paths.myFoodTrucks)
+                return router.push(paths.myFoodTrucks);
             } else {
-                alert('Server Error')
+                alert('Server Error');
             }
-        })
-    }
+        });
+    };
 
     return (
         <>
@@ -134,5 +134,5 @@ export default function MyNewRestaurant({ restaurant, categories }: Props) {
                 </section>
             </main>
         </>
-    )
+    );
 }

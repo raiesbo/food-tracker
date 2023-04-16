@@ -17,14 +17,14 @@ export default function RatingStars({ rating = 0, onChange }: Props) {
                 <IconButton key={i} onClick={() => onChange(i + 1)}>
                     <StarIcon />
                 </IconButton>
-            )
+            );
         }
         if (i >= Math.floor(rating) && i < 5) {
             stars.push(
                 <IconButton key={i} onClick={() => onChange(i + 1)}>
                     <StarOutlineIcon />
                 </IconButton >
-            )
+            );
         }
     }
 
@@ -32,5 +32,5 @@ export default function RatingStars({ rating = 0, onChange }: Props) {
         <div>
             {stars}
         </div>
-    )
+    );
 }

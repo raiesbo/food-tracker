@@ -42,8 +42,8 @@ export default function MyGoodTruckDish({ dish }: Props) {
             name: ing
         })) || []);
 
-        setIsUpdate(false)
-    }
+        setIsUpdate(false);
+    };
 
     const onRemoveDish = () => {
         setIsLoading(true);
@@ -52,12 +52,12 @@ export default function MyGoodTruckDish({ dish }: Props) {
             method: 'DELETE'
         }).then(response => {
             if (!response.ok) {
-                alert('Server Error')
+                alert('Server Error');
             } else {
                 router.reload();
             }
         }).finally(() => setIsLoading(false));
-    }
+    };
 
     const onUpdateDish = () => {
         setIsLoading(true);
@@ -81,7 +81,7 @@ export default function MyGoodTruckDish({ dish }: Props) {
             return fetch(`/api/dishes/${dish.id}/ingredients`, {
                 method: 'PUT',
                 body: JSON.stringify({ ingredients })
-            })
+            });
         }).then(response => {
             if (!response?.ok) {
                 alert('Server Error');
@@ -91,7 +91,7 @@ export default function MyGoodTruckDish({ dish }: Props) {
             setIsLoading(false);
             setIsUpdate(false);
         });
-    }
+    };
 
     return (
         <Card key={dish.id} className={styles.root}>
@@ -246,5 +246,5 @@ export default function MyGoodTruckDish({ dish }: Props) {
                 </div>
             </div>
         </Card>
-    )
+    );
 }

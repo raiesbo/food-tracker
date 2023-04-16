@@ -33,5 +33,5 @@ export default function RestaurantDetailsHours({ schedules }: Props) {
                 ))}
             </div>
         </Card>
-    )
+    );
 }

@@ -26,7 +26,7 @@ export default function MyFoodTruckLocations({ location }: Props) {
         setZip(location.zip || '');
 
         setIsUpdate(false);
-    }
+    };
 
     const onSave = () => {
         setIsLoading(true);
@@ -42,8 +42,8 @@ export default function MyFoodTruckLocations({ location }: Props) {
         }).finally(() => {
             setIsLoading(false);
             setIsUpdate(false);
-        })
-    }
+        });
+    };
 
     return (
         <InfoSection title="Main Location">
@@ -110,5 +110,5 @@ export default function MyFoodTruckLocations({ location }: Props) {
                 </div>
             )}
         </InfoSection>
-    )
+    );
 }

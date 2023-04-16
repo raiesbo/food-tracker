@@ -6,9 +6,9 @@ export default function categoriesService({ categoryClient }: typeof prismaClien
     return {
         getAllCategories: async () => {
             try {
-                const categories = await categoryClient.getCategories()
+                const categories = await categoryClient.getCategories();
 
-                if (categories) return { result: categories }
+                if (categories) return { result: categories };
 
                 return {
                     result: {},
@@ -16,24 +16,24 @@ export default function categoriesService({ categoryClient }: typeof prismaClien
                         status: 400,
                         message: `Unable to get all categories`
                     }
-                }
+                };
             } catch (e) {
                 const message = e as { message: string };
-                console.error(message)
+                console.error(message);
                 return {
                     result: {},
                     error: {
                         status: 400,
                         message: message
                     }
-                }
+                };
             }
         },
         getCategoriesByUserId: async (userId: User['id']) => {
             try {
-                const categories = await categoryClient.getCategories({ userId })
+                const categories = await categoryClient.getCategories({ userId });
 
-                if (categories) return { result: categories }
+                if (categories) return { result: categories };
 
                 return {
                     result: {},
@@ -41,17 +41,17 @@ export default function categoriesService({ categoryClient }: typeof prismaClien
                         status: 400,
                         message: `Unable to get all categories from user with ID ${userId}`
                     }
-                }
+                };
             } catch (e) {
                 const message = e as { message: string };
-                console.error(message)
+                console.error(message);
                 return {
                     result: {},
                     error: {
                         status: 400,
                         message: message
                     }
-                }
+                };
             }
         },
         deleteCategory: async (req: NextApiRequest) => {
@@ -60,18 +60,18 @@ export default function categoriesService({ categoryClient }: typeof prismaClien
             try {
                 await categoryClient.deleteCategory(Number(categoryId));
 
-                return { result: {} }
+                return { result: {} };
 
             } catch (e) {
                 const message = e as { message: string };
-                console.error(message)
+                console.error(message);
                 return {
                     result: {},
                     error: {
                         status: 400,
                         message: message
                     }
-                }
+                };
             }
         },
         createNewCategory: async (req: NextApiRequest) => {
@@ -80,7 +80,7 @@ export default function categoriesService({ categoryClient }: typeof prismaClien
 
                 const category = await categoryClient.createCategory(parsedBody);
 
-                if (category) return { result: category }
+                if (category) return { result: category };
 
                 return {
                     result: {},
@@ -88,19 +88,19 @@ export default function categoriesService({ categoryClient }: typeof prismaClien
                         status: 400,
                         message: `Unable to create a new category`
                     }
-                }
+                };
 
             } catch (e) {
                 const message = e as { message: string };
-                console.error(message)
+                console.error(message);
                 return {
                     result: {},
                     error: {
                         status: 400,
                         message: message
                     }
-                }
+                };
             }
         }
-    }
+    };
 }

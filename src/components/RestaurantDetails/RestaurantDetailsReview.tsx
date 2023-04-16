@@ -24,10 +24,10 @@ export default function RestaurantDetailsReview({ reviews, ownerId, restaurantId
 
     const [newComment, setNewComment] = useState('');
     const [newRating, setNewRating] = useState(0);
-    const [isDialogOpen, setIsDialogOpen] = useState(false)
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
 
     const userMetadata = user && user[auth0Config.metadata] as { user_id: number } | undefined;
-    const isYourFoodTruck = userMetadata?.user_id === ownerId
+    const isYourFoodTruck = userMetadata?.user_id === ownerId;
 
     const onSaveNewReview = () => {
         setIsLoading(true);
@@ -42,12 +42,12 @@ export default function RestaurantDetailsReview({ reviews, ownerId, restaurantId
             })
         }).then(response => {
             if (!response.ok) {
-                alert('Server Error')
+                alert('Server Error');
             } else {
                 router.reload();
             }
         }).finally(() => setIsLoading(false));
-    }
+    };
 
     return (
         <>
@@ -124,5 +124,5 @@ export default function RestaurantDetailsReview({ reviews, ownerId, restaurantId
                 </DialogContent>
             </Dialog>
         </>
-    )
+    );
 }

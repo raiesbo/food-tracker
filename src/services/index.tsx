@@ -21,7 +21,7 @@ function services({ prismaClient, auth0Client }: Props) {
         categoriesService: categoriesService(prismaClient),
         dishesService: dishesService(prismaClient),
         locationsService: locationsService(prismaClient)
-    }
+    };
 }
 
 export default services({ prismaClient, auth0Client });

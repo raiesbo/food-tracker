@@ -14,7 +14,7 @@ function prismaClients(prismaInstance: IDBClient) {
         reviewClient: reviewClient(prismaInstance),
         locationClient: locationClient(prismaInstance),
         categoryClient: categoryClient(prismaInstance)
-    }
+    };
 }
 
 export default prismaClients(PrismaDBClient);

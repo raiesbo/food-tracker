@@ -14,10 +14,10 @@ export default function auth0Service({ auth0Client }: Props) {
 
     return {
         createAuth0User: async (req: NextApiRequest, userId: string = '') => {
-            const parsedBody = JSON.parse(req.body)
+            const parsedBody = JSON.parse(req.body);
 
             try {
-                const response = await getManagementApiToken({ clientId, clientSecret, auth0Domain })
+                const response = await getManagementApiToken({ clientId, clientSecret, auth0Domain });
 
                 if (!response.ok) return {
                     result: {},
@@ -25,7 +25,7 @@ export default function auth0Service({ auth0Client }: Props) {
                         status: 400,
                         message: 'Unable to get API Token to create Auth0 user'
                     }
-                }
+                };
 
                 const { access_token: accessToken } = await response.json();
 
@@ -42,7 +42,7 @@ export default function auth0Service({ auth0Client }: Props) {
                     name: `${firstName} ${lastName}`,
                     connection,
                     verify_email: false
-                }
+                };
 
                 const createUserResponse = await createUser({ accessToken, auth0Domain, body });
 
@@ -52,23 +52,23 @@ export default function auth0Service({ auth0Client }: Props) {
                         status: 400,
                         message: 'Unable to create Auth0 user'
                     }
-                }
+                };
 
                 const user = await createUserResponse.json();
 
                 return { result: user };
 
             } catch (e) {
-                console.error(e)
-                const { message } = e as { message: string }
+                console.error(e);
+                const { message } = e as { message: string };
                 return {
                     result: {},
                     error: {
                         status: 400,
                         message: message
                     }
-                }
+                };
             }
         }
-    }
+    };
 }

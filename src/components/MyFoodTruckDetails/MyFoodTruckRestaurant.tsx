@@ -30,7 +30,7 @@ export default function MyFoodTruckRestaurant({ restaurant, categories }: Props)
         setIsCashOnly(restaurant.isCashOnly || false);
 
         setIsUpdate(false);
-    }
+    };
 
     const onSave = () => {
         setIsLoading(true);
@@ -51,8 +51,8 @@ export default function MyFoodTruckRestaurant({ restaurant, categories }: Props)
         }).finally(() => {
             setIsLoading(false);
             setIsUpdate(false);
-        })
-    }
+        });
+    };
 
     return (
         <InfoSection
@@ -105,7 +105,7 @@ export default function MyFoodTruckRestaurant({ restaurant, categories }: Props)
                             >
                                 {category.name}
                             </MenuItem>
-                        )
+                        );
                     })}
                 </Select>
             </div>
@@ -177,5 +177,5 @@ export default function MyFoodTruckRestaurant({ restaurant, categories }: Props)
             </div>
 
         </InfoSection>
-    )
+    );
 }

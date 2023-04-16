@@ -25,5 +25,5 @@ export default function RestaurantDetailsReview({ reviews, currentUserId, classN
                 ))}
             </div>
         </InfoSection>
-    )
+    );
 }

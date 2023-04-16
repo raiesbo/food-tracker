@@ -29,7 +29,7 @@ export default function userService({ restaurantClient }: typeof prismaClients) 
                             }))
                         ]
                     }))
-                }
+                };
 
                 return {
                     result: {},
@@ -37,17 +37,17 @@ export default function userService({ restaurantClient }: typeof prismaClients) 
                         status: 400,
                         message: `Unable to get all restaurants with the following filters ${filters}`
                     }
-                }
+                };
             } catch (e) {
                 const message = e as { message: string };
-                console.error(message)
+                console.error(message);
                 return {
                     result: {},
                     error: {
                         status: 400,
                         message: message
                     }
-                }
+                };
             }
         },
         getAllRestaurantByUser: async (userId: User['id']) => {
@@ -74,7 +74,7 @@ export default function userService({ restaurantClient }: typeof prismaClients) 
                             }))
                         ]
                     }))
-                }
+                };
 
                 return {
                     result: {},
@@ -82,17 +82,17 @@ export default function userService({ restaurantClient }: typeof prismaClients) 
                         status: 400,
                         message: `Unable to get all restaurants from user with id ${userId}`
                     }
-                }
+                };
             } catch (e) {
                 const message = e as { message: string };
-                console.error(message)
+                console.error(message);
                 return {
                     result: {},
                     error: {
                         status: 400,
                         message: message
                     }
-                }
+                };
             }
         },
         getRestaurant: async (req: NextApiRequest | { query: { restaurantId: Restaurant['id'] } }) => {
@@ -121,7 +121,7 @@ export default function userService({ restaurantClient }: typeof prismaClients) 
                             }))
                         ]
                     }
-                }
+                };
 
                 return {
                     result: {},
@@ -129,17 +129,17 @@ export default function userService({ restaurantClient }: typeof prismaClients) 
                         status: 400,
                         message: `Unable to find restaurant with ID ${restaurantId}`
                     }
-                }
+                };
             } catch (e) {
                 const message = e as { message: string };
-                console.error(message)
+                console.error(message);
                 return {
                     result: {},
                     error: {
                         status: 400,
                         message: message
                     }
-                }
+                };
             }
 
         },
@@ -151,7 +151,7 @@ export default function userService({ restaurantClient }: typeof prismaClients) 
             try {
                 const restaurant = await restaurantClient.updateRestaurant(Number(restaurantId), restaurantProps);
 
-                if (restaurant) return { result: restaurant }
+                if (restaurant) return { result: restaurant };
 
                 return {
                     result: {},
@@ -159,17 +159,17 @@ export default function userService({ restaurantClient }: typeof prismaClients) 
                         status: 400,
                         message: `Unable to update restaurant with ID ${restaurantId}`
                     }
-                }
+                };
             } catch (e) {
                 const message = e as { message: string };
-                console.error(message)
+                console.error(message);
                 return {
                     result: {},
                     error: {
                         status: 400,
                         message: message
                     }
-                }
+                };
             }
         },
         createNewRestaurant: async (req: NextApiRequest) => {
@@ -201,9 +201,9 @@ export default function userService({ restaurantClient }: typeof prismaClients) 
                             { day: 'SUNDAY' }
                         ]
                     }
-                })
+                });
 
-                if (restaurant) return { result: restaurant }
+                if (restaurant) return { result: restaurant };
 
                 return {
                     result: {},
@@ -211,17 +211,17 @@ export default function userService({ restaurantClient }: typeof prismaClients) 
                         status: 400,
                         message: `Unable to create a new restaurant`
                     }
-                }
+                };
             } catch (e) {
                 const message = e as { message: string };
-                console.error(message)
+                console.error(message);
                 return {
                     result: {},
                     error: {
                         status: 400,
                         message: message
                     }
-                }
+                };
             }
         },
         deleteRestaurant: async (req: NextApiRequest) => {
@@ -230,19 +230,19 @@ export default function userService({ restaurantClient }: typeof prismaClients) 
             try {
                 await restaurantClient.deleteRestaurant(Number(restaurantId));
 
-                return { result: {} }
+                return { result: {} };
 
             } catch (e) {
                 const message = e as { message: string };
-                console.error(message)
+                console.error(message);
                 return {
                     result: {},
                     error: {
                         status: 400,
                         message: message
                     }
-                }
+                };
             }
         }
-    }
+    };
 }

@@ -23,5 +23,5 @@ export default function MyFoodTruckReviews({ reviews, currentUserId }: Props) {
                 ))}
             </div>
         </InfoSection>
-    )
+    );
 }

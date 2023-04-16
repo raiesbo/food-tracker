@@ -32,5 +32,5 @@ export default function auth0Client() {
                 body: JSON.stringify(body)
             });
         }
-    }
+    };
 }

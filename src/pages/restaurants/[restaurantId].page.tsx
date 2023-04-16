@@ -31,14 +31,14 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
     if (error || getAllCategoriesError) return {
         props: { restaurants: [], categories: [] }
-    }
+    };
 
     return {
         props: {
             restaurant,
             categories
         }
-    }
+    };
 }
 
 type Props = {
@@ -50,8 +50,8 @@ type Props = {
 export default function RestaurantDetailsPage({ restaurant, categories }: Props) {
     const { user } = useUser();
 
-    const [newComment, setNewComment] = useState('')
-    const [isDialogOpen, setIsDialogOpen] = useState(false)
+    const [newComment, setNewComment] = useState('');
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
 
     const userMetadata = user && user[auth0Config.metadata] as { user_id: string } | undefined;
 
@@ -103,7 +103,7 @@ export default function RestaurantDetailsPage({ restaurant, categories }: Props)
                                         key={dish.id}
                                         dish={dish}
                                     />
-                                )
+                                );
                             })}
                         </div>
                     </div>
@@ -128,5 +128,5 @@ export default function RestaurantDetailsPage({ restaurant, categories }: Props)
                 </div>
             </main>
         </>
-    )
+    );
 }

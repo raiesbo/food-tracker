@@ -14,7 +14,7 @@ import styles from './restaurants.module.scss';
 const { restaurantService, categoriesService, locationsService } = services;
 
 export async function getServerSideProps({ query }: GetServerSidePropsContext) {
-    let filters = {}
+    let filters = {};
 
     if (!!query?.vegan) {
         filters = {
@@ -24,14 +24,14 @@ export async function getServerSideProps({ query }: GetServerSidePropsContext) {
                     isVegan: true
                 }
             }
-        }
+        };
     }
 
     if (!!query?.creditcard) {
         filters = {
             ...filters,
             isCashOnly: false
-        }
+        };
     }
 
     if (query?.name) {
@@ -41,7 +41,7 @@ export async function getServerSideProps({ query }: GetServerSidePropsContext) {
                 contains: query.name,
                 mode: 'insensitive'
             }
-        }
+        };
     }
 
     if (query?.category) {
@@ -52,7 +52,7 @@ export async function getServerSideProps({ query }: GetServerSidePropsContext) {
                     name: query.category
                 }
             }
-        }
+        };
     }
 
     if (query?.city) {
@@ -63,7 +63,7 @@ export async function getServerSideProps({ query }: GetServerSidePropsContext) {
                     city: query.city
                 }
             }
-        }
+        };
     }
 
     const {
@@ -83,11 +83,11 @@ export async function getServerSideProps({ query }: GetServerSidePropsContext) {
 
     if (getAllCategoriesError || getAllLocationsError) return {
         props: { getAllCategoriesError, getAllLocationsError }
-    }
+    };
 
     if (error || getAllCategoriesError || getAllLocationsError) return {
         props: { restaurants: [], locations: [], categories: [] }
-    }
+    };
 
     return {
         props: {
@@ -98,7 +98,7 @@ export async function getServerSideProps({ query }: GetServerSidePropsContext) {
             queryCity: query?.city || '',
             queryCategory: query?.category || ''
         }
-    }
+    };
 }
 
 type Props = {
@@ -136,16 +136,16 @@ export default function RestaurantPage({
                 category: category.replace('All', ''),
                 vegan: vegan ? 'true' : '',
                 creditcard: creditcard ? 'true' : ''
-            })
+            });
 
             clearTimeout(timeoutId);
             setTimeoutId(setTimeout(() => {
                 router.replace(`${paths.restaurants}?${searchParams}`);
             }, 500));
-        }
+        };
 
         handleButtonClick();
-    }, [city, category, vegan, creditcard, name])
+    }, [city, category, vegan, creditcard, name]);
 
     return (
         <>
@@ -235,5 +235,5 @@ export default function RestaurantPage({
                 </div>
             </main>
         </>
-    )
+    );
 }

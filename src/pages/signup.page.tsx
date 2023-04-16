@@ -43,9 +43,9 @@ export default function SignIn() {
         }).finally(() => setIsLoading(false));
 
         if (response.ok) {
-            return router.push(paths.home)
+            return router.push(paths.home);
         }
-    }
+    };
 
     const onPasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target;

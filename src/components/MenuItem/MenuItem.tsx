@@ -8,14 +8,14 @@ import { Card } from "../Card";
 import { Text } from "../Text";
 import styles from './MenuItem.module.scss';
 
-const mockImg = 'https://images.unsplash.com/photo-1551730707-ae4fde676aae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80'
+const mockImg = 'https://images.unsplash.com/photo-1551730707-ae4fde676aae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80';
 
 type Props = {
     dish: Dish
 }
 
 export default function MenuItem({ dish }: Props) {
-    const id = useId()
+    const id = useId();
     const [isOpen, setIsOpen] = useState(false);
 
     return (
@@ -58,10 +58,10 @@ export default function MenuItem({ dish }: Props) {
                                 label={ingredient}
                                 size='small'
                             />
-                        )
+                        );
                     })}
                 </div>
             </div>
         </Card >
-    )
+    );
 };

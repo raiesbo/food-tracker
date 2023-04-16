@@ -40,5 +40,5 @@ export default function InfoSection({ children, title, className, childrenClassN
                 {children}
             </div>
         </section>
-    )
+    );
 }

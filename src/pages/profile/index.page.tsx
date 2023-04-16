@@ -24,9 +24,9 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
             permanent: true,
             destination: '/'
         },
-    }
+    };
 
-    const userId = session.user[auth0Config.metadata]?.user_id
+    const userId = session.user[auth0Config.metadata]?.user_id;
 
     const {
         result: user,
@@ -43,7 +43,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
             permanent: true,
             destination: '/'
         },
-    }
+    };
 
     return {
         props: {
@@ -51,7 +51,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
             reviews,
             auth0User: session.user
         }
-    }
+    };
 }
 
 type Props = {
@@ -76,7 +76,7 @@ export default function Profile({ user, auth0User, reviews }: Props) {
         setPhone(user.phone || '');
 
         setIsUpdate(false);
-    }
+    };
 
     const onSave = async () => {
         setIsLoading(true);
@@ -91,8 +91,8 @@ export default function Profile({ user, auth0User, reviews }: Props) {
         }).finally(() => {
             setIsLoading(false);
             setIsUpdate(false);
-        })
-    }
+        });
+    };
 
     return (
         <>
@@ -207,5 +207,5 @@ export default function Profile({ user, auth0User, reviews }: Props) {
                 </section>
             </main>
         </>
-    )
+    );
 }

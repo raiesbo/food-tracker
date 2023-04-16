@@ -7,7 +7,7 @@ export default function reviewsService({ reviewClient }: typeof prismaClients) {
             const { userId } = req.query as { userId: string };
 
             try {
-                const review = await reviewClient.getReviews({ userId: Number(userId) })
+                const review = await reviewClient.getReviews({ userId: Number(userId) });
 
                 if (review) return {
                     result: review.map(review => ({
@@ -15,7 +15,7 @@ export default function reviewsService({ reviewClient }: typeof prismaClients) {
                         createdAt: new Date(review.createdAt).toDateString(),
                         updatedAt: new Date(review.updatedAt).toDateString()
                     }))
-                }
+                };
 
                 return {
                     result: {},
@@ -23,18 +23,18 @@ export default function reviewsService({ reviewClient }: typeof prismaClients) {
                         status: 400,
                         message: `Unable to find all reviews from User with id ${userId}`
                     }
-                }
+                };
 
             } catch (e) {
                 const { message } = e as { message: string };
-                console.error(message)
+                console.error(message);
                 return {
                     result: {},
                     error: {
                         status: 400,
                         message: message
                     }
-                }
+                };
             }
 
         },
@@ -52,7 +52,7 @@ export default function reviewsService({ reviewClient }: typeof prismaClients) {
                         createdAt: new Date(review.createdAt).toDateString(),
                         updatedAt: new Date(review.updatedAt).toDateString()
                     }
-                }
+                };
 
                 return {
                     result: {},
@@ -60,27 +60,27 @@ export default function reviewsService({ reviewClient }: typeof prismaClients) {
                         status: 400,
                         message: `Unable to update review with ID ${reviewId}`
                     }
-                }
+                };
 
             } catch (e) {
                 const { message } = e as { message: string };
-                console.error(message)
+                console.error(message);
                 return {
                     result: {},
                     error: {
                         status: 400,
                         message: message
                     }
-                }
+                };
             }
         },
         deleteReview: async (req: NextApiRequest) => {
             const { reviewId } = req.query as { reviewId: string };
 
             try {
-                const review = await reviewClient.deleteReview(Number(reviewId))
+                const review = await reviewClient.deleteReview(Number(reviewId));
 
-                if (review) return { result: review }
+                if (review) return { result: review };
 
                 return {
                     result: {},
@@ -88,25 +88,25 @@ export default function reviewsService({ reviewClient }: typeof prismaClients) {
                         status: 400,
                         message: `Unable to delete review with ID ${reviewId}`
                     }
-                }
+                };
 
             } catch (e) {
                 const { message } = e as { message: string };
-                console.error(message)
+                console.error(message);
                 return {
                     result: {},
                     error: {
                         status: 400,
                         message: message
                     }
-                }
+                };
             }
         },
         createReview: async (req: NextApiRequest) => {
             try {
                 const newProps = JSON.parse(req.body);
 
-                const review = await reviewClient.createReview(newProps)
+                const review = await reviewClient.createReview(newProps);
 
                 if (review) return {
                     result: {
@@ -114,7 +114,7 @@ export default function reviewsService({ reviewClient }: typeof prismaClients) {
                         createdAt: new Date(review.createdAt).toDateString(),
                         updatedAt: new Date(review.updatedAt).toDateString()
                     }
-                }
+                };
 
                 return {
                     result: {},
@@ -122,19 +122,19 @@ export default function reviewsService({ reviewClient }: typeof prismaClients) {
                         status: 400,
                         message: `Unable to create a new review`
                     }
-                }
+                };
 
             } catch (e) {
                 const { message } = e as { message: string };
-                console.error(message)
+                console.error(message);
                 return {
                     result: {},
                     error: {
                         status: 400,
                         message: message
                     }
-                }
+                };
             }
         }
-    }
+    };
 }
