@@ -1,11 +1,12 @@
 import { Restaurant, Review } from '@/types';
+import { User } from '@prisma/client';
 import { InfoSection } from '../InfoSection';
 import { ReviewItem } from '../Review';
 import styles from './MyFoodTruckReviews.module.scss';
 
 type Props = {
     reviews: Restaurant['reviews'],
-    currentUserId?: string | null
+    currentUserId?: User['id']
 }
 
 export default function MyFoodTruckReviews({ reviews, currentUserId }: Props) {
