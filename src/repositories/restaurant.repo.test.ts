@@ -27,7 +27,7 @@ describe('prisma Restaurants client', () => {
                 locations: true,
                 menu: true,
                 schedules: true,
-                category: true,
+                categories: true,
                 user: true,
                 reviews: {
                     include: {
@@ -50,7 +50,7 @@ describe('prisma Restaurants client', () => {
                 locations: true,
                 menu: true,
                 schedules: true,
-                category: true,
+                categories: true,
                 user: true,
                 reviews: {
                     include: {
