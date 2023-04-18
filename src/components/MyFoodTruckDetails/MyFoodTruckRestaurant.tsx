@@ -27,8 +27,8 @@ export default function MyFoodTruckRestaurant({ restaurant, allCategories }: Pro
 
         setCategories([
             ...allCategories.filter(({ id }) => (value as unknown as Array<number>).includes(id))
-        ])
-    }
+        ]);
+    };
 
     const onCancel = () => {
         setName(restaurant.name || '');
