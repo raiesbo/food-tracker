@@ -19,10 +19,10 @@ describe('prisma Restaurants client', () => {
         const getRestaurantMock = vi.fn();
         prismaClientMock.instance.restaurant.findUnique = getRestaurantMock;
 
-        restaurantsClient.getRestaurant('6' as Restaurant['id']);
+        restaurantsClient.getRestaurant(6 as Restaurant['id']);
 
         expect(getRestaurantMock).toHaveBeenCalledWith({
-            'where': { 'id': '6' },
+            'where': { 'id': 6 },
             'include': {
                 locations: true,
                 menu: true,
@@ -65,10 +65,10 @@ describe('prisma Restaurants client', () => {
         const updateRestaurantMock = vi.fn();
         prismaClientMock.instance.restaurant.update = updateRestaurantMock;
 
-        restaurantsClient.updateRestaurant('4' as Restaurant['id'], { name: 'test_name' } as Restaurant);
+        restaurantsClient.updateRestaurant(4 as Restaurant['id'], { name: 'test_name' } as Restaurant);
 
         expect(updateRestaurantMock).toHaveBeenCalledWith({
-            'where': { 'id': '4' },
+            'where': { 'id': 4 },
             'data': { 'name': 'test_name' }
         });
     });
@@ -77,8 +77,8 @@ describe('prisma Restaurants client', () => {
         const deleteRestaurantMock = vi.fn();
         prismaClientMock.instance.restaurant.delete = deleteRestaurantMock;
 
-        restaurantsClient.deleteRestaurant('5' as Restaurant['id']);
+        restaurantsClient.deleteRestaurant(5 as Restaurant['id']);
 
-        expect(deleteRestaurantMock).toHaveBeenCalledWith({ 'where': { 'id': '5' } });
+        expect(deleteRestaurantMock).toHaveBeenCalledWith({ 'where': { 'id': 5 } });
     });
 });

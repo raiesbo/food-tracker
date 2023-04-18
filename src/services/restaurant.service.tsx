@@ -1,4 +1,4 @@
-import { Restaurant } from '@/types';
+import { Category, Restaurant } from '@/types';
 import { Prisma, User } from '@prisma/client';
 import { NextApiRequest } from 'next';
 import prismaClients from '../repositories';
@@ -145,10 +145,25 @@ export default function userService({ restaurantClient }: typeof prismaClients) 
         updateRestaurant: async (req: NextApiRequest) => {
             const { restaurantId } = req.query as { restaurantId: string };
 
-            const restaurantProps = JSON.parse(req.body);
-
             try {
-                const restaurant = await restaurantClient.updateRestaurant(Number(restaurantId), restaurantProps);
+                const {
+                    name,
+                    slogan,
+                    description,
+                    isCashOnly,
+                    categories
+                } = JSON.parse(req.body);
+
+                const restaurant = await restaurantClient.updateRestaurant(Number(restaurantId), {
+                    name,
+                    slogan,
+                    description,
+                    isCashOnly,
+                    categories: {
+                        set: [],
+                        connect: categories.map((category: Category) => ({ id: category.id }))
+                    }
+                });
 
                 if (restaurant) return { result: restaurant };
 

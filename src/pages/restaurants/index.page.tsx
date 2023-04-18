@@ -34,37 +34,31 @@ export async function getServerSideProps({ query }: GetServerSidePropsContext) {
         };
     }
 
-    if (query?.name) {
-        filters = {
-            ...filters,
-            name: {
-                contains: query.name,
-                mode: 'insensitive'
-            }
-        };
-    }
+    if (query?.name) filters = {
+        ...filters,
+        name: {
+            contains: query.name,
+            mode: 'insensitive'
+        }
+    };
 
-    if (query?.category) {
-        filters = {
-            ...filters,
-            category: {
-                is: {
-                    name: query.category
-                }
+    if (query?.category) filters = {
+        ...filters,
+        categories: {
+            some: {
+                name: query.category
             }
-        };
-    }
+        }
+    };
 
-    if (query?.city) {
-        filters = {
-            ...filters,
-            locations: {
-                some: {
-                    city: query.city
-                }
+    if (query?.city) filters = {
+        ...filters,
+        locations: {
+            some: {
+                city: query.city
             }
-        };
-    }
+        }
+    };
 
     const {
         result: restaurants,

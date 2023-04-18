@@ -169,7 +169,7 @@ export default function MyNewRestaurant({ restaurant, categories }: Props) {
                     <div className={cc([styles.container, styles.mainColumn])}>
                         <MyFoodTruckRestaurant
                             restaurant={restaurant}
-                            categories={categories}
+                            allCategories={categories}
                         />
                         <MyFoodTruckMenu
                             menu={restaurant.menu}

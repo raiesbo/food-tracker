@@ -111,8 +111,13 @@ async function main() {
             slogan: 'Beef burgers like in no other place',
             imageUrl: 'https://images.unsplash.com/photo-1570441262582-a2d4b9a916a5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80',
             userId: mainUser.id,
-            categoryId: categoryAmerican.id,
             isCashOnly: true,
+            categories: {
+                connect: [
+                    { id: categoryAmerican.id },
+                    { id: categoryJapanese.id }
+                ]
+            },
             menu: {
                 create: [
                     {
@@ -180,8 +185,13 @@ async function main() {
             slogan: 'The original Paella Valenciana',
             imageUrl: 'https://images.unsplash.com/photo-1570441262582-a2d4b9a916a5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80',
             userId: alice.id,
-            categoryId: categorySpanish.id,
-            isCashOnly: false,
+            isCashOnly: true,
+            categories: {
+                connect: [
+                    { id: categorySpanish.id },
+                    { id: categoryJapanese.id }
+                ]
+            },
             menu: {
                 create: [
                     {
@@ -259,8 +269,13 @@ async function main() {
             slogan: 'Tapas for every moment',
             imageUrl: 'https://images.unsplash.com/photo-1570441262582-a2d4b9a916a5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80',
             userId: bob.id,
-            categoryId: categoryAmerican.id,
             isCashOnly: true,
+            categories: {
+                connect: [
+                    { id: categoryThai.id },
+                    { id: categoryMexican.id }
+                ]
+            },
             menu: {
                 create: [
                     {

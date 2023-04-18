@@ -21,7 +21,7 @@ export default function MyFoodTruckCategories({ categories, userId }: Props) {
     const onAddCategory = () => {
         setCategoryList(state => ([
             ...state,
-            { id: `${(Math.random() * 100000).toFixed(0)}`, name: 'New Category' }
+            { id: Math.ceil(Math.random() * 100000), name: 'New Category' }
         ] as Array<Category>));
     };
 
@@ -62,6 +62,9 @@ export default function MyFoodTruckCategories({ categories, userId }: Props) {
 
     const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
+
+        console.log({ name, value })
+        console.log({ categories })
 
         setCategoryList([...categoryList.map(category => (
             category.id === Number(name) ? { ...category, name: value } : category

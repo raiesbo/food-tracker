@@ -61,8 +61,7 @@ model Restaurant {
   schedules   Schedule[]
   user        User?      @relation(fields: [userId], references: [id])
   userId      Int?
-  category    Category?  @relation(fields: [categoryId], references: [id])
-  categoryId  Int?
+  categories  Category[]
   reviews     Review[]
 }
 
@@ -111,6 +110,7 @@ model Location {
   isMainLocation Boolean     @default(false)
   restaurant     Restaurant? @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   restaurantId   Int?
+  event          Event?
 }
 
 model Category {
@@ -128,4 +128,16 @@ model Like {
   userId   Int?
   review   Review? @relation(fields: [reviewId], references: [id])
   reviewId Int?
+}
+
+model Event {
+  id           Int       @id @default(autoincrement())
+  name         String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  date         DateTime?
+  opening_hour String?   @default("9:00")
+  closing_hour String?   @default("11:30")
+  location     Location? @relation(fields: [locationId], references: [id])
+  locationId   Int?      @unique
 }

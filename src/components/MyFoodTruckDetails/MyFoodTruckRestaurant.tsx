@@ -1,5 +1,5 @@
 import { Restaurant } from "@/types";
-import { Button, Checkbox, FormControlLabel, MenuItem, Select, TextField } from "@mui/material";
+import { Button, Checkbox, FormControlLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
 import { Category } from "@prisma/client";
 import { useState } from "react";
 import { InfoSection } from "../InfoSection";
@@ -8,10 +8,10 @@ import styles from './MyFoodTruckRestaurant.module.scss';
 
 type Props = {
     restaurant: Restaurant,
-    categories: Array<Category>
+    allCategories: Array<Category>
 }
 
-export default function MyFoodTruckRestaurant({ restaurant, categories }: Props) {
+export default function MyFoodTruckRestaurant({ restaurant, allCategories }: Props) {
     const [isUpdate, setIsUpdate] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -19,14 +19,22 @@ export default function MyFoodTruckRestaurant({ restaurant, categories }: Props)
     const [slogan, setSlogan] = useState(restaurant.slogan || '');
     const [imageUrl, setImageUrl] = useState(restaurant.imageUrl || '');
     const [description, setDescription] = useState(restaurant.description || '');
-    const [categoryId, setCategoryId] = useState(restaurant.categoryId || '');
+    const [categories, setCategories] = useState(restaurant.categories || '');
     const [isCashOnly, setIsCashOnly] = useState(restaurant.isCashOnly || false);
+
+    const onCategorySelect = (e: SelectChangeEvent) => {
+        const { value } = e.target;
+
+        setCategories([
+            ...allCategories.filter(({ id }) => (value as unknown as Array<number>).includes(id))
+        ])
+    }
 
     const onCancel = () => {
         setName(restaurant.name || '');
         setSlogan(restaurant.slogan || '');
         setDescription(restaurant.description || '');
-        setCategoryId(restaurant.categoryId || '');
+        setCategories(restaurant.categories || '');
         setIsCashOnly(restaurant.isCashOnly || false);
 
         setIsUpdate(false);
@@ -42,7 +50,7 @@ export default function MyFoodTruckRestaurant({ restaurant, categories }: Props)
                 slogan,
                 description,
                 isCashOnly,
-                categoryId
+                categories
             })
         }).then(response => {
             if (response.ok) return;
@@ -91,13 +99,14 @@ export default function MyFoodTruckRestaurant({ restaurant, categories }: Props)
                 </Text>
                 <Select
                     id="demo-simple-select"
-                    value={categoryId}
-                    onChange={(e) => setCategoryId(e.target.value)}
+                    value={categories.map(cat => cat?.id) as unknown as string}
+                    onChange={onCategorySelect}
                     fullWidth
                     sx={{ mt: 1, backgroundColor: 'white' }}
                     disabled={!isUpdate || isLoading}
+                    multiple
                 >
-                    {categories.map(category => {
+                    {allCategories.map(category => {
                         return (
                             <MenuItem
                                 key={category.id}
@@ -176,6 +185,6 @@ export default function MyFoodTruckRestaurant({ restaurant, categories }: Props)
                 </div>
             </div>
 
-        </InfoSection>
+        </InfoSection >
     );
 }
