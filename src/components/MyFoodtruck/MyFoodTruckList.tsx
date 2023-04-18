@@ -51,7 +51,7 @@ export default function MyFoodTruckList({ restaurants }: Props) {
                         >
                             <div className={styles.imageContainer}>
                                 <Image
-                                    src={imagePlaceholder}
+                                    src={restaurant.imageUrl || imagePlaceholder}
                                     alt='Restaurant image'
                                     fill
                                     className={styles.backgroundImage}

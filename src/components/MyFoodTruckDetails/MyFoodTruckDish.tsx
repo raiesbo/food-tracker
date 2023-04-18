@@ -102,7 +102,6 @@ export default function MyGoodTruckDish({ dish }: Props) {
 
     const updateFile = async (event: ChangeEvent<HTMLInputElement>) => {
         setIsLoading(true);
-
         const files = event.target.files;
 
         if (user?.accessToken && files && userMetadata?.user_id && dish.restaurantId) {
@@ -124,7 +123,9 @@ export default function MyGoodTruckDish({ dish }: Props) {
                     method: 'PUT',
                     body: JSON.stringify({ imageUrl: newImage })
                 }).then(response => {
-                    if (response.ok) setImageUrl(newImage);
+                    if (response.ok) {
+                        setImageUrl(newImage);
+                    }
                 });
             }
 

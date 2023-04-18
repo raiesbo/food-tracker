@@ -98,7 +98,6 @@ export default function Profile({ user, auth0User, reviews }: Props) {
 
     const updateFile = async (event: ChangeEvent<HTMLInputElement>) => {
         setIsLoading(true);
-
         const files = event.target.files;
 
         if (auth0User?.accessToken && files && user.id) {
