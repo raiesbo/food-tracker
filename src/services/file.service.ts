@@ -5,7 +5,7 @@ export default function FileService() {
         createFile: async ({ token, file, userId, type, typeId, format }: {
             token: string,
             file: File,
-            userId: string,
+            userId: string | number,
             type: 'restaurant' | 'dish' | 'profile',
             format: 'png' | 'jpg'
             typeId: number

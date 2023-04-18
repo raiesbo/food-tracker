@@ -3,6 +3,7 @@ import { NavigationMenu } from "@/components/NavigationMenu";
 import { ProfileReviews } from "@/components/Profile";
 import { Text } from "@/components/Text";
 import services from "@/services";
+import FileService from "@/services/file.service";
 import { Review } from "@/types";
 import { auth0Config } from "@/utils/settings";
 import { getSession } from "@auth0/nextjs-auth0";
@@ -11,7 +12,7 @@ import { Button, TextField } from "@mui/material";
 import { User } from "@prisma/client";
 import { GetServerSidePropsContext, NextApiRequest } from "next";
 import Image from "next/image";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import styles from './profile.module.scss';
 
 const { userService, reviewsService } = services;
@@ -68,6 +69,7 @@ export default function Profile({ user, auth0User, reviews }: Props) {
     const [lastName, setLastname] = useState(user.lastName || '');
     const [email, setEmail] = useState(user.email || '');
     const [phone, setPhone] = useState(user.phone || '');
+    const [imageUrl, setImageUrl] = useState(user.imageUrl);
 
     const onCancel = () => {
         setFirstName(user.firstName || '');
@@ -93,6 +95,40 @@ export default function Profile({ user, auth0User, reviews }: Props) {
             setIsUpdate(false);
         });
     };
+
+    const updateFile = async (event: ChangeEvent<HTMLInputElement>) => {
+        setIsLoading(true);
+
+        const files = event.target.files;
+
+        if (auth0User?.accessToken && files && user.id) {
+            const file = files[0];
+            const fileExtension = file?.name?.split('.')?.at(-1)?.toLowerCase() as "png" | "jpg";
+
+            const { result } = await FileService().createFile({
+                token: auth0User.accessToken as string,
+                file,
+                userId: user.id,
+                type: 'profile',
+                format: fileExtension,
+                typeId: user.id
+            });
+
+            if (result) {
+                const newImage = `https://udydjimmfagekivvovwh.supabase.co/storage/v1/object/public/food-truck/${user.id}/profile_${user.id}.${fileExtension}`;
+
+                await fetch(`/api/users/${user.id}`, {
+                    method: 'PUT',
+                    body: JSON.stringify({ imageUrl: newImage })
+                }).then(response => {
+                    if (response.ok) setImageUrl(newImage);
+                });
+            }
+
+            setIsLoading(false);
+        }
+    };
+
 
     return (
         <>
@@ -135,11 +171,20 @@ export default function Profile({ user, auth0User, reviews }: Props) {
                 </header>
                 <section className={styles.bodyContainer}>
                     <div className={styles.imageContainer}>
-                        <Image
-                            alt='Users image'
-                            src={auth0User?.picture || ""}
-                            fill
-                            className={styles.image}
+                        <label htmlFor={`profile_${user.id}`} className={styles.imageUploadInput}>
+                            <Image
+                                alt='Users image'
+                                src={imageUrl || auth0User?.picture || ""}
+                                fill
+                                className={styles.image}
+                                style={{ objectFit: 'cover' }}
+                            />
+                        </label>
+                        <input
+                            id={`profile_${user.id}`}
+                            type='file'
+                            accept="image/jpg,image/png"
+                            onChange={updateFile}
                         />
                     </div>
                     <InfoSection

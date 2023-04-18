@@ -1,10 +1,13 @@
+import FileService from '@/services/file.service';
 import { Dish } from '@/types';
+import { auth0Config } from '@/utils/settings';
+import { useUser } from '@auth0/nextjs-auth0/client';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Button, Checkbox, FormControlLabel, IconButton, TextField } from '@mui/material';
 import cc from 'classcat';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { Card } from '../Card';
 import { Text } from '../Text';
 import styles from './MyFoodTruckDish.module.scss';
@@ -16,6 +19,10 @@ type Props = {
 
 export default function MyGoodTruckDish({ dish }: Props) {
     const router = useRouter();
+    const { user } = useUser();
+
+    const userMetadata = user && user?.[auth0Config.metadata] as { user_id: string };
+
     const [isLoading, setIsLoading] = useState(false);
     const [isUpdate, setIsUpdate] = useState(false);
     const [isCollapsed, setIsCollapsed] = useState(true);
@@ -93,6 +100,38 @@ export default function MyGoodTruckDish({ dish }: Props) {
         });
     };
 
+    const updateFile = async (event: ChangeEvent<HTMLInputElement>) => {
+        setIsLoading(true);
+
+        const files = event.target.files;
+
+        if (user?.accessToken && files && userMetadata?.user_id && dish.restaurantId) {
+            const file = files[0];
+            const fileExtension = file?.name?.split('.')?.at(-1)?.toLowerCase() as "png" | "jpg";
+
+            const { result } = await FileService().createFile({
+                token: user.accessToken as string,
+                file,
+                userId: userMetadata.user_id,
+                type: 'dish',
+                format: fileExtension,
+                typeId: dish.id
+            });
+
+            if (result) {
+                const newImage = `https://udydjimmfagekivvovwh.supabase.co/storage/v1/object/public/food-truck/${userMetadata?.user_id}/dish_${dish.id}.${fileExtension}`;
+                await fetch(`/api/dishes/${dish.id}`, {
+                    method: 'PUT',
+                    body: JSON.stringify({ imageUrl: newImage })
+                }).then(response => {
+                    if (response.ok) setImageUrl(newImage);
+                });
+            }
+
+            setIsLoading(false);
+        }
+    };
+
     return (
         <Card key={dish.id} className={styles.root}>
             <header className={styles.header}>
@@ -158,11 +197,20 @@ export default function MyGoodTruckDish({ dish }: Props) {
                             Thumbnail
                         </Text>
                         <div className={styles.imageContainer}>
-                            <Image
-                                alt='Dish image'
-                                src={dish.imageUrl || ''}
-                                fill
-                                className={styles.image}
+                            <label htmlFor={`dish_${dish.id}`} className={styles.imageUploadInput}>
+                                <Image
+                                    alt='Dish image'
+                                    src={imageUrl}
+                                    fill
+                                    className={styles.image}
+                                    style={{ objectFit: 'cover' }}
+                                />
+                            </label>
+                            <input
+                                id={`dish_${dish.id}`}
+                                type='file'
+                                accept="image/jpg,image/png"
+                                onChange={updateFile}
                             />
                         </div>
                     </div>

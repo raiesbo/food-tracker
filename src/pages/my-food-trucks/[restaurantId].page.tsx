@@ -4,14 +4,18 @@ import { MyFoodTruckLocations, MyFoodTruckMenu, MyFoodTruckRestaurant } from "@/
 import MyFoodTruckReviews from "@/components/MyFoodTruckDetails/MyFoodTruckReviews";
 import { NavigationMenu } from "@/components/NavigationMenu";
 import services from "@/services";
+import FileService from "@/services/file.service";
 import { Restaurant } from "@/types";
 import { paths } from "@/utils/paths";
+import { auth0Config } from "@/utils/settings";
+import { useUser } from "@auth0/nextjs-auth0/client";
 import { Button } from "@mui/material";
 import { Category, Location } from "@prisma/client";
 import cc from 'classcat';
 import { GetServerSidePropsContext, NextApiRequest } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { ChangeEvent } from "react";
 import { Text } from '../../components/Text';
 import styles from './MyFoodTrucksDetails.module.scss';
 
@@ -49,6 +53,9 @@ type Props = {
 
 export default function MyNewRestaurant({ restaurant, categories }: Props) {
     const router = useRouter();
+    const { user } = useUser();
+
+    const userMetadata = user && user?.[auth0Config.metadata] as { user_id: string };
 
     const onRemove = () => {
         fetch(`/api/restaurants/${restaurant.id}`, {
@@ -60,6 +67,35 @@ export default function MyNewRestaurant({ restaurant, categories }: Props) {
                 alert('Server Error');
             }
         });
+    };
+
+    const updateFile = async (event: ChangeEvent<HTMLInputElement>) => {
+        const files = event.target.files;
+
+        if (user?.accessToken && files && userMetadata?.user_id) {
+            const file = files[0];
+            const fileExtension = file?.name?.split('.')?.at(-1)?.toLowerCase() as "png" | "jpg";
+
+            const { result, error } = await FileService().createFile({
+                token: user.accessToken as string,
+                file,
+                userId: userMetadata.user_id,
+                type: 'restaurant',
+                format: fileExtension,
+                typeId: restaurant.id
+            });
+
+            if (result) {
+                await fetch(`/api/restaurants/${restaurant.id}`, {
+                    method: 'PUT',
+                    body: JSON.stringify({
+                        imageUrl: `https://udydjimmfagekivvovwh.supabase.co/storage/v1/object/public/food-truck/${userMetadata?.user_id}/restaurant_${restaurant.id}.${fileExtension}`
+                    })
+                }).then(response => {
+                    if (response.ok) router.reload();
+                });
+            }
+        }
     };
 
     return (
@@ -84,12 +120,21 @@ export default function MyNewRestaurant({ restaurant, categories }: Props) {
                     <div className={cc([styles.container, styles.sideColumn])}>
                         <InfoSection title="Food Truck Thumbnail">
                             <Card className={styles.imageContainer}>
-                                <Image
-                                    alt='Business image | default image from Unsplash'
-                                    src={restaurant.imageUrl || imagePlaceholder}
-                                    fill
-                                    className={styles.image}
-                                    style={{ objectFit: 'cover' }}
+                                <label htmlFor={`restaurant_${restaurant.id}`} className={styles.imageUploadInput}>
+                                    <Image
+                                        alt='Business image | default image from Unsplash'
+                                        src={restaurant.imageUrl || imagePlaceholder}
+                                        fill
+                                        className={styles.image}
+                                        style={{ objectFit: 'cover' }}
+                                        priority
+                                    />
+                                </label>
+                                <input
+                                    id={`restaurant_${restaurant.id}`}
+                                    type='file'
+                                    accept="image/jpg,image/png"
+                                    onChange={updateFile}
                                 />
                             </Card>
                         </InfoSection>
