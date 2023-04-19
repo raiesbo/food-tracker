@@ -23,17 +23,17 @@ export default function MyGoodTruckDish({ dish }: Props) {
 
     const userMetadata = user && user?.[auth0Config.metadata] as { user_id: string };
 
-    const [isLoading, setIsLoading] = useState(false);
-    const [isUpdate, setIsUpdate] = useState(false);
-    const [isCollapsed, setIsCollapsed] = useState(true);
+    const [ isLoading, setIsLoading ] = useState(false);
+    const [ isUpdate, setIsUpdate ] = useState(false);
+    const [ isCollapsed, setIsCollapsed ] = useState(true);
 
-    const [name, setName] = useState(dish.name || '');
-    const [price, setPrice] = useState(dish.price || 0);
-    const [description, setDescription] = useState(dish.description || '');
-    const [imageUrl, setImageUrl] = useState(dish.imageUrl || '');
-    const [isVegan, setIsVegan] = useState(dish.isVegan || false);
-    const [isGlutenFree, setIsGlutenFree] = useState(dish.isGlutenFree || false);
-    const [ingredients, setIngredients] = useState(dish.ingredients?.split(';')?.map(ing => ({
+    const [ name, setName ] = useState(dish.name || '');
+    const [ price, setPrice ] = useState(dish.price || 0);
+    const [ description, setDescription ] = useState(dish.description || '');
+    const [ imageUrl, setImageUrl ] = useState(dish.imageUrl || '');
+    const [ isVegan, setIsVegan ] = useState(dish.isVegan || false);
+    const [ isGlutenFree, setIsGlutenFree ] = useState(dish.isGlutenFree || false);
+    const [ ingredients, setIngredients ] = useState(dish.ingredients?.split(';')?.map(ing => ({
         id: `${(Math.random() * 100000).toFixed(0)}`,
         name: ing
     })) || []);
@@ -140,7 +140,7 @@ export default function MyGoodTruckDish({ dish }: Props) {
                     {name}
                 </Text>
                 <IconButton size='small'
-                    className={cc([isCollapsed && styles.rotateChevron])}
+                    className={cc([ isCollapsed && styles.rotateChevron ])}
                     onClick={() => setIsCollapsed(!isCollapsed)}
                 >
                     <ExpandMoreIcon fontSize='small' />
@@ -193,7 +193,7 @@ export default function MyGoodTruckDish({ dish }: Props) {
                             } label="Is Gluten Free" />
                         </div>
                     </div>
-                    <div className={cc([styles.entryContainer, styles.imageHeader])}>
+                    <div className={cc([ styles.entryContainer, styles.imageHeader ])}>
                         <Text variant={'h4'} bold>
                             Thumbnail
                         </Text>

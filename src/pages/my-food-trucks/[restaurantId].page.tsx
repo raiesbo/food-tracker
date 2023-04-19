@@ -15,11 +15,9 @@ import cc from 'classcat';
 import { GetServerSidePropsContext, NextApiRequest } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { ChangeEvent } from "react";
+import { ChangeEvent, useState } from "react";
 import { Text } from '../../components/Text';
 import styles from './MyFoodTrucksDetails.module.scss';
-
-const imagePlaceholder = 'https://images.unsplash.com/photo-1570441262582-a2d4b9a916a5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2048&q=80';
 
 const { restaurantService, categoriesService } = services;
 
@@ -55,6 +53,8 @@ export default function MyNewRestaurant({ restaurant, categories }: Props) {
     const router = useRouter();
     const { user } = useUser();
 
+    const [ imageUrl, setImageUrl ] = useState(restaurant.imageUrl);
+
     const userMetadata = user && user?.[auth0Config.metadata] as { user_id: string };
 
     const onRemove = () => {
@@ -86,13 +86,12 @@ export default function MyNewRestaurant({ restaurant, categories }: Props) {
             });
 
             if (result) {
+                const newImageUrl = `${supagaseConfig.url}/storage/v1/object/public/food-truck/${userMetadata?.user_id}/restaurant_${restaurant.id}.${fileExtension}`;
                 await fetch(`/api/restaurants/${restaurant.id}`, {
                     method: 'PUT',
-                    body: JSON.stringify({
-                        imageUrl: `${supagaseConfig.url}/storage/v1/object/public/food-truck/${userMetadata?.user_id}/restaurant_${restaurant.id}.${fileExtension}`
-                    })
+                    body: JSON.stringify({ imageUrl: newImageUrl })
                 }).then(response => {
-                    if (response.ok) router.reload();
+                    if (response.ok) setImageUrl(newImageUrl);
                 });
             }
         }
@@ -117,13 +116,13 @@ export default function MyNewRestaurant({ restaurant, categories }: Props) {
                     </div>
                 </header>
                 <section className={styles.bodyContainer}>
-                    <div className={cc([styles.container, styles.sideColumn])}>
+                    <div className={cc([ styles.container, styles.sideColumn ])}>
                         <InfoSection title="Food Truck Thumbnail">
                             <Card className={styles.imageContainer} withHover>
                                 <label htmlFor={`restaurant_${restaurant.id}`} className={styles.imageUploadInput}>
                                     <Image
                                         alt='Business image | default image from Unsplash'
-                                        src={restaurant.imageUrl || imagesConfig.default}
+                                        src={imageUrl || imagesConfig.default}
                                         fill
                                         className={styles.image}
                                         style={{ objectFit: 'cover' }}
@@ -166,7 +165,7 @@ export default function MyNewRestaurant({ restaurant, categories }: Props) {
                             currentUserId={restaurant.userId}
                         />
                     </div>
-                    <div className={cc([styles.container, styles.mainColumn])}>
+                    <div className={cc([ styles.container, styles.mainColumn ])}>
                         <MyFoodTruckRestaurant
                             restaurant={restaurant}
                             allCategories={categories}

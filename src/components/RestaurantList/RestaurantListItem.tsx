@@ -17,11 +17,11 @@ type Props = {
 }
 
 export default function RestaurantListItem({ restaurant }: Props) {
-    const [rating, setRating] = useState(0);
+    const [ rating, setRating ] = useState(0);
 
     useEffect(() => {
         setRating(calcRating(restaurant.reviews));
-    }, [restaurant]);
+    }, [ restaurant ]);
 
     const mainLocation = findMainLocation(restaurant.locations);
     const withVeganOptions = restaurant.menu.some((dish: Dish) => dish.isVegan);

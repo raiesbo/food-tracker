@@ -9,14 +9,14 @@ type Props = {
 }
 
 export default function MyFoodTruckLocations({ location }: Props) {
-    const [isLoading, setIsLoading] = useState(false);
-    const [isUpdate, setIsUpdate] = useState(false);
+    const [ isLoading, setIsLoading ] = useState(false);
+    const [ isUpdate, setIsUpdate ] = useState(false);
 
-    const [streetName, setStreetName] = useState(location.streetName || '');
-    const [streetNumber, setStreetNumber] = useState(location.streetNumber || '');
-    const [city, setCity] = useState(location.city || '');
-    const [country, setCountry] = useState(location.country || '');
-    const [zip, setZip] = useState(location.zip || '');
+    const [ streetName, setStreetName ] = useState(location.streetName || '');
+    const [ streetNumber, setStreetNumber ] = useState(location.streetNumber || '');
+    const [ city, setCity ] = useState(location.city || '');
+    const [ country, setCountry ] = useState(location.country || '');
+    const [ zip, setZip ] = useState(location.zip || '');
 
     const onCancel = () => {
         setStreetName(location.streetName || '');

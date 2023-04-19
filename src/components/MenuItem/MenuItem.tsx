@@ -15,7 +15,7 @@ type Props = {
 
 export default function MenuItem({ dish }: Props) {
     const id = useId();
-    const [isOpen, setIsOpen] = useState(false);
+    const [ isOpen, setIsOpen ] = useState(false);
 
     return (
         <Card className={styles.root}>
@@ -31,7 +31,7 @@ export default function MenuItem({ dish }: Props) {
                     )}
                     <IconButton
                         onClick={() => setIsOpen(!isOpen)}
-                        className={cc([isOpen && styles.rotateChevron])}
+                        className={cc([ isOpen && styles.rotateChevron ])}
                     >
                         <ExpandMoreIcon />
                     </IconButton>
@@ -45,7 +45,7 @@ export default function MenuItem({ dish }: Props) {
                     style={{ objectFit: 'cover' }}
                 />
             </div>
-            <div className={cc([styles.ingredientList, !isOpen && styles.ingredientList_closed])}>
+            <div className={cc([ styles.ingredientList, !isOpen && styles.ingredientList_closed ])}>
                 <Text variant={'h4'} bold>
                     Ingredients
                 </Text>

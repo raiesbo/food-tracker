@@ -14,7 +14,7 @@ type Props = {
 export default function RestaurantDetailsReview({ reviews, currentUserId, className }: Props) {
 
     return (
-        <InfoSection title="Your Reviews" className={cc([className])}>
+        <InfoSection title="Your Reviews" className={cc([ className ])}>
             <div className={styles.reviewList}>
                 {reviews.map((review) => (
                     <ReviewItem

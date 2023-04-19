@@ -20,11 +20,11 @@ export default function RestaurantDetailsReview({ reviews, ownerId, restaurantId
     const { user } = useUser();
     const router = useRouter();
 
-    const [isLoading, setIsLoading] = useState(false);
+    const [ isLoading, setIsLoading ] = useState(false);
 
-    const [newComment, setNewComment] = useState('');
-    const [newRating, setNewRating] = useState(0);
-    const [isDialogOpen, setIsDialogOpen] = useState(false);
+    const [ newComment, setNewComment ] = useState('');
+    const [ newRating, setNewRating ] = useState(0);
+    const [ isDialogOpen, setIsDialogOpen ] = useState(false);
 
     const userMetadata = user && user[auth0Config.metadata] as { user_id: number } | undefined;
     const isYourFoodTruck = userMetadata?.user_id === ownerId;

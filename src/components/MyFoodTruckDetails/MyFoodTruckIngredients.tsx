@@ -16,19 +16,19 @@ type Props = {
 
 export default function MyFoodTruckIngredients({ ingredients, isUpdate, isLoading, onUpdate }: Props) {
     const onRemoveOne = (ingredientId: string) => {
-        onUpdate([...ingredients.filter(({ id }) => id !== ingredientId)]);
+        onUpdate([ ...ingredients.filter(({ id }) => id !== ingredientId) ]);
     };
 
     const onAddOne = () => {
-        onUpdate([...ingredients, { id: `${(Math.random() * 100000).toFixed(0)}`, name: '' }]);
+        onUpdate([ ...ingredients, { id: `${(Math.random() * 100000).toFixed(0)}`, name: '' } ]);
     };
 
     const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
 
-        onUpdate([...ingredients.map(ingredient => {
+        onUpdate([ ...ingredients.map(ingredient => {
             return ingredient.id === name ? { ...ingredient, name: value } : ingredient;
-        })]);
+        }) ]);
     };
 
     return (

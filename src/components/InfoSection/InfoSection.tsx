@@ -13,7 +13,7 @@ type Props = {
 }
 
 export default function InfoSection({ children, title, className, childrenClassName }: Props) {
-    const [isCollapsed, setIsCollapsed] = useState(false);
+    const [ isCollapsed, setIsCollapsed ] = useState(false);
 
     return (
         <section className={cc([
@@ -26,7 +26,7 @@ export default function InfoSection({ children, title, className, childrenClassN
                     {title}
                 </Text>
                 <IconButton size='small'
-                    className={cc([isCollapsed && styles.rotateChevron])}
+                    className={cc([ isCollapsed && styles.rotateChevron ])}
                     onClick={() => setIsCollapsed(!isCollapsed)}
                 >
                     <ExpandMoreIcon />

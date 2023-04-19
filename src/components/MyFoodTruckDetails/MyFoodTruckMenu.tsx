@@ -11,8 +11,8 @@ type Props = {
 }
 
 export default function MyFoodTruckMenu({ menu, restaurantid }: Props) {
-    const [restaurantMenu, setRestaurantMenu] = useState(menu);
-    const [isLoading, setIsLoading] = useState(false);
+    const [ restaurantMenu, setRestaurantMenu ] = useState(menu);
+    const [ isLoading, setIsLoading ] = useState(false);
 
     const onCreateDish = () => {
         setIsLoading(true);
@@ -25,7 +25,7 @@ export default function MyFoodTruckMenu({ menu, restaurantid }: Props) {
             }
             alert('Server Error');
         }).then(({ dish }) => {
-            setRestaurantMenu((state => ([...state, dish])));
+            setRestaurantMenu((state => ([ ...state, dish ])));
         }).finally(() => setIsLoading(false));
     };
 

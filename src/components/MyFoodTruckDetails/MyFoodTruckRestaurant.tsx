@@ -12,15 +12,15 @@ type Props = {
 }
 
 export default function MyFoodTruckRestaurant({ restaurant, allCategories }: Props) {
-    const [isUpdate, setIsUpdate] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
+    const [ isUpdate, setIsUpdate ] = useState(false);
+    const [ isLoading, setIsLoading ] = useState(false);
 
-    const [name, setName] = useState(restaurant.name || '');
-    const [slogan, setSlogan] = useState(restaurant.slogan || '');
-    const [imageUrl, setImageUrl] = useState(restaurant.imageUrl || '');
-    const [description, setDescription] = useState(restaurant.description || '');
-    const [categories, setCategories] = useState(restaurant.categories || '');
-    const [isCashOnly, setIsCashOnly] = useState(restaurant.isCashOnly || false);
+    const [ name, setName ] = useState(restaurant.name || '');
+    const [ slogan, setSlogan ] = useState(restaurant.slogan || '');
+    const [ imageUrl, setImageUrl ] = useState(restaurant.imageUrl || '');
+    const [ description, setDescription ] = useState(restaurant.description || '');
+    const [ categories, setCategories ] = useState(restaurant.categories || '');
+    const [ isCashOnly, setIsCashOnly ] = useState(restaurant.isCashOnly || false);
 
     const onCategorySelect = (e: SelectChangeEvent) => {
         const { value } = e.target;

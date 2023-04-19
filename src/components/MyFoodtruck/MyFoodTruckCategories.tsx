@@ -15,8 +15,8 @@ type Props = {
 }
 
 export default function MyFoodTruckCategories({ categories, userId }: Props) {
-    const [isLoading, setIsLoading] = useState(false);
-    const [categoryList, setCategoryList] = useState(categories);
+    const [ isLoading, setIsLoading ] = useState(false);
+    const [ categoryList, setCategoryList ] = useState(categories);
 
     const onAddCategory = () => {
         setCategoryList(state => ([
@@ -32,7 +32,7 @@ export default function MyFoodTruckCategories({ categories, userId }: Props) {
             method: 'DELETE'
         }).then(response => {
             if (response.ok) {
-                setCategoryList([...categoryList.filter(({ id }) => id !== catId)]);
+                setCategoryList([ ...categoryList.filter(({ id }) => id !== catId) ]);
             } else {
                 alert('Server Error');
             }
@@ -49,7 +49,7 @@ export default function MyFoodTruckCategories({ categories, userId }: Props) {
             body: JSON.stringify({ name: catToSave?.name, userId })
         }).then(response => response.json()).then(({ category }) => {
             if (category.id) {
-                setCategoryList([...categoryList.map(cat => cat.name === category.name ? category : cat)]);
+                setCategoryList([ ...categoryList.map(cat => cat.name === category.name ? category : cat) ]);
             } else {
                 alert('Server Error');
             }
@@ -57,15 +57,15 @@ export default function MyFoodTruckCategories({ categories, userId }: Props) {
     };
 
     const onCancelNewCategory = (catId: Category['id']) => {
-        setCategoryList([...categoryList.filter(({ id }) => id !== catId)]);
+        setCategoryList([ ...categoryList.filter(({ id }) => id !== catId) ]);
     };
 
     const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
 
-        setCategoryList([...categoryList.map(category => (
+        setCategoryList([ ...categoryList.map(category => (
             category.id === Number(name) ? { ...category, name: value } : category
-        ))]);
+        )) ]);
     };
 
     return (

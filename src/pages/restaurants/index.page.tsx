@@ -114,13 +114,13 @@ export default function RestaurantPage({
 }: Props) {
     const router = useRouter();
 
-    const [timeoutId, setTimeoutId] = useState<ReturnType<typeof setTimeout>>();
+    const [ timeoutId, setTimeoutId ] = useState<ReturnType<typeof setTimeout>>();
 
-    const [name, setName] = useState(queryName);
-    const [city, setCity] = useState(queryCity);
-    const [category, setCategory] = useState(queryCategory);
-    const [vegan, setVegan] = useState(false);
-    const [creditcard, setCreditcard] = useState(false);
+    const [ name, setName ] = useState(queryName);
+    const [ city, setCity ] = useState(queryCity);
+    const [ category, setCategory ] = useState(queryCategory);
+    const [ vegan, setVegan ] = useState(false);
+    const [ creditcard, setCreditcard ] = useState(false);
 
     useEffect(() => {
         const handleButtonClick = () => {
@@ -139,7 +139,7 @@ export default function RestaurantPage({
         };
 
         handleButtonClick();
-    }, [city, category, vegan, creditcard, name]);
+    }, [ city, category, vegan, creditcard, name ]);
 
     return (
         <>

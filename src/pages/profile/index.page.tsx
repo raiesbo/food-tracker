@@ -62,14 +62,14 @@ type Props = {
 }
 
 export default function Profile({ user, auth0User, reviews }: Props) {
-    const [isUpdate, setIsUpdate] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
+    const [ isUpdate, setIsUpdate ] = useState(false);
+    const [ isLoading, setIsLoading ] = useState(false);
 
-    const [firstName, setFirstName] = useState(user.firstName || '');
-    const [lastName, setLastname] = useState(user.lastName || '');
-    const [email, setEmail] = useState(user.email || '');
-    const [phone, setPhone] = useState(user.phone || '');
-    const [imageUrl, setImageUrl] = useState(user.imageUrl);
+    const [ firstName, setFirstName ] = useState(user.firstName || '');
+    const [ lastName, setLastname ] = useState(user.lastName || '');
+    const [ email, setEmail ] = useState(user.email || '');
+    const [ phone, setPhone ] = useState(user.phone || '');
+    const [ imageUrl, setImageUrl ] = useState(user.imageUrl);
 
     const onCancel = () => {
         setFirstName(user.firstName || '');
@@ -126,7 +126,6 @@ export default function Profile({ user, auth0User, reviews }: Props) {
             setIsLoading(false);
         }
     };
-
 
     return (
         <>
@@ -239,6 +238,20 @@ export default function Profile({ user, auth0User, reviews }: Props) {
                                 fullWidth
                                 sx={{ mt: 1, backgroundColor: 'white' }}
                                 disabled={!isUpdate || isLoading}
+                            />
+                        </div>
+                        <div>
+                            <Text variant={'h4'} bold>
+                                Image URL
+                            </Text>
+                            <TextField
+                                value={imageUrl}
+                                label=''
+                                onChange={(e) => setImageUrl(e.target.value)}
+                                fullWidth
+                                sx={{ mt: 1, backgroundColor: 'white' }}
+                                disabled={!isUpdate || isLoading}
+                                multiline={isUpdate}
                             />
                         </div>
                     </InfoSection>

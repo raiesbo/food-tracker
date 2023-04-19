@@ -17,7 +17,7 @@ export default function Card({
 }: Props) {
     return (
         <MUICard
-            className={cc([styles.root, withHover && styles.withHover, className])}
+            className={cc([ styles.root, withHover && styles.withHover, className ])}
             {...rest}
         >
             {children}

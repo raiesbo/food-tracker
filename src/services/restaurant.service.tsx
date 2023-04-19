@@ -3,6 +3,22 @@ import { Prisma, User } from '@prisma/client';
 import { NextApiRequest } from 'next';
 import prismaClients from '../repositories';
 
+const validateUpdateBody = (parsedBody: Prisma.RestaurantUncheckedUpdateInput) => {
+    const verifiedBody = {} as Prisma.RestaurantUncheckedUpdateInput & { categories: Array<{ id: number }> };
+
+    if (parsedBody?.name) verifiedBody.name = parsedBody.name;
+    if (parsedBody?.slogan) verifiedBody.slogan = parsedBody.slogan;
+    if (parsedBody?.description) verifiedBody.description = parsedBody.description;
+    if (parsedBody?.isCashOnly) verifiedBody.isCashOnly = parsedBody.isCashOnly;
+    if (
+        parsedBody?.categories
+        && Array.isArray(parsedBody.categories)
+        && parsedBody.categories.length > 0
+    ) verifiedBody.categories = parsedBody.categories.map((category: Category) => ({ id: category.id }));
+
+    return verifiedBody;
+};
+
 export default function userService({ restaurantClient }: typeof prismaClients) {
     return {
         getAllRestaurantByFilter: async (filters: Prisma.RestaurantWhereInput) => {
@@ -146,24 +162,11 @@ export default function userService({ restaurantClient }: typeof prismaClients) 
             const { restaurantId } = req.query as { restaurantId: string };
 
             try {
-                const {
-                    name,
-                    slogan,
-                    description,
-                    isCashOnly,
-                    categories
-                } = JSON.parse(req.body);
+                const parsedBody = JSON.parse(req.body);
 
-                const restaurant = await restaurantClient.updateRestaurant(Number(restaurantId), {
-                    name,
-                    slogan,
-                    description,
-                    isCashOnly,
-                    categories: {
-                        set: [],
-                        connect: categories.map((category: Category) => ({ id: category.id }))
-                    }
-                });
+                const vaildatedBody = validateUpdateBody(parsedBody);
+
+                const restaurant = await restaurantClient.updateRestaurant(Number(restaurantId), vaildatedBody);
 
                 if (restaurant) return { result: restaurant };
 

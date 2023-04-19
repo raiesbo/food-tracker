@@ -9,7 +9,6 @@ type Props = {
 
 const { clientId, clientSecret, auth0Domain, connection } = auth0Config;
 
-
 export default function auth0Service({ auth0Client }: Props) {
     const { getManagementApiToken, createUser } = auth0Client();
 

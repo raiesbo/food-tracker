@@ -46,12 +46,11 @@ type Props = {
     categories: Array<Category>
 }
 
-
 export default function RestaurantDetailsPage({ restaurant, categories }: Props) {
     const { user } = useUser();
 
-    const [newComment, setNewComment] = useState('');
-    const [isDialogOpen, setIsDialogOpen] = useState(false);
+    const [ newComment, setNewComment ] = useState('');
+    const [ isDialogOpen, setIsDialogOpen ] = useState(false);
 
     const userMetadata = user && user[auth0Config.metadata] as { user_id: string } | undefined;
 
