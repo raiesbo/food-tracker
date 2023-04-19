@@ -6,6 +6,16 @@ export const auth0Config = {
     metadata: 'https://food-tracker-tfm.vercel.app/user_metadata'
 };
 
+export const supagaseConfig = {
+    url: process.env.NEXT_PUBLIC_SUPABASE_URL,
+    anonKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    jwtSecret: process.env.SUPABASE_JWT_SECRET,
+};
+
 export const dropboxConfig = {
     apiToken: process.env.DROPBOX_API_TOKEN
+};
+
+export const imagesConfig = {
+    default: '/default_image.jpeg'
 };

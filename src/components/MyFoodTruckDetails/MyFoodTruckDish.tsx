@@ -1,6 +1,6 @@
 import FileService from '@/services/file.service';
 import { Dish } from '@/types';
-import { auth0Config } from '@/utils/settings';
+import { auth0Config, imagesConfig, supagaseConfig } from '@/utils/settings';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Button, Checkbox, FormControlLabel, IconButton, TextField } from '@mui/material';
@@ -118,7 +118,7 @@ export default function MyGoodTruckDish({ dish }: Props) {
             });
 
             if (result) {
-                const newImage = `https://udydjimmfagekivvovwh.supabase.co/storage/v1/object/public/food-truck/${userMetadata?.user_id}/dish_${dish.id}.${fileExtension}`;
+                const newImage = `${supagaseConfig.url}/storage/v1/object/public/food-truck/${userMetadata?.user_id}/dish_${dish.id}.${fileExtension}`;
                 await fetch(`/api/dishes/${dish.id}`, {
                     method: 'PUT',
                     body: JSON.stringify({ imageUrl: newImage })
@@ -201,7 +201,7 @@ export default function MyGoodTruckDish({ dish }: Props) {
                             <label htmlFor={`dish_${dish.id}`} className={styles.imageUploadInput}>
                                 <Image
                                     alt='Dish image'
-                                    src={imageUrl}
+                                    src={imageUrl || imagesConfig.default}
                                     fill
                                     className={styles.image}
                                     style={{ objectFit: 'cover' }}

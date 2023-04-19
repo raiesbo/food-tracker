@@ -5,7 +5,7 @@ import { Text } from "@/components/Text";
 import services from "@/services";
 import FileService from "@/services/file.service";
 import { Review } from "@/types";
-import { auth0Config } from "@/utils/settings";
+import { auth0Config, imagesConfig, supagaseConfig } from "@/utils/settings";
 import { getSession } from "@auth0/nextjs-auth0";
 import { UserProfile } from "@auth0/nextjs-auth0/client";
 import { Button, TextField } from "@mui/material";
@@ -114,8 +114,7 @@ export default function Profile({ user, auth0User, reviews }: Props) {
             });
 
             if (result) {
-                const newImage = `https://udydjimmfagekivvovwh.supabase.co/storage/v1/object/public/food-truck/${user.id}/profile_${user.id}.${fileExtension}`;
-
+                const newImage = `${supagaseConfig.url}/storage/v1/object/public/food-truck/${user.id}/profile_${user.id}.${fileExtension}`;
                 await fetch(`/api/users/${user.id}`, {
                     method: 'PUT',
                     body: JSON.stringify({ imageUrl: newImage })
@@ -173,7 +172,7 @@ export default function Profile({ user, auth0User, reviews }: Props) {
                         <label htmlFor={`profile_${user.id}`} className={styles.imageUploadInput}>
                             <Image
                                 alt='Users image'
-                                src={imageUrl || auth0User?.picture || ""}
+                                src={imageUrl || auth0User?.picture || imagesConfig.default}
                                 fill
                                 className={styles.image}
                                 style={{ objectFit: 'cover' }}

@@ -7,7 +7,7 @@ import services from "@/services";
 import FileService from "@/services/file.service";
 import { Restaurant } from "@/types";
 import { paths } from "@/utils/paths";
-import { auth0Config } from "@/utils/settings";
+import { auth0Config, imagesConfig, supagaseConfig } from "@/utils/settings";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { Button } from "@mui/material";
 import { Category, Location } from "@prisma/client";
@@ -89,7 +89,7 @@ export default function MyNewRestaurant({ restaurant, categories }: Props) {
                 await fetch(`/api/restaurants/${restaurant.id}`, {
                     method: 'PUT',
                     body: JSON.stringify({
-                        imageUrl: `https://udydjimmfagekivvovwh.supabase.co/storage/v1/object/public/food-truck/${userMetadata?.user_id}/restaurant_${restaurant.id}.${fileExtension}`
+                        imageUrl: `${supagaseConfig.url}/storage/v1/object/public/food-truck/${userMetadata?.user_id}/restaurant_${restaurant.id}.${fileExtension}`
                     })
                 }).then(response => {
                     if (response.ok) router.reload();
@@ -119,11 +119,11 @@ export default function MyNewRestaurant({ restaurant, categories }: Props) {
                 <section className={styles.bodyContainer}>
                     <div className={cc([styles.container, styles.sideColumn])}>
                         <InfoSection title="Food Truck Thumbnail">
-                            <Card className={styles.imageContainer}>
+                            <Card className={styles.imageContainer} withHover>
                                 <label htmlFor={`restaurant_${restaurant.id}`} className={styles.imageUploadInput}>
                                     <Image
                                         alt='Business image | default image from Unsplash'
-                                        src={restaurant.imageUrl || imagePlaceholder}
+                                        src={restaurant.imageUrl || imagesConfig.default}
                                         fill
                                         className={styles.image}
                                         style={{ objectFit: 'cover' }}
