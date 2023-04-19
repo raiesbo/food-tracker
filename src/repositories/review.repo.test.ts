@@ -19,9 +19,9 @@ describe('prisma reviews client', () => {
         const getRestaurantMock = vi.fn();
         prismaClientMock.instance.review.findUnique = getRestaurantMock;
 
-        reviewsClient.getReview('6' as Review['id']);
+        reviewsClient.getReview(6 as Review['id']);
 
-        expect(getRestaurantMock).toHaveBeenCalledWith({ 'where': { 'id': '6' } });
+        expect(getRestaurantMock).toHaveBeenCalledWith({ 'where': { 'id': 6 } });
     });
 
     it('can get many reviews by ids', () => {
@@ -47,10 +47,10 @@ describe('prisma reviews client', () => {
         const updatereviewMock = vi.fn();
         prismaClientMock.instance.review.update = updatereviewMock;
 
-        reviewsClient.updateReview('4' as Review['id'], { comment: 'test_comment' } as Review);
+        reviewsClient.updateReview(4 as Review['id'], { comment: 'test_comment' } as Review);
 
         expect(updatereviewMock).toHaveBeenCalledWith({
-            'where': { 'id': '4' },
+            'where': { 'id': 4 },
             'data': { 'comment': 'test_comment' }
         });
     });
@@ -59,8 +59,8 @@ describe('prisma reviews client', () => {
         const deletereviewMock = vi.fn();
         prismaClientMock.instance.review.delete = deletereviewMock;
 
-        reviewsClient.deleteReview('5' as Review['id']);
+        reviewsClient.deleteReview(5 as Review['id']);
 
-        expect(deletereviewMock).toHaveBeenCalledWith({ 'where': { 'id': '5' } });
+        expect(deletereviewMock).toHaveBeenCalledWith({ 'where': { 'id': 5 } });
     });
 });

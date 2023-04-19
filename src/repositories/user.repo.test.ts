@@ -19,9 +19,9 @@ describe('prisma users client', () => {
         const getUserMock = vi.fn();
         prismaClientMock.instance.user.findUnique = getUserMock;
 
-        usersClient.getUser('6' as User['id']);
+        usersClient.getUser(6 as User['id']);
 
-        expect(getUserMock).toHaveBeenCalledWith({ 'where': { 'id': '6' } });
+        expect(getUserMock).toHaveBeenCalledWith({ 'where': { 'id': 6 } });
     });
 
     it('can get many users by ids', () => {
@@ -37,10 +37,10 @@ describe('prisma users client', () => {
         const updateUserMock = vi.fn();
         prismaClientMock.instance.user.update = updateUserMock;
 
-        usersClient.updateUser('4' as User['id'], { email: 'test_email' } as User);
+        usersClient.updateUser(4 as User['id'], { email: 'test_email' } as User);
 
         expect(updateUserMock).toHaveBeenCalledWith({
-            'where': { 'id': '4' },
+            'where': { 'id': 4 },
             'data': { 'email': 'test_email' }
         });
     });
@@ -49,8 +49,8 @@ describe('prisma users client', () => {
         const deleteUserMock = vi.fn();
         prismaClientMock.instance.user.delete = deleteUserMock;
 
-        usersClient.deleteUser('5' as User['id']);
+        usersClient.deleteUser(5 as User['id']);
 
-        expect(deleteUserMock).toHaveBeenCalledWith({ 'where': { 'id': '5' } });
+        expect(deleteUserMock).toHaveBeenCalledWith({ 'where': { 'id': 5 } });
     });
 });

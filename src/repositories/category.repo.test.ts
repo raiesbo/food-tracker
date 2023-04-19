@@ -26,10 +26,10 @@ describe('prisma Categorys client', () => {
         const getCategoryMock = vi.fn();
         prismaClientMock.instance.category.findUnique = getCategoryMock;
 
-        categoriesClient.getCategory('6' as Category['id']);
+        categoriesClient.getCategory(6 as Category['id']);
 
         expect(getCategoryMock).toHaveBeenCalledWith({
-            'where': { 'id': '6' }, include: {
+            'where': { 'id': 6 }, include: {
                 _count: {
                     select: { restaurants: true },
                 },
@@ -57,10 +57,10 @@ describe('prisma Categorys client', () => {
         const updateCategoryMock = vi.fn();
         prismaClientMock.instance.category.update = updateCategoryMock;
 
-        categoriesClient.updateCategory('4' as Category['id'], { name: 'category test' } as Category);
+        categoriesClient.updateCategory(4 as Category['id'], { name: 'category test' } as Category);
 
         expect(updateCategoryMock).toHaveBeenCalledWith({
-            'where': { 'id': '4' },
+            'where': { 'id': 4 },
             'data': { 'name': 'category test' },
             include: {
                 _count: {
@@ -74,8 +74,8 @@ describe('prisma Categorys client', () => {
         const deleteCategoryMock = vi.fn();
         prismaClientMock.instance.category.delete = deleteCategoryMock;
 
-        categoriesClient.deleteCategory('5' as Category['id']);
+        categoriesClient.deleteCategory(5 as Category['id']);
 
-        expect(deleteCategoryMock).toHaveBeenCalledWith({ 'where': { 'id': '5' } });
+        expect(deleteCategoryMock).toHaveBeenCalledWith({ 'where': { 'id': 5 } });
     });
 });

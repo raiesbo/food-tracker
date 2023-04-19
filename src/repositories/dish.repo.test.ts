@@ -19,9 +19,9 @@ describe('prisma disches client', () => {
         const getDishMock = vi.fn();
         prismaClientMock.instance.dish.findUnique = getDishMock;
 
-        dischesClient.getDish('6' as Dish['id']);
+        dischesClient.getDish(6 as Dish['id']);
 
-        expect(getDishMock).toHaveBeenCalledWith({ 'where': { 'id': '6' } });
+        expect(getDishMock).toHaveBeenCalledWith({ 'where': { 'id': 6 } });
     });
 
     it('can get many disches by ids', () => {
@@ -37,10 +37,10 @@ describe('prisma disches client', () => {
         const updateDishMock = vi.fn();
         prismaClientMock.instance.dish.update = updateDishMock;
 
-        dischesClient.updateDish('4' as Dish['id'], { name: 'test_name' } as Dish);
+        dischesClient.updateDish(4 as Dish['id'], { name: 'test_name' } as Dish);
 
         expect(updateDishMock).toHaveBeenCalledWith({
-            'where': { 'id': '4' },
+            'where': { 'id': 4 },
             'data': { 'name': 'test_name' }
         });
     });
@@ -49,8 +49,8 @@ describe('prisma disches client', () => {
         const deleteDishMock = vi.fn();
         prismaClientMock.instance.dish.delete = deleteDishMock;
 
-        dischesClient.deleteDish('5' as Dish['id']);
+        dischesClient.deleteDish(5 as Dish['id']);
 
-        expect(deleteDishMock).toHaveBeenCalledWith({ 'where': { 'id': '5' } });
+        expect(deleteDishMock).toHaveBeenCalledWith({ 'where': { 'id': 5 } });
     });
 });

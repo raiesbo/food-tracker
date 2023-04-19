@@ -23,6 +23,7 @@ model User {
   resturants      Restaurant[]
   categories      Category[]
   likes           Like[]
+  orders          Order[]
 }
 
 enum UserType {
@@ -63,6 +64,7 @@ model Restaurant {
   userId      Int?
   categories  Category[]
   reviews     Review[]
+  orders      Order[]
 }
 
 model Dish {
@@ -78,6 +80,7 @@ model Dish {
   isGlutenFree Boolean     @default(false)
   restaurant   Restaurant? @relation(fields: [restaurantId], references: [id])
   restaurantId Int?
+  OrderItem    OrderItem[]
 }
 
 enum WeekDay {
@@ -140,4 +143,24 @@ model Event {
   closing_hour String?   @default("11:30")
   location     Location? @relation(fields: [locationId], references: [id])
   locationId   Int?      @unique
+}
+
+model Order {
+  id           Int         @id @default(autoincrement())
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  items        OrderItem[]
+  user         User?       @relation(fields: [userId], references: [id])
+  userId       Int?
+  restaurant   Restaurant? @relation(fields: [restaurantId], references: [id])
+  restaurantId Int?
+}
+
+model OrderItem {
+  id      Int    @id @default(autoincrement())
+  units   Int    @default(0)
+  dish    Dish?  @relation(fields: [dishId], references: [id])
+  dishId  Int?
+  order   Order? @relation(fields: [orderId], references: [id])
+  orderId Int?
 }

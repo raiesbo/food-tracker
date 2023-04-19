@@ -19,9 +19,9 @@ describe('prisma locations client', () => {
         const getLocationMock = vi.fn();
         prismaClientMock.instance.location.findUnique = getLocationMock;
 
-        locationsClient.getLocation('6' as Location['id']);
+        locationsClient.getLocation(6 as Location['id']);
 
-        expect(getLocationMock).toHaveBeenCalledWith({ 'where': { 'id': '6' } });
+        expect(getLocationMock).toHaveBeenCalledWith({ 'where': { 'id': 6 } });
     });
 
     it('can get many locations by ids', () => {
@@ -37,10 +37,10 @@ describe('prisma locations client', () => {
         const updateLocationMock = vi.fn();
         prismaClientMock.instance.location.update = updateLocationMock;
 
-        locationsClient.updateLocation('4' as Location['id'], { streetName: 'test_streetName' } as Location);
+        locationsClient.updateLocation(4 as Location['id'], { streetName: 'test_streetName' } as Location);
 
         expect(updateLocationMock).toHaveBeenCalledWith({
-            'where': { 'id': '4' },
+            'where': { 'id': 4 },
             'data': { 'streetName': 'test_streetName' }
         });
     });
@@ -49,8 +49,8 @@ describe('prisma locations client', () => {
         const deleteLocationMock = vi.fn();
         prismaClientMock.instance.location.delete = deleteLocationMock;
 
-        locationsClient.deleteLocation('5' as Location['id']);
+        locationsClient.deleteLocation(5 as Location['id']);
 
-        expect(deleteLocationMock).toHaveBeenCalledWith({ 'where': { 'id': '5' } });
+        expect(deleteLocationMock).toHaveBeenCalledWith({ 'where': { 'id': 5 } });
     });
 });
