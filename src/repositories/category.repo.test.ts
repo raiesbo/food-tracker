@@ -16,8 +16,8 @@ describe('prisma Categorys client', () => {
             data: { 'name': 'category test' },
             include: {
                 _count: {
-                    select: { restaurants: true },
-                },
+                    select: { restaurants: true }
+                }
             }
         });
     });
@@ -31,8 +31,8 @@ describe('prisma Categorys client', () => {
         expect(getCategoryMock).toHaveBeenCalledWith({
             'where': { 'id': 6 }, include: {
                 _count: {
-                    select: { restaurants: true },
-                },
+                    select: { restaurants: true }
+                }
             }
         });
     });
@@ -44,11 +44,11 @@ describe('prisma Categorys client', () => {
         categoriesClient.getCategories({ name: 'category test' } as Category);
 
         expect(getCategorysMock).toHaveBeenCalledWith({
-            'where': { 'name': 'category test', },
+            'where': { 'name': 'category test' },
             include: {
                 _count: {
-                    select: { restaurants: true },
-                },
+                    select: { restaurants: true }
+                }
             }
         });
     });
@@ -64,8 +64,8 @@ describe('prisma Categorys client', () => {
             'data': { 'name': 'category test' },
             include: {
                 _count: {
-                    select: { restaurants: true },
-                },
+                    select: { restaurants: true }
+                }
             }
         });
     });

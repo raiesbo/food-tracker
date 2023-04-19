@@ -83,6 +83,6 @@ export default function categoriesService({ dishClient }: typeof prismaClients) 
                     }
                 };
             }
-        },
+        }
     };
 }

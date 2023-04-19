@@ -55,7 +55,7 @@ export default function RestaurantDetailsContact({ user, location }: Props) {
                             streetName: location.streetName || '',
                             streetNumber: location.streetNumber,
                             city: location.city,
-                            zip: location.zip,
+                            zip: location.zip
                         })}
                     >
                         <Text>

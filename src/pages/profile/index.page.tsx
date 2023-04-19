@@ -24,7 +24,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         redirect: {
             permanent: true,
             destination: '/'
-        },
+        }
     };
 
     const userId = session.user[auth0Config.metadata]?.user_id;
@@ -43,7 +43,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         redirect: {
             permanent: true,
             destination: '/'
-        },
+        }
     };
 
     return {

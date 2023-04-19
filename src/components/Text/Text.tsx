@@ -54,7 +54,7 @@ export default function Text({
                 semiBold && styles.semiBold,
                 bold && styles.bold,
                 italic && styles.italic,
-                thin && styles.thin,
+                thin && styles.thin
             ])}
             {...rest}
         >

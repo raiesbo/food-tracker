@@ -4,8 +4,8 @@ import { IDBClient } from './prismaClient';
 
 export const categoryRelations = Prisma.validator<Prisma.CategoryInclude>()({
     _count: {
-        select: { restaurants: true },
-    },
+        select: { restaurants: true }
+    }
 });
 
 export default function prismaCategoryClient({ instance }: IDBClient) {

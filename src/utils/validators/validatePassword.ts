@@ -18,7 +18,7 @@ export default function validatePassword(password: string)
         withLowerCase: lowerCase.test(password),
         withUpperCase: upperCase.test(password),
         withNumbers: numbers.test(password),
-        withSpecialChars: specialChars.test(password),
+        withSpecialChars: specialChars.test(password)
     };
 
     // The password needs to match 3 out of 4 rules

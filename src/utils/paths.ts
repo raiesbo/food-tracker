@@ -36,7 +36,7 @@ export const paths = {
             detailLists: '/components/data-display/detail-lists',
             tables: '/components/data-display/tables',
             quickStats: '/components/data-display/quick-stats'
-        },
+        }
     },
     401: '/401',
     404: '/404',

@@ -84,7 +84,7 @@ export default function Home({ categories, locations }: Props) {
                 display: 'flex',
                 flexDirection: { xs: 'column', md: 'row' },
                 gap: { xs: 5, md: 3 },
-                alignItems: 'center',
+                alignItems: 'center'
               }}
             >
               <FormControl fullWidth>

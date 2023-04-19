@@ -9,7 +9,7 @@ export const auth0Config = {
 export const supagaseConfig = {
     url: process.env.NEXT_PUBLIC_SUPABASE_URL,
     anonKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-    jwtSecret: process.env.SUPABASE_JWT_SECRET,
+    jwtSecret: process.env.SUPABASE_JWT_SECRET
 };
 
 export const dropboxConfig = {

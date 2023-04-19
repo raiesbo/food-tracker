@@ -65,7 +65,7 @@ export default function SignIn() {
                         marginTop: 4,
                         display: 'flex',
                         flexDirection: 'column',
-                        alignItems: 'center',
+                        alignItems: 'center'
                     }}
                 >
                     <Typography component="h1" variant="h5">

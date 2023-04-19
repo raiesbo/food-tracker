@@ -14,7 +14,7 @@ export default function auth0Client() {
                     grant_type: 'client_credentials',
                     client_id: `${clientId}`,
                     client_secret: `${clientSecret}`,
-                    audience: `https://${auth0Domain}/api/v2/`,
+                    audience: `https://${auth0Domain}/api/v2/`
                 })
             });
         },

@@ -34,14 +34,14 @@ export default function userService({ restaurantClient }: typeof prismaClients) 
                             ...restaurant.reviews?.map(review => ({
                                 ...review,
                                 createdAt: `${review?.createdAt}`,
-                                updatedAt: `${review?.updatedAt}`,
+                                updatedAt: `${review?.updatedAt}`
                             }))
                         ],
                         menu: [
                             ...restaurant.menu.map(dish => ({
                                 ...dish,
                                 createdAt: `${dish?.createdAt}`,
-                                updatedAt: `${dish?.updatedAt}`,
+                                updatedAt: `${dish?.updatedAt}`
                             }))
                         ]
                     }))
@@ -79,14 +79,14 @@ export default function userService({ restaurantClient }: typeof prismaClients) 
                             ...restaurant.reviews.map(review => ({
                                 ...review,
                                 createdAt: `${review?.createdAt}`,
-                                updatedAt: `${review?.updatedAt}`,
+                                updatedAt: `${review?.updatedAt}`
                             }))
                         ],
                         menu: [
                             ...restaurant.menu.map(dish => ({
                                 ...dish,
                                 createdAt: `${dish?.createdAt}`,
-                                updatedAt: `${dish?.updatedAt}`,
+                                updatedAt: `${dish?.updatedAt}`
                             }))
                         ]
                     }))
@@ -126,14 +126,14 @@ export default function userService({ restaurantClient }: typeof prismaClients) 
                             ...restaurant.reviews.map(review => ({
                                 ...review,
                                 createdAt: `${review?.createdAt}`,
-                                updatedAt: `${review?.updatedAt}`,
+                                updatedAt: `${review?.updatedAt}`
                             }))
                         ],
                         menu: [
                             ...restaurant.menu.map(dish => ({
                                 ...dish,
                                 createdAt: `${dish?.createdAt}`,
-                                updatedAt: `${dish?.updatedAt}`,
+                                updatedAt: `${dish?.updatedAt}`
                             }))
                         ]
                     }

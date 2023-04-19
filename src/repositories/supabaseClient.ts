@@ -6,8 +6,8 @@ export default function supabaseClient(access_token: string) {
     if (access_token) {
         options.global = {
             headers: {
-                Authorization: `Bearer ${access_token}`,
-            },
+                Authorization: `Bearer ${access_token}`
+            }
         };
     }
 
