@@ -1,10 +1,10 @@
 import { InfoSection } from "@/components/InfoSection";
-import { NavigationMenu } from "@/components/NavigationMenu";
 import { ProfileReviews } from "@/components/Profile";
 import { Text } from "@/components/Text";
 import services from "@/services";
 import FileService from "@/services/file.service";
 import { Review } from "@/types";
+import { ToastContext } from "@/utils";
 import { auth0Config, imagesConfig, supagaseConfig } from "@/utils/settings";
 import { getSession } from "@auth0/nextjs-auth0";
 import { UserProfile } from "@auth0/nextjs-auth0/client";
@@ -12,7 +12,7 @@ import { Button, TextField } from "@mui/material";
 import { User } from "@prisma/client";
 import { GetServerSidePropsContext, NextApiRequest } from "next";
 import Image from "next/image";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useContext, useState } from "react";
 import styles from './profile.module.scss';
 
 const { userService, reviewsService } = services;
@@ -62,6 +62,8 @@ type Props = {
 }
 
 export default function Profile({ user, auth0User, reviews }: Props) {
+    const { dispatch } = useContext(ToastContext);
+
     const [ isUpdate, setIsUpdate ] = useState(false);
     const [ isLoading, setIsLoading ] = useState(false);
 
@@ -69,7 +71,7 @@ export default function Profile({ user, auth0User, reviews }: Props) {
     const [ lastName, setLastname ] = useState(user.lastName || '');
     const [ email, setEmail ] = useState(user.email || '');
     const [ phone, setPhone ] = useState(user.phone || '');
-    const [ imageUrl, setImageUrl ] = useState(user.imageUrl);
+    const [ imageUrl, setImageUrl ] = useState(user.imageUrl || '');
 
     const onCancel = () => {
         setFirstName(user.firstName || '');
@@ -128,140 +130,137 @@ export default function Profile({ user, auth0User, reviews }: Props) {
     };
 
     return (
-        <>
-            <NavigationMenu />
-            <main className={styles.root}>
-                <header className={styles.pageHeader}>
-                    <Text as='h1' variant='h1' bold>
-                        User Porfile
-                    </Text>
-                    <div className={styles.buttonContainer}>
-                        {isUpdate ? (
-                            <>
-                                <Button
-                                    variant="outlined"
-                                    onClick={onCancel}
-                                    color="error"
-                                    disabled={isLoading}
-                                >
-                                    CANCEL
-                                </Button>
-                                <Button
-                                    variant="contained"
-                                    color="success"
-                                    onClick={onSave}
-                                    disabled={isLoading}
-                                >
-                                    SAVE
-                                </Button>
-                            </>
-                        ) : (
+        <div className={styles.root}>
+            <header className={styles.pageHeader}>
+                <Text as='h1' variant='h1' bold>
+                    User Porfile
+                </Text>
+                <div className={styles.buttonContainer}>
+                    {isUpdate ? (
+                        <>
                             <Button
-                                variant="contained"
-                                onClick={() => setIsUpdate(true)}
+                                variant="outlined"
+                                onClick={onCancel}
+                                color="error"
                                 disabled={isLoading}
                             >
-                                EDIT
+                                CANCEL
                             </Button>
-                        )}
-                    </div>
-                </header>
-                <section className={styles.bodyContainer}>
-                    <div className={styles.imageContainer}>
-                        <label htmlFor={`profile_${user.id}`} className={styles.imageUploadInput}>
-                            <Image
-                                alt='Users image'
-                                src={imageUrl || auth0User?.picture || imagesConfig.default}
-                                fill
-                                className={styles.image}
-                                style={{ objectFit: 'cover' }}
-                            />
-                        </label>
-                        <input
-                            id={`profile_${user.id}`}
-                            type='file'
-                            accept="image/jpg,image/png"
-                            onChange={updateFile}
+                            <Button
+                                variant="contained"
+                                color="success"
+                                onClick={onSave}
+                                disabled={isLoading}
+                            >
+                                SAVE
+                            </Button>
+                        </>
+                    ) : (
+                        <Button
+                            variant="contained"
+                            onClick={() => setIsUpdate(true)}
+                            disabled={isLoading}
+                        >
+                            EDIT
+                        </Button>
+                    )}
+                </div>
+            </header>
+            <section className={styles.bodyContainer}>
+                <div className={styles.imageContainer}>
+                    <label htmlFor={`profile_${user.id}`} className={styles.imageUploadInput}>
+                        <Image
+                            alt='Users image'
+                            src={imageUrl || auth0User?.picture || imagesConfig.default}
+                            fill
+                            className={styles.image}
+                            style={{ objectFit: 'cover' }}
+                        />
+                    </label>
+                    <input
+                        id={`profile_${user.id}`}
+                        type='file'
+                        accept="image/jpg,image/png"
+                        onChange={updateFile}
+                    />
+                </div>
+                <InfoSection
+                    title='Personal Information'
+                    childrenClassName={styles.userInfo}
+                >
+                    <div>
+                        <Text variant={'h4'} bold>
+                            First Name
+                        </Text>
+                        <TextField
+                            value={firstName}
+                            label=''
+                            onChange={(e) => setFirstName(e.target.value)}
+                            fullWidth
+                            sx={{ mt: 1, backgroundColor: 'white' }}
+                            disabled={!isUpdate || isLoading}
                         />
                     </div>
-                    <InfoSection
-                        title='Personal Information'
-                        childrenClassName={styles.userInfo}
-                    >
-                        <div>
-                            <Text variant={'h4'} bold>
-                                First Name
-                            </Text>
-                            <TextField
-                                value={firstName}
-                                label=''
-                                onChange={(e) => setFirstName(e.target.value)}
-                                fullWidth
-                                sx={{ mt: 1, backgroundColor: 'white' }}
-                                disabled={!isUpdate || isLoading}
-                            />
-                        </div>
-                        <div>
-                            <Text variant={'h4'} bold>
-                                Last Name
-                            </Text>
-                            <TextField
-                                value={lastName}
-                                label=''
-                                onChange={(e) => setLastname(e.target.value)}
-                                fullWidth
-                                sx={{ mt: 1, backgroundColor: 'white' }}
-                                disabled={!isUpdate || isLoading}
-                            />
-                        </div>
-                        <div>
-                            <Text variant={'h4'} bold>
-                                Email
-                            </Text>
-                            <TextField
-                                value={email}
-                                label=''
-                                onChange={(e) => setEmail(e.target.value)}
-                                fullWidth
-                                sx={{ mt: 1, backgroundColor: 'white' }}
-                                disabled={!isUpdate || isLoading}
-                            />
-                        </div>
-                        <div>
-                            <Text variant={'h4'} bold>
-                                Phone Number
-                            </Text>
-                            <TextField
-                                value={phone}
-                                label=''
-                                onChange={(e) => setPhone(e.target.value)}
-                                fullWidth
-                                sx={{ mt: 1, backgroundColor: 'white' }}
-                                disabled={!isUpdate || isLoading}
-                            />
-                        </div>
-                        <div>
-                            <Text variant={'h4'} bold>
-                                Image URL
-                            </Text>
-                            <TextField
-                                value={imageUrl}
-                                label=''
-                                onChange={(e) => setImageUrl(e.target.value)}
-                                fullWidth
-                                sx={{ mt: 1, backgroundColor: 'white' }}
-                                disabled={!isUpdate || isLoading}
-                                multiline={isUpdate}
-                            />
-                        </div>
-                    </InfoSection>
-                    <ProfileReviews
-                        reviews={reviews}
-                        currentUserId={user.id}
-                        className={styles.revews}
-                    />
-                </section>
-            </main>
-        </>
+                    <div>
+                        <Text variant={'h4'} bold>
+                            Last Name
+                        </Text>
+                        <TextField
+                            value={lastName}
+                            label=''
+                            onChange={(e) => setLastname(e.target.value)}
+                            fullWidth
+                            sx={{ mt: 1, backgroundColor: 'white' }}
+                            disabled={!isUpdate || isLoading}
+                        />
+                    </div>
+                    <div>
+                        <Text variant={'h4'} bold>
+                            Email
+                        </Text>
+                        <TextField
+                            value={email}
+                            label=''
+                            onChange={(e) => setEmail(e.target.value)}
+                            fullWidth
+                            sx={{ mt: 1, backgroundColor: 'white' }}
+                            disabled={!isUpdate || isLoading}
+                        />
+                    </div>
+                    <div>
+                        <Text variant={'h4'} bold>
+                            Phone Number
+                        </Text>
+                        <TextField
+                            value={phone}
+                            label=''
+                            onChange={(e) => setPhone(e.target.value)}
+                            fullWidth
+                            sx={{ mt: 1, backgroundColor: 'white' }}
+                            disabled={!isUpdate || isLoading}
+                        />
+                    </div>
+                    <div>
+                        <Text variant={'h4'} bold>
+                            Image URL
+                        </Text>
+                        <TextField
+                            value={imageUrl}
+                            label=''
+                            onChange={(e) => setImageUrl(e.target.value)}
+                            fullWidth
+                            sx={{ mt: 1, backgroundColor: 'white' }}
+                            disabled={!isUpdate || isLoading}
+                            multiline={isUpdate}
+                        />
+                    </div>
+                </InfoSection>
+                <ProfileReviews
+                    reviews={reviews}
+                    currentUserId={user.id}
+                    className={styles.revews}
+                />
+            </section>
+        </div>
     );
 }

@@ -1,7 +1,6 @@
 import { InfoSection } from '@/components/InfoSection';
 import { MyFoodTruckCategories } from '@/components/MyFoodtruck';
 import MyFoodTruckList from '@/components/MyFoodtruck/MyFoodTruckList';
-import { NavigationMenu } from "@/components/NavigationMenu";
 import services from "@/services";
 import { Category, Restaurant } from '@/types';
 import { auth0Config } from "@/utils/settings";
@@ -53,23 +52,20 @@ type Props = {
 export default function MyRestaurants({ restaurants, categories, userId }: Props) {
 
     return (
-        <>
-            <NavigationMenu />
-            <main className={styles.root}>
-                <h1>
-                    My Food Trucks
-                </h1>
-                <MyFoodTruckList restaurants={restaurants} />
-                <div className={styles.bottonSection}>
-                    <MyFoodTruckCategories
-                        categories={categories}
-                        userId={userId}
-                    />
-                    <InfoSection title='Events'>
-                        {'Coming soon...'}
-                    </InfoSection>
-                </div>
-            </main>
-        </>
+        <div className={styles.root}>
+            <h1>
+                My Food Trucks
+            </h1>
+            <MyFoodTruckList restaurants={restaurants} />
+            <div className={styles.bottonSection}>
+                <MyFoodTruckCategories
+                    categories={categories}
+                    userId={userId}
+                />
+                <InfoSection title='Events'>
+                    {'Coming soon...'}
+                </InfoSection>
+            </div>
+        </div>
     );
 }
