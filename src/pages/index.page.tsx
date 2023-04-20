@@ -40,8 +40,8 @@ type Props = {
 export default function Home({ categories, locations }: Props) {
   const router = useRouter();
 
-  const [city, setCity] = useState('All');
-  const [category, setCategory] = useState('All');
+  const [ city, setCity ] = useState('All');
+  const [ category, setCategory ] = useState('All');
 
   const handleButtonClick = () => {
     const searchParams = new URLSearchParams({

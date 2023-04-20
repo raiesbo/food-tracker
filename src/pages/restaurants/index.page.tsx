@@ -1,4 +1,3 @@
-import { NavigationMenu } from "@/components/NavigationMenu";
 import { RestaurantListItem } from "@/components/RestaurantList";
 import { Text } from "@/components/Text";
 import services from "@/services";
@@ -142,92 +141,89 @@ export default function RestaurantPage({
     }, [ city, category, vegan, creditcard, name ]);
 
     return (
-        <>
-            <NavigationMenu />
-            <main className={styles.root}>
-                <Text as='h1' variant='h1' bold>
-                    Restaurants
-                </Text>
-                <div className={styles.filtersContainer}>
-                    <TextField
-                        id="restaurant-name"
-                        label="Restaurant's name"
-                        variant="outlined"
-                        sx={{ backgroundColor: 'white' }}
-                        onChange={(e) => setName(e.target.value)}
-                    />
-                    <div className={styles.dropdownContainer}>
-                        <FormControl>
-                            <InputLabel id="demo-simple-select-label">
-                                City
-                            </InputLabel>
-                            <Select
-                                labelId="City"
-                                id="location"
-                                value={city}
-                                label="City"
-                                onChange={(e) => setCity(e.target.value)}
-                                sx={{ backgroundColor: 'white' }}
-                            >
-                                <MenuItem value={'All'}>All</MenuItem>
-                                {locations.map(city => (
-                                    <MenuItem key={city} value={city || ''}>
-                                        {city}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
-                        <FormControl>
-                            <InputLabel id="demo-simple-select-label">
-                                Food Type
-                            </InputLabel>
-                            <Select
-                                labelId="Food Type"
-                                id="category"
-                                value={category}
-                                label="Food Type"
-                                onChange={(e) => setCategory(e.target.value)}
-                                sx={{ backgroundColor: 'white' }}
-                            >
-                                <MenuItem value={'All'}>All</MenuItem>
-                                {categories.map(({ name }: Category) => (
-                                    <MenuItem key={name} value={name || ''}>
-                                        {name}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
-                    </div>
+        <div className={styles.root}>
+            <Text as='h1' variant='h1' bold>
+                Restaurants
+            </Text>
+            <div className={styles.filtersContainer}>
+                <TextField
+                    id="restaurant-name"
+                    label="Restaurant's name"
+                    variant="outlined"
+                    sx={{ backgroundColor: 'white' }}
+                    onChange={(e) => setName(e.target.value)}
+                />
+                <div className={styles.dropdownContainer}>
+                    <FormControl>
+                        <InputLabel id="demo-simple-select-label">
+                            City
+                        </InputLabel>
+                        <Select
+                            labelId="City"
+                            id="location"
+                            value={city}
+                            label="City"
+                            onChange={(e) => setCity(e.target.value)}
+                            sx={{ backgroundColor: 'white' }}
+                        >
+                            <MenuItem value={'All'}>All</MenuItem>
+                            {locations.map(city => (
+                                <MenuItem key={city} value={city || ''}>
+                                    {city}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                    <FormControl>
+                        <InputLabel id="demo-simple-select-label">
+                            Food Type
+                        </InputLabel>
+                        <Select
+                            labelId="Food Type"
+                            id="category"
+                            value={category}
+                            label="Food Type"
+                            onChange={(e) => setCategory(e.target.value)}
+                            sx={{ backgroundColor: 'white' }}
+                        >
+                            <MenuItem value={'All'}>All</MenuItem>
+                            {categories.map(({ name }: Category) => (
+                                <MenuItem key={name} value={name || ''}>
+                                    {name}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
                 </div>
-                <div className={styles.additionalFilters}>
-                    <FormControlLabel
-                        control={
-                            <Checkbox
-                                onChange={(e) => setVegan(e.target.checked)}
-                                value={vegan}
-                            />
-                        }
-                        label="with Vegan options"
-                    />
-                    <FormControlLabel
-                        control={
-                            <Checkbox
-                                onChange={(e) => setCreditcard(e.target.checked)}
-                                value={creditcard}
-                            />
-                        }
-                        label="accepts Credit Card"
-                    />
-                </div>
-                <div className={styles.listContainer}>
-                    {restaurants?.map((restaurant: Restaurant) => (
-                        <RestaurantListItem
-                            key={restaurant.id}
-                            restaurant={restaurant}
+            </div>
+            <div className={styles.additionalFilters}>
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                            onChange={(e) => setVegan(e.target.checked)}
+                            value={vegan}
                         />
-                    ))}
-                </div>
-            </main>
-        </>
+                    }
+                    label="with Vegan options"
+                />
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                            onChange={(e) => setCreditcard(e.target.checked)}
+                            value={creditcard}
+                        />
+                    }
+                    label="accepts Credit Card"
+                />
+            </div>
+            <div className={styles.listContainer}>
+                {restaurants?.map((restaurant: Restaurant) => (
+                    <RestaurantListItem
+                        key={restaurant.id}
+                        restaurant={restaurant}
+                    />
+                ))}
+            </div>
+        </div>
     );
 }
