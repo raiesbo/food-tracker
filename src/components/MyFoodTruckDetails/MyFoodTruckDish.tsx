@@ -1,6 +1,7 @@
 import FileService from '@/services/file.service';
 import { Dish } from '@/types';
-import { auth0Config, imagesConfig, supagaseConfig } from '@/utils/settings';
+import { uploadImage } from '@/utils';
+import { auth0Config, imagesConfig } from '@/utils/settings';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Button, Checkbox, FormControlLabel, IconButton, TextField } from '@mui/material';
@@ -106,27 +107,21 @@ export default function MyGoodTruckDish({ dish }: Props) {
 
         if (user?.accessToken && files && userMetadata?.user_id && dish.restaurantId) {
             const file = files[0];
-            const fileExtension = file?.name?.split('.')?.at(-1)?.toLowerCase() as "png" | "jpg";
+            const extension = file?.name?.split('.')?.at(-1)?.toLowerCase() as "png" | "jpg";
+            const type = 'dishes';
 
             const { result } = await FileService().createFile({
                 token: user.accessToken as string,
                 file,
                 userId: userMetadata.user_id,
-                type: 'dish',
-                format: fileExtension,
+                type,
+                format: extension,
                 typeId: dish.id
             });
 
             if (result) {
-                const newImage = `${supagaseConfig.url}/storage/v1/object/public/food-truck/${userMetadata?.user_id}/dish_${dish.id}.${fileExtension}`;
-                await fetch(`/api/dishes/${dish.id}`, {
-                    method: 'PUT',
-                    body: JSON.stringify({ imageUrl: newImage })
-                }).then(response => {
-                    if (response.ok) {
-                        setImageUrl(newImage);
-                    }
-                });
+                const newImageUrl = await uploadImage({ userId: userMetadata.user_id, type, typeId: dish.id, extension });
+                if (newImageUrl) setImageUrl(newImageUrl);
             }
 
             setIsLoading(false);

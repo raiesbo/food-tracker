@@ -10,6 +10,7 @@ const validateUpdateBody = (parsedBody: Prisma.RestaurantUncheckedUpdateInput) =
     if (parsedBody?.slogan) verifiedBody.slogan = parsedBody.slogan;
     if (parsedBody?.description) verifiedBody.description = parsedBody.description;
     if (parsedBody?.isCashOnly) verifiedBody.isCashOnly = parsedBody.isCashOnly;
+    if (parsedBody?.imageUrl) verifiedBody.imageUrl = parsedBody.imageUrl;
     if (
         parsedBody?.categories
         && Array.isArray(parsedBody.categories)

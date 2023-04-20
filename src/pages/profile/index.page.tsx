@@ -4,8 +4,8 @@ import { Text } from "@/components/Text";
 import services from "@/services";
 import FileService from "@/services/file.service";
 import { Review } from "@/types";
-import { ToastContext } from "@/utils";
-import { auth0Config, imagesConfig, supagaseConfig } from "@/utils/settings";
+import { ToastContext, uploadImage } from "@/utils";
+import { auth0Config, imagesConfig } from "@/utils/settings";
 import { getSession } from "@auth0/nextjs-auth0";
 import { UserProfile } from "@auth0/nextjs-auth0/client";
 import { Button, TextField } from "@mui/material";
@@ -104,25 +104,21 @@ export default function Profile({ user, auth0User, reviews }: Props) {
 
         if (auth0User?.accessToken && files && user.id) {
             const file = files[0];
-            const fileExtension = file?.name?.split('.')?.at(-1)?.toLowerCase() as "png" | "jpg";
+            const extension = file?.name?.split('.')?.at(-1)?.toLowerCase() as "png" | "jpg";
+            const type = 'users';
 
             const { result } = await FileService().createFile({
                 token: auth0User.accessToken as string,
                 file,
                 userId: user.id,
-                type: 'profile',
-                format: fileExtension,
+                type,
+                format: extension,
                 typeId: user.id
             });
 
             if (result) {
-                const newImage = `${supagaseConfig.url}/storage/v1/object/public/food-truck/${user.id}/profile_${user.id}.${fileExtension}`;
-                await fetch(`/api/users/${user.id}`, {
-                    method: 'PUT',
-                    body: JSON.stringify({ imageUrl: newImage })
-                }).then(response => {
-                    if (response.ok) setImageUrl(newImage);
-                });
+                const newImageUrl = await uploadImage({ userId: user.id, type, typeId: user.id, extension });
+                if (newImageUrl) setImageUrl(newImageUrl);
             }
 
             setIsLoading(false);

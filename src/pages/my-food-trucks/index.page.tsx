@@ -12,7 +12,6 @@ import styles from './MyFoodTrucks.module.scss';
 const { restaurantService, categoriesService } = services;
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-
     const session = await getSession(context.req, context.res);
 
     const metadata = session?.user && session?.user[auth0Config.metadata] as {

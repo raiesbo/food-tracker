@@ -6,7 +6,7 @@ export default function FileService() {
             token: string,
             file: File,
             userId: string | number,
-            type: 'restaurant' | 'dish' | 'profile',
+            type: 'restaurants' | 'dishes' | 'users',
             format: 'png' | 'jpg'
             typeId: number
         }) => {

@@ -5,8 +5,9 @@ import MyFoodTruckReviews from "@/components/MyFoodTruckDetails/MyFoodTruckRevie
 import services from "@/services";
 import FileService from "@/services/file.service";
 import { Restaurant } from "@/types";
+import { uploadImage } from "@/utils";
 import { paths } from "@/utils/paths";
-import { auth0Config, imagesConfig, supagaseConfig } from "@/utils/settings";
+import { auth0Config, imagesConfig } from "@/utils/settings";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { Button } from "@mui/material";
 import { Category, Location } from "@prisma/client";
@@ -73,25 +74,21 @@ export default function MyNewRestaurant({ restaurant, categories }: Props) {
 
         if (user?.accessToken && files && userMetadata?.user_id) {
             const file = files[0];
-            const fileExtension = file?.name?.split('.')?.at(-1)?.toLowerCase() as "png" | "jpg";
+            const extension = file?.name?.split('.')?.at(-1)?.toLowerCase() as "png" | "jpg";
+            const type = 'restaurants';
 
-            const { result, error } = await FileService().createFile({
+            const { result } = await FileService().createFile({
                 token: user.accessToken as string,
                 file,
                 userId: userMetadata.user_id,
-                type: 'restaurant',
-                format: fileExtension,
+                type,
+                format: extension,
                 typeId: restaurant.id
             });
 
             if (result) {
-                const newImageUrl = `${supagaseConfig.url}/storage/v1/object/public/food-truck/${userMetadata?.user_id}/restaurant_${restaurant.id}.${fileExtension}`;
-                await fetch(`/api/restaurants/${restaurant.id}`, {
-                    method: 'PUT',
-                    body: JSON.stringify({ imageUrl: newImageUrl })
-                }).then(response => {
-                    if (response.ok) setImageUrl(newImageUrl);
-                });
+                const newImageUrl = await uploadImage({ userId: userMetadata.user_id, type, typeId: restaurant.id, extension });
+                if (newImageUrl) setImageUrl(newImageUrl);
             }
         }
     };
