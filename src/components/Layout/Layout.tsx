@@ -1,6 +1,7 @@
 import { ToastContext } from "@/utils";
 import { Alert, Snackbar } from "@mui/material";
 import { ReactNode, useContext } from "react";
+import { Footer } from "../Footer";
 import { NavigationMenu } from "../NavigationMenu";
 
 type Props = {
@@ -18,6 +19,7 @@ export default function Layout({ children }: Props) {
             <main>
                 {children}
             </main>
+            <Footer />
             <Snackbar
                 open={toastContext.isOpen}
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}

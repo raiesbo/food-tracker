@@ -16,16 +16,16 @@ import styles from './signup.module.scss';
 export default function SignIn() {
     const router = useRouter();
 
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [isSP, setIsSp] = useState('SP');
+    const [ firstName, setFirstName ] = useState('');
+    const [ lastName, setLastName ] = useState('');
+    const [ email, setEmail ] = useState('');
+    const [ password, setPassword ] = useState('');
+    const [ isSP, setIsSp ] = useState('SP');
 
-    const [isDisabled, setIsDisabled] = useState(true);
-    const [isLoading, setIsLoading] = useState(false);
+    const [ isDisabled, setIsDisabled ] = useState(true);
+    const [ isLoading, setIsLoading ] = useState(false);
 
-    const [passwordError, setPasswordError] = useState(false);
+    const [ passwordError, setPasswordError ] = useState(false);
 
     const handleClickButton = async () => {
         setIsLoading(true);
