@@ -1,6 +1,6 @@
 import FileService from '@/services/file.service';
 import { Dish } from '@/types';
-import { uploadImage } from '@/utils';
+import { uploadImage, useToast } from '@/utils';
 import { auth0Config, imagesConfig } from '@/utils/settings';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -11,6 +11,7 @@ import { useRouter } from 'next/router';
 import { ChangeEvent, useState } from 'react';
 import { Card } from '../Card';
 import { Text } from '../Text';
+import { ToastAction } from '../ToastContext';
 import styles from './MyFoodTruckDish.module.scss';
 import MyFoodTruckIngredients from './MyFoodTruckIngredients';
 
@@ -21,6 +22,7 @@ type Props = {
 export default function MyGoodTruckDish({ dish }: Props) {
     const router = useRouter();
     const { user } = useUser();
+    const { dispatch } = useToast();
 
     const userMetadata = user && user?.[auth0Config.metadata] as { user_id: string };
 
@@ -110,13 +112,23 @@ export default function MyGoodTruckDish({ dish }: Props) {
             const extension = file?.name?.split('.')?.at(-1)?.toLowerCase() as "png" | "jpg";
             const type = 'dishes';
 
-            const { result } = await FileService().createFile({
+            const { result, error } = await FileService().createFile({
                 token: user.accessToken as string,
                 file,
                 userId: userMetadata.user_id,
                 type,
                 format: extension,
                 typeId: dish.id
+            });
+
+            dispatch({
+                type: ToastAction.UPDATE_TOAST, payload: error ? {
+                    message: 'Error while uploading the image',
+                    severity: 'error'
+                } : {
+                    message: 'The image has been successfully uploaded',
+                    severity: 'success'
+                }
             });
 
             if (result) {

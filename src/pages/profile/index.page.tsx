@@ -123,24 +123,19 @@ export default function Profile({ user, auth0User, reviews }: Props) {
                 typeId: user.id
             });
 
-            if (error) {
-                dispatch({
-                    type: ToastAction.UPDATE_TOAST, payload: {
-                        message: 'Error while uploading the image.',
-                        severity: 'error'
-                    }
-                });
-            }
+            dispatch({
+                type: ToastAction.UPDATE_TOAST, payload: error ? {
+                    message: 'Error while uploading the image',
+                    severity: 'error'
+                } : {
+                    message: 'The image has been successfully uploaded',
+                    severity: 'success'
+                }
+            });
 
             if (result) {
                 const newImageUrl = await uploadImage({ userId: user.id, type, typeId: user.id, extension });
                 if (newImageUrl) setImageUrl(newImageUrl);
-                dispatch({
-                    type: ToastAction.UPDATE_TOAST, payload: {
-                        message: 'Image successfully uploaded.',
-                        severity: 'success'
-                    }
-                });
             }
 
             setIsLoading(false);

@@ -63,11 +63,19 @@ export default function MyNewRestaurant({ restaurant, categories }: Props) {
         fetch(`/api/restaurants/${restaurant.id}`, {
             method: 'DELETE'
         }).then(response => {
-            if (response.ok) {
-                return router.push(paths.myFoodTrucks);
-            } else {
-                alert('Server Error');
-            }
+            dispatch({
+                type: ToastAction.UPDATE_TOAST, payload: response.ok ? {
+                    message: 'Restaurant successfully removed',
+                    severity: 'success'
+                } : {
+                    message: 'There has been a server error',
+                    severity: 'error'
+                }
+            });
+
+            if (response.ok) setTimeout(() => {
+                router.push(paths.myFoodTrucks);
+            }, 1000);
         });
     };
 
@@ -88,10 +96,13 @@ export default function MyNewRestaurant({ restaurant, categories }: Props) {
                 typeId: restaurant.id
             });
 
-            if (error) dispatch({
-                type: ToastAction.UPDATE_TOAST, payload: {
-                    message: '',
+            dispatch({
+                type: ToastAction.UPDATE_TOAST, payload: error ? {
+                    message: 'Error while uploading the image',
                     severity: 'error'
+                } : {
+                    message: 'The image has been successfully uploaded',
+                    severity: 'success'
                 }
             });
 
