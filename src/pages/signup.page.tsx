@@ -1,5 +1,4 @@
 import { ErrorMessagePassword } from '@/components/ErrorMessage';
-import { NavigationMenu } from '@/components/NavigationMenu';
 import { validatePassword } from '@/utils';
 import { paths } from '@/utils/paths';
 import { FormControlLabel, FormLabel, Radio, RadioGroup } from '@mui/material';
@@ -17,16 +16,16 @@ import styles from './signup.module.scss';
 export default function SignIn() {
     const router = useRouter();
 
-    const [ firstName, setFirstName ] = useState('');
-    const [ lastName, setLastName ] = useState('');
-    const [ email, setEmail ] = useState('');
-    const [ password, setPassword ] = useState('');
-    const [ isSP, setIsSp ] = useState('SP');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [isSP, setIsSp] = useState('SP');
 
-    const [ isDisabled, setIsDisabled ] = useState(true);
-    const [ isLoading, setIsLoading ] = useState(false);
+    const [isDisabled, setIsDisabled] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
 
-    const [ passwordError, setPasswordError ] = useState(false);
+    const [passwordError, setPasswordError] = useState(false);
 
     const handleClickButton = async () => {
         setIsLoading(true);
@@ -56,105 +55,102 @@ export default function SignIn() {
     };
 
     return (
-        <>
-            <NavigationMenu />
-            <main className={styles.root}>
-                <CssBaseline />
-                <Box
-                    sx={{
-                        marginTop: 4,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center'
-                    }}
-                >
-                    <Typography component="h1" variant="h5">
-                        Sign Up
-                    </Typography>
-                    <Box component="form" noValidate sx={{ mt: 1 }}>
+        <div className={styles.root}>
+            <CssBaseline />
+            <Box
+                sx={{
+                    marginTop: 4,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center'
+                }}
+            >
+                <Typography component="h1" variant="h5">
+                    Sign Up
+                </Typography>
+                <Box component="form" noValidate sx={{ mt: 1 }}>
+                    <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="firstName"
+                        label="First Name"
+                        name="firstName"
+                        autoFocus
+                        value={firstName}
+                        onChange={e => setFirstName(e.target.value)}
+                        sx={{ backgroundColor: 'white' }}
+                    />
+                    <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="lastName"
+                        label="Last Name"
+                        name="lastName"
+                        value={lastName}
+                        onChange={e => setLastName(e.target.value)}
+                        sx={{ backgroundColor: 'white' }}
+                    />
+                    <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="email"
+                        label="Email Address"
+                        name="email"
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
+                        sx={{ backgroundColor: 'white' }}
+                    />
+                    <div>
                         <TextField
                             margin="normal"
                             required
                             fullWidth
-                            id="firstName"
-                            label="First Name"
-                            name="firstName"
-                            autoFocus
-                            value={firstName}
-                            onChange={e => setFirstName(e.target.value)}
+                            name="password"
+                            label="Password"
+                            type="password"
+                            id="password"
+                            autoComplete="current-password"
+                            value={password}
+                            onChange={onPasswordChange}
                             sx={{ backgroundColor: 'white' }}
                         />
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="lastName"
-                            label="Last Name"
-                            name="lastName"
-                            value={lastName}
-                            onChange={e => setLastName(e.target.value)}
-                            sx={{ backgroundColor: 'white' }}
-                        />
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="email"
-                            label="Email Address"
-                            name="email"
-                            value={email}
-                            onChange={e => setEmail(e.target.value)}
-                            sx={{ backgroundColor: 'white' }}
-                        />
-                        <div>
-                            <TextField
-                                margin="normal"
-                                required
-                                fullWidth
-                                name="password"
-                                label="Password"
-                                type="password"
-                                id="password"
-                                autoComplete="current-password"
-                                value={password}
-                                onChange={onPasswordChange}
-                                sx={{ backgroundColor: 'white' }}
+                        {passwordError && (
+                            <ErrorMessagePassword
+                                conditions={validatePassword(password).conditions}
                             />
-                            {passwordError && (
-                                <ErrorMessagePassword
-                                    conditions={validatePassword(password).conditions}
-                                />
-                            )}
-                        </div>
-                        <FormLabel id="demo-row-radio-buttons-group-label">Register as:</FormLabel>
-                        <RadioGroup
-                            row
-                            aria-labelledby="demo-row-radio-buttons-group-label"
-                            name="row-radio-buttons-group"
-                            onChange={(e) => setIsSp(e.target.value)}
-                        >
-                            <FormControlLabel value={"CUSTOMER"} control={<Radio />} label="Client" defaultChecked />
-                            <FormControlLabel value={"SP"} control={<Radio />} label="Business" />
-                        </RadioGroup>
-                        <Button
-                            disabled={isDisabled || isLoading}
-                            fullWidth
-                            variant="contained"
-                            sx={{ mt: 3, mb: 2 }}
-                            onClick={handleClickButton}
-                        >
-                            Sign Up
-                        </Button>
-                        <Grid container>
-                            <Grid item>
-                                <Link href={paths.login} variant="body2">
-                                    {"Do have an account? Sign In"}
-                                </Link>
-                            </Grid>
+                        )}
+                    </div>
+                    <FormLabel id="demo-row-radio-buttons-group-label">Register as:</FormLabel>
+                    <RadioGroup
+                        row
+                        aria-labelledby="demo-row-radio-buttons-group-label"
+                        name="row-radio-buttons-group"
+                        onChange={(e) => setIsSp(e.target.value)}
+                    >
+                        <FormControlLabel value={"CUSTOMER"} control={<Radio />} label="Client" defaultChecked />
+                        <FormControlLabel value={"SP"} control={<Radio />} label="Business" />
+                    </RadioGroup>
+                    <Button
+                        disabled={isDisabled || isLoading}
+                        fullWidth
+                        variant="contained"
+                        sx={{ mt: 3, mb: 2 }}
+                        onClick={handleClickButton}
+                    >
+                        Sign Up
+                    </Button>
+                    <Grid container>
+                        <Grid item>
+                            <Link href={paths.login} variant="body2">
+                                {"Do have an account? Sign In"}
+                            </Link>
                         </Grid>
-                    </Box>
+                    </Grid>
                 </Box>
-            </main>
-        </>
+            </Box>
+        </div>
     );
 }
