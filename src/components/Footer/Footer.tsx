@@ -4,9 +4,11 @@ import styles from './Footer.module.scss';
 export default function Footer() {
     const { error } = useUser();
 
+    console.log({ error })
+
     return (
         <footer className={styles.root}>
-            Footer {!!error}
+            {/* Footer {!!error} */}
         </footer>
     );
 }

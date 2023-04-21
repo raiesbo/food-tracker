@@ -1,10 +1,11 @@
 import { InfoSection } from "@/components/InfoSection";
 import { ProfileReviews } from "@/components/Profile";
 import { Text } from "@/components/Text";
+import { ToastAction } from "@/components/ToastContext";
 import services from "@/services";
 import FileService from "@/services/file.service";
 import { Review } from "@/types";
-import { ToastContext, uploadImage } from "@/utils";
+import { uploadImage, useToast } from "@/utils";
 import { auth0Config, imagesConfig } from "@/utils/settings";
 import { getSession } from "@auth0/nextjs-auth0";
 import { UserProfile } from "@auth0/nextjs-auth0/client";
@@ -12,7 +13,7 @@ import { Button, TextField } from "@mui/material";
 import { User } from "@prisma/client";
 import { GetServerSidePropsContext, NextApiRequest } from "next";
 import Image from "next/image";
-import { ChangeEvent, useContext, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import styles from './profile.module.scss';
 
 const { userService, reviewsService } = services;
@@ -62,7 +63,7 @@ type Props = {
 }
 
 export default function Profile({ user, auth0User, reviews }: Props) {
-    const { dispatch } = useContext(ToastContext);
+    const { dispatch } = useToast();
 
     const [ isUpdate, setIsUpdate ] = useState(false);
     const [ isLoading, setIsLoading ] = useState(false);
@@ -91,7 +92,12 @@ export default function Profile({ user, auth0User, reviews }: Props) {
         }).then(response => {
             if (response.ok) return;
             onCancel();
-            alert('There has been server error, please try again later.');
+            dispatch({
+                type: ToastAction.UPDATE_TOAST, payload: {
+                    message: 'There has been server error, please try again later.',
+                    severity: 'error'
+                }
+            });
         }).finally(() => {
             setIsLoading(false);
             setIsUpdate(false);
@@ -100,6 +106,7 @@ export default function Profile({ user, auth0User, reviews }: Props) {
 
     const updateFile = async (event: ChangeEvent<HTMLInputElement>) => {
         setIsLoading(true);
+
         const files = event.target.files;
 
         if (auth0User?.accessToken && files && user.id) {
@@ -107,7 +114,7 @@ export default function Profile({ user, auth0User, reviews }: Props) {
             const extension = file?.name?.split('.')?.at(-1)?.toLowerCase() as "png" | "jpg";
             const type = 'users';
 
-            const { result } = await FileService().createFile({
+            const { result, error } = await FileService().createFile({
                 token: auth0User.accessToken as string,
                 file,
                 userId: user.id,
@@ -116,9 +123,24 @@ export default function Profile({ user, auth0User, reviews }: Props) {
                 typeId: user.id
             });
 
+            if (error) {
+                dispatch({
+                    type: ToastAction.UPDATE_TOAST, payload: {
+                        message: 'Error while uploading the image.',
+                        severity: 'error'
+                    }
+                });
+            }
+
             if (result) {
                 const newImageUrl = await uploadImage({ userId: user.id, type, typeId: user.id, extension });
                 if (newImageUrl) setImageUrl(newImageUrl);
+                dispatch({
+                    type: ToastAction.UPDATE_TOAST, payload: {
+                        message: 'Image successfully uploaded.',
+                        severity: 'success'
+                    }
+                });
             }
 
             setIsLoading(false);

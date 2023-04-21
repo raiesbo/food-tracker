@@ -1,15 +1,21 @@
-import { ToastContext } from "@/utils";
-import { Alert, Snackbar } from "@mui/material";
-import { ReactNode, useContext } from "react";
+import { useToast } from "@/utils";
+import Alert from "@mui/material/Alert";
+import Snackbar from "@mui/material/Snackbar";
+import { ReactNode } from "react";
 import { Footer } from "../Footer";
 import { NavigationMenu } from "../NavigationMenu";
+import { ToastAction } from "../ToastContext";
 
 type Props = {
     children: ReactNode
 }
 
 export default function Layout({ children }: Props) {
-    const { toastContext, handleClose } = useContext(ToastContext);
+    const { toastState, dispatch } = useToast();
+
+    const onCloseToast = () => {
+        dispatch({ type: ToastAction.RESET_TOAST, payload: {} });
+    };
 
     return (
         <>
@@ -21,20 +27,20 @@ export default function Layout({ children }: Props) {
             </main>
             <Footer />
             <Snackbar
-                open={toastContext.isOpen}
+                open={toastState.isOpen}
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
                 autoHideDuration={4000}
-                onClose={handleClose}
-                message={toastContext.message}
+                onClose={onCloseToast}
+                message={toastState.message}
             >
                 <Alert
-                    onClose={handleClose}
-                    severity={toastContext.severity}
+                    onClose={onCloseToast}
+                    severity={toastState.severity}
                     sx={{ width: '100%' }}
                     variant="filled"
                     elevation={5}
                 >
-                    {toastContext.message}
+                    {toastState.message}
                 </Alert>
             </Snackbar>
         </>

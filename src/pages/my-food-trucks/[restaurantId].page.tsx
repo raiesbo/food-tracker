@@ -2,10 +2,11 @@ import { Card } from "@/components/Card";
 import { InfoSection } from "@/components/InfoSection";
 import { MyFoodTruckLocations, MyFoodTruckMenu, MyFoodTruckRestaurant } from "@/components/MyFoodTruckDetails";
 import MyFoodTruckReviews from "@/components/MyFoodTruckDetails/MyFoodTruckReviews";
+import { ToastAction } from "@/components/ToastContext";
 import services from "@/services";
 import FileService from "@/services/file.service";
 import { Restaurant } from "@/types";
-import { uploadImage } from "@/utils";
+import { uploadImage, useToast } from "@/utils";
 import { paths } from "@/utils/paths";
 import { auth0Config, imagesConfig } from "@/utils/settings";
 import { useUser } from "@auth0/nextjs-auth0/client";
@@ -52,6 +53,7 @@ type Props = {
 export default function MyNewRestaurant({ restaurant, categories }: Props) {
     const router = useRouter();
     const { user } = useUser();
+    const { dispatch } = useToast();
 
     const [ imageUrl, setImageUrl ] = useState(restaurant.imageUrl);
 
@@ -77,13 +79,20 @@ export default function MyNewRestaurant({ restaurant, categories }: Props) {
             const extension = file?.name?.split('.')?.at(-1)?.toLowerCase() as "png" | "jpg";
             const type = 'restaurants';
 
-            const { result } = await FileService().createFile({
+            const { result, error } = await FileService().createFile({
                 token: user.accessToken as string,
                 file,
                 userId: userMetadata.user_id,
                 type,
                 format: extension,
                 typeId: restaurant.id
+            });
+
+            if (error) dispatch({
+                type: ToastAction.UPDATE_TOAST, payload: {
+                    message: '',
+                    severity: 'error'
+                }
             });
 
             if (result) {

@@ -1,26 +1,12 @@
-import { AlertColor } from "@mui/material";
-import { useState } from "react";
+import { useContext } from "react";
+import { ToastContext } from "../../components/ToastContext/ToastContext";
 
 export default function useToast() {
-    const [ isOpen, setIsOpen ] = useState(false);
-    const [ message, setMessage ] = useState('');
-    const [ severity, setSeverity ] = useState<AlertColor>('info');
+    const context = useContext(ToastContext);
 
-    const handleClose = () => {
-        setIsOpen(false);
-    };
+    if (context === undefined) {
+        throw new Error("useShop must be used within ShopContext");
+    }
 
-    const dispatch = (newMessage: string, severity: AlertColor = 'info') => {
-        setIsOpen(true);
-        setMessage(newMessage);
-        setSeverity(severity);
-    };
-
-    return {
-        isOpen,
-        message,
-        severity,
-        handleClose,
-        dispatch
-    };
+    return context;
 }
