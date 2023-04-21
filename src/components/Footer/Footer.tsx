@@ -4,7 +4,7 @@ import styles from './Footer.module.scss';
 export default function Footer() {
     const { error } = useUser();
 
-    console.log({ error })
+    console.log({ error });
 
     return (
         <footer className={styles.root}>
