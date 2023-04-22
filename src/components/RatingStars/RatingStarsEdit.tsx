@@ -1,6 +1,6 @@
 import StarIcon from '@mui/icons-material/Star';
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
-import { IconButton } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
 import { ReactNode } from 'react';
 
 type Props = {

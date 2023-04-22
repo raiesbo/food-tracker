@@ -1,6 +1,11 @@
 import services from '@/services';
 import { paths } from '@/utils/paths';
-import { Box, Button, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
 import { Category } from '@prisma/client';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -24,7 +29,7 @@ export async function getServerSideProps() {
   } = await locationsService.getAllUniqueCities();
 
   if (getAllCategoriesError || getAllLocationsError) return {
-    props: { getAllCategoriesError, getAllLocationsError }
+    props: { categories: [], locations: [] }
   };
 
   return {
@@ -56,8 +61,8 @@ export default function Home({ categories, locations }: Props) {
     <div className={styles.searchSectionContainer}>
       <Image
         src={bgImageUrl}
-        alt="Food truck background | default image from Unsplash"
-        style={{ objectFit: "cover", opacity: 0.9, filter: 'brightness(15%)' }}
+        alt="Food truck background | image from Unsplash"
+        style={{ objectFit: "cover", opacity: 0.9, filter: 'brightness(18%)' }}
         priority
         fill
         className={styles.backgroundImage}

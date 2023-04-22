@@ -1,5 +1,5 @@
 import { Dish, Restaurant } from "@/types";
-import { Button } from "@mui/material";
+import Button from "@mui/material/Button";
 import { useState } from "react";
 import { InfoSection } from "../InfoSection";
 import MyFoodTruckDish from "./MyFoodTruckDish";

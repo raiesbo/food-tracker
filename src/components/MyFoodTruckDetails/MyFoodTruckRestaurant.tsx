@@ -1,5 +1,10 @@
 import { Restaurant } from "@/types";
-import { Button, Checkbox, FormControlLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
+import Button from "@mui/material/Button";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import TextField from "@mui/material/TextField";
 import { Category } from "@prisma/client";
 import { useState } from "react";
 import { InfoSection } from "../InfoSection";

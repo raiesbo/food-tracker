@@ -4,7 +4,7 @@ import { paths } from "@/utils/paths";
 import { auth0Config, imagesConfig } from "@/utils/settings";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import AddIcon from '@mui/icons-material/Add';
-import { IconButton } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";

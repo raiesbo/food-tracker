@@ -12,20 +12,20 @@ export const paths = {
         NavigtionMenu: {
             visitor: [
                 { name: 'Home', url: '/' },
-                { name: 'Restaurants', url: '/restaurants' },
+                { name: 'Restaurants', url: '/restaurants?name=&city=&category=&vegan=&creditcard=' },
                 { name: 'Sign Up', url: '/signup' },
                 { name: 'Login', url: '/api/auth/login' }
             ],
             customer: [
                 { name: 'Home', url: '/' },
-                { name: 'Restaurants', url: '/restaurants' },
+                { name: 'Restaurants', url: '/restaurants?name=&city=&category=&vegan=&creditcard=' },
                 { name: 'Profile', url: '/profile' },
                 // { name: 'My Reviews', url: '/reviews' },
                 { name: 'Logout', url: '/api/auth/logout' }
             ],
             serviceProvider: [
                 { name: 'Home', url: '/' },
-                { name: 'Restaurants', url: '/restaurants' },
+                { name: 'Restaurants', url: '/restaurants?name=&city=&category=&vegan=&creditcard=' },
                 { name: 'Profile', url: '/profile' },
                 { name: 'My Food Trucks', url: '/my-food-trucks' },
                 { name: 'Logout', url: '/api/auth/logout' }

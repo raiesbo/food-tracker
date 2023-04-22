@@ -1,5 +1,5 @@
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { IconButton } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
 import cc from 'classcat';
 import { ReactNode, useState } from 'react';
 import { Text } from '../Text';

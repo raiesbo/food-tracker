@@ -1,7 +1,7 @@
 import { Dish } from '@/types';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
-import { IconButton } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
 import { ChangeEvent } from "react";
 import { Text } from '../Text';
 import styles from './MyFoodTruckIngredients.module.scss';

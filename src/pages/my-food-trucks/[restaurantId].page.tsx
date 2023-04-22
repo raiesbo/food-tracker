@@ -10,7 +10,7 @@ import { uploadImage, useToast } from "@/utils";
 import { paths } from "@/utils/paths";
 import { auth0Config, imagesConfig } from "@/utils/settings";
 import { useUser } from "@auth0/nextjs-auth0/client";
-import { Button } from "@mui/material";
+import Button from "@mui/material/Button";
 import { Category, Location } from "@prisma/client";
 import cc from 'classcat';
 import { GetServerSidePropsContext, NextApiRequest } from "next";
