@@ -10,7 +10,10 @@ import { calcRating, findMainLocation } from "@/utils";
 import userOrder from "@/utils/hooks/useOrder";
 import { auth0Config } from "@/utils/settings";
 import { useUser } from "@auth0/nextjs-auth0/client";
+import AddIcon from '@mui/icons-material/Add';
+import ClearIcon from '@mui/icons-material/Clear';
 import LocalGroceryStoreIcon from '@mui/icons-material/LocalGroceryStore';
+import RemoveIcon from '@mui/icons-material/Remove';
 import { Popover } from "@mui/material";
 import Badge from "@mui/material/Badge";
 import IconButton from "@mui/material/IconButton";
@@ -42,7 +45,7 @@ type Props = { restaurant: Restaurant }
 
 export default function RestaurantDetailsPage({ restaurant }: Props) {
     const { user } = useUser();
-    const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+    const [ anchorEl, setAnchorEl ] = useState<HTMLButtonElement | null>(null);
     const { state: orderState, dispatch } = userOrder();
 
     const userMetadata = user && user[auth0Config.metadata] as { user_id: string } | undefined;
@@ -102,11 +105,53 @@ export default function RestaurantDetailsPage({ restaurant }: Props) {
                         >
                             <Card className={styles.orderPopover}>
                                 <Text bold variant='h4'>Your Pre-Order:</Text>
+                                <div className={styles.orderContent}>
+                                    <Text variant='small' bold>Name</Text>
+                                    <Text variant='small' bold>Units</Text>
+                                    <Text variant='small' bold>Total price</Text>
+                                    <Text variant='small' bold>Actions</Text>
+                                </div>
                                 {orderState[restaurant.id]?.map((dish) => {
-                                    const name = restaurant.menu.find(({ id }) => dish.id === id)?.name;
-                                    return (
-                                        <div key={dish.id}>
-                                            <Text>{`${name}: ${dish.units}`}</Text>
+                                    const dishData = restaurant.menu.find(({ id }) => dish.id === id);
+                                    return dishData && (
+                                        <div key={dish.id} className={styles.orderContent}>
+                                            <Text>{dishData?.name}</Text>
+                                            <Text>{`${dish.units}`}</Text>
+                                            <Text>{`${dishData.price || 1 * dish.units}€`}</Text>
+                                            <div className={styles.buttonsContainer}>
+                                                <IconButton
+                                                    size="small"
+                                                    onClick={() => dispatch({
+                                                        type: OrderAction.ADD_TO_ORDER, payload: {
+                                                            restaurantId: dishData.restaurantId || 0,
+                                                            dishId: dishData.id
+                                                        }
+                                                    })}
+                                                >
+                                                    <AddIcon fontSize="small" />
+                                                </IconButton>
+                                                <IconButton
+                                                    size="small" onClick={() => dispatch({
+                                                        type: OrderAction.ADD_TO_ORDER, payload: {
+                                                            restaurantId: dishData.restaurantId || 0,
+                                                            dishId: dishData.id
+                                                        }
+                                                    })}
+                                                >
+                                                    <RemoveIcon fontSize="small" />
+                                                </IconButton>
+                                                <IconButton
+                                                    size="small"
+                                                    onClick={() => dispatch({
+                                                        type: OrderAction.ADD_TO_ORDER, payload: {
+                                                            restaurantId: dishData.restaurantId || 0,
+                                                            dishId: dishData.id
+                                                        }
+                                                    })}
+                                                >
+                                                    <ClearIcon fontSize="small" color="error" />
+                                                </IconButton>
+                                            </div>
                                         </div>
                                     );
                                 })}

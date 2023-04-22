@@ -23,6 +23,17 @@
     padding: 10px;
 }
 
+.orderContent {
+    display: grid;
+    grid-template-columns: 1fr min-content min-content max-content;
+    gap: 10px;
+    align-items: center;
+
+    * {
+        white-space: nowrap;
+    }
+}
+
 .container {
     display: flex;
     flex-direction: column;
