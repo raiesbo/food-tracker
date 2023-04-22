@@ -45,7 +45,7 @@ type Props = { restaurant: Restaurant }
 
 export default function RestaurantDetailsPage({ restaurant }: Props) {
     const { user } = useUser();
-    const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+    const [ anchorEl, setAnchorEl ] = useState<HTMLButtonElement | null>(null);
     const { state: orderState, dispatch } = userOrder();
 
     const userMetadata = user && user[auth0Config.metadata] as { user_id: string } | undefined;
@@ -54,7 +54,7 @@ export default function RestaurantDetailsPage({ restaurant }: Props) {
     const rating = calcRating(restaurant.reviews);
 
     const numberOfOrders = orderState[restaurant.id]?.reduce((acc, dish) => {
-        return acc + dish.units
+        return acc + dish.units;
     }, 0);
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -163,7 +163,7 @@ export default function RestaurantDetailsPage({ restaurant }: Props) {
                                                         </IconButton>
                                                     </TableCell>
                                                 </TableRow>
-                                            )
+                                            );
                                         })}
                                     </TableBody>
                                 </Table>
