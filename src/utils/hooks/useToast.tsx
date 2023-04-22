@@ -5,7 +5,7 @@ export default function useToast() {
     const context = useContext(ToastContext);
 
     if (context === undefined) {
-        throw new Error("useShop must be used within ShopContext");
+        throw new Error("useToast must be used within ToastContext");
     }
 
     return context;

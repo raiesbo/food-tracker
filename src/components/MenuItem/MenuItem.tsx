@@ -1,5 +1,6 @@
 import { Dish } from "@/types";
 import { imagesConfig } from "@/utils/settings";
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Chip, IconButton } from "@mui/material";
 import cc from 'classcat';
@@ -10,10 +11,11 @@ import { Text } from "../Text";
 import styles from './MenuItem.module.scss';
 
 type Props = {
-    dish: Dish
+    dish: Dish,
+    onAddToOrder?: (id: Dish['id']) => void
 }
 
-export default function MenuItem({ dish }: Props) {
+export default function MenuItem({ dish, onAddToOrder }: Props) {
     const id = useId();
     const [ isOpen, setIsOpen ] = useState(false);
 
@@ -28,6 +30,11 @@ export default function MenuItem({ dish }: Props) {
                         <Text variant={'smallest'} italic semiBold>
                             {dish.price} €
                         </Text>
+                    )}
+                    {onAddToOrder && (
+                        <IconButton onClick={() => onAddToOrder(dish.id)}>
+                            <AddShoppingCartIcon fontSize="small" />
+                        </IconButton>
                     )}
                     <IconButton
                         onClick={() => setIsOpen(!isOpen)}

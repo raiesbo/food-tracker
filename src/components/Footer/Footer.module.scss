@@ -1,1 +1,13 @@
-.root {}
+@use '../../styles/theme.scss' as *;
+
+.root {
+    width: 100vw;
+    background-color: $white;
+    padding: 20px;
+}
+
+.footerContent {
+    margin-inline: auto;
+    width: 100%;
+    max-width: 1000px;
+}

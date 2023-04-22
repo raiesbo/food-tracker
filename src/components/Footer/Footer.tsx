@@ -1,14 +1,13 @@
-import { useUser } from '@auth0/nextjs-auth0/client';
+import Link from 'next/link';
 import styles from './Footer.module.scss';
 
 export default function Footer() {
-    const { error } = useUser();
-
-    console.log({ error });
 
     return (
         <footer className={styles.root}>
-            {/* Footer {!!error} */}
+            <div className={styles.footerContent}>
+                <Link href={'/feedback'}>Feedback</Link>
+            </div>
         </footer>
     );
 }

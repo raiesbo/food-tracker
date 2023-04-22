@@ -13,6 +13,16 @@
     }
 }
 
+.shopHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.orderPopover {
+    padding: 10px;
+}
+
 .container {
     display: flex;
     flex-direction: column;

@@ -1,4 +1,5 @@
 import { Layout } from '@/components/Layout';
+import { OrderContext } from '@/components/OrderContext';
 import { ToastContext } from '@/components/ToastContext';
 import '@/styles/globals.css';
 import { UserProvider } from '@auth0/nextjs-auth0/client';
@@ -12,11 +13,13 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider theme={theme}>
       <UserProvider>
-        <ToastContext>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </ToastContext>
+        <OrderContext>
+          <ToastContext>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </ToastContext>
+        </OrderContext>
       </UserProvider>
     </ThemeProvider >
   );
