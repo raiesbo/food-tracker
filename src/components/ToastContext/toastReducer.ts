@@ -11,17 +11,15 @@ type ToastType = {
     message?: string
 }
 
-export default function toastReducer(state: any, action: { type: any; payload: ToastType; }) {
+export default function toastReducer(state: any, action: { type: string; payload: ToastType; }) {
     const { type, payload } = action;
 
     switch (type) {
         case ToastAction.UPDATE_TOAST:
-            return { ...state, ...payload, isOpen: true };
-
+            return { ...state, isOpen: true, ...payload };
         case ToastAction.RESET_TOAST:
             return { ...state, isOpen: false };
-
         default:
-            throw new Error(`No case for type ${type} found in shopReducer.`);
+            throw new Error(`No case for type ${type} found in toastReducer.`);
     }
 }

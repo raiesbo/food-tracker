@@ -16,7 +16,7 @@ const initialState: ContextResult = {
 
 export const ToastContext = createContext({
     toastState: initialState,
-    dispatch: ({ type, payload }: { type: string, payload: ContextResult }) => { }
+    dispatch: ({ }: { type: string, payload: Partial<ContextResult> }) => { }
 });
 
 type Props = {
