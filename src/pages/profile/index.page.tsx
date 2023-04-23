@@ -66,14 +66,14 @@ type Props = {
 export default function Profile({ user, auth0User, reviews }: Props) {
     const { dispatch } = useToast();
 
-    const [ isUpdate, setIsUpdate ] = useState(false);
-    const [ isLoading, setIsLoading ] = useState(false);
+    const [isUpdate, setIsUpdate] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
-    const [ firstName, setFirstName ] = useState(user.firstName || '');
-    const [ lastName, setLastname ] = useState(user.lastName || '');
-    const [ email, setEmail ] = useState(user.email || '');
-    const [ phone, setPhone ] = useState(user.phone || '');
-    const [ imageUrl, setImageUrl ] = useState(user.imageUrl || '');
+    const [firstName, setFirstName] = useState(user.firstName || '');
+    const [lastName, setLastname] = useState(user.lastName || '');
+    const [email, setEmail] = useState(user.email || '');
+    const [phone, setPhone] = useState(user.phone || '');
+    const [imageUrl, setImageUrl] = useState(user.imageUrl || '');
 
     const onCancel = () => {
         setFirstName(user.firstName || '');
@@ -189,10 +189,11 @@ export default function Profile({ user, auth0User, reviews }: Props) {
                             fill
                             className={styles.image}
                             style={{ objectFit: 'cover' }}
+                            sizes="(max-width: 600px) 100px,(max-width: 900px) 150px, 200px"
                         />
                     </label>
                     <input
-                        id={`profile_${user.id}`}
+                        id={`users_${user.id}`}
                         type='file'
                         accept="image/jpg,image/png"
                         onChange={updateFile}

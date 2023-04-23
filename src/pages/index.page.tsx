@@ -14,12 +14,11 @@ import { useState } from 'react';
 import { Text } from '../components/Text';
 import styles from './Home.module.scss';
 
-const homepageServiceInstance = homepageService(PrismaDBClient);
+const service = homepageService(PrismaDBClient);
+// const bgImageUrl = 'https://images.unsplash.com/photo-1565123409695-7b5ef63a2efb?w=1000';
 
-const bgImageUrl = 'https://images.unsplash.com/photo-1565123409695-7b5ef63a2efb?w=1000';
-
-export async function getServerSideProps() {
-  const { result, error } = await homepageServiceInstance.getLocationsAndCategories();
+export async function getStaticProps() {
+  const { result, error } = await service.getLocationsAndCategories();
 
   if (error) return {
     props: { categories: [], locations: [] }
@@ -51,7 +50,7 @@ export default function Home({ categories, locations }: Props) {
   return (
     <div className={styles.searchSectionContainer}>
       <Image
-        src={bgImageUrl}
+        src='/images/homepage-background.jpeg'
         alt="Food truck background | image from Unsplash"
         style={{ objectFit: "cover", opacity: 0.9, filter: 'brightness(18%)' }}
         priority

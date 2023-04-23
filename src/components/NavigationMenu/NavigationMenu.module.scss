@@ -1,4 +1,41 @@
+@use '../../styles/theme' as *;
+
 .link {
     text-decoration: none;
     text-transform: uppercase;
+}
+
+.appBarContainer {
+    margin: auto;
+    display: flex;
+    max-width: 1000px;
+    width: 100%;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 10px;
+    color: $black;
+}
+
+.desktopItems {
+    display: none;
+
+    @include matchMedium {
+        display: flex;
+    }
+}
+
+.mobileItems {
+    display: flex;
+
+    @include matchMedium {
+        display: none;
+    }
+}
+
+.menuItem {
+    color: $black;
+
+    &_bold {
+        text-shadow: 1px 0px 0px black;
+    }
 }

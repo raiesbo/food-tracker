@@ -35,9 +35,13 @@ export default function RestaurantListItem({ restaurant }: Props) {
                 <div className={styles.imageContainer}>
                     <Image
                         src={restaurant.imageUrl || imagesConfig.default}
+                        blurDataURL={imagesConfig.default}
                         alt='Restaurant image'
                         style={{ objectFit: 'cover' }}
                         height='150'
+                        width='150'
+                        loading="lazy"
+                        placeholder='blur'
                     />
                 </div>
                 <section className={styles.bodySection}>

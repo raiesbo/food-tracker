@@ -17,5 +17,5 @@ export const dropboxConfig = {
 };
 
 export const imagesConfig = {
-    default: '/default_image.jpeg'
+    default: '/images/default_image.jpeg'
 };

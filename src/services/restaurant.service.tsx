@@ -24,7 +24,7 @@ export default function userService({ restaurantClient }: typeof prismaClients) 
     return {
         getAllRestaurantByFilter: async (filters: Prisma.RestaurantWhereInput) => {
             try {
-                const restaurants = await restaurantClient.getRestaurants(filters) as Array<Restaurant>;
+                const restaurants = await restaurantClient.getRestaurants(filters);
 
                 if (restaurants) return {
                     result: restaurants.map(restaurant => ({
