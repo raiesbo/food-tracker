@@ -4,11 +4,11 @@ import { RatingStars } from "@/components/RatingStars";
 import RestaurantDetailsContact from "@/components/RestaurantDetails/RestaurantDetailsContact";
 import RestaurantDetailsHours from "@/components/RestaurantDetails/RestaurantDetailsHours";
 import RestaurantDetailsReview from "@/components/RestaurantDetails/RestaurantDetailsReview";
+import RestaurantListOrderConfirmation from "@/components/RestaurantList/RestaurantListOrderConfirmation";
 import services from "@/services";
 import { Dish, Restaurant } from "@/types";
 import { calcRating, findMainLocation } from "@/utils";
 import userOrder from "@/utils/hooks/useOrder";
-import { auth0Config } from "@/utils/settings";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
@@ -51,10 +51,10 @@ type Props = { restaurant: Restaurant }
 
 export default function RestaurantDetailsPage({ restaurant }: Props) {
     const { user } = useUser();
-    const [ anchorEl, setAnchorEl ] = useState<HTMLButtonElement | null>(null);
+    const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+    const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const { state: orderState, dispatch } = userOrder();
-
-    const userMetadata = user && user[auth0Config.metadata] as { user_id: string } | undefined;
 
     const mainLocation = findMainLocation(restaurant.locations);
     const rating = calcRating(restaurant.reviews);
@@ -75,6 +75,26 @@ export default function RestaurantDetailsPage({ restaurant }: Props) {
         dispatch({ type: OrderAction.ADD_ONE_TO_ORDER, payload: { restaurantId: restaurant.id, dishId } });
     };
 
+    const onConfirmOrder = (orderDate: Date) => {
+        setIsLoading(true);
+
+        fetch('/api/orders', {
+            method: 'POST',
+            body: JSON.stringify({
+                deliveryAt: orderDate
+                //TODO: Fill with rest of data
+            })
+        }).then(response => {
+            if (response.ok) {
+                alert('ok');
+                dispatch({ type: OrderAction.CLEAR_ORDER, payload: { restaurantId: restaurant.id } });
+                setIsConfirmationOpen(false);
+            } else {
+                alert('no ok');
+            }
+        }).finally(() => { setIsLoading(false); });
+    };
+
     return (
         <div className={styles.root}>
             <header className={styles.shopHeader}>
@@ -92,7 +112,7 @@ export default function RestaurantDetailsPage({ restaurant }: Props) {
                     <div>
                         <IconButton
                             onClick={handleClick}
-                            disabled={numberOfOrders === 0}
+                            disabled={!numberOfOrders || numberOfOrders === 0}
                         >
                             <Badge
                                 badgeContent={numberOfOrders}
@@ -124,6 +144,7 @@ export default function RestaurantDetailsPage({ restaurant }: Props) {
                                     <TableBody>
                                         {orderState[restaurant.id]?.map((dish) => {
                                             const dishData = restaurant.menu.find(({ id }) => dish.id === id);
+                                            const price = (dishData?.price ? dishData.price * dish.units : 0).toFixed(2);
                                             return dishData && (
                                                 <TableRow
                                                     key={dish.id}
@@ -133,7 +154,7 @@ export default function RestaurantDetailsPage({ restaurant }: Props) {
                                                         {dishData.name}
                                                     </TableCell>
                                                     <TableCell align="center" sx={{ padding: 1 }}>{dish.units}</TableCell>
-                                                    <TableCell align="center" sx={{ padding: 1 }}>{`${dishData.price || 1 * dish.units}€`}</TableCell>
+                                                    <TableCell align="center" sx={{ padding: 1 }}>{`${price}€`}</TableCell>
                                                     <TableCell align="center" sx={{ padding: 1 }} className={styles.buttonsContainer}>
                                                         <IconButton
                                                             size="small"
@@ -177,12 +198,16 @@ export default function RestaurantDetailsPage({ restaurant }: Props) {
                                     <Button
                                         variant='contained'
                                         sx={{ width: '100%' }}
+                                        onClick={() => {
+                                            setAnchorEl(null);
+                                            setIsConfirmationOpen(true);
+                                        }}
                                     >
                                         Order now
                                     </Button>
                                 </div>
-                            </Card >
-                        </Popover >
+                            </Card>
+                        </Popover>
                     </div >
                 )}
             </header >
@@ -241,6 +266,14 @@ export default function RestaurantDetailsPage({ restaurant }: Props) {
                     />
                 </div>
             </div>
-        </div >
+            <RestaurantListOrderConfirmation
+                isOpen={isConfirmationOpen}
+                onCancel={() => setIsConfirmationOpen(false)}
+                onAccept={onConfirmOrder}
+                menu={restaurant.menu}
+                order={orderState[restaurant.id]}
+                isLoading={isLoading}
+            />
+        </div>
     );
 }

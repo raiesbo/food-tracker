@@ -182,7 +182,7 @@ export default function Profile({ user, auth0User, reviews }: Props) {
             </header>
             <section className={styles.bodyContainer}>
                 <div className={styles.imageContainer}>
-                    <label htmlFor={`profile_${user.id}`} className={styles.imageUploadInput}>
+                    <label htmlFor={`users_${user.id}`} className={styles.imageUploadInput}>
                         <Image
                             alt='Users image'
                             src={imageUrl || auth0User?.picture || imagesConfig.default}

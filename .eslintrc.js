@@ -10,7 +10,6 @@ module.exports = {
       'maxEOF': 0
     }],
     'object-curly-spacing': ['error', 'always'],
-    'array-bracket-spacing': ['warn', 'always'],
     'comma-dangle': ["error", "never"]
   }
 }

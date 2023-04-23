@@ -18,7 +18,7 @@ const urls = paths.components.NavigtionMenu;
 
 export default function NavigationMenu() {
     const { user } = useUser();
-    const router = useRouter()
+    const router = useRouter();
 
     const userRole = user && user[auth0Config.metadata] as {
         role: 'SP' | 'CUSTOMER',

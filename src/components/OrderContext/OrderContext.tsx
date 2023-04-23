@@ -2,7 +2,7 @@ import { createContext, ReactNode, useReducer } from "react";
 import orderReducer from "./OrderReducer";
 
 export type OrderPayload = {
-    restaurantId: number, dishId: number
+    restaurantId: number, dishId?: number
 }
 
 export type OrderResult = {
@@ -17,7 +17,7 @@ export const OrderContext = createContext({
 });
 
 export default function OrderProvider({ children }: { children: ReactNode }) {
-    const [ state, dispatch ] = useReducer(orderReducer, initialState);
+    const [state, dispatch] = useReducer(orderReducer, initialState);
 
     return (
         <OrderContext.Provider value={{ state, dispatch }}>
