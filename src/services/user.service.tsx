@@ -45,6 +45,7 @@ export default function userService({ userClient }: typeof prismaClients) {
         },
         getUser: async (id: User['id']) => {
             try {
+                console.time('getUserService');
                 const user = await userClient.getUser(id);
 
                 if (!user?.id) return {
@@ -55,6 +56,7 @@ export default function userService({ userClient }: typeof prismaClients) {
                     }
                 };
 
+                console.timeEnd('getUserService');
                 return { result: user };
 
             } catch (e) {

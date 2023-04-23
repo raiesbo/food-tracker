@@ -173,7 +173,7 @@ export default function RestaurantPage({
                             <>
                                 {restaurants?.map((restaurant: Restaurant) => (
                                     <RestaurantListItem
-                                        key={restaurant.id}
+                                        key={restaurant.name}
                                         restaurant={restaurant}
                                     />
                                 ))}

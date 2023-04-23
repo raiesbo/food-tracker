@@ -50,7 +50,7 @@ export default function RestaurantDetailsReview({ currentUserId, className }: Pr
                 <div className={styles.reviewList}>
                     {reviews.map((review) => (
                         <ReviewItem
-                            key={review.id}
+                            key={review.createdAt.toDateString()}
                             review={review as Review}
                             currentUserId={currentUserId}
                             onRemove={onDeleteOne}

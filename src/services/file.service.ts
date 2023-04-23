@@ -1,14 +1,15 @@
 import supabaseClient from "@/repositories/supabaseClient";
+import { User } from "@prisma/client";
 
 export default function FileService() {
     return {
         createFile: async ({ token, file, userId, type, typeId, format }: {
             token: string,
             file: File,
-            userId: string | number,
+            userId: string | User['id'],
             type: 'restaurants' | 'dishes' | 'users',
             format: 'png' | 'jpg'
-            typeId: number
+            typeId: User['id']
         }) => {
             const { data, error } = await supabaseClient(token)
                 .storage

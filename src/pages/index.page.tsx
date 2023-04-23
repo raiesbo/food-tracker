@@ -17,13 +17,15 @@ import styles from './Home.module.scss';
 const service = homepageService(PrismaDBClient);
 // const bgImageUrl = 'https://images.unsplash.com/photo-1565123409695-7b5ef63a2efb?w=1000';
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
+  console.time('getLocationAndCategoriesGSSP');
   const { result, error } = await service.getLocationsAndCategories();
 
   if (error) return {
     props: { categories: [], locations: [] }
   };
 
+  console.timeEnd('getLocationAndCategoriesGSSP');
   return { props: result };
 }
 
@@ -35,8 +37,8 @@ type Props = {
 export default function Home({ categories, locations }: Props) {
   const router = useRouter();
 
-  const [ city, setCity ] = useState('All');
-  const [ category, setCategory ] = useState('All');
+  const [city, setCity] = useState('All');
+  const [category, setCategory] = useState('All');
 
   const handleButtonClick = () => {
     const searchParams = new URLSearchParams({

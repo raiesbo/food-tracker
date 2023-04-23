@@ -22,7 +22,7 @@ export default function MyFoodTruckReviews({ reviews, currentUserId }: Props) {
             <div className={styles.reviewList}>
                 {localReviews.map((review) => (
                     <ReviewItem
-                        key={review.id}
+                        key={review.createdAt.toDateString()}
                         review={review as Review}
                         currentUserId={currentUserId}
                         title={`${review.user?.firstName} ${review.user?.lastName}`}

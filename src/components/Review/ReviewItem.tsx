@@ -17,7 +17,7 @@ import styles from './ReviewItem.module.scss';
 type Props = {
     review: Review,
     title?: string,
-    currentUserId?: User['id'] | null,
+    currentUserId?: User['id'] | number | null,
     onRemove: (reviewId: Review['id']) => void
 }
 
@@ -95,84 +95,86 @@ export default function ProfileReviewsItem({ review, title, currentUserId, onRem
     };
 
     return (
-        <Card key={review.id} className={styles.root}>
-            <div className={styles.commentHeader}>
-                <Text>
-                    {(title || review.restaurant?.name) && (
-                        <strong>{title || `${review.restaurant?.name}`}</strong>
-                    )}
-                </Text>
-                <Text>{(new Date(review.createdAt)).toDateString()}</Text>
-            </div>
-            <div>
-                {isEdit ? (
-                    <RatingStarsEdit
-                        rating={rating}
-                        onChange={setRating}
-                    />
-                ) : (
-                    <RatingStars rating={rating} size='small' />
-                )}
-            </div>
-            {comment && !isEdit && (
-                <Text className={styles.commentBody}>
-                    {comment}
-                </Text>
-            )}
-            {isEdit && (
-                <TextField
-                    value={comment}
-                    multiline
-                    onChange={(e) => setComment(e.target.value)}
-                />
-            )}
-            {currentUserId && (
-                <div className={styles.iconsSection}>
-                    <div>
-                        <IconButton>
-                            <ThumbUpOffAltIcon fontSize="small" />
-                        </IconButton>
-                        {/* TODO Implement review answer feature */}
-                        {/* <IconButton>
-                            <QuestionAnswerIcon fontSize="small" />
-                        </IconButton> */}
-                    </div>
-                    {isOwner && (
-                        <div>
-                            {isEdit ? (
-                                <>
-                                    <IconButton
-                                        disabled={isLoading}
-                                        onClick={onSaveUpdate}
-                                    >
-                                        <SaveIcon color='success' fontSize="small" />
-                                    </IconButton>
-                                    <IconButton
-                                        disabled={isLoading}
-                                        onClick={onCancelUpdate}
-                                    >
-                                        <CancelIcon color='error' fontSize="small" />
-                                    </IconButton>
-                                </>
-                            ) : (
-                                <IconButton
-                                    disabled={isLoading}
-                                    onClick={() => setIsEdit(true)}
-                                >
-                                    <EditIcon fontSize="small" />
-                                </IconButton>
-                            )}
-
-                            <IconButton
-                                onClick={() => onRemoveReview(review.id)}
-                                disabled={isLoading}
-                            >
-                                <DeleteIcon fontSize="small" />
-                            </IconButton>
-                        </div>
+        <Card key={review.createdAt.toDateString()} className={styles.root}>
+            <>
+                <div className={styles.commentHeader}>
+                    <Text>
+                        {(title || review.restaurant?.name) && (
+                            <strong>{title || `${review.restaurant?.name}`}</strong>
+                        )}
+                    </Text>
+                    <Text>{(new Date(review.createdAt)).toDateString()}</Text>
+                </div>
+                <div>
+                    {isEdit ? (
+                        <RatingStarsEdit
+                            rating={rating}
+                            onChange={setRating}
+                        />
+                    ) : (
+                        <RatingStars rating={rating} size='small' />
                     )}
                 </div>
-            )}
+                {comment && !isEdit && (
+                    <Text className={styles.commentBody}>
+                        {comment}
+                    </Text>
+                )}
+                {isEdit && (
+                    <TextField
+                        value={comment}
+                        multiline
+                        onChange={(e) => setComment(e.target.value)}
+                    />
+                )}
+                {currentUserId && (
+                    <div className={styles.iconsSection}>
+                        <div>
+                            <IconButton>
+                                <ThumbUpOffAltIcon fontSize="small" />
+                            </IconButton>
+                            {/* TODO Implement review answer feature */}
+                            {/* <IconButton>
+                            <QuestionAnswerIcon fontSize="small" />
+                        </IconButton> */}
+                        </div>
+                        {isOwner && (
+                            <div>
+                                {isEdit ? (
+                                    <>
+                                        <IconButton
+                                            disabled={isLoading}
+                                            onClick={onSaveUpdate}
+                                        >
+                                            <SaveIcon color='success' fontSize="small" />
+                                        </IconButton>
+                                        <IconButton
+                                            disabled={isLoading}
+                                            onClick={onCancelUpdate}
+                                        >
+                                            <CancelIcon color='error' fontSize="small" />
+                                        </IconButton>
+                                    </>
+                                ) : (
+                                    <IconButton
+                                        disabled={isLoading}
+                                        onClick={() => setIsEdit(true)}
+                                    >
+                                        <EditIcon fontSize="small" />
+                                    </IconButton>
+                                )}
+
+                                <IconButton
+                                    onClick={() => onRemoveReview(review.id)}
+                                    disabled={isLoading}
+                                >
+                                    <DeleteIcon fontSize="small" />
+                                </IconButton>
+                            </div>
+                        )}
+                    </div>
+                )}
+            </>
         </Card>
     );
 }

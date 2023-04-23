@@ -28,7 +28,7 @@ export default function RestaurantDetailsReview({ reviews, ownerId, restaurantId
     const [isDialogOpen, setIsDialogOpen] = useState(false);
 
     const userMetadata = user && user[auth0Config.metadata] as { user_id: number } | undefined;
-    const isYourFoodTruck = userMetadata?.user_id === ownerId;
+    const isYourFoodTruck = userMetadata?.user_id?.toString() == ownerId?.toString();
 
     const onDeleteOne = (reviewId: Review['id']) => {
         setReviews([...localReviews.filter(({ id }) => id !== reviewId)]);
@@ -63,7 +63,7 @@ export default function RestaurantDetailsReview({ reviews, ownerId, restaurantId
                 <div className={styles.commentList}>
                     {localReviews?.map(review => (
                         <ReviewItem
-                            key={review.id}
+                            key={review.createdAt.toDateString()}
                             review={review as Review}
                             title={`${review.user?.firstName} ${review.user?.lastName}`}
                             currentUserId={userMetadata?.user_id}

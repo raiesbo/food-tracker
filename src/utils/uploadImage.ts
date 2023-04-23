@@ -1,9 +1,10 @@
+import { User } from "@prisma/client";
 import { supagaseConfig } from "./settings";
 
 type Props = {
-    userId: string | number,
+    userId: string | User['id'],
     type: 'restaurants' | 'dishes' | 'users',
-    typeId: string | number,
+    typeId: string | User['id'],
     extension: string
 }
 
