@@ -22,11 +22,11 @@ type Props = {
 export default function ProfileReviewsItem({ review, title, currentUserId }: Props) {
     const router = useRouter();
 
-    const [ rating, setRating ] = useState(review.rating);
-    const [ comment, setComment ] = useState(review.comment);
+    const [rating, setRating] = useState(review.rating || 0);
+    const [comment, setComment] = useState(review.comment || '');
 
-    const [ isLoading, setIsLoading ] = useState(false);
-    const [ isEdit, setIsEdit ] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [isEdit, setIsEdit] = useState(false);
 
     const isOwner = review.userId === currentUserId;
 
@@ -48,8 +48,8 @@ export default function ProfileReviewsItem({ review, title, currentUserId }: Pro
     };
 
     const onCancelUpdate = () => {
-        setRating(review.rating);
-        setComment(review.comment);
+        setRating(review.rating || 0);
+        setComment(review.comment || '');
 
         setIsEdit(false);
     };

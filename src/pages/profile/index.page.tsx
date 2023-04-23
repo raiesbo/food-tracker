@@ -12,12 +12,12 @@ import { UserProfile } from "@auth0/nextjs-auth0/client";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { User } from "@prisma/client";
-import { GetServerSidePropsContext, NextApiRequest } from "next";
+import { GetServerSidePropsContext } from "next";
 import Image from "next/image";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, Suspense, useState } from "react";
 import styles from './profile.module.scss';
 
-const { userService, reviewsService } = services;
+const { userService } = services;
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
     const session = await getSession(context.req, context.res);
@@ -36,12 +36,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         error
     } = await userService.getUser(userId);
 
-    const {
-        result: reviews,
-        error: reviewsError
-    } = await reviewsService.getAllReviewsByUserId({ query: { userId } } as unknown as NextApiRequest);
-
-    if (error || reviewsError) return {
+    if (error) return {
         redirect: {
             permanent: true,
             destination: '/'
@@ -49,11 +44,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     };
 
     return {
-        props: {
-            user,
-            reviews,
-            auth0User: session.user
-        }
+        props: { user, auth0User: session.user }
     };
 }
 
@@ -270,11 +261,12 @@ export default function Profile({ user, auth0User, reviews }: Props) {
                         />
                     </div>
                 </InfoSection>
-                <ProfileReviews
-                    reviews={reviews}
-                    currentUserId={user.id}
-                    className={styles.revews}
-                />
+                <Suspense fallback={<p>Loading Reviews</p>}>
+                    <ProfileReviews
+                        currentUserId={user.id}
+                        className={styles.revews}
+                    />
+                </Suspense>
             </section>
         </div>
     );

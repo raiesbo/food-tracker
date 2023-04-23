@@ -13,7 +13,7 @@ import TextField from "@mui/material/TextField";
 import { Category } from "@prisma/client";
 import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import styles from './restaurants.module.scss';
 
 const { restaurantService, categoriesService, locationsService } = services;
@@ -119,13 +119,13 @@ export default function RestaurantPage({
 }: Props) {
     const router = useRouter();
 
-    const [ timeoutId, setTimeoutId ] = useState<ReturnType<typeof setTimeout>>();
+    const [timeoutId, setTimeoutId] = useState<ReturnType<typeof setTimeout>>();
 
-    const [ name, setName ] = useState(queryName);
-    const [ city, setCity ] = useState(queryCity);
-    const [ category, setCategory ] = useState(queryCategory);
-    const [ vegan, setVegan ] = useState(false);
-    const [ creditcard, setCreditcard ] = useState(false);
+    const [name, setName] = useState(queryName);
+    const [city, setCity] = useState(queryCity);
+    const [category, setCategory] = useState(queryCategory);
+    const [vegan, setVegan] = useState(false);
+    const [creditcard, setCreditcard] = useState(false);
 
     useEffect(() => {
         const handleButtonClick = () => {
@@ -144,7 +144,7 @@ export default function RestaurantPage({
         };
 
         handleButtonClick();
-    }, [ city, category, vegan, creditcard, name ]);
+    }, [city, category, vegan, creditcard, name]);
 
     return (
         <div className={styles.root}>
@@ -223,12 +223,14 @@ export default function RestaurantPage({
                 />
             </div>
             <div className={styles.listContainer}>
-                {restaurants?.map((restaurant: Restaurant) => (
-                    <RestaurantListItem
-                        key={restaurant.id}
-                        restaurant={restaurant}
-                    />
-                ))}
+                <Suspense fallback={<p>Loading Food Trucks</p>}>
+                    {restaurants?.map((restaurant: Restaurant) => (
+                        <RestaurantListItem
+                            key={restaurant.id}
+                            restaurant={restaurant}
+                        />
+                    ))}
+                </Suspense>
             </div>
         </div>
     );

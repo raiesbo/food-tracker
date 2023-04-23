@@ -25,7 +25,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import cc from 'classcat';
 import { GetServerSidePropsContext } from "next";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { Card } from '../../components/Card';
 import { Text } from '../../components/Text';
 import styles from './restaurantDetails.module.scss';
@@ -259,11 +259,13 @@ export default function RestaurantDetailsPage({ restaurant }: Props) {
                             <RatingStars rating={rating} />
                         </div>
                     </Card>
-                    <RestaurantDetailsReview
-                        reviews={restaurant.reviews}
-                        ownerId={restaurant.userId}
-                        restaurantId={restaurant.id}
-                    />
+                    <Suspense fallback={<p>Loading Reviews</p>}>
+                        <RestaurantDetailsReview
+                            reviews={restaurant.reviews}
+                            ownerId={restaurant.userId}
+                            restaurantId={restaurant.id}
+                        />
+                    </Suspense>
                 </div>
             </div>
             <RestaurantListOrderConfirmation
