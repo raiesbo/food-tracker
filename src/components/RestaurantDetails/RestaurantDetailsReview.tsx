@@ -20,14 +20,19 @@ export default function RestaurantDetailsReview({ reviews, ownerId, restaurantId
     const { user } = useUser();
     const router = useRouter();
 
-    const [ isLoading, setIsLoading ] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [localReviews, setReviews] = useState(reviews);
 
-    const [ newComment, setNewComment ] = useState('');
-    const [ newRating, setNewRating ] = useState(0);
-    const [ isDialogOpen, setIsDialogOpen ] = useState(false);
+    const [newComment, setNewComment] = useState('');
+    const [newRating, setNewRating] = useState(0);
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
 
     const userMetadata = user && user[auth0Config.metadata] as { user_id: number } | undefined;
     const isYourFoodTruck = userMetadata?.user_id === ownerId;
+
+    const onDeleteOne = (reviewId: Review['id']) => {
+        setReviews([...localReviews.filter(({ id }) => id !== reviewId)]);
+    };
 
     const onSaveNewReview = () => {
         setIsLoading(true);
@@ -56,12 +61,13 @@ export default function RestaurantDetailsReview({ reviews, ownerId, restaurantId
                     Reviews
                 </Text>
                 <div className={styles.commentList}>
-                    {reviews?.map(review => (
+                    {localReviews?.map(review => (
                         <ReviewItem
                             key={review.id}
                             review={review as Review}
                             title={`${review.user?.firstName} ${review.user?.lastName}`}
                             currentUserId={userMetadata?.user_id}
+                            onRemove={onDeleteOne}
                         />
                     ))}
                     {!isYourFoodTruck && user && (

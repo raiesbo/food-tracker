@@ -16,6 +16,10 @@ export default function RestaurantDetailsReview({ currentUserId, className }: Pr
     const [isLoading, setisLoading] = useState(false);
     const [reviews, setReviews] = useState<Array<Review>>([]);
 
+    const onDeleteOne = (reviewId: Review['id']) => {
+        setReviews([...reviews.filter(({ id }) => id !== reviewId)]);
+    };
+
     useEffect(() => {
         const getReviews = () => {
             setisLoading(true);
@@ -47,6 +51,7 @@ export default function RestaurantDetailsReview({ currentUserId, className }: Pr
                             key={review.id}
                             review={review as Review}
                             currentUserId={currentUserId}
+                            onRemove={onDeleteOne}
                         />
                     ))}
                 </div>

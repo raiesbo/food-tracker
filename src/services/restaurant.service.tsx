@@ -22,31 +22,50 @@ const validateUpdateBody = (parsedBody: Prisma.RestaurantUncheckedUpdateInput) =
 
 export default function userService({ restaurantClient }: typeof prismaClients) {
     return {
-        getAllRestaurantByFilter: async (filters: Prisma.RestaurantWhereInput) => {
+        getAllRestaurantByFilter: async (req: NextApiRequest) => {
+            const query = req.query;
+            let filters = {};
+
+            if (!!query?.vegan) {
+                filters = {
+                    ...filters,
+                    menu: {
+                        some: {
+                            isVegan: true
+                        }
+                    }
+                };
+            }
+
+            if (!!query?.creditcard) {
+                filters = {
+                    ...filters,
+                    isCashOnly: false
+                };
+            }
+
+            if (query?.name) filters = {
+                ...filters,
+                name: {
+                    contains: query.name,
+                    mode: 'insensitive'
+                }
+            };
+
+            if (query?.category) filters = {
+                ...filters,
+                categories: { some: { name: query.category } }
+            };
+
+            if (query?.city) filters = {
+                ...filters,
+                locations: { some: { city: query.city } }
+            };
+
             try {
                 const restaurants = await restaurantClient.getRestaurants(filters);
 
-                if (restaurants) return {
-                    result: restaurants.map(restaurant => ({
-                        ...restaurant,
-                        createdAt: `${restaurant.createdAt}`,
-                        updatedAt: `${restaurant.updatedAt}`,
-                        reviews: [
-                            ...restaurant.reviews?.map(review => ({
-                                ...review,
-                                createdAt: `${review?.createdAt}`,
-                                updatedAt: `${review?.updatedAt}`
-                            }))
-                        ],
-                        menu: [
-                            ...restaurant.menu.map(dish => ({
-                                ...dish,
-                                createdAt: `${dish?.createdAt}`,
-                                updatedAt: `${dish?.updatedAt}`
-                            }))
-                        ]
-                    }))
-                };
+                if (restaurants) return { result: restaurants };
 
                 return {
                     result: {},

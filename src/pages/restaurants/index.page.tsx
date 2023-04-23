@@ -1,8 +1,8 @@
 import { RestaurantListItem } from "@/components/RestaurantList";
 import { Text } from "@/components/Text";
-import services from "@/services";
+import PrismaDBClient from "@/repositories/prismaClient";
+import homepageService from "@/services/homepage.service";
 import { Restaurant } from "@/types";
-import { paths } from "@/utils/paths";
 import Checkbox from "@mui/material/Checkbox";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -12,88 +12,22 @@ import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import { Category } from "@prisma/client";
 import { GetServerSidePropsContext } from "next";
-import { useRouter } from "next/router";
 import { Suspense, useEffect, useState } from "react";
 import styles from './restaurants.module.scss';
 
-const { restaurantService, categoriesService, locationsService } = services;
+const service = homepageService(PrismaDBClient);
 
 export async function getServerSideProps({ query }: GetServerSidePropsContext) {
-    let filters = {};
+    const { result, error } = await service.getLocationsAndCategories();
 
-    if (!!query?.vegan) {
-        filters = {
-            ...filters,
-            menu: {
-                some: {
-                    isVegan: true
-                }
-            }
-        };
-    }
-
-    if (!!query?.creditcard) {
-        filters = {
-            ...filters,
-            isCashOnly: false
-        };
-    }
-
-    if (query?.name) filters = {
-        ...filters,
-        name: {
-            contains: query.name,
-            mode: 'insensitive'
-        }
-    };
-
-    if (query?.category) filters = {
-        ...filters,
-        categories: {
-            some: {
-                name: query.category
-            }
-        }
-    };
-
-    if (query?.city) filters = {
-        ...filters,
-        locations: {
-            some: {
-                city: query.city
-            }
-        }
-    };
-
-    const {
-        result: restaurants,
-        error
-    } = await restaurantService.getAllRestaurantByFilter(filters);
-
-    const {
-        result: categories,
-        error: getAllCategoriesError
-    } = await categoriesService.getAllCategories();
-
-    const {
-        result: locations,
-        error: getAllLocationsError
-    } = await locationsService.getAllUniqueCities();
-
-    if (getAllCategoriesError || getAllLocationsError) return {
-        props: { getAllCategoriesError, getAllLocationsError }
-    };
-
-    if (error || getAllCategoriesError || getAllLocationsError) return {
-        props: { restaurants: [], locations: [], categories: [] }
+    if (error) return {
+        props: { locations: [], categories: [] }
     };
 
     return {
         props: {
-            restaurants,
-            locations,
-            categories,
-            queryName: query?.name || '',
+            locations: result.locations,
+            categories: result.categories,
             queryCity: query?.city || '',
             queryCategory: query?.category || ''
         }
@@ -101,34 +35,29 @@ export async function getServerSideProps({ query }: GetServerSidePropsContext) {
 }
 
 type Props = {
-    restaurants: Array<Restaurant>,
     locations: Array<string>,
     categories: Array<Category>,
-    queryName: string,
     queryCity: string,
     queryCategory: string
 }
 
 export default function RestaurantPage({
-    restaurants,
     locations,
     categories,
-    queryName,
     queryCity,
     queryCategory
 }: Props) {
-    const router = useRouter();
-
     const [timeoutId, setTimeoutId] = useState<ReturnType<typeof setTimeout>>();
+    const [restaurants, setRestaurants] = useState<Array<Restaurant>>([]);
 
-    const [name, setName] = useState(queryName);
+    const [name, setName] = useState('');
     const [city, setCity] = useState(queryCity);
     const [category, setCategory] = useState(queryCategory);
     const [vegan, setVegan] = useState(false);
     const [creditcard, setCreditcard] = useState(false);
 
     useEffect(() => {
-        const handleButtonClick = () => {
+        const getRestaurants = () => {
             const searchParams = new URLSearchParams({
                 name: name,
                 city: city.replace('All', ''),
@@ -137,13 +66,21 @@ export default function RestaurantPage({
                 creditcard: creditcard ? 'true' : ''
             });
 
-            clearTimeout(timeoutId);
-            setTimeoutId(setTimeout(() => {
-                router.replace(`${paths.restaurants}?${searchParams}`);
-            }, 500));
+            fetch(`/api/restaurants/filters?${searchParams}`)
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        return { restaurants: null };
+                    }
+                })
+                .then(({ restaurants }) => {
+                    restaurants && setRestaurants(restaurants);
+                });
         };
 
-        handleButtonClick();
+        clearTimeout(timeoutId);
+        setTimeoutId(setTimeout(getRestaurants, 500));
     }, [city, category, vegan, creditcard, name]);
 
     return (

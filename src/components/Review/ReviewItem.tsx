@@ -1,4 +1,5 @@
 import { Review } from "@/types";
+import { useToast } from "@/utils";
 import CancelIcon from '@mui/icons-material/Cancel';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -6,21 +7,22 @@ import SaveIcon from '@mui/icons-material/Save';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import { IconButton, TextField } from "@mui/material";
 import { User } from "@prisma/client";
-import { useRouter } from "next/router";
 import { useState } from "react";
 import { Card } from "../Card";
 import { RatingStars, RatingStarsEdit } from "../RatingStars";
 import { Text } from "../Text";
+import { ToastAction } from "../ToastContext";
 import styles from './ReviewItem.module.scss';
 
 type Props = {
     review: Review,
     title?: string,
-    currentUserId?: User['id'] | null
+    currentUserId?: User['id'] | null,
+    onRemove: (reviewId: Review['id']) => void
 }
 
-export default function ProfileReviewsItem({ review, title, currentUserId }: Props) {
-    const router = useRouter();
+export default function ProfileReviewsItem({ review, title, currentUserId, onRemove }: Props) {
+    const { dispatch } = useToast();
 
     const [rating, setRating] = useState(review.rating || 0);
     const [comment, setComment] = useState(review.comment || '');
@@ -37,11 +39,21 @@ export default function ProfileReviewsItem({ review, title, currentUserId }: Pro
             method: 'DELETE'
         }).then(response => {
             if (response.ok) {
-                router.reload();
-                return;
-            };
-            // TODO Switch from alter to Toast
-            alert('There has been server error, please try again later.');
+                onRemove(review.id);
+                dispatch({
+                    type: ToastAction.UPDATE_TOAST, payload: {
+                        message: 'Review removed successfully',
+                        severity: 'success'
+                    }
+                });
+            } else {
+                dispatch({
+                    type: ToastAction.UPDATE_TOAST, payload: {
+                        message: 'There has been server error, please try again later.',
+                        severity: 'error'
+                    }
+                });
+            }
         }).finally(() => {
             setIsLoading(false);
         });
@@ -61,9 +73,21 @@ export default function ProfileReviewsItem({ review, title, currentUserId }: Pro
             method: 'PUT',
             body: JSON.stringify({ rating, comment })
         }).then(response => {
-            if (response.ok) return;
-            // TODO Switch from alter to Toast
-            alert('There has been server error, please try again later.');
+            if (response.ok) {
+                dispatch({
+                    type: ToastAction.UPDATE_TOAST, payload: {
+                        message: 'Review updated successfully',
+                        severity: 'success'
+                    }
+                });
+            } else {
+                dispatch({
+                    type: ToastAction.UPDATE_TOAST, payload: {
+                        message: 'There has been server error, please try again later.',
+                        severity: 'error'
+                    }
+                });
+            }
         }).finally(() => {
             setIsLoading(false);
             setIsEdit(false);
