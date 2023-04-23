@@ -63,7 +63,7 @@ export default function RestaurantDetailsReview({ reviews, ownerId, restaurantId
                 <div className={styles.commentList}>
                     {localReviews?.map(review => (
                         <ReviewItem
-                            key={review.createdAt.toDateString()}
+                            key={review.id}
                             review={review as Review}
                             title={`${review.user?.firstName} ${review.user?.lastName}`}
                             currentUserId={userMetadata?.user_id}
