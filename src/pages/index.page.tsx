@@ -1,4 +1,5 @@
-import services from '@/services';
+import PrismaDBClient from '@/repositories/prismaClient';
+import homepageService from '@/services/homepage.service';
 import { paths } from '@/utils/paths';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -13,28 +14,18 @@ import { useState } from 'react';
 import { Text } from '../components/Text';
 import styles from './Home.module.scss';
 
-const { categoriesService, locationsService } = services;
+const homepageServiceInstance = homepageService(PrismaDBClient);
 
 const bgImageUrl = 'https://images.unsplash.com/photo-1565123409695-7b5ef63a2efb?w=1000';
 
 export async function getServerSideProps() {
-  const {
-    result: categories,
-    error: getAllCategoriesError
-  } = await categoriesService.getAllCategories();
+  const { result, error } = await homepageServiceInstance.getLocationsAndCategories();
 
-  const {
-    result: locations,
-    error: getAllLocationsError
-  } = await locationsService.getAllUniqueCities();
-
-  if (getAllCategoriesError || getAllLocationsError) return {
+  if (error) return {
     props: { categories: [], locations: [] }
   };
 
-  return {
-    props: { categories, locations }
-  };
+  return { props: result };
 }
 
 type Props = {

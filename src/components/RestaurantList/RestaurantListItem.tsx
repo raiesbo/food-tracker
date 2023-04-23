@@ -36,8 +36,8 @@ export default function RestaurantListItem({ restaurant }: Props) {
                     <Image
                         src={restaurant.imageUrl || imagesConfig.default}
                         alt='Restaurant image'
-                        fill
                         style={{ objectFit: 'cover' }}
+                        height='150'
                     />
                 </div>
                 <section className={styles.bodySection}>
