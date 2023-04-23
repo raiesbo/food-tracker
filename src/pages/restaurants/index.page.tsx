@@ -4,6 +4,7 @@ import PrismaDBClient from "@/repositories/prismaClient";
 import homepageService from "@/services/homepage.service";
 import { Restaurant } from "@/types";
 import Checkbox from "@mui/material/Checkbox";
+import CircularProgress from "@mui/material/CircularProgress";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import InputLabel from "@mui/material/InputLabel";
@@ -49,6 +50,7 @@ export default function RestaurantPage({
 }: Props) {
     const [timeoutId, setTimeoutId] = useState<ReturnType<typeof setTimeout>>();
     const [restaurants, setRestaurants] = useState<Array<Restaurant>>([]);
+    const [isLoading, setIsLoading] = useState(false);
 
     const [name, setName] = useState('');
     const [city, setCity] = useState(queryCity);
@@ -58,6 +60,7 @@ export default function RestaurantPage({
 
     useEffect(() => {
         const getRestaurants = () => {
+            setIsLoading(true);
             const searchParams = new URLSearchParams({
                 name: name,
                 city: city.replace('All', ''),
@@ -76,7 +79,7 @@ export default function RestaurantPage({
                 })
                 .then(({ restaurants }) => {
                     restaurants && setRestaurants(restaurants);
-                });
+                }).finally(() => setIsLoading(false));
         };
 
         clearTimeout(timeoutId);
@@ -161,12 +164,27 @@ export default function RestaurantPage({
             </div>
             <div className={styles.listContainer}>
                 <Suspense fallback={<p>Loading Food Trucks</p>}>
-                    {restaurants?.map((restaurant: Restaurant) => (
-                        <RestaurantListItem
-                            key={restaurant.id}
-                            restaurant={restaurant}
-                        />
-                    ))}
+                    {isLoading ? (
+                        <div className={styles.spinnerContainer}>
+                            <CircularProgress />
+                        </div>
+                    ) : (
+                        restaurants.length > 0 ? (
+                            <>
+                                {restaurants?.map((restaurant: Restaurant) => (
+                                    <RestaurantListItem
+                                        key={restaurant.id}
+                                        restaurant={restaurant}
+                                    />
+                                ))}
+                            </>
+                        ) : (
+                            <div>
+                                <Text>No Food Trucks found</Text>
+                            </div>
+                        )
+                    )}
+
                 </Suspense>
             </div>
         </div>

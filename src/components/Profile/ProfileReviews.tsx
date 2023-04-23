@@ -1,5 +1,5 @@
-import Text from '@/components/Text/Text';
 import { Review } from '@/types';
+import CircularProgress from '@mui/material/CircularProgress';
 import { User } from '@prisma/client';
 import cc from 'classcat';
 import { useEffect, useState } from 'react';
@@ -43,7 +43,9 @@ export default function RestaurantDetailsReview({ currentUserId, className }: Pr
     return (
         <InfoSection title="Your Reviews" className={cc([className])}>
             {isLoading ? (
-                <Text>Loading the personal reviews...</Text>
+                <div className={styles.spinnerContainer}>
+                    <CircularProgress />
+                </div>
             ) : (
                 <div className={styles.reviewList}>
                     {reviews.map((review) => (
