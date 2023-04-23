@@ -95,7 +95,7 @@ export default function ProfileReviewsItem({ review, title, currentUserId, onRem
     };
 
     return (
-        <Card key={review.createdAt.toDateString()} className={styles.root}>
+        <Card key={review.id} className={styles.root}>
             <>
                 <div className={styles.commentHeader}>
                     <Text>
