@@ -188,15 +188,7 @@ export default function userService({ restaurantClient }: typeof prismaClients) 
 
                 const restaurant = await restaurantClient.updateRestaurant(Number(restaurantId), vaildatedBody);
 
-                if (restaurant) return { result: restaurant };
-
-                return {
-                    result: {},
-                    error: {
-                        status: 400,
-                        message: `Unable to update restaurant with ID ${restaurantId}`
-                    }
-                };
+                return { result: restaurant };
             } catch (e) {
                 const message = e as { message: string };
                 console.error(message);
@@ -266,9 +258,7 @@ export default function userService({ restaurantClient }: typeof prismaClients) 
 
             try {
                 await restaurantClient.deleteRestaurant(Number(restaurantId));
-
                 return { result: {} };
-
             } catch (e) {
                 const message = e as { message: string };
                 console.error(message);

@@ -7,18 +7,18 @@ const orderServiceInstance = ordersService(PrismaDBClient.instance);
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
 
-    if (req.method === 'POST') {
+    if (req.method === 'GET') {
 
         const {
-            result: orders,
+            result: restaurants,
             error
-        } = await orderServiceInstance.createOrder(req);
+        } = await orderServiceInstance.getRestaurantsWithOrders(req);
 
         if (error) {
             return res.status(error.status).json({ message: error.message });
         }
 
-        return res.status(201).json({ orders });
+        return res.status(201).json({ restaurants });
     }
 
     res.status(405).end();

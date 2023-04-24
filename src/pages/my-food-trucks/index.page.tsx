@@ -1,6 +1,7 @@
 import { InfoSection } from '@/components/InfoSection';
 import { MyFoodTruckCategories } from '@/components/MyFoodtruck';
 import MyFoodTruckList from '@/components/MyFoodtruck/MyFoodTruckList';
+import MyFoodTruckOrders from '@/components/MyFoodtruck/MyFoodTruckOrders';
 import services from "@/services";
 import { Category, Restaurant } from '@/types';
 import { auth0Config } from "@/utils/settings";
@@ -65,6 +66,9 @@ export default function MyRestaurants({ restaurants, categories, userId }: Props
                     {'Coming soon...'}
                 </InfoSection>
             </div>
+            <InfoSection title='Orders'>
+                <MyFoodTruckOrders userId={userId} />
+            </InfoSection>
         </div>
     );
 }
