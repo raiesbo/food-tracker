@@ -19,26 +19,6 @@
     justify-content: space-between;
 }
 
-.orderPopover {
-    padding: 10px;
-}
-
-.orderContent {
-    display: grid;
-    grid-template-columns: 1fr min-content min-content max-content;
-    gap: 10px;
-    align-items: center;
-
-    * {
-        white-space: nowrap;
-    }
-}
-
-.orderButton {
-    width: 100%;
-    margin-top: 5px;
-}
-
 .container {
     display: flex;
     flex-direction: column;
@@ -79,21 +59,11 @@
     }
 }
 
-.column {
-    background-color: red;
-}
-
 .infoCard {
     padding: 15px;
     display: flex;
     flex-direction: column;
     gap: 15px;
-}
-
-.infoSlot {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
 }
 
 .menuList {
