@@ -19,13 +19,15 @@ import { useState } from 'react';
 import SideBarIcon from '../SideBar/SideBarIcon';
 import { Text } from '../Text';
 import styles from './AppBar.module.scss';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 type Props = {
 	window?: () => Window,
 	withBackground?: boolean
+	withFullNavigation?: boolean
 }
 
-export default function AppBar({ window, withBackground = false }: Props) {
+export default function AppBar({ window, withBackground = false, withFullNavigation = false }: Props) {
 	const { user } = useUser();
 
 	const userRole = user && user[auth0Config.metadata] as {
@@ -71,44 +73,32 @@ export default function AppBar({ window, withBackground = false }: Props) {
 				{/* <Link href={paths.home}>
                         <FastfoodIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, fill: 'black' }} />
                     </Link> */}
+
 				<div className={styles.mobileItems}>
-					<IconButton
-						aria-label="account of current user"
-						aria-controls="menu-appbar"
-						aria-haspopup="true"
-						onClick={handleOpenNavMenu}
-						color="inherit"
-					>
-						<MenuIcon sx={{ fill: 'black' }}/>
-					</IconButton>
-					<Drawer
-						anchor={'left'}
-						open={!!anchorElNav}
-						onClose={handleCloseNavMenu}
-					>
-						<div className={styles.topContainer}>
-							<Link href={paths.home}>
-								<FastfoodIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, fill: 'black' }}/>
-							</Link>
-						</div>
-						<Divider/>
-						<List>
-							{paths.components.Dashboard.basic?.map(item => (
-								<Link href={item.url} key={item.name} className={styles.listItemLink}>
-									<ListItemButton className={styles.listItemButton}>
-										<SideBarIcon url={item.url} size='small'/>
-										<Text semiBold variant={'smallest'}>
-											{item.name}
-										</Text>
-									</ListItemButton>
-								</Link>
-							))}
-						</List>
-						{isSP && (
-							<>
+					{withFullNavigation && (
+						<>
+							<IconButton
+								aria-label="account of current user"
+								aria-controls="menu-appbar"
+								aria-haspopup="true"
+								onClick={handleOpenNavMenu}
+								color="inherit"
+							>
+								<MenuIcon sx={{ fill: 'black' }}/>
+							</IconButton>
+							<Drawer
+								anchor={'left'}
+								open={!!anchorElNav}
+								onClose={handleCloseNavMenu}
+							>
+								<div className={styles.topContainer}>
+									<Link href={paths.home}>
+										<FastfoodIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, fill: 'black' }}/>
+									</Link>
+								</div>
 								<Divider/>
 								<List>
-									{paths.components.Dashboard.business?.map(item => (
+									{paths.components.Dashboard.basic?.map(item => (
 										<Link href={item.url} key={item.name} className={styles.listItemLink}>
 											<ListItemButton className={styles.listItemButton}>
 												<SideBarIcon url={item.url} size='small'/>
@@ -119,10 +109,28 @@ export default function AppBar({ window, withBackground = false }: Props) {
 										</Link>
 									))}
 								</List>
-							</>
-						)}
-					</Drawer>
+								{isSP && (
+									<>
+										<Divider/>
+										<List>
+											{paths.components.Dashboard.business?.map(item => (
+												<Link href={item.url} key={item.name} className={styles.listItemLink}>
+													<ListItemButton className={styles.listItemButton}>
+														<SideBarIcon url={item.url} size='small'/>
+														<Text semiBold variant={'smallest'}>
+															{item.name}
+														</Text>
+													</ListItemButton>
+												</Link>
+											))}
+										</List>
+									</>
+								)}
+							</Drawer>
+						</>
+					)}
 				</div>
+
 				<IconButton
 					aria-label="account of current user"
 					aria-controls="menu-appbar"
@@ -130,9 +138,17 @@ export default function AppBar({ window, withBackground = false }: Props) {
 					onClick={handleOpenAvMenu}
 					color="inherit"
 				>
-					<Avatar sx={{ width: 35, height: 35 }}>
-						OP
-					</Avatar>
+					{user ? (
+						<Avatar
+							sx={{ width: 35, height: 35 }}
+							alt="user image"
+							src={user.picture || ''}
+						/>
+					) : (
+						<Avatar sx={{ width: 35, height: 35 }}>
+							<AccountCircleIcon/>
+						</Avatar>
+					)}
 				</IconButton>
 				<Menu
 					id="menu-avatar"
@@ -143,6 +159,17 @@ export default function AppBar({ window, withBackground = false }: Props) {
 					open={Boolean(anchorElAv)}
 					onClose={handleCloseAvMenu}
 				>
+					{user && (
+						<div className={styles.avatarText}>
+							<Text semiBold>
+								{`${user.name}`}
+							</Text>
+							<Text variant='small'>
+								{`${user.email}`}
+							</Text>
+							<Divider/>
+						</div>
+					)}
 					{(paths.components.AppBar[user ? 'customer' : 'visitor']).map(({ name, url }) => (
 						<MenuItem key={name}>
 							<Link href={url} className={styles.link}>

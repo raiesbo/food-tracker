@@ -10,46 +10,46 @@ import styles from './LayoutWithSideBar.module.scss';
 import cc from 'classcat';
 
 type Props = {
-    children: ReactNode,
-    mainClassName?: string
+	children: ReactNode,
+	mainClassName?: string
 }
 
 export default function LayoutWithSideBar({ children, mainClassName }: Props) {
-    const { toastState, dispatch } = useToast();
+	const { toastState, dispatch } = useToast();
 
-    const onCloseToast = () => {
-        dispatch({ type: ToastAction.RESET_TOAST, payload: {} });
-    };
+	const onCloseToast = () => {
+		dispatch({ type: ToastAction.RESET_TOAST, payload: {} });
+	};
 
-    return (
-        <>
-            <header>
-                <AppBar withBackground />
-            </header>
-            <aside>
-                <SideBar />
-            </aside>
-            <main className={cc([styles.main, mainClassName])}>
-                {children}
-            </main>
-            <Footer withSideBar />
-            <Snackbar
-                open={toastState.isOpen}
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-                autoHideDuration={4000}
-                onClose={onCloseToast}
-                message={toastState.message}
-            >
-                <Alert
-                    onClose={onCloseToast}
-                    severity={toastState.severity}
-                    sx={{ width: '100%' }}
-                    variant="filled"
-                    elevation={5}
-                >
-                    {toastState.message}
-                </Alert>
-            </Snackbar>
-        </>
-    );
+	return (
+		<>
+			<header>
+				<AppBar withBackground withFullNavigation/>
+			</header>
+			<aside>
+				<SideBar/>
+			</aside>
+			<main className={cc([styles.main, mainClassName])}>
+				{children}
+			</main>
+			<Footer withSideBar/>
+			<Snackbar
+				open={toastState.isOpen}
+				anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+				autoHideDuration={4000}
+				onClose={onCloseToast}
+				message={toastState.message}
+			>
+				<Alert
+					onClose={onCloseToast}
+					severity={toastState.severity}
+					sx={{ width: '100%' }}
+					variant="filled"
+					elevation={5}
+				>
+					{toastState.message}
+				</Alert>
+			</Snackbar>
+		</>
+	);
 }
