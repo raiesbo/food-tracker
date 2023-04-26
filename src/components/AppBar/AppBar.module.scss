@@ -1,7 +1,7 @@
 @use '../../styles/theme' as *;
 
 .root {
-    height: calc($appBarHeight + 1);
+    height: calc($appBarHeight + 1px);
     background-color: rgba(0, 0, 0, 0) !important;
     box-shadow: 0 0 0 rgba(0, 0, 0, 0) !important;
 
