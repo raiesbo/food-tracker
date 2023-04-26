@@ -1,5 +1,6 @@
 import { Card } from "@/components/Card";
 import { InfoSection } from "@/components/InfoSection";
+import LayoutWithSideBar from "@/components/Layout/LayoutWithSideBar";
 import { MyFoodTruckLocations, MyFoodTruckMenu, MyFoodTruckRestaurant } from "@/components/MyFoodTruckDetails";
 import MyFoodTruckReviews from "@/components/MyFoodTruckDetails/MyFoodTruckReviews";
 import { ToastAction } from "@/components/ToastContext";
@@ -19,6 +20,7 @@ import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
 import { Text } from '../../components/Text';
 import styles from './MyFoodTrucksDetails.module.scss';
+import { PageHeader } from "@/components/PageHeader";
 
 const { restaurantService, categoriesService } = services;
 
@@ -55,7 +57,7 @@ export default function MyNewRestaurant({ restaurant, categories }: Props) {
     const { user } = useUser();
     const { dispatch } = useToast();
 
-    const [ imageUrl, setImageUrl ] = useState(restaurant.imageUrl);
+    const [imageUrl, setImageUrl] = useState(restaurant.imageUrl);
 
     const userMetadata = user && user?.[auth0Config.metadata] as { user_id: string };
 
@@ -114,82 +116,79 @@ export default function MyNewRestaurant({ restaurant, categories }: Props) {
     };
 
     return (
-        <div className={styles.root}>
-            <header className={styles.pageHeader}>
-                <Text as='h1' variant='h1' bold>
-                    {restaurant.name}
-                </Text>
-                <div className={styles.buttonContainer}>
-                    <Button
-                        variant="outlined"
-                        onClick={onRemove}
-                        color='error'
-                    >
-                        REMOVE
-                    </Button>
-                </div>
-            </header>
-            <section className={styles.bodyContainer}>
-                <div className={cc([ styles.container, styles.sideColumn ])}>
-                    <InfoSection title="Food Truck Thumbnail">
-                        <Card className={styles.imageContainer} withHover>
-                            <label htmlFor={`restaurant_${restaurant.id}`} className={styles.imageUploadInput}>
-                                <Image
-                                    alt='Business image | default image from Unsplash'
-                                    src={imageUrl || imagesConfig.default}
-                                    fill
-                                    className={styles.image}
-                                    style={{ objectFit: 'cover' }}
-                                    priority
+        <LayoutWithSideBar>
+            <div className={styles.root}>
+                    <PageHeader title={restaurant.name || ''} childrenClassName={styles.buttonContainer}>
+                        <Button
+                            variant="outlined"
+                            onClick={onRemove}
+                            color='error'
+                        >
+                            REMOVE
+                        </Button>
+                    </PageHeader>
+                <section className={styles.bodyContainer}>
+                    <div className={cc([styles.container, styles.sideColumn])}>
+                        <InfoSection title="Food Truck Thumbnail">
+                            <Card className={styles.imageContainer} withHover>
+                                <label htmlFor={`restaurant_${restaurant.id}`} className={styles.imageUploadInput}>
+                                    <Image
+                                        alt='Business image | default image from Unsplash'
+                                        src={imageUrl || imagesConfig.default}
+                                        fill
+                                        className={styles.image}
+                                        style={{ objectFit: 'cover' }}
+                                        priority
+                                    />
+                                </label>
+                                <input
+                                    id={`restaurant_${restaurant.id}`}
+                                    type='file'
+                                    accept="image/jpg,image/png"
+                                    onChange={updateFile}
                                 />
-                            </label>
-                            <input
-                                id={`restaurant_${restaurant.id}`}
-                                type='file'
-                                accept="image/jpg,image/png"
-                                onChange={updateFile}
-                            />
-                        </Card>
-                    </InfoSection>
-                    <MyFoodTruckLocations
-                        location={restaurant.locations.find(loc => loc.isMainLocation) || {} as Location}
-                    />
-                    <Card className={styles.scheduleList}>
-                        <InfoSection title="Opening Hours" childrenClassName={styles.item}>
-                            {restaurant.schedules?.map((schedule) => (
-                                <div key={schedule.id} className={styles.scheduleListItem}>
-                                    <Text bold variant={'smallest'}>
-                                        {schedule.day}
-                                    </Text>
-                                    {schedule.isOpen ? (
-                                        <Text variant={'smallest'}>
-                                            {`${schedule.opening_hour} ${schedule.closing_hour}`}
-                                        </Text>
-                                    ) : (
-                                        <Text variant={'smallest'}>
-                                            Closed
-                                        </Text>
-                                    )}
-                                </div>
-                            ))}
+                            </Card>
                         </InfoSection>
-                    </Card>
-                    <MyFoodTruckReviews
-                        reviews={restaurant.reviews}
-                        currentUserId={restaurant.userId}
-                    />
-                </div>
-                <div className={cc([ styles.container, styles.mainColumn ])}>
-                    <MyFoodTruckRestaurant
-                        restaurant={restaurant}
-                        allCategories={categories}
-                    />
-                    <MyFoodTruckMenu
-                        menu={restaurant.menu}
-                        restaurantid={restaurant.id}
-                    />
-                </div>
-            </section>
-        </div>
+                        <MyFoodTruckLocations
+                            location={restaurant.locations.find(loc => loc.isMainLocation) || {} as Location}
+                        />
+                        <Card className={styles.scheduleList}>
+                            <InfoSection title="Opening Hours" childrenClassName={styles.item}>
+                                {restaurant.schedules?.map((schedule) => (
+                                    <div key={schedule.id} className={styles.scheduleListItem}>
+                                        <Text bold variant={'smallest'}>
+                                            {schedule.day}
+                                        </Text>
+                                        {schedule.isOpen ? (
+                                            <Text variant={'smallest'}>
+                                                {`${schedule.opening_hour} ${schedule.closing_hour}`}
+                                            </Text>
+                                        ) : (
+                                            <Text variant={'smallest'}>
+                                                Closed
+                                            </Text>
+                                        )}
+                                    </div>
+                                ))}
+                            </InfoSection>
+                        </Card>
+                        <MyFoodTruckReviews
+                            reviews={restaurant.reviews}
+                            currentUserId={restaurant.userId}
+                        />
+                    </div>
+                    <div className={cc([styles.container, styles.mainColumn])}>
+                        <MyFoodTruckRestaurant
+                            restaurant={restaurant}
+                            allCategories={categories}
+                        />
+                        <MyFoodTruckMenu
+                            menu={restaurant.menu}
+                            restaurantid={restaurant.id}
+                        />
+                    </div>
+                </section>
+            </div>
+        </LayoutWithSideBar>
     );
 }

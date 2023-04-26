@@ -13,18 +13,6 @@
     }
 }
 
-.pageHeader {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-
-    @include matchSmall {
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-    }
-}
-
 .buttonContainer {
     display: flex;
     flex-direction: row;

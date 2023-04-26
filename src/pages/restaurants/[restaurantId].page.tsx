@@ -1,3 +1,4 @@
+import { Layout } from "@/components/Layout";
 import MenuItem from "@/components/MenuItem/MenuItem";
 import { OrderAction } from "@/components/OrderContext";
 import { RatingStars } from "@/components/RatingStars";
@@ -107,109 +108,111 @@ export default function RestaurantDetailsPage({ restaurant }: Props) {
     };
 
     return (
-        <div className={styles.root}>
-            <header className={styles.shopHeader}>
-                <div>
-                    <Text as='h1' bold>
-                        {restaurant.name}
-                    </Text>
-                    {restaurant.slogan && (
-                        <Text as='small' semiBold italic>
-                            {restaurant.slogan}
-                        </Text>
-                    )}
-                </div>
-                {user && (
+        <Layout withTopMargin>
+            <div className={styles.root}>
+                <header className={styles.shopHeader}>
                     <div>
-                        <IconButton
-                            onClick={handleClick}
-                            disabled={!numberOfOrders || numberOfOrders === 0}
-                        >
-                            <Badge
-                                badgeContent={numberOfOrders}
-                                color="primary"
+                        <Text as='h1' bold>
+                            {restaurant.name}
+                        </Text>
+                        {restaurant.slogan && (
+                            <Text as='small' semiBold italic>
+                                {restaurant.slogan}
+                            </Text>
+                        )}
+                    </div>
+                    {user && (
+                        <div>
+                            <IconButton
+                                onClick={handleClick}
+                                disabled={!numberOfOrders || numberOfOrders === 0}
                             >
-                                <LocalGroceryStoreIcon />
-                            </Badge>
-                        </IconButton>
-                        <RestaurantDetailsOrder
-                            restaurantId={restaurant.id}
-                            anchorEl={anchorEl}
-                            setAnchorEl={setAnchorEl}
-                            handleClose={handleClose}
-                            menu={restaurant.menu}
-                            setIsConfirmationOpen={setIsConfirmationOpen}
+                                <Badge
+                                    badgeContent={numberOfOrders}
+                                    color="primary"
+                                >
+                                    <LocalGroceryStoreIcon />
+                                </Badge>
+                            </IconButton>
+                            <RestaurantDetailsOrder
+                                restaurantId={restaurant.id}
+                                anchorEl={anchorEl}
+                                setAnchorEl={setAnchorEl}
+                                handleClose={handleClose}
+                                menu={restaurant.menu}
+                                setIsConfirmationOpen={setIsConfirmationOpen}
+                            />
+                        </div >
+                    )}
+                </header >
+                <div className={styles.bodyContainer}>
+                    <div className={cc([
+                        styles.container,
+                        styles.leftContainer
+                    ])}>
+                        <RestaurantDetailsContact
+                            user={restaurant.user}
+                            location={mainLocation}
                         />
-                    </div >
-                )}
-            </header >
-            <div className={styles.bodyContainer}>
-                <div className={cc([
-                    styles.container,
-                    styles.leftContainer
-                ])}>
-                    <RestaurantDetailsContact
-                        user={restaurant.user}
-                        location={mainLocation}
-                    />
-                    <RestaurantDetailsHours
-                        schedules={restaurant.schedules}
-                    />
-                </div>
-                <div className={cc([
-                    styles.container,
-                    styles.middleContainer
-                ])}>
-                    <Text>
-                        {restaurant.description}
-                    </Text>
+                        <RestaurantDetailsHours
+                            schedules={restaurant.schedules}
+                        />
+                    </div>
+                    <div className={cc([
+                        styles.container,
+                        styles.middleContainer
+                    ])}>
+                        <Text>
+                            {restaurant.description}
+                        </Text>
 
-                    <Text as='h3'>
-                        Menu
-                    </Text>
-                    <div className={styles.menuList}>
-                        {restaurant.menu.map((dish: Dish) => {
-                            return (
-                                <MenuItem
-                                    key={dish.id}
-                                    dish={dish}
-                                    onAddToOrder={user && onAddToOrder}
-                                />
-                            );
-                        })}
+                        <Text as='h3'>
+                            Menu
+                        </Text>
+                        <div className={styles.menuList}>
+                            {restaurant.menu.map((dish: Dish) => {
+                                return (
+                                    <MenuItem
+                                        key={dish.id}
+                                        dish={dish}
+                                        onAddToOrder={user && onAddToOrder}
+                                    />
+                                );
+                            })}
+                        </div>
+                    </div>
+                    <div className={cc([
+                        styles.container,
+                        styles.rightContainer
+                    ])}>
+                        <Card className={styles.infoCard} withHover={false}>
+                            <Text as='h3'>
+                                Rating
+                            </Text>
+                            <div>
+                                <RatingStars rating={rating} />
+                            </div>
+                        </Card>
+                        <Suspense fallback={<p>Loading Reviews</p>}>
+                            <RestaurantDetailsReview
+                                reviews={restaurant.reviews}
+                                ownerId={restaurant.userId}
+                                restaurantId={restaurant.id}
+                            />
+                        </Suspense>
                     </div>
                 </div>
-                <div className={cc([
-                    styles.container,
-                    styles.rightContainer
-                ])}>
-                    <Card className={styles.infoCard} withHover={false}>
-                        <Text as='h3'>
-                            Rating
-                        </Text>
-                        <div>
-                            <RatingStars rating={rating} />
-                        </div>
-                    </Card>
-                    <Suspense fallback={<p>Loading Reviews</p>}>
-                        <RestaurantDetailsReview
-                            reviews={restaurant.reviews}
-                            ownerId={restaurant.userId}
-                            restaurantId={restaurant.id}
-                        />
-                    </Suspense>
-                </div>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <RestaurantListOrderConfirmation
+                        isOpen={isConfirmationOpen}
+                        onCancel={() => setIsConfirmationOpen(false)}
+                        onAccept={onConfirmOrder}
+                        menu={restaurant.menu}
+                        order={orderState[restaurant.id]}
+                        isLoading={isLoading}
+                    />
+                </LocalizationProvider>
             </div>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <RestaurantListOrderConfirmation
-                    isOpen={isConfirmationOpen}
-                    onCancel={() => setIsConfirmationOpen(false)}
-                    onAccept={onConfirmOrder}
-                    menu={restaurant.menu}
-                    order={orderState[restaurant.id]}
-                    isLoading={isLoading}
-                />
-            </LocalizationProvider>
-        </div>
+        </Layout>
     );
 }

@@ -1,4 +1,5 @@
 import { InfoSection } from "@/components/InfoSection";
+import LayoutWithSideBar from "@/components/Layout/LayoutWithSideBar";
 import { ProfileReviews } from "@/components/Profile";
 import { Text } from "@/components/Text";
 import { ToastAction } from "@/components/ToastContext";
@@ -16,6 +17,7 @@ import { GetServerSidePropsContext } from "next";
 import Image from "next/image";
 import { ChangeEvent, Suspense, useState } from "react";
 import styles from './profile.module.scss';
+import { PageHeader } from "@/components/PageHeader";
 
 const { userService } = services;
 
@@ -135,12 +137,9 @@ export default function Profile({ user, auth0User, reviews }: Props) {
     };
 
     return (
-        <div className={styles.root}>
-            <header className={styles.pageHeader}>
-                <Text as='h1' variant='h1' bold>
-                    User Porfile
-                </Text>
-                <div className={styles.buttonContainer}>
+        <LayoutWithSideBar>
+            <div className={styles.root}>
+                <PageHeader title={'User Profile'} childrenClassName={styles.buttonContainer}>
                     {isUpdate ? (
                         <>
                             <Button
@@ -169,105 +168,105 @@ export default function Profile({ user, auth0User, reviews }: Props) {
                             EDIT
                         </Button>
                     )}
-                </div>
-            </header>
-            <section className={styles.bodyContainer}>
-                <div className={styles.imageContainer}>
-                    <label htmlFor={`users_${user.id}`} className={styles.imageUploadInput}>
-                        <Image
-                            alt='Users image'
-                            src={imageUrl || auth0User?.picture || imagesConfig.default}
-                            fill
-                            className={styles.image}
-                            style={{ objectFit: 'cover' }}
-                            sizes="(max-width: 600px) 100px,(max-width: 900px) 150px, 200px"
-                        />
-                    </label>
-                    <input
-                        id={`users_${user.id}`}
-                        type='file'
-                        accept="image/jpg,image/png"
-                        onChange={updateFile}
-                    />
-                </div>
-                <InfoSection
-                    title='Personal Information'
-                    childrenClassName={styles.userInfo}
-                >
-                    <div>
-                        <Text variant={'h4'} bold>
-                            First Name
-                        </Text>
-                        <TextField
-                            value={firstName}
-                            label=''
-                            onChange={(e) => setFirstName(e.target.value)}
-                            fullWidth
-                            sx={{ mt: 1, backgroundColor: 'white' }}
-                            disabled={!isUpdate || isLoading}
+                </PageHeader>
+                <section className={styles.bodyContainer}>
+                    <div className={styles.imageContainer}>
+                        <label htmlFor={`users_${user.id}`} className={styles.imageUploadInput}>
+                            <Image
+                                alt='Users image'
+                                src={imageUrl || auth0User?.picture || imagesConfig.default}
+                                fill
+                                className={styles.image}
+                                style={{ objectFit: 'cover' }}
+                                sizes="(max-width: 600px) 100px,(max-width: 900px) 150px, 200px"
+                            />
+                        </label>
+                        <input
+                            id={`users_${user.id}`}
+                            type='file'
+                            accept="image/jpg,image/png"
+                            onChange={updateFile}
                         />
                     </div>
-                    <div>
-                        <Text variant={'h4'} bold>
-                            Last Name
-                        </Text>
-                        <TextField
-                            value={lastName}
-                            label=''
-                            onChange={(e) => setLastname(e.target.value)}
-                            fullWidth
-                            sx={{ mt: 1, backgroundColor: 'white' }}
-                            disabled={!isUpdate || isLoading}
+                    <InfoSection
+                        title='Personal Information'
+                        childrenClassName={styles.userInfo}
+                    >
+                        <div>
+                            <Text variant={'h4'} bold>
+                                First Name
+                            </Text>
+                            <TextField
+                                value={firstName}
+                                label=''
+                                onChange={(e) => setFirstName(e.target.value)}
+                                fullWidth
+                                sx={{ mt: 1, backgroundColor: 'white' }}
+                                disabled={!isUpdate || isLoading}
+                            />
+                        </div>
+                        <div>
+                            <Text variant={'h4'} bold>
+                                Last Name
+                            </Text>
+                            <TextField
+                                value={lastName}
+                                label=''
+                                onChange={(e) => setLastname(e.target.value)}
+                                fullWidth
+                                sx={{ mt: 1, backgroundColor: 'white' }}
+                                disabled={!isUpdate || isLoading}
+                            />
+                        </div>
+                        <div>
+                            <Text variant={'h4'} bold>
+                                Email
+                            </Text>
+                            <TextField
+                                value={email}
+                                label=''
+                                onChange={(e) => setEmail(e.target.value)}
+                                fullWidth
+                                sx={{ mt: 1, backgroundColor: 'white' }}
+                                disabled={!isUpdate || isLoading}
+                            />
+                        </div>
+                        <div>
+                            <Text variant={'h4'} bold>
+                                Phone Number
+                            </Text>
+                            <TextField
+                                value={phone}
+                                label=''
+                                onChange={(e) => setPhone(e.target.value)}
+                                fullWidth
+                                sx={{ mt: 1, backgroundColor: 'white' }}
+                                disabled={!isUpdate || isLoading}
+                            />
+                        </div>
+                        <div>
+                            <Text variant={'h4'} bold>
+                                Image URL
+                            </Text>
+                            <TextField
+                                value={imageUrl}
+                                label=''
+                                onChange={(e) => setImageUrl(e.target.value)}
+                                fullWidth
+                                sx={{ mt: 1, backgroundColor: 'white' }}
+                                disabled={!isUpdate || isLoading}
+                                multiline={isUpdate}
+                            />
+                        </div>
+                    </InfoSection>
+                    <Suspense fallback={<p>Loading Reviews</p>}>
+                        <ProfileReviews
+                            currentUserId={user.id}
+                            className={styles.revews}
                         />
-                    </div>
-                    <div>
-                        <Text variant={'h4'} bold>
-                            Email
-                        </Text>
-                        <TextField
-                            value={email}
-                            label=''
-                            onChange={(e) => setEmail(e.target.value)}
-                            fullWidth
-                            sx={{ mt: 1, backgroundColor: 'white' }}
-                            disabled={!isUpdate || isLoading}
-                        />
-                    </div>
-                    <div>
-                        <Text variant={'h4'} bold>
-                            Phone Number
-                        </Text>
-                        <TextField
-                            value={phone}
-                            label=''
-                            onChange={(e) => setPhone(e.target.value)}
-                            fullWidth
-                            sx={{ mt: 1, backgroundColor: 'white' }}
-                            disabled={!isUpdate || isLoading}
-                        />
-                    </div>
-                    <div>
-                        <Text variant={'h4'} bold>
-                            Image URL
-                        </Text>
-                        <TextField
-                            value={imageUrl}
-                            label=''
-                            onChange={(e) => setImageUrl(e.target.value)}
-                            fullWidth
-                            sx={{ mt: 1, backgroundColor: 'white' }}
-                            disabled={!isUpdate || isLoading}
-                            multiline={isUpdate}
-                        />
-                    </div>
-                </InfoSection>
-                <Suspense fallback={<p>Loading Reviews</p>}>
-                    <ProfileReviews
-                        currentUserId={user.id}
-                        className={styles.revews}
-                    />
-                </Suspense>
-            </section>
-        </div>
+                    </Suspense>
+                </section>
+            </div>
+        </LayoutWithSideBar>
     );
 }

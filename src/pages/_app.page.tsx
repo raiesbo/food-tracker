@@ -1,4 +1,3 @@
-import { Layout } from '@/components/Layout';
 import { OrderContext } from '@/components/OrderContext';
 import { ToastContext } from '@/components/ToastContext';
 import '@/styles/globals.css';
@@ -15,9 +14,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <UserProvider>
         <OrderContext>
           <ToastContext>
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
+            <Component {...pageProps} />
           </ToastContext>
         </OrderContext>
       </UserProvider>

@@ -1,4 +1,5 @@
 import { InfoSection } from '@/components/InfoSection';
+import LayoutWithSideBar from '@/components/Layout/LayoutWithSideBar';
 import { MyFoodTruckCategories } from '@/components/MyFoodtruck';
 import MyFoodTruckList from '@/components/MyFoodtruck/MyFoodTruckList';
 import MyFoodTruckOrders from '@/components/MyFoodtruck/MyFoodTruckOrders';
@@ -9,6 +10,7 @@ import { getSession } from "@auth0/nextjs-auth0";
 import { User } from '@prisma/client';
 import { GetServerSidePropsContext } from "next";
 import styles from './MyFoodTrucks.module.scss';
+import { PageHeader } from "@/components/PageHeader";
 
 const { restaurantService, categoriesService } = services;
 
@@ -52,23 +54,23 @@ type Props = {
 export default function MyRestaurants({ restaurants, categories, userId }: Props) {
 
     return (
-        <div className={styles.root}>
-            <h1>
-                My Food Trucks
-            </h1>
-            <MyFoodTruckList restaurants={restaurants} />
-            <div className={styles.bottonSection}>
-                <MyFoodTruckCategories
-                    categories={categories}
-                    userId={userId}
-                />
-                <InfoSection title='Events'>
-                    {'Coming soon...'}
+        <LayoutWithSideBar>
+            <div className={styles.root}>
+                <PageHeader title={'My Food Trucks'} ></PageHeader>
+                <MyFoodTruckList restaurants={restaurants} />
+                <div className={styles.bottonSection}>
+                    <MyFoodTruckCategories
+                        categories={categories}
+                        userId={userId}
+                    />
+                    <InfoSection title='Events'>
+                        {'Coming soon...'}
+                    </InfoSection>
+                </div>
+                <InfoSection title='Orders'>
+                    <MyFoodTruckOrders userId={userId} />
                 </InfoSection>
             </div>
-            <InfoSection title='Orders'>
-                <MyFoodTruckOrders userId={userId} />
-            </InfoSection>
-        </div>
+        </LayoutWithSideBar>
     );
 }

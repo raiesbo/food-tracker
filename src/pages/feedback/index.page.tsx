@@ -1,7 +1,11 @@
+import { Layout } from "@/components/Layout";
+
 export default function Feedback() {
     return (
-        <div>
-            Feedback Page
-        </div>
+        <Layout withTopMargin>
+            <div>
+                Feedback Page
+            </div>
+        </Layout>
     );
 }

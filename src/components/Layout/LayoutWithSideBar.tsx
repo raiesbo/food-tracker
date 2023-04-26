@@ -1,19 +1,20 @@
 import { useToast } from "@/utils";
 import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
-import cc from 'classcat';
 import { ReactNode } from "react";
 import { AppBar } from "../AppBar";
 import { Footer } from "../Footer";
+import { SideBar } from "../SideBar";
 import { ToastAction } from "../ToastContext";
-import styles from './Layout.module.scss';
+import styles from './LayoutWithSideBar.module.scss';
+import cc from 'classcat';
 
 type Props = {
     children: ReactNode,
-    withTopMargin?: boolean
+    mainClassName?: string
 }
 
-export default function Layout({ children, withTopMargin = false }: Props) {
+export default function LayoutWithSideBar({ children, mainClassName }: Props) {
     const { toastState, dispatch } = useToast();
 
     const onCloseToast = () => {
@@ -23,15 +24,15 @@ export default function Layout({ children, withTopMargin = false }: Props) {
     return (
         <>
             <header>
-                <AppBar />
+                <AppBar withBackground />
             </header>
-            <main className={cc([
-                styles.main,
-                withTopMargin && styles.main_withTopMargin
-            ])}>
+            <aside>
+                <SideBar />
+            </aside>
+            <main className={cc([styles.main, mainClassName])}>
                 {children}
             </main>
-            <Footer />
+            <Footer withSideBar />
             <Snackbar
                 open={toastState.isOpen}
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}

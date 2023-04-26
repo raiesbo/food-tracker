@@ -1,0 +1,35 @@
+@use '@/styles/theme' as *;
+
+.root {
+    width: $sideBarWidth;
+    flex-shrink: 0;
+
+    & .MuiDrawer-paper {
+        width: $sideBarWidth;
+        box-sizing: border-box;
+    }
+}
+
+.topContainer {
+    height: $appBarHeight;
+    width: $sideBarWidth;
+    padding: 8px 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.listItemLink {
+    text-decoration: none;
+    color: inherit;
+}
+
+.listItemButton {
+    display: grid;
+    grid-template-columns: min-content 1fr;
+    gap: 15px;
+
+    p {
+        padding-right: 10px;
+    }
+}
