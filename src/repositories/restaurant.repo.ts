@@ -6,7 +6,12 @@ export const restaurantRelations = Prisma.validator<Prisma.RestaurantInclude>()(
     locations: true,
     menu: true,
     schedules: true,
-    categories: true,
+    categories: {
+        select: {
+            id: true,
+            name: true
+        }
+    },
     user: true,
     reviews: {
         include: {

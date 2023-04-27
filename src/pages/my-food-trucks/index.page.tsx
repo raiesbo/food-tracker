@@ -1,6 +1,5 @@
 import { InfoSection } from '@/components/InfoSection';
 import LayoutWithSideBar from '@/components/Layout/LayoutWithSideBar';
-import { MyFoodTruckCategories } from '@/components/MyFoodtruck';
 import MyFoodTruckList from '@/components/MyFoodtruck/MyFoodTruckList';
 import MyFoodTruckOrders from '@/components/MyFoodtruck/MyFoodTruckOrders';
 import services from "@/services";
@@ -12,7 +11,7 @@ import { GetServerSidePropsContext } from "next";
 import styles from './MyFoodTrucks.module.scss';
 import { PageHeader } from "@/components/PageHeader";
 
-const { restaurantService, categoriesService } = services;
+const { restaurantService } = services;
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
     const session = await getSession(context.req, context.res);
@@ -31,27 +30,21 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         error: getRestaurantsError
     } = await restaurantService.getAllRestaurantByUser(metadata.user_id);
 
-    const {
-        result: categories,
-        error: categoriesError
-    } = await categoriesService.getCategoriesByUserId(metadata.user_id);
-
-    if (getRestaurantsError || categoriesError) return {
-        props: { restaurants: [], categories: [] }
+    if (getRestaurantsError) return {
+        props: { restaurants: [] }
     };
 
     return {
-        props: { restaurants, categories, userId: metadata?.user_id }
+        props: { restaurants, userId: metadata?.user_id }
     };
 }
 
 type Props = {
     restaurants: Array<Restaurant>
-    categories: Array<Category>
     userId: User['id']
 }
 
-export default function MyRestaurants({ restaurants, categories, userId }: Props) {
+export default function MyRestaurants({ restaurants, userId }: Props) {
 
     return (
         <LayoutWithSideBar>
@@ -59,17 +52,13 @@ export default function MyRestaurants({ restaurants, categories, userId }: Props
                 <PageHeader title={'My Food Trucks'} ></PageHeader>
                 <MyFoodTruckList restaurants={restaurants} />
                 <div className={styles.bottonSection}>
-                    <MyFoodTruckCategories
-                        categories={categories}
-                        userId={userId}
-                    />
                     <InfoSection title='Events'>
                         {'Coming soon...'}
                     </InfoSection>
+                    <InfoSection title='Orders'>
+                        <MyFoodTruckOrders userId={userId} />
+                    </InfoSection>
                 </div>
-                <InfoSection title='Orders'>
-                    <MyFoodTruckOrders userId={userId} />
-                </InfoSection>
             </div>
         </LayoutWithSideBar>
     );

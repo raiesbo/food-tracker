@@ -20,6 +20,7 @@ import SideBarIcon from '../SideBar/SideBarIcon';
 import { Text } from '../Text';
 import styles from './AppBar.module.scss';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { useRouter } from "next/router";
 
 type Props = {
 	window?: () => Window,
@@ -28,6 +29,7 @@ type Props = {
 }
 
 export default function AppBar({ window, withBackground = false, withFullNavigation = false }: Props) {
+	const router = useRouter();
 	const { user } = useUser();
 
 	const userRole = user && user[auth0Config.metadata] as {
@@ -70,10 +72,6 @@ export default function AppBar({ window, withBackground = false, withFullNavigat
 			withBackground && styles.root_withBackground
 		])}>
 			<div className={styles.appBarContainer}>
-				{/* <Link href={paths.home}>
-                        <FastfoodIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, fill: 'black' }} />
-                    </Link> */}
-
 				<div className={styles.mobileItems}>
 					{withFullNavigation && (
 						<>
@@ -102,7 +100,7 @@ export default function AppBar({ window, withBackground = false, withFullNavigat
 										<Link href={item.url} key={item.name} className={styles.listItemLink}>
 											<ListItemButton className={styles.listItemButton}>
 												<SideBarIcon url={item.url} size='small'/>
-												<Text semiBold variant={'smallest'}>
+												<Text bold={router.pathname === item.url} variant={'p'}>
 													{item.name}
 												</Text>
 											</ListItemButton>
@@ -117,7 +115,7 @@ export default function AppBar({ window, withBackground = false, withFullNavigat
 												<Link href={item.url} key={item.name} className={styles.listItemLink}>
 													<ListItemButton className={styles.listItemButton}>
 														<SideBarIcon url={item.url} size='small'/>
-														<Text semiBold variant={'smallest'}>
+														<Text bold={router.pathname === item.url} variant={'p'}>
 															{item.name}
 														</Text>
 													</ListItemButton>
@@ -130,7 +128,6 @@ export default function AppBar({ window, withBackground = false, withFullNavigat
 						</>
 					)}
 				</div>
-
 				<IconButton
 					aria-label="account of current user"
 					aria-controls="menu-appbar"

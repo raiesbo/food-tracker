@@ -1,0 +1,35 @@
+@use '@/styles/theme' as *;
+
+.root {
+  max-width: 1040px;
+  padding: 20px;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  @include matchSmall {
+    gap: 30px;
+  }
+}
+
+.buttonContainer {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.textInput {
+  width: 100%;
+
+  input {
+    padding: 5px 10px;
+  }
+}
+
+.tableButtonContent {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  gap: 5px;
+}

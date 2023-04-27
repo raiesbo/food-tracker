@@ -119,6 +119,7 @@ model Location {
 
 model Category {
   id          Int          @id @default(autoincrement())
+  createdAt   DateTime     @default(now())
   name        String       @unique
   user        User?        @relation(fields: [userId], references: [id])
   userId      Int?

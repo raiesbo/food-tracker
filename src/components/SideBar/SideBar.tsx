@@ -10,8 +10,10 @@ import Link from 'next/link';
 import { Text } from '../Text';
 import styles from './SideBar.module.scss';
 import SideBarIcon from './SideBarIcon';
+import { useRouter } from "next/router";
 
 export default function SideBar() {
+    const router = useRouter();
     const { user } = useUser();
 
     const userRole = user && user[auth0Config.metadata] as {
@@ -39,7 +41,7 @@ export default function SideBar() {
                     <Link href={item.url} key={item.name} className={styles.listItemLink}>
                         <ListItemButton className={styles.listItemButton}>
                             <SideBarIcon url={item.url} size='small' />
-                            <Text semiBold variant={'smallest'}>
+                            <Text bold={router.pathname === item.url} variant={'p'}>
                                 {item.name}
                             </Text>
                         </ListItemButton>
@@ -54,7 +56,7 @@ export default function SideBar() {
                             <Link href={item.url} key={item.name} className={styles.listItemLink}>
                                 <ListItemButton className={styles.listItemButton}>
                                     <SideBarIcon url={item.url} size='small' />
-                                    <Text semiBold variant={'smallest'}>
+                                    <Text bold={router.pathname === item.url} variant={'p'}>
                                         {item.name}
                                     </Text>
                                 </ListItemButton>

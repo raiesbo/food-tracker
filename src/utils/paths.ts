@@ -45,15 +45,16 @@ export const paths = {
         },
         Dashboard: {
             basic: [
-                { name: 'Personal Data', url: '/profile', icon: 'AccountBoxIcon' },
-                { name: 'My Reviews', url: '/reviews', icon: 'RateReviewIcon' },
-                { name: 'My Orders', url: '/orders', icon: 'ShoppingCartIcon' }
+                { name: 'Personal Data', url: '/profile' },
+                { name: 'My Reviews', url: '/reviews' },
+                { name: 'My Orders', url: '/orders' }
             ],
             business: [
-                { name: 'Food Trucks', url: '/my-food-trucks', icon: 'StorefrontIcon' },
-                { name: 'Reviews', url: '/business-reviews', icon: 'RateReviewIcon' },
-                { name: 'Orders', url: '/business-orders', icon: 'FilterFramesIcon' },
-                { name: 'Events', url: '/events', icon: 'EventAvailableIcon' }
+                { name: 'Food Trucks', url: '/my-food-trucks' },
+                { name: 'Categories', url: '/categories' },
+                { name: 'Reviews', url: '/business-reviews' },
+                { name: 'Orders', url: '/business-orders' },
+                { name: 'Events', url: '/events' }
             ]
         },
         footer: {
