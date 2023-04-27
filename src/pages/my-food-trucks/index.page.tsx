@@ -3,7 +3,7 @@ import LayoutWithSideBar from '@/components/Layout/LayoutWithSideBar';
 import MyFoodTruckList from '@/components/MyFoodtruck/MyFoodTruckList';
 import MyFoodTruckOrders from '@/components/MyFoodtruck/MyFoodTruckOrders';
 import services from "@/services";
-import { Category, Restaurant } from '@/types';
+import { Restaurant } from '@/types';
 import { auth0Config } from "@/utils/settings";
 import { getSession } from "@auth0/nextjs-auth0";
 import { User } from '@prisma/client';
