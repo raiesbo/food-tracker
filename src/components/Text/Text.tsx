@@ -20,6 +20,7 @@ type Props = HTMLAttributes<HTMLElement> & {
     semiBold?: boolean;
     thin?: boolean;
     italic?: boolean;
+    grey?: boolean;
     variant?: Variant;
 };
 
@@ -31,6 +32,7 @@ export default function Text({
     semiBold = false,
     thin = false,
     italic = false,
+    grey = false,
     variant = 'body',
     ...rest
 }: Props) {
@@ -54,7 +56,8 @@ export default function Text({
                 semiBold && styles.semiBold,
                 bold && styles.bold,
                 italic && styles.italic,
-                thin && styles.thin
+                thin && styles.thin,
+                grey && styles.grey
             ])}
             {...rest}
         >

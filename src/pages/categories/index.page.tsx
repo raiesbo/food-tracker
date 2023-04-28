@@ -133,8 +133,8 @@ export default function Categories({ categories, userId }: Props) {
 		<LayoutWithSideBar>
 			<div className={styles.root}>
 				<PageHeader title={'Categories'}></PageHeader>
-				<Card>
-					<Table aria-label="a dense table">
+				<Card className={styles.card}>
+					<Table>
 						<TableHead>
 							<TableRow>
 								<TableCell>
@@ -149,7 +149,7 @@ export default function Categories({ categories, userId }: Props) {
 								</TableCell>
 								<TableCell align="right">
 									<Text bold variant='h4'>
-										Assigned Restaurants
+										Assigned to
 									</Text>
 								</TableCell>
 								<TableCell align="right">

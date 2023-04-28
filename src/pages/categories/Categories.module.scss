@@ -13,6 +13,16 @@
   }
 }
 
+.card {
+  overflow: hidden;
+  overflow-x: auto;
+
+  th {
+    text-transform: uppercase;
+    width: min-content;
+  }
+}
+
 .buttonContainer {
   width: 100%;
   display: flex;
@@ -21,6 +31,7 @@
 
 .textInput {
   width: 100%;
+  min-width: 150px;
 
   input {
     padding: 5px 10px;

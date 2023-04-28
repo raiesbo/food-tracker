@@ -124,6 +124,17 @@ export default function AppBar({ window, withBackground = false, withFullNavigat
 										</List>
 									</>
 								)}
+								<Divider />
+								<List>
+									<Link href='/api/auth/logout' className={styles.listItemLink}>
+										<ListItemButton className={styles.listItemButton}>
+											<SideBarIcon url='/api/auth/logout' size='small' />
+											<Text semiBold variant={'smallest'}>
+												Logout
+											</Text>
+										</ListItemButton>
+									</Link>
+								</List>
 							</Drawer>
 						</>
 					)}
