@@ -26,6 +26,7 @@ import { Suspense, useState } from "react";
 import { Card } from '../../components/Card';
 import { Text } from '../../components/Text';
 import styles from './restaurantDetails.module.scss';
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 
 const { restaurantService } = services;
 
@@ -107,6 +108,12 @@ export default function RestaurantDetailsPage({ restaurant }: Props) {
         }).finally(() => { setIsLoading(false); });
     };
 
+    const breadcrumbList = [
+        { label: "Home", url: '/' },
+        { label: "Restaurants", url: '/restaurants' },
+        { label: restaurant?.name || '' }
+    ];
+
     return (
         <Layout withTopMargin>
             <div className={styles.root}>
@@ -120,6 +127,7 @@ export default function RestaurantDetailsPage({ restaurant }: Props) {
                                 {restaurant.slogan}
                             </Text>
                         )}
+                        <Breadcrumbs items={breadcrumbList} className={styles.breadcrumbs} />
                     </div>
                     {user && (
                         <div>

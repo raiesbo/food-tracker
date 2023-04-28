@@ -16,6 +16,7 @@ import { Category } from "@prisma/client";
 import { GetServerSidePropsContext } from "next";
 import { Suspense, useEffect, useState } from "react";
 import styles from './restaurants.module.scss';
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 
 const service = homepageService(PrismaDBClient);
 
@@ -87,12 +88,18 @@ export default function RestaurantPage({
         setTimeoutId(setTimeout(getRestaurants, 500));
     }, [city, category, vegan, creditcard, name]);
 
+    const breadcrumbList = [
+        { label: "Home", url: '/' },
+        { label: "Restaurants" }
+    ];
+
     return (
         <Layout withTopMargin>
             <div className={styles.root}>
                 <Text as='h1' variant='h1' bold>
                     Restaurants
                 </Text>
+                <Breadcrumbs items={breadcrumbList} />
                 <div className={styles.filtersContainer}>
                     <TextField
                         id="restaurant-name"
