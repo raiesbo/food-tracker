@@ -2,19 +2,58 @@ import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import { Order } from ".prisma/client";
 import { useState } from "react";
-import { Collapse, Typography, IconButton, TableHead, Box, Table, TableBody } from "@mui/material";
+import { Collapse, IconButton, TableHead, Box, Table, TableBody } from "@mui/material";
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { OrderItem } from "@prisma/client";
+import Button from "@mui/material/Button";
+import { formatDate, useToast } from "@/utils";
+import { Text } from '../Text';
+import styles from './OrdersTableRow.module.scss';
+import { ToastAction } from "@/components/ToastContext";
 
 type Props = {
-	order: Partial<Order> & {items: Array<OrderItem>}
+	order: Order & {
+		items: Array<OrderItem & { dish: any }>
+	},
+	onUpdateOrder: (id: Order['id']) => void
 }
 
-export default function OrderTableRow({ order }: Props) {
+export default function OrderTableRow({ order, onUpdateOrder }: Props) {
+	const { dispatch } = useToast();
+	const [isLoading, setIsLoading] = useState(false);
 	const [open, setOpen] = useState(false);
 
-	console.log({ order });
+	const totalPrice = order.items.reduce((acc, item) => {
+		return acc + item.units * item.dish.price;
+	}, 0);
+
+	const onAcceptOrder = () => {
+		setIsLoading(true);
+		fetch(`/api/orders/${order.id}`, {
+			method: 'PUT',
+			body: JSON.stringify({ isAccepted: true })
+		}).then(response => response.json())
+			.then(({ order }) => {
+				if (order.id) {
+					dispatch({
+						type: ToastAction.UPDATE_TOAST, payload: {
+							message: 'Order successfully updated',
+							severity: 'success'
+						}
+					});
+					onUpdateOrder(order.id);
+				} else {
+					dispatch({
+						type: ToastAction.UPDATE_TOAST, payload: {
+							message: 'Server Error. Unable to accept the order',
+							severity: 'error'
+						}
+					});
+				}
+			})
+			.finally(() => setIsLoading(false));
+	};
 
 	return (
 		<>
@@ -25,43 +64,84 @@ export default function OrderTableRow({ order }: Props) {
 						size="small"
 						onClick={() => setOpen(!open)}
 					>
-						{open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+						{open ? <KeyboardArrowUpIcon/> : <KeyboardArrowDownIcon/>}
 					</IconButton>
 				</TableCell>
 				<TableCell component="th" scope="row">
 					{order.id}
 				</TableCell>
-				{/*<TableCell align="right">{order?.createdAt?.getFullYear()}</TableCell>*/}
-				<TableCell align="right">{order?.isAccepted}</TableCell>
-				{/*<TableCell align="right">{row.carbs}</TableCell>*/}
-				{/*<TableCell align="right">{row.protein}</TableCell>*/}
+				<TableCell align="right" className={styles.date}>
+					{formatDate(order?.createdAt)}
+				</TableCell>
+				<TableCell align="right" className={styles.date}>
+					{formatDate(order?.deliveryAt || '')}
+				</TableCell>
+				<TableCell align="right">
+					{totalPrice} €
+				</TableCell>
+				<TableCell align="right">
+					{order.isAccepted ? (
+						<Text semiBold variant='h4'>
+							ACCEPED
+						</Text>
+					) : (
+						<Button
+							variant='contained'
+							color='warning'
+							disabled={isLoading}
+							onClick={onAcceptOrder}
+						>
+							Accept Order
+						</Button>
+					)}
+				</TableCell>
 			</TableRow>
 			<TableRow>
 				<TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
 					<Collapse in={open} timeout="auto" unmountOnExit>
 						<Box sx={{ margin: 1 }}>
-							<Typography variant="h6" gutterBottom component="div">
-								History
-							</Typography>
+							<Text semiBold variant='h3'>
+								Order details
+							</Text>
 							<Table size="small" aria-label="purchases">
 								<TableHead>
 									<TableRow>
-										<TableCell>Date</TableCell>
-										<TableCell>Customer</TableCell>
-										<TableCell align="right">Amount</TableCell>
-										<TableCell align="right">Total price ($)</TableCell>
+										<TableCell>
+											<Text semiBold variant='h4'>
+												Dish name
+											</Text>
+										</TableCell>
+										<TableCell>
+											<Text semiBold variant='h4'>
+												Units
+											</Text>
+										</TableCell>
+										<TableCell align="right">
+											<Text semiBold variant='h4'>
+												Price / Dish
+											</Text>
+										</TableCell>
+										<TableCell align="right">
+											<Text semiBold variant='h4'>
+												Total price (€)
+											</Text>
+										</TableCell>
 									</TableRow>
 								</TableHead>
 								<TableBody>
 									{order?.items?.map((orderItem) => (
 										<TableRow key={orderItem.id}>
 											<TableCell component="th" scope="row">
-												{orderItem.id}
+												{orderItem.dish.name}
 											</TableCell>
-											<TableCell>{orderItem.units}</TableCell>
-											<TableCell align="right">{orderItem.id}</TableCell>
+											<TableCell>
+												{orderItem.units}
+											</TableCell>
 											<TableCell align="right">
-												{/*{Math.round(historyRow.amount * row.price * 100) / 100}*/}
+												{orderItem.dish.price}
+											</TableCell>
+											<TableCell align="right">
+												{orderItem.dish.price * orderItem.units}
 											</TableCell>
 										</TableRow>
 									))}

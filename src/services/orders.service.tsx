@@ -67,6 +67,7 @@ export default function ordersService({ order, restaurant }: IDBClient['instance
 								deliveryAt: true,
 								items: {
 									select: {
+										id: true,
 										dish: { select: { id: true, name: true, price: true } },
 										units: true
 									}
