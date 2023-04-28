@@ -1,7 +1,6 @@
 import { InfoSection } from '@/components/InfoSection';
 import LayoutWithSideBar from '@/components/Layout/LayoutWithSideBar';
 import MyFoodTruckList from '@/components/MyFoodtruck/MyFoodTruckList';
-import MyFoodTruckOrders from '@/components/MyFoodtruck/MyFoodTruckOrders';
 import services from "@/services";
 import { Restaurant } from '@/types';
 import { auth0Config } from "@/utils/settings";
@@ -54,9 +53,6 @@ export default function MyRestaurants({ restaurants, userId }: Props) {
                 <div className={styles.bottonSection}>
                     <InfoSection title='Events'>
                         {'Coming soon...'}
-                    </InfoSection>
-                    <InfoSection title='Orders'>
-                        <MyFoodTruckOrders userId={userId} />
                     </InfoSection>
                 </div>
             </div>
