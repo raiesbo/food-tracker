@@ -11,6 +11,7 @@ import { Text } from '../Text';
 import styles from './SideBar.module.scss';
 import SideBarIcon from './SideBarIcon';
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 export default function SideBar() {
     const router = useRouter();
@@ -32,7 +33,7 @@ export default function SideBar() {
         >
             <div className={styles.topContainer} >
                 <Link href={paths.home}>
-                    <FastfoodIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, fill: 'black' }} />
+                    <Image src={'/images/icon.png'} alt='food tracker icon' width={89} height={30} />
                 </Link>
             </div>
             <Divider />

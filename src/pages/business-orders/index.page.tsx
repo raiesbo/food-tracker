@@ -19,7 +19,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
         return { props: { restaurants: [] } };
     }
 
-    const { result: restaurants, error } = await ordersServiceInstance
+    const { result: restaurants } = await ordersServiceInstance
         .getRestaurantsWithOrders(userId);
 
     return { props: { restaurants } };

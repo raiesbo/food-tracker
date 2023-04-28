@@ -7,7 +7,6 @@ import PrismaDBClient from "@/repositories/prismaClient";
 import { getSession } from "@auth0/nextjs-auth0";
 import { auth0Config } from "@/utils/settings";
 import RestaurantWithOrders from "@/types/RestaurantWithOrders";
-import { OrdersTable } from "@/components/Orders";
 
 const ordersServiceInstance = ordersService(PrismaDBClient.instance);
 
@@ -15,7 +14,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     const session = await getSession(context.req, context.res);
     const userId = session && session?.user[auth0Config.metadata]?.userId;
 
-    const { result: restaurants, error } = await ordersServiceInstance.getRestaurantsWithOrders(userId);
+    const { result: restaurants } = await ordersServiceInstance.getRestaurantsWithOrders(userId);
 
     return { props: { restaurants } };
 };

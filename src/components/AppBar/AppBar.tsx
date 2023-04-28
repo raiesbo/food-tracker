@@ -21,6 +21,7 @@ import { Text } from '../Text';
 import styles from './AppBar.module.scss';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 type Props = {
 	window?: () => Window,
@@ -91,7 +92,7 @@ export default function AppBar({ window, withBackground = false, withFullNavigat
 							>
 								<div className={styles.topContainer}>
 									<Link href={paths.home}>
-										<FastfoodIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, fill: 'black' }}/>
+										<Image src={'/images/icon.png'} alt='food tracker icon' width={89} height={30} />
 									</Link>
 								</div>
 								<Divider/>
