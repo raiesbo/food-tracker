@@ -2,42 +2,30 @@
 
 $imageWidth: 150px;
 
+.root {
+    overflow: hidden;
+}
+
 .cardLink {
-    display: grid;
-    grid-template-columns: $imageWidth 1fr;
-    gap: 15px;
-    padding: 15px;
+    overflow: hidden;
     text-decoration: none;
     color: black;
 }
 
 .imageContainer {
+    overflow: hidden;
     position: relative;
-    width: $imageWidth;
-    height: $imageWidth;
+    width: 100%;
+    height: 130px;
 }
 
-.bodySection {
+.cardBody {
+    padding: 10px;
+}
+
+.cardBodyHeader {
     display: flex;
-    flex-direction: column;
     justify-content: space-between;
-}
-
-.itemHeader {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-
-    @include matchSmall {
-        flex-direction: row;
-        justify-content: space-between;
-    }
-}
-
-.itemBody {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
 }
 
 .badges {
@@ -45,4 +33,19 @@ $imageWidth: 150px;
     flex-wrap: wrap;
     flex-direction: row;
     gap: 5px;
+}
+
+.cardFooter {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    height: 100%;
+}
+
+.ratingContainer {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    align-items: center;
+    height: 23px;
 }

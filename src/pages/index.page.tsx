@@ -52,9 +52,11 @@ export default function Home({ categories, locations }: Props) {
     <Layout>
       <div className={styles.searchSectionContainer}>
         <Image
-          src={bgImageUrl}
+          src={'/images/homepage-background.webp'}
           alt="Food truck background | image from Unsplash"
           style={{ objectFit: "cover", opacity: 0.9, filter: 'brightness(18%)' }}
+          blurDataURL={bgImageUrl}
+          placeholder='blur'
           priority
           fill
           className={styles.backgroundImage}
