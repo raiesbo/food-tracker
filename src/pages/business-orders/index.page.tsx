@@ -31,24 +31,31 @@ type Props = {
 }
 
 export default function BusinessOrders({ restaurants }: Props) {
+	const withOrdrs = restaurants.some(restaurant => restaurant.orders.length > 0);
 
 	return (
 		<LayoutWithSideBar>
 			<div className={styles.root}>
 				<PageHeader title={'Food Truck Orders'}></PageHeader>
-				{restaurants?.map(restaurant => {
-					return restaurant.orders.length > 0 && (
-						<div key={restaurant.id} className={styles.tableContainer}>
-							<Text bold variant='h3'>
-								{restaurant.name}
-							</Text>
-							<OrdersTable
-								key={restaurant.id}
-								fetchedOrders={restaurant.orders}
-							/>
-						</div>
-					);
-				})}
+				{withOrdrs ? (
+					restaurants?.map(restaurant => {
+						return restaurant.orders.length > 0 && (
+							<div key={restaurant.id} className={styles.tableContainer}>
+								<Text bold variant='h3'>
+									{restaurant.name}
+								</Text>
+								<OrdersTable
+									key={restaurant.id}
+									fetchedOrders={restaurant.orders}
+								/>
+							</div>
+						);
+					})
+				) : (
+					<Text>
+						No orders found
+					</Text>
+				)}
 			</div>
 		</LayoutWithSideBar>
 	);
