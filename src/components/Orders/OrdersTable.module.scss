@@ -1,7 +1,12 @@
 .root {
   overflow-x: auto;
+
+  th {
+    text-transform: uppercase;
+    width: min-content;
+  }
 }
 
 .tabsContainer {
-  padding: 0;
+  padding: 0 !important;
 }

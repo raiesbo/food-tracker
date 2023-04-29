@@ -12,3 +12,26 @@
     gap: 30px;
   }
 }
+
+.card {
+  overflow-x: auto;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  @include matchSmall {
+    padding: 20px;
+  }
+}
+
+.cardHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.date {
+  text-transform: capitalize;
+}

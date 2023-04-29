@@ -1,6 +1,7 @@
 import { IDBClient } from '@/repositories/prismaClient';
 import { NextApiRequest } from 'next';
 import { User } from "@prisma/client";
+import { orderWithItemsInclude } from "@/types/OrderWithItems";
 
 export default function ordersService({ order, restaurant }: IDBClient['instance']) {
 	return {
@@ -87,6 +88,32 @@ export default function ordersService({ order, restaurant }: IDBClient['instance
 								deliveryAt: order.deliveryAt?.toISOString()
 							}))
 						]
+					}))
+				};
+			} catch (e) {
+				const message = e as { message: string };
+				console.error(message);
+				return {
+					result: {},
+					error: {
+						status: 400,
+						message: message
+					}
+				};
+			}
+		},
+		getOrdersByUser: async (userId: User['id']) => {
+			try {
+				const orders = await order.findMany({
+					where: { userId },
+					include: orderWithItemsInclude
+				});
+				return {
+					result: orders.map(order => ({
+						...order,
+						createdAt: order.createdAt.toISOString(),
+						updatedAt: order.updatedAt.toISOString(),
+						deliveryAt: order.deliveryAt?.toISOString()
 					}))
 				};
 			} catch (e) {
