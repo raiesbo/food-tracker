@@ -13,18 +13,17 @@ import { OrderItem } from "@prisma/client";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { SyntheticEvent, useState } from "react";
-import Divider from "@mui/material/Divider";
 
 type OrderDate = Order & {
 	items: Array<OrderItem & { dish: any }>
 }
 
 type Props = {
-	restaurant: RestaurantWithOrders
+	fetchedOrders: RestaurantWithOrders['orders']
 }
 
-export default function OrderTable({ restaurant }: Props) {
-	const [orders, setOrders] = useState(restaurant.orders);
+export default function OrderTable({ fetchedOrders }: Props) {
+	const [orders, setOrders] = useState(fetchedOrders);
 	const [value, setValue] = useState(0);
 
 	const onAcceptOrder = (orderId: Order['id']) => {
@@ -49,18 +48,14 @@ export default function OrderTable({ restaurant }: Props) {
 
 	return (
 		<Card className={styles.root}>
-			<Tabs value={value} onChange={handleChange}>
-				<Tab label="Open Orders"/>
-				<Tab label="Accepted"/>
-			</Tabs>
-			<Divider/>
 			<Table aria-label="collapsible table">
 				<TableHead>
 					<TableRow>
-						<TableCell align="center" colSpan={6}>
-							<Text bold variant='h3'>
-								{restaurant.name}
-							</Text>
+						<TableCell align="center" colSpan={6} className={styles.tabsContainer}>
+							<Tabs value={value} onChange={handleChange}>
+								<Tab label="Open Orders"/>
+								<Tab label="Accepted"/>
+							</Tabs>
 						</TableCell>
 					</TableRow>
 					<TableRow>

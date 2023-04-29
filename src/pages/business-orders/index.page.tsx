@@ -8,40 +8,48 @@ import ordersService from "@/services/orders.service";
 import PrismaDBClient from "@/repositories/prismaClient";
 import RestaurantWithOrders from "@/types/RestaurantWithOrders";
 import { OrdersTable } from "@/components/Orders";
+import { Text } from '@/components/Text';
 
 const ordersServiceInstance = ordersService(PrismaDBClient.instance);
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
-    const session = await getSession(context.req, context.res);
-    const userId = session && session?.user[auth0Config.metadata]?.user_id;
+	const session = await getSession(context.req, context.res);
+	const userId = session && session?.user[auth0Config.metadata]?.user_id;
 
-    if (!userId) {
-        return { props: { restaurants: [] } };
-    }
+	if (!userId) {
+		return { props: { restaurants: [] } };
+	}
 
-    const { result: restaurants } = await ordersServiceInstance
-        .getRestaurantsWithOrders(userId);
+	const { result: restaurants } = await ordersServiceInstance
+		.getRestaurantsWithOrders(userId);
 
-    return { props: { restaurants } };
+	return { props: { restaurants } };
 };
 
 type Props = {
-    restaurants: Array<RestaurantWithOrders>
+	restaurants: Array<RestaurantWithOrders>
 }
 
 export default function BusinessOrders({ restaurants }: Props) {
 
-    return (
-        <LayoutWithSideBar>
-            <div className={styles.root}>
-                <PageHeader title={'Food Truck Orders'} ></PageHeader>
-                {restaurants?.map(restaurant => (
-                    <OrdersTable
-                        key={restaurant.id}
-                        restaurant={restaurant}
-                    />
-                ))}
-            </div>
-        </LayoutWithSideBar>
-    );
+	return (
+		<LayoutWithSideBar>
+			<div className={styles.root}>
+				<PageHeader title={'Food Truck Orders'}></PageHeader>
+				{restaurants?.map(restaurant => {
+					return restaurant.orders.length > 0 && (
+						<div key={restaurant.id} className={styles.tableContainer}>
+							<Text bold variant='h3'>
+								{restaurant.name}
+							</Text>
+							<OrdersTable
+								key={restaurant.id}
+								fetchedOrders={restaurant.orders}
+							/>
+						</div>
+					);
+				})}
+			</div>
+		</LayoutWithSideBar>
+	);
 }
