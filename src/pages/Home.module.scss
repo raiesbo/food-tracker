@@ -1,29 +1,57 @@
 @use '@/styles/theme' as *;
 
-.searchSectionContainer {
+.backgroundImageContainer {
   position: relative;
+  height: 300px;
+  z-index: -1;
 
-  * {
-    z-index: 9;
+  @include matchMedium {
+    height: 500px;
   }
 }
 
 .headerContent {
-  max-width: 840px;
-  padding: 75px 20px;
-  margin-inline: auto;
-  color: white;
+  padding:  10px 15px 15px;
+  margin-inline: 20px;
+  margin-bottom: 50px;
+  margin-top: -150px;
   display: flex;
   flex-direction: column;
   gap: 15px;
+  box-shadow: 0 0 3px rgb(175, 175, 175);
+
+  @include matchMedium {
+    max-width: 800px;
+    padding:  25px 40px 30px;
+    margin-inline: auto;
+    margin-top: -170px;
+    gap: 25px;
+  }
 }
 
 .headerTextContent {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 3px;
 }
 
-.backgroundImage {
-  z-index: 1;
+.filterContainer {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+
+  @include matchMedium {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.filterInput {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  & > input {
+    width: 100%;
+  }
 }

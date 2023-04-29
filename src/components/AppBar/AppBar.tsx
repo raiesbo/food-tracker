@@ -148,7 +148,7 @@ export default function AppBar({ window, withBackground = false, withFullNavigat
 				>
 					{user ? (
 						<Avatar
-							sx={{ width: 35, height: 35 }}
+							sx={{ width: 45, height: 45 }}
 							alt="user image"
 							src={user.picture || ''}
 						/>
@@ -172,7 +172,7 @@ export default function AppBar({ window, withBackground = false, withFullNavigat
 							<Text semiBold>
 								{`${user.name}`}
 							</Text>
-							<Text variant='small'>
+							<Text grey variant='small'>
 								{`${user.email}`}
 							</Text>
 							<Divider/>
