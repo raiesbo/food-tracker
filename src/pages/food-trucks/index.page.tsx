@@ -4,7 +4,6 @@ import { Text } from "@/components/Text";
 import PrismaDBClient from "@/repositories/prismaClient";
 import homepageService from "@/services/homepage.service";
 import { Restaurant } from "@/types";
-import Checkbox from "@mui/material/Checkbox";
 import CircularProgress from "@mui/material/CircularProgress";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -17,6 +16,9 @@ import { GetServerSidePropsContext } from "next";
 import { Suspense, useEffect, useState } from "react";
 import styles from './restaurants.module.scss';
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import Image from "next/image";
+import { Card } from "@/components/Card";
+import { Switch } from "@mui/material";
 
 const service = homepageService(PrismaDBClient);
 
@@ -45,11 +47,11 @@ type Props = {
 }
 
 export default function RestaurantPage({
-										   locations,
-										   categories,
-										   queryCity,
-										   queryCategory
-									   }: Props) {
+	locations,
+	categories,
+	queryCity,
+	queryCategory
+}: Props) {
 	const [timeoutId, setTimeoutId] = useState<ReturnType<typeof setTimeout>>();
 	const [restaurants, setRestaurants] = useState<Array<Restaurant>>([]);
 	const [isLoading, setIsLoading] = useState(false);
@@ -94,13 +96,27 @@ export default function RestaurantPage({
 	];
 
 	return (
-		<Layout withTopMargin>
-			<div className={styles.root}>
-				<Text as='h1' variant='h1' bold>
+		<Layout>
+			<div className={styles.imageContainer}>
+				<Image
+					src={'/images/background-food-list-1500px.webp'}
+					alt="Food truck background | image from Unsplash"
+					blurDataURL={'/images/homepage_background_800px.webp'}
+					placeholder='blur'
+					fill
+				/>
+			</div>
+			<header className={styles.pageHeader}>
+				<Text as='h1' variant={{ small: 'h2', medium: 'h1' }} bold>
 					Food Trucks
 				</Text>
 				<Breadcrumbs items={breadcrumbList}/>
-				<div className={styles.filtersContainer}>
+			</header>
+			<div className={styles.root}>
+				<Card className={styles.filtersContainer}>
+					<Text as='h1' variant={{ small: 'h4', medium: 'h3' }} bold>
+						Filters
+					</Text>
 					<TextField
 						id="restaurant-name"
 						label="Restaurant's name"
@@ -108,53 +124,49 @@ export default function RestaurantPage({
 						sx={{ backgroundColor: 'white' }}
 						onChange={(e) => setName(e.target.value)}
 					/>
-					<div className={styles.dropdownContainer}>
-						<FormControl>
-							<InputLabel id="demo-simple-select-label">
-								City
-							</InputLabel>
-							<Select
-								labelId="City"
-								id="location"
-								value={city}
-								label="City"
-								onChange={(e) => setCity(e.target.value)}
-								sx={{ backgroundColor: 'white' }}
-							>
-								<MenuItem value={'All'}>All</MenuItem>
-								{locations.map(city => (
-									<MenuItem key={city} value={city || ''}>
-										{city}
-									</MenuItem>
-								))}
-							</Select>
-						</FormControl>
-						<FormControl>
-							<InputLabel id="demo-simple-select-label">
-								Food Type
-							</InputLabel>
-							<Select
-								labelId="Food Type"
-								id="category"
-								value={category}
-								label="Food Type"
-								onChange={(e) => setCategory(e.target.value)}
-								sx={{ backgroundColor: 'white' }}
-							>
-								<MenuItem value={'All'}>All</MenuItem>
-								{categories.map(({ name }: Category) => (
-									<MenuItem key={name} value={name || ''}>
-										{name}
-									</MenuItem>
-								))}
-							</Select>
-						</FormControl>
-					</div>
-				</div>
-				<div className={styles.additionalFilters}>
+					<FormControl>
+						<InputLabel id="demo-simple-select-label">
+							City
+						</InputLabel>
+						<Select
+							labelId="City"
+							id="location"
+							value={city}
+							label="City"
+							onChange={(e) => setCity(e.target.value)}
+							sx={{ backgroundColor: 'white' }}
+						>
+							<MenuItem value={'All'}>All</MenuItem>
+							{locations.map(city => (
+								<MenuItem key={city} value={city || ''}>
+									{city}
+								</MenuItem>
+							))}
+						</Select>
+					</FormControl>
+					<FormControl>
+						<InputLabel id="demo-simple-select-label">
+							Food Type
+						</InputLabel>
+						<Select
+							labelId="Food Type"
+							id="category"
+							value={category}
+							label="Food Type"
+							onChange={(e) => setCategory(e.target.value)}
+							sx={{ backgroundColor: 'white' }}
+						>
+							<MenuItem value={'All'}>All</MenuItem>
+							{categories.map(({ name }: Category) => (
+								<MenuItem key={name} value={name || ''}>
+									{name}
+								</MenuItem>
+							))}
+						</Select>
+					</FormControl>
 					<FormControlLabel
 						control={
-							<Checkbox
+							<Switch
 								onChange={(e) => setVegan(e.target.checked)}
 								value={vegan}
 							/>
@@ -163,14 +175,14 @@ export default function RestaurantPage({
 					/>
 					<FormControlLabel
 						control={
-							<Checkbox
+							<Switch
 								onChange={(e) => setCreditcard(e.target.checked)}
 								value={creditcard}
 							/>
 						}
 						label="accepts Credit Card"
 					/>
-				</div>
+				</Card>
 				<div className={styles.listContainer}>
 					<Suspense fallback={<p>Loading Food Trucks</p>}>
 						{isLoading ? (

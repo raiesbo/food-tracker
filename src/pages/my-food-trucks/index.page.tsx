@@ -1,4 +1,3 @@
-import { InfoSection } from '@/components/InfoSection';
 import LayoutWithSideBar from '@/components/Layout/LayoutWithSideBar';
 import MyFoodTruckList from '@/components/MyFoodtruck/MyFoodTruckList';
 import services from "@/services";
@@ -50,11 +49,6 @@ export default function MyRestaurants({ restaurants, userId }: Props) {
             <div className={styles.root}>
                 <PageHeader title={'My Food Trucks'} ></PageHeader>
                 <MyFoodTruckList restaurants={restaurants} />
-                <div className={styles.bottonSection}>
-                    <InfoSection title='Events'>
-                        {'Coming soon...'}
-                    </InfoSection>
-                </div>
             </div>
         </LayoutWithSideBar>
     );
