@@ -1,7 +1,7 @@
 export const paths = {
     home: '/',
     aboutUs: '/about-us',
-    restaurants: '/restaurants',
+    restaurants: '/food-trucks',
     myFoodTrucks: '/my-food-trucks',
     login: '/login',
     auth0: {
@@ -24,7 +24,7 @@ export const paths = {
         NavigtionMenu: {
             visitor: [
                 { name: 'Home', url: '/' },
-                { name: 'Restaurants', url: '/restaurants' },
+                { name: 'Food Trucks', url: '/food-trucks' },
                 { name: 'Sign Up', url: '/signup' },
                 { name: 'Login', url: '/api/auth/login' }
             ],
@@ -37,7 +37,7 @@ export const paths = {
             ],
             serviceProvider: [
                 { name: 'Home', url: '/' },
-                { name: 'Restaurants', url: '/restaurants' },
+                { name: 'Food Trucks', url: '/food-trucks' },
                 { name: 'Dashboard', url: '/profile' },
                 // { name: 'My Food Trucks', url: '/my-food-trucks' },
                 { name: 'Logout', url: '/api/auth/logout' }

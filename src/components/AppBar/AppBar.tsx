@@ -1,7 +1,6 @@
 import { paths } from '@/utils/paths';
 import { auth0Config } from '@/utils/settings';
 import { useUser } from '@auth0/nextjs-auth0/client';
-import FastfoodIcon from '@mui/icons-material/Fastfood';
 import MenuIcon from '@mui/icons-material/Menu';
 import MUIAppBar from '@mui/material/AppBar';
 import Avatar from '@mui/material/Avatar';
@@ -130,7 +129,7 @@ export default function AppBar({ window, withBackground = false, withFullNavigat
 									<Link href='/api/auth/logout' className={styles.listItemLink}>
 										<ListItemButton className={styles.listItemButton}>
 											<SideBarIcon url='/api/auth/logout' size='small' />
-											<Text semiBold variant={'smallest'}>
+											<Text variant={'p'}>
 												Logout
 											</Text>
 										</ListItemButton>

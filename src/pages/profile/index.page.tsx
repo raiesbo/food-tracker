@@ -1,11 +1,9 @@
 import { InfoSection } from "@/components/InfoSection";
 import LayoutWithSideBar from "@/components/Layout/LayoutWithSideBar";
-import { ProfileReviews } from "@/components/Profile";
 import { Text } from "@/components/Text";
 import { ToastAction } from "@/components/ToastContext";
 import services from "@/services";
 import FileService from "@/services/file.service";
-import { Review } from "@/types";
 import { uploadImage, useToast } from "@/utils";
 import { auth0Config, imagesConfig } from "@/utils/settings";
 import { getSession } from "@auth0/nextjs-auth0";
@@ -15,7 +13,7 @@ import TextField from "@mui/material/TextField";
 import { User } from "@prisma/client";
 import { GetServerSidePropsContext } from "next";
 import Image from "next/image";
-import { ChangeEvent, Suspense, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import styles from './profile.module.scss';
 import { PageHeader } from "@/components/PageHeader";
 
@@ -52,11 +50,10 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
 type Props = {
     user: User,
-    reviews: Array<Review>,
     auth0User: UserProfile
 }
 
-export default function Profile({ user, auth0User, reviews }: Props) {
+export default function Profile({ user, auth0User }: Props) {
     const { dispatch } = useToast();
 
     const [isUpdate, setIsUpdate] = useState(false);
@@ -246,7 +243,7 @@ export default function Profile({ user, auth0User, reviews }: Props) {
                         </div>
                         <div>
                             <Text variant={'h4'} bold>
-                                Image URL
+                                Profile Picture URL
                             </Text>
                             <TextField
                                 value={imageUrl}
@@ -259,12 +256,6 @@ export default function Profile({ user, auth0User, reviews }: Props) {
                             />
                         </div>
                     </InfoSection>
-                    <Suspense fallback={<p>Loading Reviews</p>}>
-                        <ProfileReviews
-                            currentUserId={user.id}
-                            className={styles.revews}
-                        />
-                    </Suspense>
                 </section>
             </div>
         </LayoutWithSideBar>

@@ -1,7 +1,6 @@
 import { paths } from '@/utils/paths';
 import { auth0Config } from '@/utils/settings';
 import { useUser } from '@auth0/nextjs-auth0/client';
-import FastfoodIcon from '@mui/icons-material/Fastfood';
 import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
@@ -71,7 +70,7 @@ export default function SideBar() {
                 <Link href='/api/auth/logout' className={styles.listItemLink}>
                     <ListItemButton className={styles.listItemButton}>
                         <SideBarIcon url='/api/auth/logout' size='small' />
-                        <Text semiBold variant={'smallest'}>
+                        <Text variant={'p'}>
                             Logout
                         </Text>
                     </ListItemButton>

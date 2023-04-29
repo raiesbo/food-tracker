@@ -37,6 +37,40 @@ export default function reviewsService(instance: IDBClient['instance']) {
 					}
 				};
 			}
+		},
+		getReviewsByUserId: async (userId: User['id']) => {
+			try {
+				const reviews = await instance.review.findMany({
+					where: { userId },
+					include: {
+						restaurant: {
+							select: {
+								name: true,
+								id: true
+							}
+						}
+					}
+				});
+
+				return {
+					result: reviews.map(rev => ({
+						...rev,
+						createdAt: rev.createdAt.toISOString(),
+						updatedAt: rev.updatedAt.toISOString()
+					}))
+				};
+
+			} catch (e) {
+				const message = e as { message: string };
+				console.error(message);
+				return {
+					result: {},
+					error: {
+						status: 400,
+						message: message
+					}
+				};
+			}
 		}
 	};
 }
