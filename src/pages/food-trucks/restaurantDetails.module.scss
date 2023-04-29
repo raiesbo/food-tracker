@@ -2,14 +2,27 @@
 
 .root {
     max-width: 1040px;
-    padding: 20px;
+    padding: 0 20px 20px;
     margin-inline: auto;
     display: flex;
     flex-direction: column;
     gap: 10px;
 
     @include matchSmall {
-        gap: 30px;
+        gap: 20px;
+    }
+}
+
+.imageContainer {
+    position: relative;
+    height: 150px;
+
+    img {
+        object-fit: cover;
+    }
+
+    @include matchSmall {
+        height: 200px;
     }
 }
 
@@ -17,10 +30,9 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-}
-
-.breadcrumbs {
-    margin-top: 10px;
+    padding: 15px 25px;
+    margin-top: -60px;
+    z-index: 9;
 }
 
 .container {

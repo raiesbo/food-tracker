@@ -97,7 +97,7 @@ export default function RestaurantPage({
 		<Layout withTopMargin>
 			<div className={styles.root}>
 				<Text as='h1' variant='h1' bold>
-					Restaurants
+					Food Trucks
 				</Text>
 				<Breadcrumbs items={breadcrumbList}/>
 				<div className={styles.filtersContainer}>

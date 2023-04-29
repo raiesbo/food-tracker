@@ -41,8 +41,16 @@
 
 .listContainer {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
     gap: 20px;
+
+    @include matchSmall {
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    }
+
+    @include matchLarge {
+        grid-template-columns: repeat(auto-fit, 490px);
+    }
 }
 
 .spinnerContainer {
