@@ -41,6 +41,8 @@ CREATE TABLE "Restaurant" (
     "description" TEXT,
     "imageUrl" TEXT,
     "isCashOnly" BOOLEAN NOT NULL DEFAULT false,
+    "isVisible" BOOLEAN NOT NULL DEFAULT true,
+    "offer" TEXT,
     "userId" INTEGER,
 
     CONSTRAINT "Restaurant_pkey" PRIMARY KEY ("id")
@@ -131,6 +133,7 @@ CREATE TABLE "Order" (
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "deliveryAt" TIMESTAMP(3),
     "isAccepted" BOOLEAN NOT NULL DEFAULT false,
+    "isCancelled" BOOLEAN NOT NULL DEFAULT false,
     "userId" INTEGER,
     "restaurantId" INTEGER,
 
