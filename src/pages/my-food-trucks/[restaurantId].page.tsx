@@ -2,7 +2,6 @@ import { Card } from "@/components/Card";
 import { InfoSection } from "@/components/InfoSection";
 import LayoutWithSideBar from "@/components/Layout/LayoutWithSideBar";
 import { MyFoodTruckLocations, MyFoodTruckMenu, MyFoodTruckRestaurant } from "@/components/MyFoodTruckDetails";
-import MyFoodTruckReviews from "@/components/MyFoodTruckDetails/MyFoodTruckReviews";
 import { ToastAction } from "@/components/ToastContext";
 import services from "@/services";
 import FileService from "@/services/file.service";
@@ -183,10 +182,6 @@ export default function MyNewRestaurant({ restaurant, categories }: Props) {
 								))}
 							</InfoSection>
 						</Card>
-						<MyFoodTruckReviews
-							reviews={restaurant.reviews}
-							currentUserId={restaurant.userId}
-						/>
 					</div>
 					<div className={cc([styles.container, styles.mainColumn])}>
 						<MyFoodTruckRestaurant
