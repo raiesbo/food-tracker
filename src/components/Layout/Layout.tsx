@@ -7,6 +7,7 @@ import { AppBar } from "../AppBar";
 import { Footer } from "../Footer";
 import { ToastAction } from "../ToastContext";
 import styles from './Layout.module.scss';
+import Head from "next/head";
 
 type Props = {
 	children: ReactNode,
@@ -22,6 +23,9 @@ export default function Layout({ children, withTopMargin = false }: Props) {
 
 	return (
 		<>
+			<Head>
+				<title>Food Tracker</title>
+			</Head>
 			<header>
 				<AppBar/>
 			</header>

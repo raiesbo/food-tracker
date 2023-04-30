@@ -10,7 +10,6 @@ import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import cc from 'classcat';
 import Link from 'next/link';
@@ -160,6 +159,7 @@ export default function AppBar({ window, withBackground = false, withFullNavigat
 					transformOrigin={{ vertical: 'top', horizontal: 'left' }}
 					open={Boolean(anchorElAv)}
 					onClose={handleCloseAvMenu}
+					transitionDuration={{ enter: 500, exit: 200 }}
 				>
 					{user && (
 						<div className={styles.avatarText}>
@@ -173,14 +173,12 @@ export default function AppBar({ window, withBackground = false, withFullNavigat
 						</div>
 					)}
 					{(paths.components.AppBar[user ? 'customer' : 'visitor']).map(({ name, url }) => (
-						<MenuItem key={name}>
-							<a href={url} className={styles.link}>
-									<SideBarIcon url={url}/>
-									<Text semiBold className={styles.menuItem} variant='smallest'>
-										{name}
-									</Text>
-							</a>
-						</MenuItem>
+						<ListItemButton key={name} onClick={() => router.push(url)} className={styles.link}>
+							<SideBarIcon url={url}/>
+							<Text semiBold className={styles.menuItem} variant='smallest'>
+								{name}
+							</Text>
+						</ListItemButton>
 					))}
 				</Menu>
 			</div>
