@@ -76,9 +76,6 @@ export default function AppBar({ window, withBackground = false, withFullNavigat
 					{withFullNavigation && (
 						<>
 							<IconButton
-								aria-label="account of current user"
-								aria-controls="menu-appbar"
-								aria-haspopup="true"
 								onClick={handleOpenNavMenu}
 								color="inherit"
 							>
@@ -91,7 +88,7 @@ export default function AppBar({ window, withBackground = false, withFullNavigat
 							>
 								<div className={styles.topContainer}>
 									<Link href={paths.home}>
-										<Image src={'/images/icon.png'} alt='food tracker icon' width={89} height={30} />
+										<Image src={'/images/icon.png'} alt='food tracker icon' width={89} height={30}/>
 									</Link>
 								</div>
 								<Divider/>
@@ -124,11 +121,11 @@ export default function AppBar({ window, withBackground = false, withFullNavigat
 										</List>
 									</>
 								)}
-								<Divider />
+								<Divider/>
 								<List>
 									<Link href='/api/auth/logout' className={styles.listItemLink}>
 										<ListItemButton className={styles.listItemButton}>
-											<SideBarIcon url='/api/auth/logout' size='small' />
+											<SideBarIcon url='/api/auth/logout' size='small'/>
 											<Text variant={'p'}>
 												Logout
 											</Text>
@@ -140,9 +137,6 @@ export default function AppBar({ window, withBackground = false, withFullNavigat
 					)}
 				</div>
 				<IconButton
-					aria-label="account of current user"
-					aria-controls="menu-appbar"
-					aria-haspopup="true"
 					onClick={handleOpenAvMenu}
 					color="inherit"
 				>
@@ -153,7 +147,7 @@ export default function AppBar({ window, withBackground = false, withFullNavigat
 							src={user.picture || ''}
 						/>
 					) : (
-						<Avatar sx={{ width: 35, height: 35 }}>
+						<Avatar sx={{ width: 45, height: 45 }}>
 							<AccountCircleIcon/>
 						</Avatar>
 					)}

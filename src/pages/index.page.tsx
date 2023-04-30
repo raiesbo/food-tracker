@@ -14,7 +14,7 @@ import styles from './Home.module.scss';
 import { Card } from "@/components/Card";
 
 const service = homepageService(PrismaDBClient);
-const bgImageUrl = 'https://images.unsplash.com/photo-1565123409695-7b5ef63a2efb?w=1000';
+// const bgImageUrl = 'https://images.unsplash.com/photo-1565123409695-7b5ef63a2efb?w=1000';
 
 export async function getServerSideProps() {
 	const { result, error } = await service.getLocationsAndCategories();

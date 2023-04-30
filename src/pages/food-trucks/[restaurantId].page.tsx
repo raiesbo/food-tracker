@@ -22,7 +22,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import cc from 'classcat';
 import { Dayjs } from "dayjs";
 import { GetServerSidePropsContext } from "next";
-import { Suspense, useState } from "react";
+import { useState } from "react";
 import { Card } from '../../components/Card';
 import { Text } from '../../components/Text';
 import styles from './restaurantDetails.module.scss';

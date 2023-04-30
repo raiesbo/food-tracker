@@ -1,10 +1,13 @@
 .root {
     border-radius: 10px;
-    //box-shadow: 0 0 10px rgb(230, 230, 230);
     box-shadow: 0 0 3px rgb(175, 175, 175);
     transition: box-shadow 150ms ease;
     background-color: white;
     overflow: hidden;
+
+    &_withHalo {
+        box-shadow: 0 0 10px rgb(230, 230, 230);
+    }
 }
 
 .withHover {

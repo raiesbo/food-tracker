@@ -9,15 +9,15 @@ const theme = createTheme();
 
 export default function App({ Component, pageProps }: AppProps) {
 
-  return (
-    <ThemeProvider theme={theme}>
-      <UserProvider>
-        <OrderContext>
-          <ToastContext>
-            <Component {...pageProps} />
-          </ToastContext>
-        </OrderContext>
-      </UserProvider>
-    </ThemeProvider >
-  );
+	return (
+		<ThemeProvider theme={theme}>
+			<UserProvider>
+				<OrderContext>
+					<ToastContext>
+						<Component {...pageProps} />
+					</ToastContext>
+				</OrderContext>
+			</UserProvider>
+		</ThemeProvider>
+	);
 }
