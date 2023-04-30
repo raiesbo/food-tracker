@@ -174,12 +174,12 @@ export default function AppBar({ window, withBackground = false, withFullNavigat
 					)}
 					{(paths.components.AppBar[user ? 'customer' : 'visitor']).map(({ name, url }) => (
 						<MenuItem key={name}>
-							<Link href={url} className={styles.link}>
-								<SideBarIcon url={url}/>
-								<Text semiBold className={styles.menuItem} variant='smallest'>
-									{name}
-								</Text>
-							</Link>
+							<a href={url} className={styles.link}>
+									<SideBarIcon url={url}/>
+									<Text semiBold className={styles.menuItem} variant='smallest'>
+										{name}
+									</Text>
+							</a>
 						</MenuItem>
 					))}
 				</Menu>
