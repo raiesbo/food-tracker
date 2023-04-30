@@ -8,6 +8,7 @@ import { SideBar } from "../SideBar";
 import { ToastAction } from "../ToastContext";
 import styles from './LayoutWithSideBar.module.scss';
 import cc from 'classcat';
+import Head from "next/head";
 
 type Props = {
 	children: ReactNode,
@@ -23,6 +24,9 @@ export default function LayoutWithSideBar({ children, mainClassName }: Props) {
 
 	return (
 		<>
+			<Head>
+				<title>Food Tracker</title>
+			</Head>
 			<header>
 				<AppBar withBackground withFullNavigation/>
 			</header>

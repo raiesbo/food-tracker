@@ -129,7 +129,7 @@ export default function ProfileReviewsItem({ review, title, currentUserId, onRem
 			{currentUserId && (
 				<div className={styles.iconsSection}>
 					<div>
-						<IconButton>
+						<IconButton aria-label='like review'>
 							<ThumbUpOffAltIcon fontSize="small"/>
 						</IconButton>
 						{/* TODO Implement review answer feature */}
@@ -144,12 +144,14 @@ export default function ProfileReviewsItem({ review, title, currentUserId, onRem
 									<IconButton
 										disabled={isLoading}
 										onClick={onSaveUpdate}
+										aria-label='edit review'
 									>
 										<SaveIcon color='success' fontSize="small"/>
 									</IconButton>
 									<IconButton
 										disabled={isLoading}
 										onClick={onCancelUpdate}
+										aria-label='remove review'
 									>
 										<CancelIcon color='error' fontSize="small"/>
 									</IconButton>

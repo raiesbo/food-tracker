@@ -62,18 +62,13 @@
 }
 
 .listItemLink {
-    text-decoration: none;
-    color: inherit;
-}
-
-.listItemButton {
     display: grid;
     grid-template-columns: min-content 1fr;
+    align-items: center;
     gap: 15px;
-
-    p {
-        padding-right: 10px;
-    }
+    text-decoration: none;
+    color: inherit;
+    width: 100%;
 }
 
 .avatarText {

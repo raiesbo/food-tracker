@@ -1,4 +1,4 @@
-import { IDBClient } from '../repositories/prismaClient';
+import { IDBClient } from '@/repositories/prismaClient';
 
 export default function homepageService({ instance }: IDBClient) {
     return {

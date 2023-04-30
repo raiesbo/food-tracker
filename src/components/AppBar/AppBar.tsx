@@ -87,20 +87,26 @@ export default function AppBar({ window, withBackground = false, withFullNavigat
 							>
 								<div className={styles.topContainer}>
 									<Link href={paths.home}>
-										<Image src={'/images/icon.png'} alt='food tracker icon' width={89} height={30}/>
+										<Image
+											src={'/images/icon.png'}
+											alt='food tracker icon'
+											width={89}
+											height={30}
+											priority
+										/>
 									</Link>
 								</div>
 								<Divider/>
 								<List>
 									{paths.components.Dashboard.basic?.map(item => (
-										<Link href={item.url} key={item.name} className={styles.listItemLink}>
-											<ListItemButton className={styles.listItemButton}>
+										<ListItemButton key={item.name} component='li'>
+											<Link href={item.url} className={styles.listItemLink}>
 												<SideBarIcon url={item.url} size='small'/>
-												<Text bold={router.pathname === item.url} variant={'p'}>
+												<Text bold={router.pathname === item.url} as='span' variant={'p'}>
 													{item.name}
 												</Text>
-											</ListItemButton>
-										</Link>
+											</Link>
+										</ListItemButton>
 									))}
 								</List>
 								{isSP && (
@@ -108,28 +114,28 @@ export default function AppBar({ window, withBackground = false, withFullNavigat
 										<Divider/>
 										<List>
 											{paths.components.Dashboard.business?.map(item => (
-												<Link href={item.url} key={item.name} className={styles.listItemLink}>
-													<ListItemButton className={styles.listItemButton}>
+												<ListItemButton key={item.name} component='li'>
+													<Link href={item.url} className={styles.listItemLink}>
 														<SideBarIcon url={item.url} size='small'/>
-														<Text bold={router.pathname === item.url} variant={'p'}>
+														<Text bold={router.pathname === item.url} as='span' variant={'p'}>
 															{item.name}
 														</Text>
-													</ListItemButton>
-												</Link>
+													</Link>
+												</ListItemButton>
 											))}
 										</List>
 									</>
 								)}
 								<Divider/>
 								<List>
-									<Link href='/api/auth/logout' className={styles.listItemLink}>
-										<ListItemButton className={styles.listItemButton}>
+									<ListItemButton component='li' >
+										<Link href='/api/auth/logout' className={styles.listItemLink}>
 											<SideBarIcon url='/api/auth/logout' size='small'/>
-											<Text variant={'p'}>
+											<Text variant={'p'} as='span'>
 												Logout
 											</Text>
-										</ListItemButton>
-									</Link>
+										</Link>
+									</ListItemButton>
 								</List>
 							</Drawer>
 						</>
@@ -159,10 +165,9 @@ export default function AppBar({ window, withBackground = false, withFullNavigat
 					transformOrigin={{ vertical: 'top', horizontal: 'left' }}
 					open={Boolean(anchorElAv)}
 					onClose={handleCloseAvMenu}
-					transitionDuration={{ enter: 500, exit: 200 }}
 				>
 					{user && (
-						<div className={styles.avatarText}>
+						<li className={styles.avatarText}>
 							<Text semiBold>
 								{`${user.name}`}
 							</Text>
@@ -170,10 +175,11 @@ export default function AppBar({ window, withBackground = false, withFullNavigat
 								{`${user.email}`}
 							</Text>
 							<Divider/>
-						</div>
+						</li>
 					)}
 					{(paths.components.AppBar[user ? 'customer' : 'visitor']).map(({ name, url }) => (
-						<ListItemButton key={name} onClick={() => router.push(url)} className={styles.link}>
+						<ListItemButton component={'li'} key={name} onClick={() => router.push(url)}
+										className={styles.link}>
 							<SideBarIcon url={url}/>
 							<Text semiBold className={styles.menuItem} variant='smallest'>
 								{name}
