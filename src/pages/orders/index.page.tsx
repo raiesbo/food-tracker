@@ -107,9 +107,7 @@ export default function Orders({ orders }: Props) {
 													</TableRow>
 												);
 											})}
-											<TableRow
-												sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-											>
+											<TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
 												<TableCell component="th" scope="row" sx={{ padding: 1 }}>
 												</TableCell>
 												<TableCell align="center" sx={{ padding: 1 }}></TableCell>

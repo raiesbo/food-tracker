@@ -93,6 +93,7 @@ export default function AppBar({ window, withBackground = false, withFullNavigat
 											width={89}
 											height={30}
 											priority
+											loading='eager'
 										/>
 									</Link>
 								</div>

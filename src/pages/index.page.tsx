@@ -57,6 +57,7 @@ export default function Home({ categories, locations }: Props) {
 					placeholder='blur'
 					priority
 					fill
+					loading='eager'
 				/>
 			</div>
 			<Card className={styles.headerContent}>

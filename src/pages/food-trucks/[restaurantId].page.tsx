@@ -127,13 +127,14 @@ export default function RestaurantDetailsPage({ restaurant }: Props) {
 						blurDataURL={imagesConfig.default}
 						placeholder='blur'
 						priority
+						loading='eager'
 					/>
 				)}
 			</div>
 			<div className={styles.root}>
 				<Card className={styles.shopHeader}>
 					<div>
-						<Text as='h1' bold>
+						<Text as='h1' variant={{ small: 'h3', medium: 'h2' }} bold>
 							{restaurant.name}
 						</Text>
 						{restaurant.slogan && (
@@ -187,7 +188,6 @@ export default function RestaurantDetailsPage({ restaurant }: Props) {
 						<Text>
 							{restaurant.description}
 						</Text>
-
 						<Text as='h3'>
 							Menu
 						</Text>

@@ -2,8 +2,18 @@
 
 .root {
     max-width: 1040px;
-    padding: 20px;
+    padding: 0 20px 20px;
     margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    @include matchSmall {
+        gap: 20px;
+    }
+}
+
+.bodyContainer {
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -16,12 +26,11 @@
     }
 }
 
-.pageHeader {
-    max-width: 1040px;
-    width: 100%;
-    margin: auto;
-    padding-inline: 20px;
-    padding-top: 20px;
+.headerCard {
+    padding: 15px 25px;
+    margin-top: -45px;
+    z-index: 9;
+    box-shadow: 0 0 7px rgb(190, 190, 190);
 }
 
 .imageContainer {
@@ -30,9 +39,10 @@
 
     img {
         object-fit: cover;
+        z-index: -1;
     }
 
-    @include matchMedium {
+    @include matchSmall {
         height: 200px;
     }
 }
