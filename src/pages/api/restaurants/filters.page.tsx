@@ -1,22 +1,23 @@
-import services from '@/services';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import PrismaDBClient from "@/repositories/prismaClient";
+import restaurantsService from "@/services/restaurant.serviceClient";
 
-const { restaurantService } = services;
+const restaurantServiceInstance = restaurantsService(PrismaDBClient.instance);
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 
-    if (req.method === 'GET') {
-        const {
-            result: restaurants,
-            error
-        } = await restaurantService.getAllRestaurantByFilter(req);
+	if (req.method === 'GET') {
+		const {
+			result: restaurants,
+			error
+		} = await restaurantServiceInstance.getAllRestaurantByFilter(req);
 
-        if (error) {
-            return res.status(error.status).json({ errorMessage: error.message });
-        }
+		if (error) {
+			return res.status(error.status).json({ errorMessage: error.message });
+		}
 
-        return res.status(201).json({ restaurants });
-    }
+		return res.status(201).json({ restaurants });
+	}
 
-    res.status(405).end();
+	res.status(405).end();
 }
