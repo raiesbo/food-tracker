@@ -4,13 +4,11 @@ export default function homepageService({ instance }: IDBClient) {
     return {
         getLocationsAndCategories: async () => {
             try {
-                console.time('getLocationAndCategoriesService');
                 const [categories, locations] = await instance.$transaction([
                     instance.category.findMany({ select: { id: true, name: true } }),
                     instance.location.findMany({ select: { id: true, city: true } })
                 ]);
 
-                console.timeEnd('getLocationAndCategoriesService');
                 if (locations && categories) return {
                     result: {
                         categories,

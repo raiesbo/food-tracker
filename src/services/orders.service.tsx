@@ -77,7 +77,6 @@ export default function ordersService({ order, restaurant }: IDBClient['instance
 						}
 					}
 				});
-				restaurants.forEach(restaurant => console.log(restaurant.orders));
 				return {
 					result: restaurants?.map(restaurant => ({
 						...restaurant,

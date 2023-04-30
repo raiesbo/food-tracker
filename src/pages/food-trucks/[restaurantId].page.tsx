@@ -88,7 +88,6 @@ export default function RestaurantDetailsPage({ restaurant }: Props) {
 				items: orderState[restaurant.id]
 			})
 		}).then(response => {
-			console.log({ response });
 			if (response.ok) {
 				dispatch({
 					type: ToastAction.UPDATE_TOAST, payload: {
