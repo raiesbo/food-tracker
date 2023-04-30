@@ -26,6 +26,9 @@ export default function LayoutWithSideBar({ children, mainClassName }: Props) {
 		<>
 			<Head>
 				<title>Food Tracker</title>
+				<meta name="author" content="Raimon Espasa Bou"/>
+				<meta name="description" content="Your free world wide Street Food finder tool"/>
+				<meta name="keywords" content="Food Truck, food, city, UOC, TFM"/>
 			</Head>
 			<header>
 				<AppBar withBackground withFullNavigation/>
