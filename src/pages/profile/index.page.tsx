@@ -21,15 +21,7 @@ const { userService } = services;
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
     const session = await getSession(context.req, context.res);
-
-    if (!session?.user) return {
-        redirect: {
-            permanent: true,
-            destination: '/'
-        }
-    };
-
-    const userId = session.user[auth0Config.metadata]?.user_id;
+    const userId = session && session.user[auth0Config.metadata]?.user_id;
 
     const {
         result: user,
@@ -44,7 +36,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     };
 
     return {
-        props: { user, auth0User: session.user }
+        props: { user, auth0User: session?.user }
     };
 }
 

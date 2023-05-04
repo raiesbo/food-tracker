@@ -28,15 +28,7 @@ import { ToastAction } from "@/components/ToastContext";
 const categoriesServiceInstance = categoriesService(PrismaDBClient.instance);
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
 	const session = await getSession(context.req, context.res);
-
-	if (!session?.user) return {
-		redirect: {
-			permanent: true,
-			destination: '/'
-		}
-	};
-
-	const userId = session.user[auth0Config.metadata]?.user_id;
+	const userId = session && session.user[auth0Config.metadata]?.user_id;
 
 	const {
 		result: categories,
@@ -51,7 +43,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
 	};
 
 	return {
-		props: { categories, auth0User: session.user, userId }
+		props: { categories, auth0User: session?.user, userId }
 	};
 };
 

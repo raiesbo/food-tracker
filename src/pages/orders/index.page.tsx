@@ -21,7 +21,7 @@ const ordersServiceInstance = ordersService(PrismaDBClient.instance);
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
 	const session = await getSession(context.req, context.res);
-	const userId = session && session?.user[auth0Config.metadata]?.userId;
+	const userId = session && session.user[auth0Config.metadata]?.user_id;
 
 	const { result: orders } = await ordersServiceInstance.getOrdersByUser(userId);
 
