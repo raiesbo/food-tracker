@@ -13,69 +13,74 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 
 export default function SideBar() {
-    const router = useRouter();
-    const { user } = useUser();
+	const router = useRouter();
+	const { user } = useUser();
 
-    const userRole = user && user[auth0Config.metadata] as {
-        role: 'SP' | 'CUSTOMER',
-        user_id: string
-    };
+	const userRole = user && user[auth0Config.metadata] as {
+		role: 'SP' | 'CUSTOMER',
+		user_id: string
+	};
 
-    const isSP = userRole?.role === 'SP';
+	const isSP = userRole?.role === 'SP';
 
-    return (
-        <Drawer
-            className={styles.root}
-            variant="permanent"
-            anchor="left"
-            sx={{ display: { xs: 'none', md: 'flex' } }}
-        >
-            <div className={styles.topContainer} >
-                <Link href={paths.home}>
-                    <Image src={'/images/icon.png'} alt='food tracker icon' width={89} height={30} />
-                </Link>
-            </div>
-            <Divider />
-            <List>
-                {paths.components.Dashboard.basic?.map(item => (
-                    <Link href={item.url} key={item.name} className={styles.listItemLink}>
-                        <ListItemButton className={styles.listItemButton}>
-                            <SideBarIcon url={item.url} size='small' />
-                            <Text bold={router.pathname === item.url} variant={'p'}>
-                                {item.name}
-                            </Text>
-                        </ListItemButton>
-                    </Link>
-                ))}
-            </List>
-            {isSP && (
-                <>
-                    <Divider />
-                    <List>
-                        {paths.components.Dashboard.business?.map(item => (
-                            <Link href={item.url} key={item.name} className={styles.listItemLink}>
-                                <ListItemButton className={styles.listItemButton}>
-                                    <SideBarIcon url={item.url} size='small' />
-                                    <Text bold={router.pathname === item.url} variant={'p'}>
-                                        {item.name}
-                                    </Text>
-                                </ListItemButton>
-                            </Link>
-                        ))}
-                    </List>
-                </>
-            )}
-            <Divider />
-            <List>
-                <Link href='/api/auth/logout' className={styles.listItemLink}>
-                    <ListItemButton className={styles.listItemButton}>
-                        <SideBarIcon url='/api/auth/logout' size='small' />
-                        <Text variant={'p'}>
-                            Logout
-                        </Text>
-                    </ListItemButton>
-                </Link>
-            </List>
-        </Drawer >
-    );
+	return (
+		<Drawer
+			className={styles.root}
+			variant="permanent"
+			anchor="left"
+			sx={{ display: { xs: 'none', md: 'flex' } }}
+		>
+			<div className={styles.topContainer}>
+				<Link href={paths.home}>
+					<Image
+						src={'/images/icon.svg'}
+						alt='food tracker icon'
+						width={140}
+						height={38}
+					/>
+				</Link>
+			</div>
+			<Divider/>
+			<List>
+				{paths.components.Dashboard.basic?.map(item => (
+					<Link href={item.url} key={item.name} className={styles.listItemLink}>
+						<ListItemButton className={styles.listItemButton}>
+							<SideBarIcon url={item.url} size='small'/>
+							<Text bold={router.pathname === item.url} variant={'p'}>
+								{item.name}
+							</Text>
+						</ListItemButton>
+					</Link>
+				))}
+			</List>
+			{isSP && (
+				<>
+					<Divider/>
+					<List>
+						{paths.components.Dashboard.business?.map(item => (
+							<Link href={item.url} key={item.name} className={styles.listItemLink}>
+								<ListItemButton className={styles.listItemButton}>
+									<SideBarIcon url={item.url} size='small'/>
+									<Text bold={router.pathname === item.url} variant={'p'}>
+										{item.name}
+									</Text>
+								</ListItemButton>
+							</Link>
+						))}
+					</List>
+				</>
+			)}
+			<Divider/>
+			<List>
+				<Link href='/api/auth/logout' className={styles.listItemLink}>
+					<ListItemButton className={styles.listItemButton}>
+						<SideBarIcon url='/api/auth/logout' size='small'/>
+						<Text variant={'p'}>
+							Logout
+						</Text>
+					</ListItemButton>
+				</Link>
+			</List>
+		</Drawer>
+	);
 }

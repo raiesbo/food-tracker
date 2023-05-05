@@ -88,10 +88,10 @@ export default function AppBar({ window, withBackground = false, withFullNavigat
 								<div className={styles.topContainer}>
 									<Link href={paths.home}>
 										<Image
-											src={'/images/icon.png'}
+											src={'/images/icon.svg'}
 											alt='food tracker icon'
-											width={89}
-											height={30}
+											width={140}
+											height={38}
 											priority
 											loading='eager'
 										/>
