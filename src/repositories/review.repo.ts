@@ -1,6 +1,6 @@
 import { Review } from '.prisma/client';
 import { IDBClient } from './prismaClient';
-import { reviewRelations } from "@/types/Review";
+import { reviewRelations } from "../types/Review";
 
 export default function prismaReviewClient({ instance }: IDBClient) {
     return {

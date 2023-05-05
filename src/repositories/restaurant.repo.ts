@@ -1,7 +1,7 @@
 import { Restaurant } from "@/types";
 import { Prisma } from "@prisma/client";
 import { IDBClient } from './prismaClient';
-import { restaurantRelations } from "@/types/RestaurantWithRelations";
+import { restaurantRelations } from "../types/RestaurantWithRelations";
 
 export default function prismaRestaurantClient({ instance }: IDBClient) {
     return {

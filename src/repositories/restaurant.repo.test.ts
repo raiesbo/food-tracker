@@ -36,7 +36,12 @@ describe('prisma Restaurants client', () => {
 				user: true,
 				reviews: {
 					include: {
-						user: true
+						user: true,
+						likes: {
+							select: {
+								userId: true
+							}
+						}
 					}
 				}
 			}
@@ -64,7 +69,12 @@ describe('prisma Restaurants client', () => {
 				user: true,
 				reviews: {
 					include: {
-						user: true
+						user: true,
+						likes: {
+							select: {
+								userId: true
+							}
+						}
 					}
 				}
 			}
