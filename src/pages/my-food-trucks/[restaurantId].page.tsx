@@ -190,7 +190,7 @@ export default function MyNewRestaurant({ restaurant, categories }: Props) {
 						/>
 						<MyFoodTruckMenu
 							menu={restaurant.menu}
-							restaurantid={restaurant.id}
+							restaurantId={restaurant.id}
 						/>
 					</div>
 				</section>

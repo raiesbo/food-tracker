@@ -8,7 +8,6 @@ import RestaurantDetailsOrder from "@/components/RestaurantDetails/RestaurantDet
 import RestaurantDetailsReview from "@/components/RestaurantDetails/RestaurantDetailsReview";
 import RestaurantListOrderConfirmation from "@/components/RestaurantList/RestaurantListOrderConfirmation";
 import { ToastAction } from "@/components/ToastContext";
-import services from "@/services";
 import { Dish, Restaurant } from "@/types";
 import { calcRating, findMainLocation, useToast } from "@/utils";
 import userOrder from "@/utils/hooks/useOrder";
