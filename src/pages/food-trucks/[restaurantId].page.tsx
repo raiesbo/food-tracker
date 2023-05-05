@@ -28,8 +28,10 @@ import { Text } from '../../components/Text';
 import styles from './restaurantDetails.module.scss';
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import Image from "next/image";
+import restaurantsService from "@/services/restaurant.serviceClient";
+import PrismaDBClient from "@/repositories/prismaClient";
 
-const { restaurantService } = services;
+const restaurantServiceInstance = restaurantsService(PrismaDBClient.instance);
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
 	const { restaurantId } = context.params as { restaurantId: string };
@@ -37,7 +39,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 	const {
 		result: restaurant,
 		error
-	} = await restaurantService.getRestaurant({ query: { restaurantId: Number(restaurantId) } });
+	} = await restaurantServiceInstance.getRestaurant({ query: { restaurantId: Number(restaurantId) } });
 
 	if (error) return {
 		props: { restaurants: [] }

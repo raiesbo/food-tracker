@@ -7,17 +7,17 @@ import styles from './MyFoodTruckMenu.module.scss';
 
 type Props = {
     menu: Array<Dish>,
-    restaurantid: Restaurant['id']
+    restaurantId: Restaurant['id']
 }
 
-export default function MyFoodTruckMenu({ menu, restaurantid }: Props) {
+export default function MyFoodTruckMenu({ menu, restaurantId }: Props) {
     const [ restaurantMenu, setRestaurantMenu ] = useState(menu);
     const [ isLoading, setIsLoading ] = useState(false);
 
     const onCreateDish = () => {
         setIsLoading(true);
 
-        fetch(`/api/restaurants/${restaurantid}/dishes`, {
+        fetch(`/api/restaurants/${restaurantId}/dishes`, {
             method: 'POST'
         }).then(response => {
             if (response.ok) {

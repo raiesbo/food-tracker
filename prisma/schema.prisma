@@ -130,9 +130,8 @@ model Category {
 
 model Like {
   id       Int     @id @default(autoincrement())
-  isLiked  Boolean @default(true)
   user     User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId   Int?
+  userId   Int
   review   Review? @relation(fields: [reviewId], references: [id])
   reviewId Int?
 }

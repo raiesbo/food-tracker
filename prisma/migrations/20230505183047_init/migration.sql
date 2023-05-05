@@ -104,8 +104,7 @@ CREATE TABLE "Category" (
 -- CreateTable
 CREATE TABLE "Like" (
     "id" SERIAL NOT NULL,
-    "isLiked" BOOLEAN NOT NULL DEFAULT true,
-    "userId" INTEGER,
+    "userId" INTEGER NOT NULL,
     "reviewId" INTEGER,
 
     CONSTRAINT "Like_pkey" PRIMARY KEY ("id")

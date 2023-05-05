@@ -13,6 +13,7 @@ import { RatingStars, RatingStarsEdit } from "../RatingStars";
 import { Text } from "../Text";
 import { ToastAction } from "../ToastContext";
 import styles from './ReviewItem.module.scss';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 
 type Props = {
 	review: Review,
@@ -26,6 +27,7 @@ export default function ProfileReviewsItem({ review, title, currentUserId, onRem
 
 	const [rating, setRating] = useState(review.rating || 0);
 	const [comment, setComment] = useState(review.comment || '');
+	const [isLiked, setIsLiked] = useState(review.likes.some(({ userId }) => userId === currentUserId));
 
 	const [isLoading, setIsLoading] = useState(false);
 	const [isEdit, setIsEdit] = useState(false);
@@ -94,6 +96,15 @@ export default function ProfileReviewsItem({ review, title, currentUserId, onRem
 		});
 	};
 
+	const onLikeComment = () => {
+		fetch(`/api/users/${currentUserId}/reviews/${review.id}/${isLiked ? 'dislike' : 'like'}`, {
+			method: 'POST'
+		}).then(response => {
+			console.log(isLiked ? 'dislike' : 'like', response);
+			if (response.status === 204) setIsLiked(!isLiked);
+		});
+	};
+
 	return (
 		<Card key={review.id} className={styles.root}>
 			<div className={styles.commentHeader}>
@@ -129,8 +140,12 @@ export default function ProfileReviewsItem({ review, title, currentUserId, onRem
 			{currentUserId && (
 				<div className={styles.iconsSection}>
 					<div>
-						<IconButton aria-label='like review'>
-							<ThumbUpOffAltIcon fontSize="small"/>
+						<IconButton onClick={onLikeComment}>
+							{isLiked ? (
+								<ThumbUpIcon fontSize="small"/>
+							) : (
+								<ThumbUpOffAltIcon fontSize="small"/>
+							)}
 						</IconButton>
 						{/* TODO Implement review answer feature */}
 						{/* <IconButton>

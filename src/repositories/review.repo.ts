@@ -1,15 +1,6 @@
 import { Review } from '.prisma/client';
-import { Prisma } from "@prisma/client";
 import { IDBClient } from './prismaClient';
-
-export const reviewRelations = Prisma.validator<Prisma.ReviewInclude>()({
-    user: true,
-    restaurant: {
-        select: {
-            name: true
-        }
-    }
-});
+import { reviewRelations } from "@/types/Review";
 
 export default function prismaReviewClient({ instance }: IDBClient) {
     return {

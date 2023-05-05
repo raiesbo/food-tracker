@@ -1,24 +1,7 @@
 import { Restaurant } from "@/types";
 import { Prisma } from "@prisma/client";
 import { IDBClient } from './prismaClient';
-
-export const restaurantRelations = Prisma.validator<Prisma.RestaurantInclude>()({
-    locations: true,
-    menu: true,
-    schedules: true,
-    categories: {
-        select: {
-            id: true,
-            name: true
-        }
-    },
-    user: true,
-    reviews: {
-        include: {
-            user: true
-        }
-    }
-});
+import { restaurantRelations } from "@/types/RestaurantWithRelations";
 
 export default function prismaRestaurantClient({ instance }: IDBClient) {
     return {

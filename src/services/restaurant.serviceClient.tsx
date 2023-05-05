@@ -1,7 +1,8 @@
 import { Prisma } from '@prisma/client';
 import { IDBClient } from "@/repositories/prismaClient";
 import { NextApiRequest } from "next";
-import { restaurantRelations } from "@/repositories/restaurant.repo";
+import { Restaurant } from "@/types";
+import { restaurantRelations } from "@/types/RestaurantWithRelations";
 
 export default function restaurantsService(instance: IDBClient['instance']) {
 	return {
@@ -58,6 +59,56 @@ export default function restaurantsService(instance: IDBClient['instance']) {
 					error: {
 						status: 400,
 						message: `Unable to get all restaurants with the following filters ${filters}`
+					}
+				};
+			} catch (e) {
+				const message = e as { message: string };
+				console.error(message);
+				return {
+					result: {},
+					error: {
+						status: 400,
+						message: message
+					}
+				};
+			}
+		},
+		getRestaurant: async (req: NextApiRequest | { query: { restaurantId: Restaurant['id'] } }) => {
+			const { restaurantId } = req.query as { restaurantId: string };
+
+			try {
+				const restaurant = await instance.restaurant.findUnique({
+					where: { id: Number(restaurantId) },
+					include: restaurantRelations
+				});
+
+				if (restaurant) return {
+					result: {
+						...restaurant,
+						createdAt: `${restaurant.createdAt}`,
+						updatedAt: `${restaurant.updatedAt}`,
+						reviews: [
+							...restaurant.reviews.map(review => ({
+								...review,
+								createdAt: `${review?.createdAt}`,
+								updatedAt: `${review?.updatedAt}`
+							}))
+						],
+						menu: [
+							...restaurant.menu.map(dish => ({
+								...dish,
+								createdAt: `${dish?.createdAt}`,
+								updatedAt: `${dish?.updatedAt}`
+							}))
+						]
+					}
+				};
+
+				return {
+					result: {},
+					error: {
+						status: 400,
+						message: `Unable to find restaurant with ID ${restaurantId}`
 					}
 				};
 			} catch (e) {
