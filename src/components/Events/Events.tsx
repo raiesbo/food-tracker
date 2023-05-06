@@ -30,29 +30,35 @@ export default function Events({ restaurants }: Props) {
 				</Button>
 			</PageHeader>
 			<div>
-				{restaurants?.map(restaurant => {
-					return (
-						<div key={restaurant.id}>
-							<Text bold variant='h3'>
-								{restaurant.name}
-							</Text>
-							<div className={styles.eventsContainer}>
-								{restaurant.events.map(event => {
-									return (
-										<div key={event.id}>
-											<Text>
-												{event.name}
-											</Text>
-											<Text>
-												{`${event.date}`}
-											</Text>
-										</div>
-									);
-								})}
-							</div>
+				{restaurants?.length > 0 ? restaurants?.map(restaurant => (
+					<div key={restaurant.id}>
+						<Text bold variant='h3'>
+							{restaurant.name}
+						</Text>
+						<div className={styles.eventsContainer}>
+							{restaurant.events?.length > 0 ? restaurant.events.map(event => {
+								return (
+									<div key={event.id}>
+										<Text>
+											{event.name}
+										</Text>
+										<Text>
+											{`${event.date}`}
+										</Text>
+									</div>
+								);
+							}) : (
+								<div>
+									No Events Found
+								</div>
+							)}
 						</div>
-					);
-				})}
+					</div>
+				)) : (
+					<div>
+						No Food Trucks found
+					</div>
+				)}
 			</div>
 			<EventsCreateModal
 				isOpen={isModalOpen}

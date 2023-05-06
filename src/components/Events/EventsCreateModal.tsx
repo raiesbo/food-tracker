@@ -18,7 +18,7 @@ type Props = {
 
 export default function EventsCreateModal({ isOpen, onClose, restaurants }: Props) {
 	const [name, setName] = useState('');
-	const [restaurantId, setRestaurantId] = useState(restaurants[0].id);
+	const [restaurantId, setRestaurantId] = useState(restaurants?.at(0)?.id);
 
 	const onCreateEvent = () => {
 		fetch(`/api/restaurants/${restaurantId}/events`, {

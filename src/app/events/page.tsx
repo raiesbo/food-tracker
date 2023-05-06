@@ -10,10 +10,18 @@ const restaurantsServiceInstance = restaurantsService(PrismaDBClient.instance);
 export default async function EventsPage() {
 	const user = await getUser({ redirectUrl: '/events' });
 	const userId = user[auth0Config.metadata]?.user_id;
-	const { result: restaurants } = await restaurantsServiceInstance
-		.getRestaurantsWithEventByUserId(userId) as { result: Array<RestaurantWithEvents> };
+	const {
+		result: restaurants,
+		error
+	} = await restaurantsServiceInstance.getRestaurantsWithEventByUserId(userId);
+
+	console.log({ restaurants, error });
 
 	return (
-		<Events restaurants={restaurants}/>
+		<Events
+			restaurants={
+				(error ? [] : restaurants) as unknown as Array<RestaurantWithEvents>
+			}
+		/>
 	);
 }
