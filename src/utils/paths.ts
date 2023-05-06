@@ -6,7 +6,8 @@ export const paths = {
     login: '/login',
     auth0: {
         callback: '/auth/auth/callback',
-        login: '/auth/auth/login'
+        login: '/auth/auth/login',
+        logout: '/auth/auth/logout'
     },
     components: {
         AppBar: {

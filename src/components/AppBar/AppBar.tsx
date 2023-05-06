@@ -130,7 +130,7 @@ export default function AppBar({ window, withBackground = false, withFullNavigat
 								<Divider/>
 								<List>
 									<ListItemButton component='li' >
-										<Link href='/api/auth/logout' className={styles.listItemLink}>
+										<Link href={paths.auth0.logout} className={styles.listItemLink}>
 											<SideBarIcon url='/api/auth/logout' size='small'/>
 											<Text variant={'p'} as='span'>
 												Logout

@@ -1,4 +1,3 @@
-import services from '@/services';
 import { withApiAuthRequired } from '@auth0/nextjs-auth0';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import reviewsService from "@/services/reviews.serviceClient";

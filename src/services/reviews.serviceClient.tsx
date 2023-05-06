@@ -1,4 +1,4 @@
-import { Prisma, User } from '@prisma/client';
+import { User } from '@prisma/client';
 import { IDBClient } from "@/repositories/prismaClient";
 import { restaurantWithReviewsInclude } from "@/types/RestaurantWithReviews";
 import { NextApiRequest } from "next";
@@ -48,6 +48,11 @@ export default function reviewsService(instance: IDBClient['instance']) {
 							select: {
 								name: true,
 								id: true
+							}
+						},
+						likes: {
+							select: {
+								userId: true
 							}
 						}
 					}

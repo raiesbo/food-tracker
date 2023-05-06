@@ -4,7 +4,12 @@ export const restaurantWithReviewsInclude = Prisma.validator<Prisma.RestaurantIn
     user: true,
     reviews: {
         include: {
-            user: true
+            user: true,
+            likes: {
+                select: {
+                    userId: true
+                }
+            }
         }
     }
 });
