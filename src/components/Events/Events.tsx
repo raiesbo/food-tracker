@@ -20,7 +20,7 @@ export default function Events({ restaurants }: Props) {
 	};
 
 	return (
-		<div className={styles.root}>
+		<main className={styles.root}>
 			<PageHeader title={'Events'}>
 				<Button
 					variant='contained'
@@ -59,6 +59,6 @@ export default function Events({ restaurants }: Props) {
 				onClose={onSetModal}
 				restaurants={restaurants}
 			/>
-		</div>
+		</main>
 	);
 }

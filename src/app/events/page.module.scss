@@ -1,14 +1,24 @@
 @use '../../styles/theme' as *;
 
 .root {
-  max-width: 1040px;
-  padding: 20px;
-  margin-inline: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+  margin-top: $appBarHeight;
+  min-height: calc(100vh - $appBarHeight - $footerHeight);
+  //max-width: 1040px;
 
-  @include matchSmall {
-    gap: 30px;
+  @include matchMedium {
+    margin-left: $sideBarWidth;
   }
 }
+
+//.root {
+//  max-width: 1040px;
+//  padding: 20px;
+//  margin-inline: auto;
+//  display: flex;
+//  flex-direction: column;
+//  gap: 15px;
+//
+//  @include matchSmall {
+//    gap: 30px;
+//  }
+//}

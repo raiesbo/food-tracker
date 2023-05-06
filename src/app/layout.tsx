@@ -1,7 +1,6 @@
 import '../styles/globals.css';
-import LayoutWithSideBar from "@/components/Layout/LayoutWithSideBar";
-import { UserProvider } from "@auth0/nextjs-auth0/client";
 import type { Metadata } from "next";
+import { Layout } from "@/components/RSCLayout";
 
 export const metadata: Metadata = {
 	title: 'Food Tracker',
@@ -17,11 +16,9 @@ export default function RootLayout({ children }: Props) {
 	return (
 		<html lang="en">
 		<body>
-		<UserProvider>
-			<LayoutWithSideBar>
-				{children}
-			</LayoutWithSideBar>
-		</UserProvider>
+		<Layout>
+			{children}
+		</Layout>
 		</body>
 		</html>
 	);

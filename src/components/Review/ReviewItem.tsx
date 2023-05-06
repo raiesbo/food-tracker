@@ -112,7 +112,7 @@ export default function ProfileReviewsItem({ review, title, currentUserId, onRem
 						title || review.restaurant?.name
 					)}
 				</Text>
-				<Text className={styles.date} variant={'smallest'}>
+				<Text className={styles.date} variant={'smallest'} grey>
 					{formatDate(review.createdAt)}
 				</Text>
 			</div>
