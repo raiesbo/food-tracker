@@ -1,3 +1,5 @@
+'use client';
+
 import { paths } from '@/utils/paths';
 import { auth0Config } from '@/utils/settings';
 import { useUser } from '@auth0/nextjs-auth0/client';
@@ -18,7 +20,7 @@ import SideBarIcon from '../SideBar/SideBarIcon';
 import { Text } from '../Text';
 import styles from './AppBar.module.scss';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { useRouter } from "next/router";
+import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 
 type Props = {
@@ -29,6 +31,7 @@ type Props = {
 
 export default function AppBar({ window, withBackground = false, withFullNavigation = false }: Props) {
 	const router = useRouter();
+	const pathname = usePathname();
 	const { user } = useUser();
 
 	const userRole = user && user[auth0Config.metadata] as {
@@ -103,7 +106,11 @@ export default function AppBar({ window, withBackground = false, withFullNavigat
 										<ListItemButton key={item.name} component='li'>
 											<Link href={item.url} className={styles.listItemLink}>
 												<SideBarIcon url={item.url} size='small'/>
-												<Text bold={router.pathname === item.url} as='span' variant={'p'}>
+												<Text
+													bold={pathname === item.url}
+													as='span'
+													variant={'p'}
+												>
 													{item.name}
 												</Text>
 											</Link>
@@ -118,7 +125,11 @@ export default function AppBar({ window, withBackground = false, withFullNavigat
 												<ListItemButton key={item.name} component='li'>
 													<Link href={item.url} className={styles.listItemLink}>
 														<SideBarIcon url={item.url} size='small'/>
-														<Text bold={router.pathname === item.url} as='span' variant={'p'}>
+														<Text
+															bold={pathname === item.url}
+															as='span'
+															variant={'p'}
+														>
 															{item.name}
 														</Text>
 													</Link>

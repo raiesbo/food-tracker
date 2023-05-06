@@ -1,3 +1,5 @@
+'use client';
+
 import { Text } from "@/components/Text";
 import { ReactNode } from "react";
 import styles from './PageHeader.module.scss';

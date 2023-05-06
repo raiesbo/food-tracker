@@ -1,3 +1,5 @@
+'use client';
+
 import { paths } from '@/utils/paths';
 import { auth0Config } from '@/utils/settings';
 import { useUser } from '@auth0/nextjs-auth0/client';
@@ -9,11 +11,11 @@ import Link from 'next/link';
 import { Text } from '../Text';
 import styles from './SideBar.module.scss';
 import SideBarIcon from './SideBarIcon';
-import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
 import Image from "next/image";
 
 export default function SideBar() {
-	const router = useRouter();
+	const pathname = usePathname();
 	const { user } = useUser();
 
 	const userRole = user && user[auth0Config.metadata] as {
@@ -46,7 +48,10 @@ export default function SideBar() {
 					<Link href={item.url} key={item.name} className={styles.listItemLink}>
 						<ListItemButton className={styles.listItemButton}>
 							<SideBarIcon url={item.url} size='small'/>
-							<Text bold={router.pathname === item.url} variant={'p'}>
+							<Text
+								bold={pathname === item.url}
+								variant={'p'}
+							>
 								{item.name}
 							</Text>
 						</ListItemButton>
@@ -61,7 +66,10 @@ export default function SideBar() {
 							<Link href={item.url} key={item.name} className={styles.listItemLink}>
 								<ListItemButton className={styles.listItemButton}>
 									<SideBarIcon url={item.url} size='small'/>
-									<Text bold={router.pathname === item.url} variant={'p'}>
+									<Text
+										bold={pathname === item.url}
+										variant={'p'}
+									>
 										{item.name}
 									</Text>
 								</ListItemButton>

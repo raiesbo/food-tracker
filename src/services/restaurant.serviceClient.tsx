@@ -1,8 +1,9 @@
-import { Prisma } from '@prisma/client';
+import { Prisma, User } from '@prisma/client';
 import { IDBClient } from "@/repositories/prismaClient";
 import { NextApiRequest } from "next";
 import { Restaurant } from "@/types";
 import { restaurantRelations } from "@/types/RestaurantWithRelations";
+import { restaurantWithEventInclude } from "@/types/RestaurantWithEvents";
 
 export default function restaurantsService(instance: IDBClient['instance']) {
 	return {
@@ -116,6 +117,39 @@ export default function restaurantsService(instance: IDBClient['instance']) {
 				console.error(message);
 				return {
 					result: {},
+					error: {
+						status: 400,
+						message: message
+					}
+				};
+			}
+		},
+		getRestaurantsWithEventByUserId: async (userId: User['id']) => {
+			try {
+				const restaurants = await instance.restaurant.findMany({
+					where: { userId: Number(userId) },
+					include: restaurantWithEventInclude
+				});
+				return {
+					result: [
+						...restaurants.map(restaurant => ({
+							...restaurant,
+							events: [
+								...restaurant.events.map(event => ({
+									...event,
+									createdAt: `${event?.createdAt}`,
+									updatedAt: `${event?.updatedAt}`,
+									date: `${event?.date}`
+								}))
+							]
+						}))
+					]
+				};
+			} catch (e) {
+				const message = e as { message: string };
+				console.error(message);
+				return {
+					result: [],
 					error: {
 						status: 400,
 						message: message
