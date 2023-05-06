@@ -4,7 +4,7 @@ import styles from './Events.module.scss';
 import RestaurantWithEvents from "@/types/RestaurantWithEvents";
 import { PageHeader } from "@/components/PageHeader";
 import Button from "@mui/material/Button";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import EventsCreateModal from "@/components/Events/EventsCreateModal";
 import { Text } from "@/components/Text";
 
@@ -60,11 +60,13 @@ export default function Events({ restaurants }: Props) {
 					</div>
 				)}
 			</div>
-			<EventsCreateModal
-				isOpen={isModalOpen}
-				onClose={onSetModal}
-				restaurants={restaurants}
-			/>
+			<Suspense fallback={<p>Loading the Modal</p>}>
+				<EventsCreateModal
+					isOpen={isModalOpen}
+					onClose={onSetModal}
+					restaurants={restaurants}
+				/>
+			</Suspense>
 		</main>
 	);
 }

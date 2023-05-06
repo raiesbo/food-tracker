@@ -1,0 +1,10 @@
+@use '../../styles/theme' as *;
+
+.root {
+  margin-top: $appBarHeight;
+  min-height: calc(100vh - $appBarHeight - $footerHeight);
+
+  @include matchMedium {
+    margin-left: $sideBarWidth;
+  }
+}
