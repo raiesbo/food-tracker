@@ -80,7 +80,6 @@ export default function reviewsService(instance: IDBClient['instance']) {
 		},
 		likeReview: async (req: NextApiRequest) => {
 			const { userId, reviewId } = req.query as { userId: string, reviewId: string };
-			console.log({ userId, reviewId });
 			try {
 				const like = await instance.like.create({
 					data: {

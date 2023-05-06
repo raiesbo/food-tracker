@@ -40,11 +40,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 		error
 	} = await restaurantServiceInstance.getRestaurant({ query: { restaurantId: Number(restaurantId) } });
 
-	if (error) return {
-		props: { restaurants: [] }
-	};
-
-	return { props: { restaurant } };
+	return { props: { restaurant: error ? [] : restaurant } };
 }
 
 type Props = { restaurant: Restaurant }
@@ -114,7 +110,7 @@ export default function RestaurantDetailsPage({ restaurant }: Props) {
 	const breadcrumbList = [
 		{ label: "Home", url: '/' },
 		{ label: "Food Trucks", url: '/food-trucks' },
-		{ label: restaurant?.name || '' }
+		{ label: restaurant?.name || 'Restaurant' }
 	];
 
 	return (

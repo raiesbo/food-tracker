@@ -100,7 +100,6 @@ export default function ProfileReviewsItem({ review, title, currentUserId, onRem
 		fetch(`/api/users/${currentUserId}/reviews/${review.id}/${isLiked ? 'dislike' : 'like'}`, {
 			method: 'POST'
 		}).then(response => {
-			console.log(isLiked ? 'dislike' : 'like', response);
 			if (response.status === 204) setIsLiked(!isLiked);
 		});
 	};

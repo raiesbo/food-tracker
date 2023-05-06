@@ -13,7 +13,7 @@ import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import { Category } from "@prisma/client";
 import { GetServerSidePropsContext } from "next";
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styles from './restaurants.module.scss';
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import Image from "next/image";
@@ -187,7 +187,6 @@ export default function RestaurantPage({
 						/>
 					</Card>
 					<div className={styles.listContainer}>
-						<Suspense fallback={<p>Loading Food Trucks</p>}>
 							{isLoading ? (
 								<div className={styles.spinnerContainer}>
 									<CircularProgress/>
@@ -206,7 +205,6 @@ export default function RestaurantPage({
 									</div>
 								)
 							)}
-						</Suspense>
 					</div>
 				</div>
 			</div>

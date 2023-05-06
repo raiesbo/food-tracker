@@ -11,34 +11,32 @@ type Props = {
 export default function Breadcrumbs({ items, className }: Props) {
 	return (
 		<div className={cc([styles.root, className])}>
-			{items?.map(item => {
-				if (item?.url) {
-					return (
+			{items?.map(item => (
+				<div
+					className={styles.root}
+					key={item.label}
+				>
+					{item?.url ? (
 						<>
 							<Link
 								href={item.url}
-								key={item.label}
 								className={styles.link}
 							>
-								<Text variant={'small'} >
+								<Text variant={'small'}>
 									{item.label}
 								</Text>
 							</Link>
-							<Text grey variant={'small'} >
+							<Text grey variant={'small'}>
 								/
 							</Text>
 						</>
-					);
-				} else {
-					return (
-						<div key={item.label}>
-							<Text variant={'small'} grey>
-								{item.label}
-							</Text>
-						</div>
-					);
-				}
-			})}
+					) : (
+						<Text grey variant={'small'}>
+							{item.label}
+						</Text>
+					)}
+				</div>
+			))}
 		</div>
 	);
 }
