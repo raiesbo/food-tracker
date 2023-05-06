@@ -57,9 +57,9 @@ export const paths = {
                 { name: 'Events', url: '/events' }
             ]
         },
-        footer: {
-            feedback: '/feedback'
-        }
+        footer: [
+            { name: 'Feedback', url: '/feedback' }
+        ]
     },
     401: '/401',
     404: '/404',
