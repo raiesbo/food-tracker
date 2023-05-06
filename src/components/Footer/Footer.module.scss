@@ -17,13 +17,26 @@
   width: 100%;
   max-width: 1000px;
   display: flex;
-  justify-content: space-evenly;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+
+  @include matchMedium {
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
 }
 
 .footerContentColumn {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  align-items: center;
+
+  @include matchMedium {
+    align-items: flex-start;
+  }
 }
 
 .linksContainer {

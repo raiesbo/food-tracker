@@ -20,5 +20,5 @@ export default async function getUser({ redirectUrl = '' }: Props = {}) {
 		return redirect(`/login?${query}`);
 	}
 
-	return await response.json();;
+	return await response.json();
 }
