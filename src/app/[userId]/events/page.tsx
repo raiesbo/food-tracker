@@ -2,16 +2,24 @@ import { Events } from '@/components/Events';
 import restaurantsService from "@/services/restaurant.serviceClient";
 import PrismaDBClient from "@/repositories/prismaClient";
 import RestaurantWithEvents from "@/types/RestaurantWithEvents";
+import { redirect } from "next/navigation";
 
 const restaurantsServiceInstance = restaurantsService(PrismaDBClient.instance);
 
-export default async function EventsPage() {
+type Props = {
+	params: {
+		userId: string
+	}
+}
+export default async function EventsPage({ params: { userId } }: Props) {
+	if (!userId) {
+		redirect('/');
+	}
+
 	const {
 		result: restaurants,
 		error
-	} = await restaurantsServiceInstance.getRestaurantsWithEventByUserId(804929);
-
-	console.log({ restaurants, error });
+	} = await restaurantsServiceInstance.getRestaurantsWithEventByUserId(Number(userId));
 
 	return (
 		<Events

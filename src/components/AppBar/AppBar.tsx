@@ -123,10 +123,13 @@ export default function AppBar({ window, withBackground = false, withFullNavigat
 										<List>
 											{paths.components.Dashboard.business?.map(item => (
 												<ListItemButton key={item.name} component='li'>
-													<Link href={item.url} className={styles.listItemLink}>
+													<Link
+														href={item.url.replaceAll('{userId}', userRole?.user_id)}
+														className={styles.listItemLink}
+													>
 														<SideBarIcon url={item.url} size='small'/>
 														<Text
-															bold={pathname === item.url}
+															bold={pathname === item.url.replaceAll('{userId}', userRole?.user_id)}
 															as='span'
 															variant={'p'}
 														>
@@ -140,7 +143,7 @@ export default function AppBar({ window, withBackground = false, withFullNavigat
 								)}
 								<Divider/>
 								<List>
-									<ListItemButton component='li' >
+									<ListItemButton component='li'>
 										<Link href={paths.auth0.logout} className={styles.listItemLink}>
 											<SideBarIcon url='/api/auth/logout' size='small'/>
 											<Text variant={'p'} as='span'>

@@ -63,11 +63,15 @@ export default function SideBar() {
 					<Divider/>
 					<List>
 						{paths.components.Dashboard.business?.map(item => (
-							<Link href={item.url} key={item.name} className={styles.listItemLink}>
+							<Link
+								href={item.url.replaceAll('{userId}', userRole?.user_id)}
+								key={item.name}
+								className={styles.listItemLink}
+							>
 								<ListItemButton className={styles.listItemButton}>
 									<SideBarIcon url={item.url} size='small'/>
 									<Text
-										bold={pathname === item.url}
+										bold={pathname === item.url.replaceAll('{userId}', userRole?.user_id)}
 										variant={'p'}
 									>
 										{item.name}
