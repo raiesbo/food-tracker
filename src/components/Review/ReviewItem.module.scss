@@ -10,7 +10,6 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    font-size: 14px;
 }
 
 .iconsSection {
@@ -27,4 +26,8 @@
 
 .createCommentText {
     width: 100%;
+}
+
+.date {
+    text-transform: capitalize;
 }

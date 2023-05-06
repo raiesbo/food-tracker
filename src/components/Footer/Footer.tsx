@@ -29,7 +29,7 @@ export default function Footer({ withSideBar = false }: Props) {
 				</div>
 				<div className={styles.footerContentColumn}>
 					<Text bold variant={'h4'}>
-						Check out the code
+						Check out the Code
 					</Text>
 					<div className={styles.linksContainer}>
 						<Link href='https://github.com/raiesbo/food-tracker' className={styles.link}>

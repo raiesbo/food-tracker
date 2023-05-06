@@ -1,5 +1,5 @@
 import { Review } from "@/types";
-import { useToast } from "@/utils";
+import { formatDate, useToast } from "@/utils";
 import CancelIcon from '@mui/icons-material/Cancel';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -108,12 +108,14 @@ export default function ProfileReviewsItem({ review, title, currentUserId, onRem
 	return (
 		<Card key={review.id} className={styles.root}>
 			<div className={styles.commentHeader}>
-				<Text>
+				<Text bold variant={'smallest'}>
 					{(title || review.restaurant?.name) && (
-						<strong>{title || `${review.restaurant?.name}`}</strong>
+						title || review.restaurant?.name
 					)}
 				</Text>
-				<Text>{(new Date(review.createdAt)).toDateString()}</Text>
+				<Text className={styles.date} variant={'smallest'}>
+					{formatDate(review.createdAt)}
+				</Text>
 			</div>
 			<div>
 				{isEdit ? (
@@ -140,7 +142,10 @@ export default function ProfileReviewsItem({ review, title, currentUserId, onRem
 			{currentUserId && (
 				<div className={styles.iconsSection}>
 					<div>
-						<IconButton onClick={onLikeComment}>
+						<IconButton
+							onClick={onLikeComment}
+							size={'small'}
+						>
 							{isLiked ? (
 								<ThumbUpIcon fontSize="small"/>
 							) : (
@@ -159,14 +164,16 @@ export default function ProfileReviewsItem({ review, title, currentUserId, onRem
 									<IconButton
 										disabled={isLoading}
 										onClick={onSaveUpdate}
-										aria-label='edit review'
+										aria-label='save review'
+										size={'small'}
 									>
 										<SaveIcon color='success' fontSize="small"/>
 									</IconButton>
 									<IconButton
 										disabled={isLoading}
 										onClick={onCancelUpdate}
-										aria-label='remove review'
+										aria-label='cancel review update'
+										size={'small'}
 									>
 										<CancelIcon color='error' fontSize="small"/>
 									</IconButton>
@@ -175,6 +182,8 @@ export default function ProfileReviewsItem({ review, title, currentUserId, onRem
 								<IconButton
 									disabled={isLoading}
 									onClick={() => setIsEdit(true)}
+									aria-label='edit review'
+									size={'small'}
 								>
 									<EditIcon fontSize="small"/>
 								</IconButton>
@@ -183,6 +192,8 @@ export default function ProfileReviewsItem({ review, title, currentUserId, onRem
 							<IconButton
 								onClick={() => onRemoveReview(review.id)}
 								disabled={isLoading}
+								size={'small'}
+								aria-label='delete review'
 							>
 								<DeleteIcon fontSize="small"/>
 							</IconButton>

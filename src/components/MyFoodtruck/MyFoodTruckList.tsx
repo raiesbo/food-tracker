@@ -59,7 +59,7 @@ export default function MyFoodTruckList({ restaurants }: Props) {
                                 <Text variant={'h4'} bold className={styles.name}>
                                     {restaurant.name}
                                 </Text>
-                                <Text className={styles.description}>
+                                <Text variant={'small'} className={styles.description}>
                                     {`${mainLocation.streetName} ${mainLocation.streetNumber}, ${mainLocation.city}`}
                                 </Text>
                             </div>
