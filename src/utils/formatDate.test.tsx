@@ -9,13 +9,13 @@ describe('formatDate', () => {
 	test('returns the correct date for today', () => {
 		const date = new Date();
 		date.setHours(14);
-		expect(formatDate(date)).toBe('Heute 14:00');
+		expect(formatDate(date)).toBe('Today 14:00');
 	});
 
 	test('returns the correct date for yesterday', () => {
 		const date = new Date();
 		const tomorrow = date.setHours(date.getHours() - 14);
-		expect(formatDate(tomorrow)).toBe('Gestern 10:00');
+		expect(formatDate(tomorrow)).toBe('Yesterday 10:00');
 	});
 
 	test('returns the correct date for more than one day of difference', () => {
