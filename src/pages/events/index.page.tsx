@@ -28,7 +28,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 			url
 		}
 	};
-};
+}
 
 type Props = {
 	url: string,
