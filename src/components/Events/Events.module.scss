@@ -12,3 +12,13 @@
     gap: 30px;
   }
 }
+
+.restaurantSection {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  @include matchSmall {
+    gap: 20px;
+  }
+}

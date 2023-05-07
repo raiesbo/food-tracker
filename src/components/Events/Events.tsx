@@ -8,6 +8,7 @@ import { Suspense, useState } from "react";
 import EventsCreateModal from "@/components/Events/EventsCreateModal";
 import { Text } from "@/components/Text";
 import { useSWRConfig } from "swr";
+import EventsTable from "@/components/Events/EventsTable";
 
 type Props = {
 	restaurants: Array<RestaurantWithEvents>,
@@ -26,36 +27,18 @@ export default function Events({ restaurants, url }: Props) {
 	return (
 		<main className={styles.root}>
 			<PageHeader title={'Events'}>
-				<Button
-					variant='contained'
-					onClick={onSetModal}
-				>
+				<Button variant='contained' onClick={onSetModal}>
 					Create Event
 				</Button>
 			</PageHeader>
 			<div>
 				{restaurants?.length > 0 ? restaurants?.map(restaurant => (
-					<div key={restaurant.id}>
+					<div key={restaurant.id} className={styles.restaurantSection}>
 						<Text bold variant='h3'>
 							{restaurant.name}
 						</Text>
 						<div className={styles.eventsContainer}>
-							{restaurant.events?.length > 0 ? restaurant.events.map(event => {
-								return (
-									<div key={event.id}>
-										<Text>
-											{event.name}
-										</Text>
-										<Text>
-											{`${event.date}`}
-										</Text>
-									</div>
-								);
-							}) : (
-								<div>
-									No Events Found
-								</div>
-							)}
+							<EventsTable title={'Current Events'} events={restaurant.events}/>
 						</div>
 					</div>
 				)) : (

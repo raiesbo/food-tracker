@@ -21,15 +21,13 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
 		return { props: { restaurants: [] } };
 	}
 
-	const { result: restaurants } = await ordersServiceInstance
-		.getRestaurantsWithOrders(userId);
+	const {
+		result: restaurants,
+		error
+	} = await ordersServiceInstance.getRestaurantsWithOrders(userId);
 
-	return { props: { restaurants } };
+	return { props: { restaurants: error ? [] : restaurants } };
 };
-
-type Props = {
-	restaurants: Array<RestaurantWithOrders>
-}
 
 BusinessOrdersPage.getLayout = function getLayout(page: ReactElement) {
 	return (
@@ -39,13 +37,17 @@ BusinessOrdersPage.getLayout = function getLayout(page: ReactElement) {
 	);
 };
 
+type Props = {
+	restaurants: Array<RestaurantWithOrders>
+}
+
 export default function BusinessOrdersPage({ restaurants }: Props) {
-	const withOrdrs = restaurants.some(restaurant => restaurant.orders.length > 0);
+	const withOrders = restaurants.some(restaurant => restaurant.orders.length > 0);
 
 	return (
 		<div className={styles.root}>
 			<PageHeader title={'Food Truck Orders'}></PageHeader>
-			{withOrdrs ? (
+			{withOrders ? (
 				restaurants?.map(restaurant => {
 					return restaurant.orders.length > 0 && (
 						<div key={restaurant.id} className={styles.tableContainer}>

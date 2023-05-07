@@ -8,19 +8,19 @@ describe('formatDate', () => {
 
 	test('returns the correct date for today', () => {
 		const date = new Date();
-		const laterToday = date.setHours(date.getHours() - 3);
-		expect(formatDate(laterToday)).toBe('today 21:00');
+		date.setHours(14);
+		expect(formatDate(date)).toBe('Heute 14:00');
 	});
 
 	test('returns the correct date for yesterday', () => {
 		const date = new Date();
-		const tomorrow = date.setHours(date.getHours() - 28);
-		expect(formatDate(tomorrow)).toBe('yesterday 20:00');
+		const tomorrow = date.setHours(date.getHours() - 14);
+		expect(formatDate(tomorrow)).toBe('Gestern 10:00');
 	});
 
 	test('returns the correct date for more than one day of difference', () => {
 		const date = new Date();
 		const tomorrow = date.setDate(date.getDate() - 3);
-		expect(formatDate(tomorrow)).toBe('25/04/2023, 00:00');
+		expect(formatDate(tomorrow)).toBe('25.04.2023, 00:00');
 	});
 });
