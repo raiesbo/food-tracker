@@ -1,0 +1,102 @@
+@use '@/styles/theme' as *;
+
+.root {
+  max-width: 1040px;
+  padding: 20px;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  @include matchSmall {
+    gap: 30px;
+  }
+}
+
+.headerContainer {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+
+  @include matchSmall {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.buttonContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+}
+
+.bodyContainer {
+  display: grid;
+  grid-template-areas:
+        'image'
+        'user'
+        'reviews';
+  grid-template-columns: 1fr;
+  gap: 10px;
+
+  @include matchSmall {
+    gap: 30px;
+  }
+
+  @include matchMedium {
+    gap: 50px;
+  }
+}
+
+.imageContainer {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  grid-area: img;
+
+  @include matchMedium {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  @include matchSmall {
+    gap: 15px;
+  }
+}
+
+.imageUploadInput {
+  cursor: pointer;
+
+  & + input {
+    visibility: hidden;
+  }
+}
+
+.name {
+  grid-area: firstName;
+}
+
+.last {
+  grid-area: lastName;
+}
+
+.topProfileInfo {
+  display: grid;
+  grid-template-areas:
+          "img firstName"
+          "img lastName";
+  grid-template-columns: min-content 1fr;
+  gap: 15px;
+
+  @include matchSmall {
+    gap: 30px;
+  }
+}
