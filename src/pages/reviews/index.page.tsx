@@ -10,6 +10,7 @@ import { auth0Config } from "@/utils/settings";
 import useSWR from "swr";
 import { ReviewItem } from "@/components/Review";
 import { Text } from "@/components/Text";
+import { ReactElement } from "react";
 
 const reviewsServiceInstance = reviewsService(PrismaDBClient.instance);
 
@@ -41,13 +42,21 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
 	};
 };
 
+MyReviewsPage.getLayout = function getLayout(page: ReactElement) {
+	return (
+		<LayoutWithSideBar>
+			{page}
+		</LayoutWithSideBar>
+	);
+};
+
 type Props = {
 	url: string,
 	fallback: { [key: string]: string },
 	userId: number
 }
 
-export default function MyReviews({ fallback, url, userId }: Props) {
+export default function MyReviewsPage({ fallback, url, userId }: Props) {
 	const fetcher = async (url: string) => {
 		return await fetch(url).then(res => res.json()).then(({ reviews }) => reviews);
 	};
@@ -58,28 +67,26 @@ export default function MyReviews({ fallback, url, userId }: Props) {
 	};
 
 	return (
-		<LayoutWithSideBar>
-			<div className={styles.root}>
-				<PageHeader title={'My Reviews'}></PageHeader>
-				<div className={styles.reviewsContainer}>
-					{data && data.length > 0 ? (
-						data?.map((review: Review) => {
-							return (
-								<ReviewItem
-									key={review.id}
-									review={review}
-									onRemove={onDelete}
-									currentUserId={userId}
-								/>
-							);
-						})
-					) : (
-						<Text>
-							No reviews found
-						</Text>
-					)}
-				</div>
+		<div className={styles.root}>
+			<PageHeader title={'My Reviews'}></PageHeader>
+			<div className={styles.reviewsContainer}>
+				{data && data.length > 0 ? (
+					data?.map((review: Review) => {
+						return (
+							<ReviewItem
+								key={review.id}
+								review={review}
+								onRemove={onDelete}
+								currentUserId={userId}
+							/>
+						);
+					})
+				) : (
+					<Text>
+						No reviews found
+					</Text>
+				)}
 			</div>
-		</LayoutWithSideBar>
+		</div>
 	);
 }

@@ -9,6 +9,7 @@ import PrismaDBClient from "@/repositories/prismaClient";
 import RestaurantWithOrders from "@/types/RestaurantWithOrders";
 import { OrdersTable } from "@/components/Orders";
 import { Text } from '@/components/Text';
+import { ReactElement } from "react";
 
 const ordersServiceInstance = ordersService(PrismaDBClient.instance);
 
@@ -30,33 +31,39 @@ type Props = {
 	restaurants: Array<RestaurantWithOrders>
 }
 
-export default function BusinessOrders({ restaurants }: Props) {
+BusinessOrdersPage.getLayout = function getLayout(page: ReactElement) {
+	return (
+		<LayoutWithSideBar>
+			{page}
+		</LayoutWithSideBar>
+	);
+};
+
+export default function BusinessOrdersPage({ restaurants }: Props) {
 	const withOrdrs = restaurants.some(restaurant => restaurant.orders.length > 0);
 
 	return (
-		<LayoutWithSideBar>
-			<div className={styles.root}>
-				<PageHeader title={'Food Truck Orders'}></PageHeader>
-				{withOrdrs ? (
-					restaurants?.map(restaurant => {
-						return restaurant.orders.length > 0 && (
-							<div key={restaurant.id} className={styles.tableContainer}>
-								<Text bold variant='h3'>
-									{restaurant.name}
-								</Text>
-								<OrdersTable
-									key={restaurant.id}
-									fetchedOrders={restaurant.orders}
-								/>
-							</div>
-						);
-					})
-				) : (
-					<Text>
-						No orders found
-					</Text>
-				)}
-			</div>
-		</LayoutWithSideBar>
+		<div className={styles.root}>
+			<PageHeader title={'Food Truck Orders'}></PageHeader>
+			{withOrdrs ? (
+				restaurants?.map(restaurant => {
+					return restaurant.orders.length > 0 && (
+						<div key={restaurant.id} className={styles.tableContainer}>
+							<Text bold variant='h3'>
+								{restaurant.name}
+							</Text>
+							<OrdersTable
+								key={restaurant.id}
+								fetchedOrders={restaurant.orders}
+							/>
+						</div>
+					);
+				})
+			) : (
+				<Text>
+					No orders found
+				</Text>
+			)}
+		</div>
 	);
 }

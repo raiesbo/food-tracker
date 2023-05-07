@@ -9,6 +9,7 @@ import reviewsService from "@/services/reviews.serviceClient";
 import RestaurantWithReviews from "@/types/RestaurantWithReviews";
 import { Text } from "@/components/Text";
 import { BusinessReviewsList } from "@/components/BusinessReviews";
+import { ReactElement } from "react";
 
 const reviewsServiceInstance = reviewsService(PrismaDBClient.instance);
 
@@ -25,29 +26,35 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
 	return { props: { restaurants, userId } };
 };
 
+BusinessReviewsPage.getLayout = function getLayout(page: ReactElement) {
+	return (
+		<LayoutWithSideBar>
+			{page}
+		</LayoutWithSideBar>
+	);
+};
+
 type Props = {
 	restaurants: Array<RestaurantWithReviews>,
 	userId: number
 }
-export default function BusinessReviews({ restaurants, userId }: Props) {
+export default function BusinessReviewsPage({ restaurants, userId }: Props) {
 	return (
-		<LayoutWithSideBar>
-			<div className={styles.root}>
-				<PageHeader title={'Food Truck Reviews'}></PageHeader>
-				{restaurants.map(restaurant => {
-					return restaurant.reviews.length > 0 && (
-						<div key={restaurant.id} className={styles.tableContainer}>
-							<Text bold variant='h3'>
-								{restaurant.name}
-							</Text>
-							<BusinessReviewsList
-								prefechedReviews={restaurant.reviews}
-								userId={userId}
-							/>
-						</div>
-					);
-				})}
-			</div>
-		</LayoutWithSideBar>
+		<div className={styles.root}>
+			<PageHeader title={'Food Truck Reviews'}></PageHeader>
+			{restaurants.map(restaurant => {
+				return restaurant.reviews.length > 0 && (
+					<div key={restaurant.id} className={styles.tableContainer}>
+						<Text bold variant='h3'>
+							{restaurant.name}
+						</Text>
+						<BusinessReviewsList
+							prefechedReviews={restaurant.reviews}
+							userId={userId}
+						/>
+					</div>
+				);
+			})}
+		</div>
 	);
 }

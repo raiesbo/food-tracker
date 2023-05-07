@@ -15,7 +15,7 @@ import TableBody from "@mui/material/TableBody";
 import { Text } from '@/components/Text';
 import { Card } from "@/components/Card";
 import Button from "@mui/material/Button";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, ReactElement, useState } from "react";
 import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
 import SaveIcon from "@mui/icons-material/Save";
@@ -47,18 +47,26 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
 	};
 };
 
+CategoriesPage.getLayout = function getLayout(page: ReactElement) {
+	return (
+		<LayoutWithSideBar>
+			{page}
+		</LayoutWithSideBar>
+	);
+};
+
 type Props = {
 	categories: Array<Category>,
 	auth0User: UserProfile,
 	userId: string
 }
 
-export default function Categories({ categories, userId }: Props) {
+export default function CategoriesPage({ categories, userId }: Props) {
 	const { dispatch } = useToast();
 	const [isLoading, setIsLoading] = useState(false);
 	const [categoryList, setCategoryList] = useState(categories);
 
-	const timeFormat = new Intl.DateTimeFormat("es", );
+	const timeFormat = new Intl.DateTimeFormat("es",);
 
 	const onAddCategory = () => {
 		setCategoryList(state => ([
@@ -122,113 +130,111 @@ export default function Categories({ categories, userId }: Props) {
 	};
 
 	return (
-		<LayoutWithSideBar>
-			<div className={styles.root}>
-				<PageHeader title={'Categories'}></PageHeader>
-				<Card className={styles.card}>
-					<Table>
-						<TableHead>
-							<TableRow>
-								<TableCell>
-									<Text bold variant='h4'>
-										Name
-									</Text>
+		<div className={styles.root}>
+			<PageHeader title={'Categories'}></PageHeader>
+			<Card className={styles.card}>
+				<Table>
+					<TableHead>
+						<TableRow>
+							<TableCell>
+								<Text bold variant='h4'>
+									Name
+								</Text>
+							</TableCell>
+							<TableCell align="right">
+								<Text bold variant='h4'>
+									Create at
+								</Text>
+							</TableCell>
+							<TableCell align="right">
+								<Text bold variant='h4'>
+									Assigned to
+								</Text>
+							</TableCell>
+							<TableCell align="right">
+								<Text bold variant='h4'>
+									Actions
+								</Text>
+							</TableCell>
+						</TableRow>
+					</TableHead>
+					<TableBody>
+						{categoryList?.map((category) => (
+							<TableRow
+								key={category.id}
+								sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+							>
+								<TableCell component="th" scope="row">
+									{category.userId ? (
+										<Text semiBold>
+											{category.name}
+										</Text>
+									) : (
+										<TextField
+											name={`${category.id}`}
+											value={category.name}
+											onChange={onChange}
+											disabled={isLoading}
+											className={styles.textInput}
+										/>
+									)}
 								</TableCell>
 								<TableCell align="right">
-									<Text bold variant='h4'>
-										Create at
-									</Text>
+									{category.createdAt && (
+										<Text>
+											{timeFormat.format(new Date(category.createdAt))}
+										</Text>
+									)}
 								</TableCell>
 								<TableCell align="right">
-									<Text bold variant='h4'>
-										Assigned to
-									</Text>
+									{category._count?.restaurants && (
+										<Text>
+											{category._count.restaurants}
+										</Text>
+									)}
 								</TableCell>
 								<TableCell align="right">
-									<Text bold variant='h4'>
-										Actions
-									</Text>
-								</TableCell>
-							</TableRow>
-						</TableHead>
-						<TableBody>
-							{categoryList?.map((category) => (
-								<TableRow
-									key={category.id}
-									sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-								>
-									<TableCell component="th" scope="row">
-										{category.userId ? (
-											<Text semiBold>
-												{category.name}
-											</Text>
-										) : (
-											<TextField
-												name={`${category.id}`}
-												value={category.name}
-												onChange={onChange}
-												disabled={isLoading}
-												className={styles.textInput}
-											/>
-										)}
-									</TableCell>
-									<TableCell align="right">
-										{category.createdAt && (
-											<Text>
-												{timeFormat.format(new Date(category.createdAt))}
-											</Text>
-										)}
-									</TableCell>
-									<TableCell align="right">
-										{category._count?.restaurants && (
-											<Text>
-												{category._count.restaurants}
-											</Text>
-										)}
-									</TableCell>
-									<TableCell align="right">
-										{category.userId ? (
+									{category.userId ? (
+										<IconButton
+											size='small'
+											onClick={() => onRemoveCategory(Number(category.id))}
+											disabled={isLoading || !!category._count.restaurants}
+										>
+											<DeleteIcon/>
+										</IconButton>
+									) : (
+										<div className={styles.tableButtonContent}>
 											<IconButton
 												size='small'
-												onClick={() => onRemoveCategory(Number(category.id))}
-												disabled={isLoading || !!category._count.restaurants}
+												onClick={() => onSaveNewCategory(Number(category.id))}
+												disabled={isLoading}
 											>
-												<DeleteIcon/>
+												<SaveIcon color='success'/>
 											</IconButton>
-										) : (
-											<div className={styles.tableButtonContent}>
-												<IconButton
-													size='small'
-													onClick={() => onSaveNewCategory(Number(category.id))}
-													disabled={isLoading}
-												>
-													<SaveIcon color='success'/>
-												</IconButton>
-												<IconButton
-													size='small'
-													onClick={() => onCancelNewCategory(Number(category.id))}
-													disabled={isLoading}
-												>
-													<CancelIcon color='error'/>
-												</IconButton>
-											</div>
-										)}
-									</TableCell>
-								</TableRow>
-							))}
-						</TableBody>
-					</Table>
-				</Card>
-				<div className={styles.buttonContainer}>
-					<Button
-						variant="outlined"
-						onClick={onAddCategory}
-						disabled={isLoading}
-					>
-						Add new category
-					</Button>
-				</div>
+											<IconButton
+												size='small'
+												onClick={() => onCancelNewCategory(Number(category.id))}
+												disabled={isLoading}
+											>
+												<CancelIcon color='error'/>
+											</IconButton>
+										</div>
+									)}
+								</TableCell>
+							</TableRow>
+						))}
+					</TableBody>
+				</Table>
+			</Card>
+			<div className={styles.buttonContainer}>
+				<Button
+					variant="outlined"
+					onClick={onAddCategory}
+					disabled={isLoading}
+				>
+					Add new category
+				</Button>
 			</div>
-		</LayoutWithSideBar>
+		</div>
 	);
 }

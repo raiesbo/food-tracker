@@ -21,7 +21,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import cc from 'classcat';
 import { Dayjs } from "dayjs";
 import { GetServerSidePropsContext } from "next";
-import { useState } from "react";
+import { ReactElement, useState } from "react";
 import { Card } from '../../components/Card';
 import { Text } from '../../components/Text';
 import styles from './restaurantDetails.module.scss';
@@ -42,6 +42,14 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
 	return { props: { restaurant: error ? [] : restaurant } };
 }
+
+RestaurantDetailsPage.getLayout = function getLayout(page: ReactElement) {
+	return (
+		<Layout>
+			{page}
+		</Layout>
+	);
+};
 
 type Props = { restaurant: Restaurant }
 
@@ -114,7 +122,7 @@ export default function RestaurantDetailsPage({ restaurant }: Props) {
 	];
 
 	return (
-		<Layout>
+		<>
 			<div className={styles.imageContainer}>
 				{restaurant.imageUrl && (
 					<Image
@@ -230,6 +238,6 @@ export default function RestaurantDetailsPage({ restaurant }: Props) {
 					/>
 				</LocalizationProvider>
 			</div>
-		</Layout>
+		</>
 	);
 }
