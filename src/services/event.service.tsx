@@ -53,6 +53,21 @@ export default function eventsService(instance: IDBClient['instance']) {
 					error: { status: 400, message }
 				};
 			}
+		},
+		deleteEvent: async (req: NextApiRequest) => {
+			const { eventId } = req.query as { eventId: string };
+
+			try {
+				await instance.event.delete({ where: { id: Number(eventId) } });
+				return { result: {} };
+			} catch (e) {
+				console.error(e);
+				const { message } = e as { message: string };
+				return {
+					result: {},
+					error: { status: 400, message }
+				};
+			}
 		}
 	};
 }

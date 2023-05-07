@@ -15,9 +15,10 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 type Props = {
 	title: string,
-	events: RestaurantWithEvents['events']
+	events: RestaurantWithEvents['events'],
+	url: string
 }
-export default function EventsTable({ title, events }: Props) {
+export default function EventsTable({ title, events, url }: Props) {
 	const [isOpen, setIsOpen] = useState(false);
 
 	return (
@@ -44,27 +45,27 @@ export default function EventsTable({ title, events }: Props) {
 						<Table>
 							<TableHead>
 								<TableRow>
-									<TableCell>
+									<TableCell align='left'>
 										<Text bold variant='h4'>
 											Name
 										</Text>
 									</TableCell>
-									<TableCell align="right">
+									<TableCell align='center'>
 										<Text bold variant='h4'>
 											Date
 										</Text>
 									</TableCell>
-									<TableCell align="right">
+									<TableCell align='center'>
 										<Text bold variant='h4'>
 											Opening Hour
 										</Text>
 									</TableCell>
-									<TableCell align="right">
+									<TableCell align='center'>
 										<Text bold variant='h4'>
 											Closing Hour
 										</Text>
 									</TableCell>
-									<TableCell align="right">
+									<TableCell align='center'>
 										<Text bold variant='h4'>
 											Locations
 										</Text>
@@ -81,10 +82,14 @@ export default function EventsTable({ title, events }: Props) {
 									<EventsTableRow
 										key={event.id}
 										event={event}
-										// onUpdateOrder={onAcceptOrder}
+										url={url}
 									/>
 								))) : (
-									<div>No Events Found</div>
+									<TableRow>
+										<TableCell>
+											No Events Found
+										</TableCell>
+									</TableRow>
 								)}
 							</TableBody>
 						</Table>

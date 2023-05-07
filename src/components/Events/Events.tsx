@@ -38,7 +38,11 @@ export default function Events({ restaurants, url }: Props) {
 							{restaurant.name}
 						</Text>
 						<div className={styles.eventsContainer}>
-							<EventsTable title={'Current Events'} events={restaurant.events}/>
+							<EventsTable
+								title={'Current Events'}
+								events={restaurant.events}
+								url={url}
+							/>
 						</div>
 					</div>
 				)) : (
