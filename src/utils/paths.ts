@@ -22,28 +22,6 @@ export const paths = {
                 { name: 'Logout', url: '/api/auth/logout' }
             ]
         },
-        NavigtionMenu: {
-            visitor: [
-                { name: 'Home', url: '/' },
-                { name: 'Food Trucks', url: '/food-trucks' },
-                { name: 'Sign Up', url: '/signup' },
-                { name: 'Login', url: '/api/auth/login' }
-            ],
-            customer: [
-                { name: 'Home', url: '/' },
-                { name: 'Restaurants', url: '/restaurants' },
-                { name: 'Dashboard', url: '/my-food-trucks' },
-                // { name: 'My Reviews', url: '/reviews' },
-                { name: 'Logout', url: '/api/auth/logout' }
-            ],
-            serviceProvider: [
-                { name: 'Home', url: '/' },
-                { name: 'Food Trucks', url: '/food-trucks' },
-                { name: 'Dashboard', url: '/profile' },
-                // { name: 'My Food Trucks', url: '/my-food-trucks' },
-                { name: 'Logout', url: '/api/auth/logout' }
-            ]
-        },
         Dashboard: {
             basic: [
                 { name: 'Personal Data', url: '/profile' },

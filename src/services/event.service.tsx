@@ -15,7 +15,7 @@ const validateCreateRequestProps = (props: Prisma.EventUncheckedCreateInput & Pr
 	if (props.streetName) validatedProps.location.streetName = props.streetName;
 	if (props.streetNumber) validatedProps.location.streetNumber = props.streetNumber;
 	if (props.zip) validatedProps.location.zip = props.zip;
-	if (props.country) validatedProps.location.country = props.country;
+	if (props.city) validatedProps.location.city = props.city;
 	if (props.zip) validatedProps.location.zip = props.zip;
 
 	return validatedProps;
@@ -31,7 +31,6 @@ export default function eventsService(instance: IDBClient['instance']) {
 
 				const event = await instance.event.create({
 					data: {
-						restaurantId: Number(restaurantId),
 						...validatedProps.event,
 						location: {
 							create: {
@@ -39,6 +38,11 @@ export default function eventsService(instance: IDBClient['instance']) {
 							}
 						}
 					} as Prisma.EventUncheckedCreateInput
+				});
+
+				await instance.restaurant.update({
+					where: { id: Number(restaurantId) },
+					data: { events: { connect: [{ id: event.id }] } }
 				});
 				return { result: event };
 			} catch (e) {

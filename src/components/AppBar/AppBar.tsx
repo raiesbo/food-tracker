@@ -20,7 +20,7 @@ import SideBarIcon from '../SideBar/SideBarIcon';
 import { Text } from '../Text';
 import styles from './AppBar.module.scss';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import Image from "next/image";
 
 type Props = {
@@ -30,7 +30,6 @@ type Props = {
 }
 
 export default function AppBar({ window, withBackground = false, withFullNavigation = false }: Props) {
-	const router = useRouter();
 	const pathname = usePathname();
 	const { user } = useUser();
 
@@ -122,7 +121,11 @@ export default function AppBar({ window, withBackground = false, withFullNavigat
 										<Divider/>
 										<List>
 											{paths.components.Dashboard.business?.map(item => (
-												<ListItemButton key={item.name} component='li' onClick={handleCloseNavMenu}>
+												<ListItemButton
+													key={item.name}
+													component='li'
+													onClick={handleCloseNavMenu}
+												>
 													<Link
 														href={item.url.replaceAll('{userId}', userRole?.user_id)}
 														className={styles.listItemLink}
@@ -193,12 +196,13 @@ export default function AppBar({ window, withBackground = false, withFullNavigat
 						</li>
 					)}
 					{(paths.components.AppBar[user ? 'customer' : 'visitor']).map(({ name, url }) => (
-						<ListItemButton component={'li'} key={name} onClick={() => router.push(url)}
-										className={styles.link}>
-							<SideBarIcon url={url}/>
-							<Text semiBold className={styles.menuItem} variant='smallest'>
-								{name}
-							</Text>
+						<ListItemButton component={'li'} key={name} className={styles.link}>
+							<Link href={url} className={styles.listItemLink}>
+								<SideBarIcon url={url}/>
+								<Text semiBold className={styles.menuItem} variant='smallest'>
+									{name}
+								</Text>
+							</Link>
 						</ListItemButton>
 					))}
 				</Menu>
