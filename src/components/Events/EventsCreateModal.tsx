@@ -51,8 +51,6 @@ export default function EventsCreateModal({ isOpen, onClose, restaurants }: Prop
 		country: ''
 	});
 
-	console.log({ restaurantId });
-
 	const onCreateEvent = () => {
 		setIsLoading(true);
 		fetch(`/api/restaurants/${restaurantId}/events`, {

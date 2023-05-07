@@ -7,16 +7,20 @@ import Button from "@mui/material/Button";
 import { Suspense, useState } from "react";
 import EventsCreateModal from "@/components/Events/EventsCreateModal";
 import { Text } from "@/components/Text";
+import { useSWRConfig } from "swr";
 
 type Props = {
-	restaurants: Array<RestaurantWithEvents>
+	restaurants: Array<RestaurantWithEvents>,
+	url: string
 }
 
-export default function Events({ restaurants }: Props) {
+export default function Events({ restaurants, url }: Props) {
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const { mutate } = useSWRConfig();
 
 	const onSetModal = () => {
 		setIsModalOpen(!isModalOpen);
+		mutate(url);
 	};
 
 	return (
