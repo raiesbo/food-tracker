@@ -16,7 +16,7 @@ import cc from 'classcat';
 import { GetServerSidePropsContext, NextApiRequest } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, ReactElement, useState } from "react";
 import { Text } from '../../components/Text';
 import styles from './MyFoodTrucksDetails.module.scss';
 import { PageHeader } from "@/components/PageHeader";
@@ -43,21 +43,31 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 		}
 	};
 
-	return { props: {
-		restaurant,
+	return {
+		props: {
+			restaurant,
 			categories: categories.map(cat => ({
 				...cat,
 				createdAt: cat.createdAt.toISOString()
 			}))
-	} };
+		}
+	};
 }
+
+MyNewFoodTruckPage.getLayout = function getLayout(page: ReactElement) {
+	return (
+		<LayoutWithSideBar>
+			{page}
+		</LayoutWithSideBar>
+	);
+};
 
 type Props = {
 	restaurant: Restaurant,
 	categories: Array<Category>
 }
 
-export default function MyNewRestaurant({ restaurant, categories }: Props) {
+export default function MyNewFoodTruckPage({ restaurant, categories }: Props) {
 	const router = useRouter();
 	const { user } = useUser();
 	const { dispatch } = useToast();
@@ -126,75 +136,73 @@ export default function MyNewRestaurant({ restaurant, categories }: Props) {
 	};
 
 	return (
-		<LayoutWithSideBar>
-			<div className={styles.root}>
-				<PageHeader title={restaurant.name || ''} childrenClassName={styles.buttonContainer}>
-					<Button
-						variant="outlined"
-						onClick={onRemove}
-						color='error'
-					>
-						REMOVE
-					</Button>
-				</PageHeader>
-				<section className={styles.bodyContainer}>
-					<div className={cc([styles.container, styles.sideColumn])}>
-						<InfoSection title="Food Truck Thumbnail">
-							<Card className={styles.imageContainer} withHover>
-								<label htmlFor={`restaurant_${restaurant.id}`} className={styles.imageUploadInput}>
-									<Image
-										alt='Business image | default image from Unsplash'
-										src={imageUrl || imagesConfig.default}
-										fill
-										className={styles.image}
-										style={{ objectFit: 'cover' }}
-										priority
-									/>
-								</label>
-								<input
-									id={`restaurant_${restaurant.id}`}
-									type='file'
-									accept="image/jpg,image/png"
-									onChange={updateFile}
+		<div className={styles.root}>
+			<PageHeader title={restaurant.name || ''} childrenClassName={styles.buttonContainer}>
+				<Button
+					variant="outlined"
+					onClick={onRemove}
+					color='error'
+				>
+					REMOVE
+				</Button>
+			</PageHeader>
+			<section className={styles.bodyContainer}>
+				<div className={cc([styles.container, styles.sideColumn])}>
+					<InfoSection title="Food Truck Thumbnail">
+						<Card className={styles.imageContainer} withHover>
+							<label htmlFor={`restaurant_${restaurant.id}`} className={styles.imageUploadInput}>
+								<Image
+									alt='Business image | default image from Unsplash'
+									src={imageUrl || imagesConfig.default}
+									fill
+									className={styles.image}
+									style={{ objectFit: 'cover' }}
+									priority
 								/>
-							</Card>
-						</InfoSection>
-						<MyFoodTruckLocations
-							location={restaurant.locations.find(loc => loc.isMainLocation) || {} as Location}
-						/>
-						<Card className={styles.scheduleList}>
-							<InfoSection title="Opening Hours" childrenClassName={styles.item}>
-								{restaurant.schedules?.map((schedule) => (
-									<div key={schedule.id} className={styles.scheduleListItem}>
-										<Text bold variant={'smallest'}>
-											{schedule.day}
-										</Text>
-										{schedule.isOpen ? (
-											<Text variant={'smallest'}>
-												{`${schedule.opening_hour} ${schedule.closing_hour}`}
-											</Text>
-										) : (
-											<Text variant={'smallest'}>
-												Closed
-											</Text>
-										)}
-									</div>
-								))}
-							</InfoSection>
+							</label>
+							<input
+								id={`restaurant_${restaurant.id}`}
+								type='file'
+								accept="image/jpg,image/png"
+								onChange={updateFile}
+							/>
 						</Card>
-					</div>
-					<div className={cc([styles.container, styles.mainColumn])}>
-						<MyFoodTruckRestaurant
-							restaurant={restaurant}
-							allCategories={categories}
-						/>
-						<MyFoodTruckMenu
-							menu={restaurant.menu}
-							restaurantId={restaurant.id}
-						/>
-					</div>
-				</section>
-			</div>
-		</LayoutWithSideBar>
+					</InfoSection>
+					<MyFoodTruckLocations
+						location={restaurant.locations.find(loc => loc.isMainLocation) || {} as Location}
+					/>
+					<Card className={styles.scheduleList}>
+						<InfoSection title="Opening Hours" childrenClassName={styles.item}>
+							{restaurant.schedules?.map((schedule) => (
+								<div key={schedule.id} className={styles.scheduleListItem}>
+									<Text bold variant={'smallest'}>
+										{schedule.day}
+									</Text>
+									{schedule.isOpen ? (
+										<Text variant={'smallest'}>
+											{`${schedule.opening_hour} ${schedule.closing_hour}`}
+										</Text>
+									) : (
+										<Text variant={'smallest'}>
+											Closed
+										</Text>
+									)}
+								</div>
+							))}
+						</InfoSection>
+					</Card>
+				</div>
+				<div className={cc([styles.container, styles.mainColumn])}>
+					<MyFoodTruckRestaurant
+						restaurant={restaurant}
+						allCategories={categories}
+					/>
+					<MyFoodTruckMenu
+						menu={restaurant.menu}
+						restaurantId={restaurant.id}
+					/>
+				</div>
+			</section>
+		</div>
 	);
 }

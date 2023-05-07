@@ -8,7 +8,7 @@ import Select from '@mui/material/Select';
 import { Category } from '@prisma/client';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { ReactElement, useState } from 'react';
 import { Text } from '../components/Text';
 import styles from './Home.module.scss';
 import { Card } from "@/components/Card";
@@ -26,12 +26,20 @@ export async function getServerSideProps() {
 	return { props: result };
 }
 
+HomePage.getLayout = function getLayout(page: ReactElement) {
+	return (
+		<Layout>
+			{page}
+		</Layout>
+	);
+};
+
 type Props = {
 	categories: Array<Category>,
 	locations: Array<string>
 }
 
-export default function Home({ categories, locations }: Props) {
+export default function HomePage({ categories, locations }: Props) {
 	const router = useRouter();
 
 	const [city, setCity] = useState('All');
@@ -47,7 +55,7 @@ export default function Home({ categories, locations }: Props) {
 	};
 
 	return (
-		<Layout>
+		<>
 			<div className={styles.backgroundImageContainer}>
 				<Image
 					src={'/images/homepage_background_2000px.webp'}
@@ -118,6 +126,6 @@ export default function Home({ categories, locations }: Props) {
 					Find Your Next Street Food
 				</Button>
 			</Card>
-		</Layout>
+		</>
 	);
 }

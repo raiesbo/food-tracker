@@ -4,17 +4,30 @@ import '@/styles/globals.css';
 import { UserProvider } from '@auth0/nextjs-auth0/client';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import type { AppProps } from 'next/app';
+import { NextPage } from "next";
+import { ReactElement, ReactNode } from "react";
 
 const theme = createTheme();
 
-export default function App({ Component, pageProps }: AppProps) {
+export type NextPageWithLayout<
+	P = Record<string, unknown>,
+	IP = P> = NextPage<P, IP> & {
+	getLayout?: (page: ReactElement) => ReactNode
+}
+
+type AppPropsWithLayout = AppProps & {
+	Component: NextPageWithLayout
+}
+
+export default function App({ Component, pageProps }: AppPropsWithLayout) {
+	const getLayout = Component.getLayout ?? ((page) => page);
 
 	return (
 		<ThemeProvider theme={theme}>
 			<UserProvider>
 				<OrderContext>
 					<ToastContext>
-						<Component {...pageProps} />
+						{getLayout(<Component {...pageProps} />)}
 					</ToastContext>
 				</OrderContext>
 			</UserProvider>

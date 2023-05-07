@@ -55,7 +55,7 @@ export const paths = {
                 { name: 'Categories', url: '/categories' },
                 { name: 'Reviews', url: '/business-reviews' },
                 { name: 'Orders', url: '/business-orders' },
-                { name: 'Events', url: '/{userId}/events' }
+                { name: 'Events', url: '/events' }
             ]
         },
         footer: [

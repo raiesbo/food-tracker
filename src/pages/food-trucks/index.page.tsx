@@ -13,7 +13,7 @@ import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import { Category } from "@prisma/client";
 import { GetServerSidePropsContext } from "next";
-import { useEffect, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import styles from './restaurants.module.scss';
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import Image from "next/image";
@@ -38,6 +38,14 @@ export async function getServerSideProps({ query }: GetServerSidePropsContext) {
 		}
 	};
 }
+
+RestaurantPage.getLayout = function getLayout(page: ReactElement) {
+	return (
+		<Layout>
+			{page}
+		</Layout>
+	);
+};
 
 type Props = {
 	locations: Array<string>,
@@ -97,7 +105,7 @@ export default function RestaurantPage({
 	];
 
 	return (
-		<Layout>
+		<>
 			<div className={styles.imageContainer}>
 				<Image
 					src={'/images/background-food-list-1500px.webp'}
@@ -187,27 +195,27 @@ export default function RestaurantPage({
 						/>
 					</Card>
 					<div className={styles.listContainer}>
-							{isLoading ? (
-								<div className={styles.spinnerContainer}>
-									<CircularProgress/>
-								</div>
+						{isLoading ? (
+							<div className={styles.spinnerContainer}>
+								<CircularProgress/>
+							</div>
+						) : (
+							restaurants.length > 0 ? (
+								restaurants?.map((restaurant: Restaurant) => (
+									<RestaurantListItem
+										key={restaurant.name}
+										restaurant={restaurant}
+									/>
+								))
 							) : (
-								restaurants.length > 0 ? (
-									restaurants?.map((restaurant: Restaurant) => (
-										<RestaurantListItem
-											key={restaurant.name}
-											restaurant={restaurant}
-										/>
-									))
-								) : (
-									<div>
-										<Text>No Food Trucks found</Text>
-									</div>
-								)
-							)}
+								<div>
+									<Text>No Food Trucks found</Text>
+								</div>
+							)
+						)}
 					</div>
 				</div>
 			</div>
-		</Layout>
+		</>
 	);
 }

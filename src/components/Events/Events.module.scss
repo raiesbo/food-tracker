@@ -1,18 +1,14 @@
 @use '@/styles/theme' as *;
 
 .root {
-  margin-top: $appBarHeight;
-  min-height: calc(100vh - $appBarHeight - $footerHeight);
-  max-width: calc(1040px + $sideBarWidth + 20px);
-  width: 100%;
-  margin-inline: auto;
+  max-width: 1040px;
   padding: 20px;
+  margin-inline: auto;
   display: flex;
   flex-direction: column;
   gap: 15px;
 
-  @include matchMedium {
-    padding-left: calc($sideBarWidth + 20px);
+  @include matchSmall {
     gap: 30px;
   }
 }

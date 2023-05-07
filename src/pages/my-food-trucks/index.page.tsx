@@ -8,6 +8,7 @@ import { User } from '@prisma/client';
 import { GetServerSidePropsContext } from "next";
 import styles from './MyFoodTrucks.module.scss';
 import { PageHeader } from "@/components/PageHeader";
+import { ReactElement } from "react";
 
 const { restaurantService } = services;
 
@@ -37,12 +38,20 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     };
 }
 
+MyFoodTrucksPage.getLayout = function getLayout(page: ReactElement) {
+    return (
+        <LayoutWithSideBar>
+            {page}
+        </LayoutWithSideBar>
+    );
+};
+
 type Props = {
     restaurants: Array<Restaurant>
     userId: User['id']
 }
 
-export default function MyRestaurants({ restaurants, userId }: Props) {
+export default function MyFoodTrucksPage({ restaurants, userId }: Props) {
 
     return (
         <LayoutWithSideBar>

@@ -15,6 +15,10 @@ const nextConfig = {
     i18n: {
         locales: ["en"],
         defaultLocale: "en"
+    },
+    modularizeImports: {
+        lodash: { transform: 'lodash/{{member}}' },
+        '@mui/material': { transform: '@mui/material/{{member}}' }
     }
 };
 

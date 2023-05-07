@@ -103,7 +103,7 @@ export default function AppBar({ window, withBackground = false, withFullNavigat
 								<Divider/>
 								<List>
 									{paths.components.Dashboard.basic?.map(item => (
-										<ListItemButton key={item.name} component='li'>
+										<ListItemButton key={item.name} component='li' onClick={handleCloseNavMenu}>
 											<Link href={item.url} className={styles.listItemLink}>
 												<SideBarIcon url={item.url} size='small'/>
 												<Text
@@ -122,7 +122,7 @@ export default function AppBar({ window, withBackground = false, withFullNavigat
 										<Divider/>
 										<List>
 											{paths.components.Dashboard.business?.map(item => (
-												<ListItemButton key={item.name} component='li'>
+												<ListItemButton key={item.name} component='li' onClick={handleCloseNavMenu}>
 													<Link
 														href={item.url.replaceAll('{userId}', userRole?.user_id)}
 														className={styles.listItemLink}
