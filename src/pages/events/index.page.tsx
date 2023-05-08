@@ -48,7 +48,10 @@ export default function EventsPage({ url, fallback }: Props) {
 		return await fetch(url).then(res => res.json()).then(({ restaurants }) => restaurants);
 	};
 
-	const { data, mutate } = useSWR(url, fetcher, { fallback });
+	const { data, mutate } = useSWR(url, fetcher, {
+		revalidateOnMount: false ,
+		fallback
+	});
 
 	return (
 		<Events restaurants={data} url={url}/>
