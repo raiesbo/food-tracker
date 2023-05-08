@@ -5,7 +5,7 @@ import { Category, Restaurant } from "@/types";
 import { paths } from "@/utils/paths";
 import { GetServerSidePropsContext, NextApiRequest } from "next";
 import { ReactElement } from "react";
-import useSWR from "swr";
+import { useData } from "@/utils";
 
 const { restaurantService, categoriesService } = services;
 
@@ -38,9 +38,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 				createdAt: cat.createdAt.toISOString()
 			})),
 			restaurant,
-			fallback: {
-				[url]: restaurant
-			},
 			url
 		}
 	};
@@ -57,15 +54,12 @@ MyNewFoodTruckPage.getLayout = function getLayout(page: ReactElement) {
 type Props = {
 	fallback: { [key: string]: Restaurant },
 	categories: Array<Category>,
+	restaurant: Restaurant,
 	url: string
 }
 
-export default function MyNewFoodTruckPage({ fallback, categories, url }: Props) {
-	const fetcher = (url: string = '') => {
-		return fetch(url).then(response => response.json()).then(({ restaurant }) => restaurant);
-	};
-
-	const { data } = useSWR((url ?? ''), fetcher, { fallback: (fallback ?? null) });
+export default function MyNewFoodTruckPage({ restaurant, categories, url }: Props) {
+	const { data } = useData<Restaurant>(url, restaurant);
 
 	return (
 		<MyFoodTruckDetails restaurant={data} categories={categories}/>

@@ -107,7 +107,7 @@ export default function EventsCreateModal({ isOpen, onClose, restaurants }: Prop
 						<DatePicker
 							label="Event Date"
 							value={event.date}
-							onChange={val => updateEvent({ date: val || '' })}
+							onChange={val => updateEvent({ date: val || (new Date()).toString() })}
 						/>
 						<TimePicker
 							label="Opening Hour"
@@ -119,7 +119,6 @@ export default function EventsCreateModal({ isOpen, onClose, restaurants }: Prop
 							value={event.closing_hour}
 							onChange={val => updateEvent({ closing_hour: val || '' })}
 						/>
-
 					</div>
 					<TextField
 						label='Street Name'

@@ -7,7 +7,7 @@ import PrismaDBClient from "@/repositories/prismaClient";
 import RestaurantWithEvents from "@/types/RestaurantWithEvents";
 import { Events } from "@/components/Events";
 import { ReactElement } from "react";
-import useSWR from "swr";
+import { useData } from "@/utils";
 
 const restaurantsServiceInstance = restaurantsService(PrismaDBClient.instance);
 
@@ -24,7 +24,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
 	return {
 		props: {
-			fallback: { [url]: error ? [] : restaurants },
+			restaurants: error ? [] : restaurants,
 			url
 		}
 	};
@@ -32,7 +32,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
 type Props = {
 	url: string,
-	fallback: { [key: string]: Array<RestaurantWithEvents> },
+	restaurants: Array<RestaurantWithEvents>,
 }
 
 EventsPage.getLayout = function getLayout(page: ReactElement) {
@@ -43,12 +43,8 @@ EventsPage.getLayout = function getLayout(page: ReactElement) {
 	);
 };
 
-export default function EventsPage({ url, fallback }: Props) {
-	const fetcher = async (url: string = '') => {
-		return await fetch(url).then(res => res.json()).then(({ restaurants }) => restaurants);
-	};
-
-	const { data } = useSWR((url ?? ''), fetcher, { fallback: (fallback ?? { [url]: [] }) });
+export default function EventsPage({ url, restaurants }: Props) {
+	const { data } = useData<Array<RestaurantWithEvents>>(url, restaurants);
 
 	return (
 		<Events restaurants={data} url={url}/>

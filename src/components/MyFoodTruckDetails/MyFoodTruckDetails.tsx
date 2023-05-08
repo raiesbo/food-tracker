@@ -20,6 +20,7 @@ import { Category, Restaurant } from "@/types";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { Switch } from "@mui/material";
 import Divider from "@mui/material/Divider";
+import { useSWRConfig } from "swr";
 
 type Props = {
 	restaurant: Restaurant,
@@ -30,8 +31,9 @@ export default function MyFoodTruckDetails({ restaurant, categories }: Props) {
 	const { user } = useUser();
 	const { dispatch } = useToast();
 
+	const { mutate } = useSWRConfig();
+
 	const [imageUrl, setImageUrl] = useState(restaurant.imageUrl);
-	const [isVisible, setIsVisible] = useState(restaurant.isVisible);
 
 	const userMetadata = user && user?.[auth0Config.metadata] as { user_id: string };
 
@@ -99,7 +101,7 @@ export default function MyFoodTruckDetails({ restaurant, categories }: Props) {
 			method: 'PUT',
 			body: JSON.stringify({ isVisible: event.target.checked || false })
 		}).then(response => {
-			if (response.ok) setIsVisible(!event.target.checked);
+			if (response.ok) mutate(`/api/restaurants/${restaurant.id}`);//setIsVisible(!event.target.checked);
 		});
 	};
 
@@ -108,7 +110,7 @@ export default function MyFoodTruckDetails({ restaurant, categories }: Props) {
 			<PageHeader title={restaurant.name || ''} childrenClassName={styles.buttonContainer}>
 				<FormControlLabel
 					control={<Switch
-						checked={isVisible}
+						checked={restaurant.isVisible}
 						onChange={onToggleFoodTruckVisibility}
 					/>}
 					label={"Make Food Truck Visible"}
