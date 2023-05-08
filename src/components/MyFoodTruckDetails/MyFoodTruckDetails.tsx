@@ -1,6 +1,6 @@
 import { useRouter } from "next/navigation";
 import { useUser } from "@auth0/nextjs-auth0/client";
-import { uploadImage, useToast } from "@/utils";
+import { uploadImage, useData, useToast } from "@/utils";
 import { ChangeEvent, useState } from "react";
 import { auth0Config, imagesConfig } from "@/utils/settings";
 import { ToastAction } from "@/components/ToastContext";
@@ -31,7 +31,7 @@ export default function MyFoodTruckDetails({ restaurant, categories }: Props) {
 	const { user } = useUser();
 	const { dispatch } = useToast();
 
-	const { mutate } = useSWRConfig();
+	const { mutate } = useData(`/api/restaurants/${restaurant.id}`, {});
 
 	const [imageUrl, setImageUrl] = useState(restaurant.imageUrl);
 
@@ -101,7 +101,7 @@ export default function MyFoodTruckDetails({ restaurant, categories }: Props) {
 			method: 'PUT',
 			body: JSON.stringify({ isVisible: event.target.checked || false })
 		}).then(response => {
-			if (response.ok) mutate(`/api/restaurants/${restaurant.id}`);//setIsVisible(!event.target.checked);
+			if (response.ok) mutate();//setIsVisible(!event.target.checked);
 		});
 	};
 

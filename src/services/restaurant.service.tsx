@@ -128,8 +128,6 @@ export default function userService({ restaurantClient }: typeof prismaClients) 
 
 				const validatedBody = validateUpdateBody(parsedBody);
 
-				console.log({ validatedBody });
-
 				const restaurant = await restaurantClient.updateRestaurant(Number(restaurantId), validatedBody);
 
 				return { result: restaurant };
