@@ -4,18 +4,24 @@ import { NextApiRequest } from 'next';
 import prismaClients from '../repositories';
 
 const validateUpdateBody = (parsedBody: Prisma.RestaurantUncheckedUpdateInput) => {
-	const verifiedBody = {} as Prisma.RestaurantUncheckedUpdateInput & { categories: Array<{ id: number }> };
+	const verifiedBody = {} as Prisma.RestaurantUncheckedUpdateInput & {
+		categories: { connect: Array<{ id: number }> }
+	};
 
 	if (parsedBody?.name) verifiedBody.name = parsedBody.name;
 	if (parsedBody?.slogan) verifiedBody.slogan = parsedBody.slogan;
 	if (parsedBody?.description) verifiedBody.description = parsedBody.description;
-	if (parsedBody?.isCashOnly) verifiedBody.isCashOnly = parsedBody.isCashOnly;
 	if (parsedBody?.imageUrl) verifiedBody.imageUrl = parsedBody.imageUrl;
+	if (typeof parsedBody?.isCashOnly === 'boolean') verifiedBody.isCashOnly = parsedBody.isCashOnly;
+	if (typeof parsedBody?.isVisible === 'boolean') verifiedBody.isVisible = parsedBody.isVisible;
 	if (
 		parsedBody?.categories
 		&& Array.isArray(parsedBody.categories)
 		&& parsedBody.categories.length > 0
-	) verifiedBody.categories = parsedBody.categories.map((category: Category) => ({ id: category.id }));
+	) verifiedBody.categories = {
+		set: [],
+		connect: parsedBody.categories.map((category: Category) => ({ id: category.id }))
+	};
 
 	return verifiedBody;
 };
@@ -120,9 +126,11 @@ export default function userService({ restaurantClient }: typeof prismaClients) 
 			try {
 				const parsedBody = JSON.parse(req.body);
 
-				const vaildatedBody = validateUpdateBody(parsedBody);
+				const validatedBody = validateUpdateBody(parsedBody);
 
-				const restaurant = await restaurantClient.updateRestaurant(Number(restaurantId), vaildatedBody);
+				console.log({ validatedBody });
+
+				const restaurant = await restaurantClient.updateRestaurant(Number(restaurantId), validatedBody);
 
 				return { result: restaurant };
 			} catch (e) {
