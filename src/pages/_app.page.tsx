@@ -6,6 +6,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import type { AppProps } from 'next/app';
 import { NextPage } from "next";
 import { ReactElement, ReactNode } from "react";
+import { SWRConfig } from "swr";
 
 const theme = createTheme();
 
@@ -24,13 +25,15 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
 
 	return (
 		<ThemeProvider theme={theme}>
-			<UserProvider>
-				<OrderContext>
-					<ToastContext>
-						{getLayout(<Component {...pageProps} />)}
-					</ToastContext>
-				</OrderContext>
-			</UserProvider>
+			<SWRConfig value={{ revalidateOnMount: false }}>
+				<UserProvider>
+					<OrderContext>
+						<ToastContext>
+							{getLayout(<Component {...pageProps} />)}
+						</ToastContext>
+					</OrderContext>
+				</UserProvider>
+			</SWRConfig>
 		</ThemeProvider>
 	);
 }

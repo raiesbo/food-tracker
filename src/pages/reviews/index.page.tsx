@@ -57,14 +57,11 @@ type Props = {
 }
 
 export default function MyReviewsPage({ fallback, url, userId }: Props) {
-	const fetcher = async (url: string) => {
+	const fetcher = async (url: string = '') => {
 		return await fetch(url).then(res => res.json()).then(({ reviews }) => reviews);
 	};
 
-	const { data, mutate } = useSWR((url ?? ''), fetcher, {
-		revalidateOnMount: false,
-		fallback: (fallback ?? null)
-	});
+	const { data, mutate } = useSWR((url ?? ''), fetcher, { fallback: (fallback ?? null) });
 
 	const onDelete = async () => {
 		await mutate();

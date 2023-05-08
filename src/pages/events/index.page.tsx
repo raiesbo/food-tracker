@@ -44,14 +44,11 @@ EventsPage.getLayout = function getLayout(page: ReactElement) {
 };
 
 export default function EventsPage({ url, fallback }: Props) {
-	const fetcher = async (url: string) => {
+	const fetcher = async (url: string = '') => {
 		return await fetch(url).then(res => res.json()).then(({ restaurants }) => restaurants);
 	};
 
-	const { data } = useSWR((url ?? ''), fetcher, {
-		revalidateOnMount: false,
-		fallback: (fallback ?? null)
-	});
+	const { data } = useSWR((url ?? ''), fetcher, { fallback: (fallback ?? { [url]: [] }) });
 
 	return (
 		<Events restaurants={data} url={url}/>

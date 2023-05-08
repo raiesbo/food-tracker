@@ -61,14 +61,11 @@ type Props = {
 }
 
 export default function MyNewFoodTruckPage({ fallback, categories, url }: Props) {
-	const fetcher = (url: string) => {
+	const fetcher = (url: string = '') => {
 		return fetch(url).then(response => response.json()).then(({ restaurant }) => restaurant);
 	};
 
-	const { data } = useSWR((url ?? ''), fetcher, {
-		revalidateOnMount: false,
-		fallback: (fallback ?? null)
-	});
+	const { data } = useSWR((url ?? ''), fetcher, { fallback: (fallback ?? null) });
 
 	return (
 		<MyFoodTruckDetails restaurant={data} categories={categories}/>
