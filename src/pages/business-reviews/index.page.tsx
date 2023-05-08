@@ -21,9 +21,14 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
 		return { props: { restaurants: [] } };
 	}
 
-	const { result: restaurants } = await reviewsServiceInstance.getRestaurantsWithReviews(userId);
+	const { result: restaurants, error } = await reviewsServiceInstance.getRestaurantsWithReviews(userId);
 
-	return { props: { restaurants, userId } };
+	return {
+		props: {
+			restaurants: error ? [] : restaurants,
+			userId
+		}
+	};
 };
 
 BusinessReviewsPage.getLayout = function getLayout(page: ReactElement) {

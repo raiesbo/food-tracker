@@ -65,9 +65,9 @@ export default function MyNewFoodTruckPage({ fallback, categories, url }: Props)
 		return fetch(url).then(response => response.json()).then(({ restaurant }) => restaurant);
 	};
 
-	const { data } = useSWR(url, fetcher, {
+	const { data } = useSWR((url ?? ''), fetcher, {
 		revalidateOnMount: false,
-		fallback
+		fallback: (fallback ?? null)
 	});
 
 	return (
