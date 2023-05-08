@@ -1,4 +1,4 @@
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { uploadImage, useToast } from "@/utils";
 import { ChangeEvent, useState } from "react";
