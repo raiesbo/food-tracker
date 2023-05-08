@@ -85,6 +85,9 @@ CREATE TABLE "Location" (
     "zip" TEXT,
     "city" TEXT,
     "country" TEXT,
+    "lat" TEXT,
+    "lon" TEXT,
+    "formattedAddress" TEXT,
     "isMainLocation" BOOLEAN NOT NULL DEFAULT false,
     "restaurantId" INTEGER,
 
