@@ -90,6 +90,7 @@ CREATE TABLE "Location" (
     "formattedAddress" TEXT,
     "isMainLocation" BOOLEAN NOT NULL DEFAULT false,
     "restaurantId" INTEGER,
+    "userId" INTEGER,
 
     CONSTRAINT "Location_pkey" PRIMARY KEY ("id")
 );
@@ -162,6 +163,9 @@ CREATE TABLE "_CategoryToRestaurant" (
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "Location_userId_key" ON "Location"("userId");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "Category_name_key" ON "Category"("name");
 
 -- CreateIndex
@@ -190,6 +194,9 @@ ALTER TABLE "Schedule" ADD CONSTRAINT "Schedule_restaurantId_fkey" FOREIGN KEY (
 
 -- AddForeignKey
 ALTER TABLE "Location" ADD CONSTRAINT "Location_restaurantId_fkey" FOREIGN KEY ("restaurantId") REFERENCES "Restaurant"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Location" ADD CONSTRAINT "Location_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Category" ADD CONSTRAINT "Category_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;

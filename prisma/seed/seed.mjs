@@ -11,9 +11,12 @@ async function main() {
             phone: '0179408329048',
             firstName: 'Alice',
             lastName: 'Muller',
-            role: 'CUSTOMER'
-        },
-    })
+            role: 'CUSTOMER',
+            location: {
+                create: { streetName: '' }
+            }
+        }
+    });
 
     const bob = await prisma.user.upsert({
         where: { email: 'bob@uoc.edu' },
@@ -23,9 +26,12 @@ async function main() {
             phone: '0179408329048',
             firstName: 'Bob',
             lastName: 'Madok',
-            role: 'SP'
-        },
-    })
+            role: 'SP',
+            location: {
+                create: { streetName: '' }
+            }
+        }
+    });
 
     const mainUser = await prisma.user.upsert({
         where: { email: 'raiesbo@uoc.edu' },
@@ -36,9 +42,12 @@ async function main() {
             phone: '0179408329048',
             firstName: 'Raimon',
             lastName: 'Espasa',
-            role: 'SP'
-        },
-    })
+            role: 'SP',
+            location: {
+                create: { streetName: '' }
+            }
+        }
+    });
 
     const categorySpanish = await prisma.category.upsert({
         where: { name: 'Spanish' },
@@ -46,8 +55,8 @@ async function main() {
         create: {
             name: 'Spanish',
             userId: bob.id
-        },
-    })
+        }
+    });
 
     const categoryGerman = await prisma.category.upsert({
         where: { name: 'German' },
@@ -55,8 +64,8 @@ async function main() {
         create: {
             name: 'German',
             userId: alice.id
-        },
-    })
+        }
+    });
 
     const categoryFrench = await prisma.category.upsert({
         where: { name: 'French' },
@@ -64,8 +73,8 @@ async function main() {
         create: {
             name: 'French',
             userId: bob.id
-        },
-    })
+        }
+    });
 
     const categoryThai = await prisma.category.upsert({
         where: { name: 'Thai' },
@@ -73,8 +82,8 @@ async function main() {
         create: {
             name: 'Thai',
             userId: alice.id
-        },
-    })
+        }
+    });
 
     const categoryJapanese = await prisma.category.upsert({
         where: { name: 'Japanese' },
@@ -82,8 +91,8 @@ async function main() {
         create: {
             name: 'Japanese',
             userId: mainUser.id
-        },
-    })
+        }
+    });
 
     const categoryMexican = await prisma.category.upsert({
         where: { name: 'Mexican' },
@@ -91,8 +100,8 @@ async function main() {
         create: {
             name: 'Mexican',
             userId: bob.id
-        },
-    })
+        }
+    });
 
     const categoryAmerican = await prisma.category.upsert({
         where: { name: 'American' },
@@ -100,9 +109,8 @@ async function main() {
         create: {
             name: 'American',
             userId: mainUser.id
-        },
-    })
-
+        }
+    });
 
     const restaurantBurger = await prisma.restaurant.create({
         data: {
@@ -146,7 +154,7 @@ async function main() {
                         city: 'Berlin',
                         streetName: 'Blücherstraße',
                         streetNumber: '61B'
-                    },
+                    }
                     // {
                     //     country: "Spain",
                     //     city: 'Barcelona',
@@ -158,7 +166,11 @@ async function main() {
             reviews: {
                 create: [
                     { comment: 'Really delicious, 100% recomended!', rating: 1, userId: bob.id },
-                    { comment: 'The food was good, but the service could improve quite a lot.', rating: 5, userId: alice.id },
+                    {
+                        comment: 'The food was good, but the service could improve quite a lot.',
+                        rating: 5,
+                        userId: alice.id
+                    },
                     { rating: 2, userId: mainUser.id },
                     { rating: 4, userId: bob.id },
                     { comment: 'Good but expensive...', rating: 3, userId: alice.id }
@@ -176,7 +188,7 @@ async function main() {
                 ]
             }
         }
-    })
+    });
 
     const restaurantSpanish = await prisma.restaurant.create({
         data: {
@@ -241,7 +253,11 @@ async function main() {
             reviews: {
                 create: [
                     { comment: 'Really delicious, 100% recomended!', rating: 5, userId: bob.id },
-                    { comment: 'The food was good, but the service could improve quite a lot.', rating: 5, userId: alice.id },
+                    {
+                        comment: 'The food was good, but the service could improve quite a lot.',
+                        rating: 5,
+                        userId: alice.id
+                    },
                     { rating: 2, userId: mainUser.id },
                     { rating: 3, userId: bob.id },
                     { comment: 'Good but expensive...', rating: 5, userId: mainUser.id }
@@ -259,8 +275,7 @@ async function main() {
                 ]
             }
         }
-    })
-
+    });
 
     const restaurantTaps = await prisma.restaurant.create({
         data: {
@@ -305,7 +320,7 @@ async function main() {
                         streetName: 'Wassertorstraße',
                         streetNumber: '19',
                         zip: '10969'
-                    },
+                    }
                     // {
                     //     country: "Spain",
                     //     city: 'Barcelona',
@@ -318,7 +333,11 @@ async function main() {
             reviews: {
                 create: [
                     { comment: 'Really delicious, 100% recomended!', rating: 1, userId: bob.id },
-                    { comment: 'The food was good, but the service could improve quite a lot.', rating: 5, userId: alice.id },
+                    {
+                        comment: 'The food was good, but the service could improve quite a lot.',
+                        rating: 5,
+                        userId: alice.id
+                    },
                     { rating: 1, userId: alice.id },
                     { rating: 1, userId: alice.id },
                     { comment: 'So so...', rating: 3, userId: mainUser.id }
@@ -336,14 +355,15 @@ async function main() {
                 ]
             }
         }
-    })
+    });
 }
+
 main()
     .then(async () => {
-        await prisma.$disconnect()
+        await prisma.$disconnect();
     })
     .catch(async (e) => {
-        console.error(e)
-        await prisma.$disconnect()
-        process.exit(1)
-    })
+        console.error(e);
+        await prisma.$disconnect();
+        process.exit(1);
+    });

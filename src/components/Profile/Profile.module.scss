@@ -42,10 +42,6 @@
   @include matchSmall {
     gap: 30px;
   }
-
-  @include matchMedium {
-    gap: 50px;
-  }
 }
 
 .imageContainer {

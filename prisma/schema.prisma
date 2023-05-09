@@ -19,6 +19,7 @@ model User {
   imageUrl        String?
   withVisibleData Boolean?     @default(true)
   role            UserType     @default(CUSTOMER)
+  location        Location?
   reviews         Review[]
   resturants      Restaurant[]
   categories      Category[]
@@ -39,13 +40,13 @@ model Review {
   comment      String?
   user         User?       @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId       Int?
-  // TODO To be implemented
-  // answers      Comment[]   @relation("answers")
-  // responseToId String?     
-  // responseTo   Comment?    @relation("answers", fields: [responseToId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   restaurant   Restaurant? @relation(fields: [restaurantId], references: [id])
   restaurantId Int?
   likes        Like[]
+  // TODO To be implemented
+  // answers      Comment[]   @relation("answers")
+  // responseToId String?
+  // responseTo   Comment?    @relation("answers", fields: [responseToId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model Restaurant {
@@ -120,6 +121,8 @@ model Location {
   restaurant       Restaurant? @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   restaurantId     Int?
   event            Event?
+  user             User?       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId           Int?        @unique
 }
 
 model Category {

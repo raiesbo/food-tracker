@@ -19,6 +19,18 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         return res.status(201).json({ user });
     }
 
+    if (req.method === 'DELETE') {
+        const {
+            error
+        } = await userService.deleteUser(req);
+
+        if (error) {
+            return res.status(error.status).json({ errorMessage: error.message });
+        }
+
+        return res.status(204).end();
+    }
+
     res.status(405).end();
 }
 

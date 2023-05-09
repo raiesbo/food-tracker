@@ -12,6 +12,9 @@ import { ToastAction } from "@/components/ToastContext";
 import FileService from "@/services/file.service";
 import { User } from "@prisma/client";
 import { UserProfile } from "@auth0/nextjs-auth0/dist/client";
+import Divider from "@mui/material/Divider";
+import { paths } from "@/utils/paths";
+import { useRouter } from "next/navigation";
 
 type Props = {
 	user: User,
@@ -20,6 +23,7 @@ type Props = {
 
 export default function Profile({ user, auth0User }: Props) {
 	const { dispatch } = useToast();
+	const router = useRouter();
 
 	const [isUpdate, setIsUpdate] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
@@ -29,6 +33,26 @@ export default function Profile({ user, auth0User }: Props) {
 	const [email, setEmail] = useState(user.email || '');
 	const [phone, setPhone] = useState(user.phone || '');
 	const [imageUrl, setImageUrl] = useState(user.imageUrl || '');
+
+	const onRemove = () => {
+		fetch(`/api/users/${user.id}`, {
+			method: 'DELETE'
+		}).then(response => {
+			dispatch({
+				type: ToastAction.UPDATE_TOAST, payload: response.ok ? {
+					message: 'User successfully removed',
+					severity: 'success'
+				} : {
+					message: 'There has been a server error',
+					severity: 'error'
+				}
+			});
+
+			if (response.ok) setTimeout(() => {
+				router.push(paths.home);
+			}, 1000);
+		});
+	};
 
 	const onCancel = () => {
 		setFirstName(user.firstName || '');
@@ -69,7 +93,6 @@ export default function Profile({ user, auth0User }: Props) {
 			const file = files[0];
 			const extension = file?.name?.split('.')?.at(-1)?.toLowerCase() as "png" | "jpg";
 			const type = 'users';
-
 			const { result, error } = await FileService().createFile({
 				token: auth0User.accessToken as string,
 				file,
@@ -78,7 +101,6 @@ export default function Profile({ user, auth0User }: Props) {
 				format: extension,
 				typeId: user.id
 			});
-
 			dispatch({
 				type: ToastAction.UPDATE_TOAST, payload: error ? {
 					message: 'Error while uploading the image',
@@ -226,6 +248,16 @@ export default function Profile({ user, auth0User }: Props) {
 						/>
 					</div>
 				</InfoSection>
+				<Divider/>
+				<div>
+					<Button
+						variant="outlined"
+						onClick={onRemove}
+						color='error'
+					>
+						REMOVE ACCOUNT
+					</Button>
+				</div>
 			</section>
 		</div>
 	);
