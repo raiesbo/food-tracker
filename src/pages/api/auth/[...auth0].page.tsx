@@ -5,7 +5,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 const afterCallback = async (req: NextApiRequest, res: NextApiResponse, session: Session) => {
     const payload = {
         userId: session.user.sub,
-        exp: Math.floor(Date.now() / 1000) + 60 * 60
+        exp: Math.floor(Date.now() / 1000) + 7 * 24 * 60 * 60
     };
 
     session.user.accessToken = jwt.sign(payload, process.env.SUPABASE_JWT_SECRET as Secret);
