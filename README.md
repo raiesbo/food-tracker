@@ -33,14 +33,16 @@ Description here...
 - `AUTH0_CLIENT_SECRET`: Auth0 client secret for the applications authentication.
 - `AUTH0_CLIENT_ID_API`: Auth0 client id for the Matchine-to-Machine Application.
 - `AUTH0_CLIENT_SECRET_API`: Auth0 client secret for the Matchine-to-Machine Application.
-- `DROPBOX_API_TOKEN`: Dropbox connection token to store images and other files. Can be found in the App section (To be implemented).
+- `NEXT_PUBLIC_SUPABASE_URL`: Supabase project's base URL.
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`: Anon key to secure Supabase client libraries.
+- `SUPABASE_JWT_SECRET`: Token to decode supabase JWT and create your own ones.
 
 ## Technologies
 
 - [Next.js](https://nextjs.org/)
-- [Prisma](https://www.prisma.io/)
+- [PostgreSQL](https://www.postgresql.org/)
 - [Auth0 SDK](https://auth0.com/docs/quickstart/webapp/nextjs)
-- [Dropbox SDK](https://dropbox.github.io/dropbox-sdk-js/)
 - [MongoDB](https://www.mongodb.com/)
 - [GitHub Actions](https://github.com/features/actions)
 - [Vitest](https://vitest.dev/)
+- [Supabase](https://supabase.com/docs)
