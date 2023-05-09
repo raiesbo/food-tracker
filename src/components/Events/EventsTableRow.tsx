@@ -1,7 +1,9 @@
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import styles from "./EventsTableRow.module.scss";
-import { formatDate, formatTime, useToast } from "@/utils";
+import { useToast } from "@/utils";
+import formatDate from "@/utils/formatDate";
+import formatTime from "@/utils/formatTime";
 import { Event } from '@prisma/client';
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from "@mui/material/IconButton";

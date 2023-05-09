@@ -6,6 +6,4 @@ export { default as useData } from './hooks/useData';
 export * as paths from './paths';
 export * as settings from './settings';
 export { default as uploadImage } from './uploadImage';
-export { default as formatDate } from './formatDate';
-export { default as formatTime } from './formatTime';
 export { default as validatePassword } from './validators/validatePassword';

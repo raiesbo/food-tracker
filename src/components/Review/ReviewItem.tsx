@@ -1,5 +1,6 @@
 import { Review } from "@/types";
-import { formatDate, useToast } from "@/utils";
+import useToast from "@/utils/hooks/useToast";
+import formatDate from "@/utils/formatDate";
 import CancelIcon from '@mui/icons-material/Cancel';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';

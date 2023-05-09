@@ -15,7 +15,7 @@ import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import Table from "@mui/material/Table";
 import Chip from "@mui/material/Chip";
-import { formatDate } from "@/utils";
+import formatDate from "@/utils/formatDate";
 import { ReactElement } from "react";
 
 const ordersServiceInstance = ordersService(PrismaDBClient.instance);

@@ -6,7 +6,7 @@ import RestaurantDetailsContact from "@/components/RestaurantDetails/RestaurantD
 import RestaurantDetailsHours from "@/components/RestaurantDetails/RestaurantDetailsHours";
 import RestaurantDetailsOrder from "@/components/RestaurantDetails/RestaurantDetailsOrder";
 import RestaurantDetailsReview from "@/components/RestaurantDetails/RestaurantDetailsReview";
-import RestaurantListOrderConfirmation from "@/components/RestaurantList/RestaurantListOrderConfirmation";
+import RestaurantDetailsOrderConfirmation from "@/components/RestaurantDetails/RestaurantDetailsOrderConfirmation";
 import { ToastAction } from "@/components/ToastContext";
 import { Dish, Restaurant } from "@/types";
 import { calcRating, findMainLocation, useToast } from "@/utils";
@@ -16,8 +16,6 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 import LocalGroceryStoreIcon from '@mui/icons-material/LocalGroceryStore';
 import Badge from "@mui/material/Badge";
 import IconButton from "@mui/material/IconButton";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import cc from 'classcat';
 import { Dayjs } from "dayjs";
 import { GetServerSidePropsContext } from "next";
@@ -227,16 +225,14 @@ export default function RestaurantDetailsPage({ restaurant }: Props) {
 						/>
 					</div>
 				</div>
-				<LocalizationProvider dateAdapter={AdapterDayjs}>
-					<RestaurantListOrderConfirmation
-						isOpen={isConfirmationOpen}
-						onCancel={() => setIsConfirmationOpen(false)}
-						onAccept={onConfirmOrder}
-						menu={restaurant.menu}
-						order={orderState[restaurant.id]}
-						isLoading={isLoading}
-					/>
-				</LocalizationProvider>
+				<RestaurantDetailsOrderConfirmation
+					isOpen={isConfirmationOpen}
+					onCancel={() => setIsConfirmationOpen(false)}
+					onAccept={onConfirmOrder}
+					menu={restaurant.menu}
+					order={orderState[restaurant.id]}
+					isLoading={isLoading}
+				/>
 			</div>
 		</>
 	);
