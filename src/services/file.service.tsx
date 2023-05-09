@@ -8,7 +8,7 @@ export default function FileService() {
             file: File,
             userId: string | User['id'],
             type: 'restaurants' | 'dishes' | 'users',
-            format: 'png' | 'jpg'
+            format: 'png' | 'jpg' | 'webp' | 'svg'
             typeId: User['id']
         }) => {
             const { data, error } = await supabaseClient(token)
