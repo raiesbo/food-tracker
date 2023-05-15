@@ -32,67 +32,11 @@
 
 .bodyContainer {
   display: grid;
-  grid-template-areas:
-        'image'
-        'user'
-        'reviews';
   grid-template-columns: 1fr;
   gap: 10px;
 
   @include matchSmall {
-    gap: 30px;
-  }
-}
-
-.imageContainer {
-  position: relative;
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  overflow: hidden;
-  grid-area: img;
-
-  @include matchMedium {
-    width: 200px;
-    height: 200px;
-  }
-}
-
-.userInfo {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-
-  @include matchSmall {
-    gap: 15px;
-  }
-}
-
-.imageUploadInput {
-  cursor: pointer;
-
-  & + input {
-    visibility: hidden;
-  }
-}
-
-.name {
-  grid-area: firstName;
-}
-
-.last {
-  grid-area: lastName;
-}
-
-.topProfileInfo {
-  display: grid;
-  grid-template-areas:
-          "img firstName"
-          "img lastName";
-  grid-template-columns: min-content 1fr;
-  gap: 15px;
-
-  @include matchSmall {
+    grid-template-columns: 3fr 2fr;
     gap: 30px;
   }
 }

@@ -1,20 +1,23 @@
 import styles from './Profile.module.scss';
 import { PageHeader } from "@/components/PageHeader";
 import Button from "@mui/material/Button";
-import Image from "next/image";
 import { imagesConfig } from "@/utils/settings";
-import { InfoSection } from "@/components/InfoSection";
-import { Text } from "@/components/Text";
-import TextField from "@mui/material/TextField";
 import { uploadImage, useToast } from "@/utils";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useReducer, useState } from "react";
 import { ToastAction } from "@/components/ToastContext";
 import FileService from "@/services/file.service";
-import { User } from "@prisma/client";
 import { UserProfile } from "@auth0/nextjs-auth0/dist/client";
 import Divider from "@mui/material/Divider";
 import { paths } from "@/utils/paths";
 import { useRouter } from "next/navigation";
+import User from "@/types/User";
+import ProfileLocation from "@/components/Profile/ProfileLocation";
+import ProfileUserData from "@/components/Profile/ProfileUserData";
+
+type UserReducer = {
+	user: Partial<User>,
+	location: Partial<User['location']>
+}
 
 type Props = {
 	user: User,
@@ -28,11 +31,21 @@ export default function Profile({ user, auth0User }: Props) {
 	const [isUpdate, setIsUpdate] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 
-	const [firstName, setFirstName] = useState(user.firstName || '');
-	const [lastName, setLastname] = useState(user.lastName || '');
-	const [email, setEmail] = useState(user.email || '');
-	const [phone, setPhone] = useState(user.phone || '');
-	const [imageUrl, setImageUrl] = useState(user.imageUrl || '');
+	const [userData, updateUserData] = useReducer((previous: UserReducer, payload: Partial<UserReducer>) => {
+		return { user: { ...previous.user, ...payload.user }, location: { ...previous.location, ...payload.location } };
+	}, { user: {
+			firstName: user.firstName || '',
+			lastName: user.lastName || '',
+			email: user.email || '',
+			phone: user.phone || '',
+			imageUrl: user.imageUrl || ''
+		}, location: {
+			streetName: user.location?.streetName,
+			streetNumber: user.location?.streetNumber,
+			city: user.location?.city,
+			country: user.location?.country,
+			zip: user.location?.zip
+		} });
 
 	const onRemove = () => {
 		fetch(`/api/users/${user.id}`, {
@@ -55,10 +68,22 @@ export default function Profile({ user, auth0User }: Props) {
 	};
 
 	const onCancel = () => {
-		setFirstName(user.firstName || '');
-		setLastname(user.lastName || '');
-		setEmail(user.email || '');
-		setPhone(user.phone || '');
+		updateUserData({
+			user: {
+				firstName: user.firstName || '',
+				lastName: user.lastName || '',
+				email: user.email || '',
+				phone: user.phone || '',
+				imageUrl: user.imageUrl || auth0User?.picture || imagesConfig.default
+			},
+			location: {
+				streetName: user.location?.streetName,
+				streetNumber: user.location?.streetNumber,
+				city: user.location?.city,
+				country: user.location?.country,
+				zip: user.location?.zip
+			}
+		});
 
 		setIsUpdate(false);
 	};
@@ -68,7 +93,10 @@ export default function Profile({ user, auth0User }: Props) {
 
 		fetch(`/api/users/${user.id}`, {
 			method: 'PUT',
-			body: JSON.stringify({ firstName, lastName, email, phone })
+			body: JSON.stringify({
+				user: userData.user,
+				location: { id: user.location?.id, ...userData.location }
+			})
 		}).then(response => {
 			if (response.ok) return;
 			onCancel();
@@ -113,7 +141,7 @@ export default function Profile({ user, auth0User }: Props) {
 
 			if (result) {
 				const newImageUrl = await uploadImage({ userId: user.id, type, typeId: user.id, extension });
-				if (newImageUrl) setImageUrl(newImageUrl);
+				if (newImageUrl) updateUserData({ user: { imageUrl: newImageUrl } });
 			}
 
 			setIsLoading(false);
@@ -157,108 +185,30 @@ export default function Profile({ user, auth0User }: Props) {
 				)}
 			</PageHeader>
 			<section className={styles.bodyContainer}>
-				<InfoSection
-					title='Personal Information'
-					childrenClassName={styles.userInfo}
-				>
-					<div className={styles.topProfileInfo}>
-						<div className={styles.imageContainer}>
-							<label htmlFor={`users_${user.id}`} className={styles.imageUploadInput}>
-								<Image
-									alt='Users image'
-									src={imageUrl || auth0User?.picture || imagesConfig.default}
-									fill
-									className={styles.image}
-									style={{ objectFit: 'cover' }}
-									sizes="(max-width: 600px) 100px,(max-width: 900px) 150px, 200px"
-								/>
-							</label>
-							<input
-								id={`users_${user.id}`}
-								type='file'
-								accept="image/jpg,image/png"
-								onChange={updateFile}
-							/>
-						</div>
-						<div className={styles.name}>
-							<Text variant={'h4'} bold>
-								First Name
-							</Text>
-							<TextField
-								value={firstName}
-								label=''
-								onChange={(e) => setFirstName(e.target.value)}
-								fullWidth
-								sx={{ mt: 1, backgroundColor: 'white' }}
-								disabled={!isUpdate || isLoading}
-							/>
-						</div>
-						<div className={styles.last}>
-							<Text variant={'h4'} bold>
-								Last Name
-							</Text>
-							<TextField
-								value={lastName}
-								label=''
-								onChange={(e) => setLastname(e.target.value)}
-								fullWidth
-								sx={{ mt: 1, backgroundColor: 'white' }}
-								disabled={!isUpdate || isLoading}
-							/>
-						</div>
-					</div>
-					<div>
-						<Text variant={'h4'} bold>
-							Email
-						</Text>
-						<TextField
-							value={email}
-							label=''
-							onChange={(e) => setEmail(e.target.value)}
-							fullWidth
-							sx={{ mt: 1, backgroundColor: 'white' }}
-							disabled={!isUpdate || isLoading}
-						/>
-					</div>
-					<div>
-						<Text variant={'h4'} bold>
-							Phone Number
-						</Text>
-						<TextField
-							value={phone}
-							label=''
-							onChange={(e) => setPhone(e.target.value)}
-							fullWidth
-							sx={{ mt: 1, backgroundColor: 'white' }}
-							disabled={!isUpdate || isLoading}
-						/>
-					</div>
-					<div>
-						<Text variant={'h4'} bold>
-							Profile Picture URL
-						</Text>
-						<TextField
-							value={imageUrl}
-							label=''
-							onChange={(e) => setImageUrl(e.target.value)}
-							fullWidth
-							sx={{ mt: 1, backgroundColor: 'white' }}
-							disabled={!isUpdate || isLoading}
-							multiline={isUpdate}
-						/>
-					</div>
-				</InfoSection>
-				<Divider/>
-				<div>
-					<Button
-						variant="outlined"
-						onClick={onRemove}
-						color='error'
-					>
-						REMOVE ACCOUNT
-					</Button>
-				</div>
+				<ProfileUserData
+					userData={userData.user}
+					updateUserData={updateUserData}
+					isLoading={isLoading}
+					isUpdate={isUpdate}
+					updateFile={updateFile}
+				/>
+				<ProfileLocation
+					location={userData.location}
+					isLoading={isLoading}
+					isUpdate={isUpdate}
+					updateLocation={updateUserData}
+				/>
 			</section>
+			<Divider/>
+			<div>
+				<Button
+					variant="outlined"
+					onClick={onRemove}
+					color='error'
+				>
+					REMOVE ACCOUNT
+				</Button>
+			</div>
 		</div>
 	);
 }

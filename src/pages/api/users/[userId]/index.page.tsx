@@ -1,16 +1,16 @@
-import services from '@/services';
 import { withApiAuthRequired } from '@auth0/nextjs-auth0';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import userService from "@/services/user.serviceClient";
+import PrismaDBClient from "@/repositories/prismaClient";
 
-const { userService } = services;
-
+const userServiceInstance = userService(PrismaDBClient);
 async function handler(req: NextApiRequest, res: NextApiResponse) {
 
     if (req.method === 'PUT') {
         const {
             result: user,
             error
-        } = await userService.updateUser(req);
+        } = await userServiceInstance.updateUser(req);
 
         if (error) {
             return res.status(error.status).json({ errorMessage: error.message });
@@ -22,7 +22,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === 'DELETE') {
         const {
             error
-        } = await userService.deleteUser(req);
+        } = await userServiceInstance.deleteUser(req);
 
         if (error) {
             return res.status(error.status).json({ errorMessage: error.message });

@@ -1,0 +1,15 @@
+@use "@/styles/theme" as *;
+
+.root {
+
+}
+
+.userLocation {
+  display: flex !important;
+  flex-direction: column;
+  gap: 10px;
+
+  @include matchSmall {
+    gap: 15px;
+  }
+}

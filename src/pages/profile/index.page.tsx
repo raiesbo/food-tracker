@@ -1,14 +1,15 @@
 import LayoutWithSideBar from "@/components/Layout/LayoutWithSideBar";
-import services from "@/services";
 import { auth0Config } from "@/utils/settings";
 import { getSession } from "@auth0/nextjs-auth0";
 import { UserProfile } from "@auth0/nextjs-auth0/client";
-import { User } from "@prisma/client";
 import { GetServerSidePropsContext } from "next";
 import { ReactElement } from "react";
 import { Profile } from '@/components/Profile';
+import User from "@/types/User";
+import userService from "@/services/user.serviceClient";
+import PrismaDBClient from "@/repositories/prismaClient";
 
-const { userService } = services;
+const userServiceInstance = userService(PrismaDBClient);
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
 	const session = await getSession(context.req, context.res);
@@ -17,7 +18,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 	const {
 		result: user,
 		error
-	} = await userService.getUser(userId);
+	} = await userServiceInstance.getUser(userId);
 
 	if (error) return {
 		redirect: {
