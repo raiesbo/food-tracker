@@ -7,7 +7,7 @@ import styles from './MyFoodTruckLocations.module.scss';
 import { GeocodeUpdate } from "@/components/GeocodeUpdate";
 import GeocodeLocation from "@/types/GeocodeLocation";
 import geocodeService from "@/services/geocode.service";
-import { useData, useToast } from "@/utils";
+import { useData } from "@/utils";
 
 type Props = { location: Location }
 
