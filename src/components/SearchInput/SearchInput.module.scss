@@ -1,0 +1,9 @@
+.root {
+  border-radius: 15px;
+  background-color: #ececec;
+  display: grid;
+  grid-template-columns: min-content 1fr;
+  gap: 5px;
+  align-items: center;
+  padding: 3px 8px;
+}

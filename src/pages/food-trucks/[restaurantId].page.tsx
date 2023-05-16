@@ -27,6 +27,7 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import Image from "next/image";
 import restaurantsService from "@/services/restaurant.serviceClient";
 import PrismaDBClient from "@/repositories/prismaClient";
+import { SearchInput } from "@/components/SearchInput";
 
 const restaurantServiceInstance = restaurantsService(PrismaDBClient.instance);
 
@@ -56,6 +57,7 @@ export default function RestaurantDetailsPage({ restaurant }: Props) {
 	const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 	const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
+	const [ingredientsFilter, setIngredientsFilter] = useState('');
 	const { state: orderState, dispatch: orderDispatch } = userOrder();
 	const { dispatch } = useToast();
 
@@ -191,11 +193,20 @@ export default function RestaurantDetailsPage({ restaurant }: Props) {
 						<Text>
 							{restaurant.description}
 						</Text>
-						<Text as='h3'>
-							Menu
-						</Text>
+						<div className={styles.menuHeader}>
+							<Text as='h3'>
+								Menu
+							</Text>
+							<SearchInput
+								value={ingredientsFilter}
+								onUpdate={setIngredientsFilter}
+								placeholder='Filter by ingredients'
+							/>
+						</div>
 						<div className={styles.menuList}>
-							{restaurant.menu.map((dish: Dish) => {
+							{restaurant.menu
+								.filter(dish => dish.ingredients?.toLowerCase().includes(ingredientsFilter.toLowerCase()))
+								.map((dish: Dish) => {
 								return (
 									<MenuItem
 										key={dish.id}
