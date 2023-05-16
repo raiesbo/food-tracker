@@ -31,7 +31,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         return res.status(204).end();
     }
 
-    res.status(405).end();
+    return res.status(405).end();
 }
 
 export default withApiAuthRequired(handler);

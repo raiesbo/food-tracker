@@ -46,7 +46,10 @@ type Props = {
 export default function BusinessReviewsPage({ restaurants, userId }: Props) {
 	return (
 		<div className={styles.root}>
-			<PageHeader title={'Food Truck Reviews'}></PageHeader>
+			<PageHeader
+				title={'Food Truck Reviews'}
+				description={'Analyze the opinions given to your businesses.'}
+			/>
 			{restaurants.map(restaurant => {
 				return restaurant.reviews.length > 0 && (
 					<div key={restaurant.id} className={styles.tableContainer}>

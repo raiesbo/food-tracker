@@ -131,7 +131,10 @@ export default function CategoriesPage({ categories, userId }: Props) {
 
 	return (
 		<div className={styles.root}>
-			<PageHeader title={'Categories'}></PageHeader>
+			<PageHeader
+				title={'Food Types'}
+				description={'Create as many categories as you need to perfectly describe your food trucks.'}
+			/>
 			<Card className={styles.card}>
 				<Table>
 					<TableHead>

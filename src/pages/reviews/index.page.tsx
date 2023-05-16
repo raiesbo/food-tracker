@@ -69,7 +69,10 @@ export default function MyReviewsPage({ fallback, url, userId }: Props) {
 
 	return (
 		<div className={styles.root}>
-			<PageHeader title={'My Reviews'}></PageHeader>
+			<PageHeader
+				title={'My Reviews'}
+				description={'Find here all your written reviews and update them if you want.'}
+			/>
 			<div className={styles.reviewsContainer}>
 				{data && data.length > 0 ? (
 					data?.map((review: Review) => {
