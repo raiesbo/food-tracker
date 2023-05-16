@@ -150,6 +150,7 @@ export default function userService({ restaurantClient }: typeof prismaClients) 
 				const restaurant = await restaurantClient.createRestaurant({
 					userId: Number(userId),
 					name: 'New Food Truck',
+					isVisible: false,
 					locations: {
 						create: [
 							{

@@ -85,10 +85,7 @@ export default function MyFoodTruckDetails({ restaurant, categories }: Props) {
 
 			if (result) {
 				const newImageUrl = await uploadImage({
-					userId: userMetadata.user_id,
-					type,
-					typeId: restaurant.id,
-					extension
+					userId: userMetadata.user_id, type, typeId: restaurant.id, extension
 				});
 				if (newImageUrl) setImageUrl(newImageUrl);
 			}
@@ -96,6 +93,16 @@ export default function MyFoodTruckDetails({ restaurant, categories }: Props) {
 	};
 
 	const onToggleFoodTruckVisibility = (event: ChangeEvent<HTMLInputElement>) => {
+		if (
+			event.target.checked &&
+			(!restaurant.locations?.at(0)?.streetName || !restaurant.locations?.at(0)?.streetNumber)
+		) {
+			dispatch({ type: ToastAction.UPDATE_TOAST, payload: {
+					message: 'The location data needs to be completed',
+					severity: 'error'
+				} });
+			return;
+		}
 		fetch(`/api/restaurants/${restaurant.id}`, {
 			method: 'PUT',
 			body: JSON.stringify({ isVisible: event.target.checked || false })

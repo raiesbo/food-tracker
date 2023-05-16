@@ -13,6 +13,9 @@ import { useRouter } from "next/navigation";
 import User from "@/types/User";
 import ProfileLocation from "@/components/Profile/ProfileLocation";
 import ProfileUserData from "@/components/Profile/ProfileUserData";
+import geocodeService from "@/services/geocode.service";
+import { GeocodeUpdate } from "@/components/GeocodeUpdate";
+import GeocodeLocation from "@/types/GeocodeLocation";
 
 type UserReducer = {
 	user: Partial<User>,
@@ -30,10 +33,12 @@ export default function Profile({ user, auth0User }: Props) {
 
 	const [isUpdate, setIsUpdate] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
-
+	const [openGeocode, setOpenGeocode] = useState(false);
+	const [geocodeLocations, setGeocodeLocations] = useState<Array<GeocodeLocation>>([]);
 	const [userData, updateUserData] = useReducer((previous: UserReducer, payload: Partial<UserReducer>) => {
 		return { user: { ...previous.user, ...payload.user }, location: { ...previous.location, ...payload.location } };
-	}, { user: {
+	}, {
+		user: {
 			firstName: user.firstName || '',
 			lastName: user.lastName || '',
 			email: user.email || '',
@@ -45,7 +50,8 @@ export default function Profile({ user, auth0User }: Props) {
 			city: user.location?.city,
 			country: user.location?.country,
 			zip: user.location?.zip
-		} });
+		}
+	});
 
 	const onRemove = () => {
 		fetch(`/api/users/${user.id}`, {
@@ -68,22 +74,19 @@ export default function Profile({ user, auth0User }: Props) {
 	};
 
 	const onCancel = () => {
-		updateUserData({
-			user: {
+		updateUserData({ user: {
 				firstName: user.firstName || '',
 				lastName: user.lastName || '',
 				email: user.email || '',
 				phone: user.phone || '',
 				imageUrl: user.imageUrl || auth0User?.picture || imagesConfig.default
-			},
-			location: {
+			}, location: {
 				streetName: user.location?.streetName,
 				streetNumber: user.location?.streetNumber,
 				city: user.location?.city,
 				country: user.location?.country,
 				zip: user.location?.zip
-			}
-		});
+			} });
 
 		setIsUpdate(false);
 	};
@@ -98,18 +101,39 @@ export default function Profile({ user, auth0User }: Props) {
 				location: { id: user.location?.id, ...userData.location }
 			})
 		}).then(response => {
-			if (response.ok) return;
-			onCancel();
 			dispatch({
-				type: ToastAction.UPDATE_TOAST, payload: {
+				type: ToastAction.UPDATE_TOAST, payload: response.ok ? {
+					message: 'Profile successfully updated.',
+					severity: 'success'
+				} : {
 					message: 'There has been server error, please try again later.',
 					severity: 'error'
 				}
 			});
+			if (!response.ok) {
+				onCancel();
+				return;
+			}
 		}).finally(() => {
 			setIsLoading(false);
 			setIsUpdate(false);
 		});
+
+		const { result: locations } = await geocodeService().getAddresses({
+			streetName: userData.location.streetName || '',
+			streetNumber: userData.location.streetNumber || '',
+			city: userData.location.city || ''
+		});
+
+		if (
+			locations
+			&& locations?.length > 0
+			&& (user.location?.streetName !== userData.location.streetName || user.location?.streetNumber !== userData.location.streetNumber)
+			&& locations.at(0)?.formattedAddress !== user.location?.formattedAddress
+		) {
+			setGeocodeLocations(locations);
+			setOpenGeocode(true);
+		}
 	};
 
 	const updateFile = async (event: ChangeEvent<HTMLInputElement>) => {
@@ -209,6 +233,12 @@ export default function Profile({ user, auth0User }: Props) {
 					REMOVE ACCOUNT
 				</Button>
 			</div>
+			<GeocodeUpdate
+				isOpen={openGeocode}
+				onClose={() => setOpenGeocode(false)}
+				geolocations={geocodeLocations}
+				locationId={user.location?.id || 0}
+			/>
 		</div>
 	);
 }

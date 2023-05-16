@@ -29,9 +29,6 @@ export default function userService({ instance }: IDBClient) {
 			try {
 				const parsedBody = JSON.parse(req.body);
 
-				console.log(parsedBody.user);
-				console.log(parsedBody.location);
-
 				if (parsedBody.location?.id) {
 					await instance.location.update({
 						where: { id: Number(parsedBody.location.id) },

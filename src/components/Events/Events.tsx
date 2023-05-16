@@ -1,5 +1,3 @@
-'use client';
-
 import styles from './Events.module.scss';
 import RestaurantWithEvents from "@/types/RestaurantWithEvents";
 import { PageHeader } from "@/components/PageHeader";
@@ -31,7 +29,7 @@ export default function Events({ restaurants, url }: Props) {
 					Create Event
 				</Button>
 			</PageHeader>
-			<div>
+			<div className={styles.foodTruckList}>
 				{restaurants?.length > 0 ? restaurants?.map(restaurant => (
 					<div key={restaurant.id} className={styles.restaurantSection}>
 						<Text bold variant='h3'>

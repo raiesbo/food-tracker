@@ -16,6 +16,16 @@
 .restaurantSection {
   display: flex;
   flex-direction: column;
+  gap: 5px;
+
+  @include matchSmall {
+    gap: 10px;
+  }
+}
+
+.foodTruckList {
+  display: flex;
+  flex-direction: column;
   gap: 10px;
 
   @include matchSmall {
