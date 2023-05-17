@@ -1,5 +1,3 @@
-'use client';
-
 import { useToast } from "@/utils";
 import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";

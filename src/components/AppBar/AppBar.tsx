@@ -1,5 +1,3 @@
-'use client';
-
 import { paths } from '@/utils/paths';
 import { auth0Config } from '@/utils/settings';
 import { useUser } from '@auth0/nextjs-auth0/client';

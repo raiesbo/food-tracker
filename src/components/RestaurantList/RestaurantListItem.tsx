@@ -13,10 +13,11 @@ import { Text } from '../Text';
 import styles from './restaurantListItem.module.scss';
 
 type Props = {
-	restaurant: Restaurant
+	restaurant: Restaurant,
+	distance: number
 }
 
-export default function RestaurantListItem({ restaurant }: Props) {
+export default function RestaurantListItem({ restaurant, distance }: Props) {
 	const [rating, setRating] = useState(0);
 
 	useEffect(() => {
@@ -55,19 +56,29 @@ export default function RestaurantListItem({ restaurant }: Props) {
 								</Text>
 							)}
 						</div>
-						<div className={styles.ratingContainer}>
-							<Text semiBold variant={'smallest'}>
-								{restaurant.reviews.length}
-							</Text>
-							<RatingStars rating={rating} size='small'/>
+						<div>
+							<div className={styles.ratingContainer}>
+								<Text semiBold variant={'smallest'}>
+									{`${rating} (${restaurant.reviews.length})`}
+								</Text>
+								<RatingStars rating={rating} size='small'/>
+							</div>
 						</div>
+
 					</header>
 					<footer className={styles.cardFooter}>
-						{mainLocation && (
-							<Text semiBold variant={"smallest"}>
-								{`${mainLocation?.streetName} ${mainLocation?.streetNumber}, ${mainLocation?.city}`}
-							</Text>
-						)}
+						<div>
+							{distance > 0 && (
+								<Text grey variant={'small'} className={styles.distance}>
+									{`Distance: ${distance.toFixed(2)} km`}
+								</Text>
+							)}
+							{mainLocation && (
+								<Text semiBold variant={"smallest"}>
+									{`${mainLocation?.streetName} ${mainLocation?.streetNumber}, ${mainLocation?.city}`}
+								</Text>
+							)}
+						</div>
 						<div className={styles.badges}>
 							{restaurant.isCashOnly && (
 								<Chip label="Cash Only" variant="filled" color="info" size="small"/>

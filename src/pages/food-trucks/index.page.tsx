@@ -13,73 +13,106 @@ import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import { Category } from "@prisma/client";
 import { GetServerSidePropsContext } from "next";
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, ReactNode, useEffect, useState } from "react";
 import styles from './restaurants.module.scss';
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import Image from "next/image";
 import { Card } from "@/components/Card";
-import { Switch } from "@mui/material";
+import { Slider, Switch } from "@mui/material";
+import useLocation from "@/utils/hooks/useLocation";
+import { getSession } from "@auth0/nextjs-auth0";
+import { auth0Config } from "@/utils/settings";
+import userService from "@/services/user.serviceClient";
+import User from "@/types/User";
+import { LocationAction } from "@/components/LocationContext";
+import calcCrow from "@/utils/calcCoordsDistance";
 
-const service = homepageService(PrismaDBClient);
+const homepageServiceInstance = homepageService(PrismaDBClient);
+const userServiceInstance = userService(PrismaDBClient);
 
-export async function getServerSideProps({ query }: GetServerSidePropsContext) {
-	const { result, error } = await service.getLocationsAndCategories();
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+	const { result, error } = await homepageServiceInstance.getLocationsAndCategories();
 
-	if (error) return {
-		props: { locations: [], categories: [] }
-	};
+	if (error) return { props: { locations: [], categories: [] } };
+
+	const session = await getSession(context.req, context.res);
+
+	if (!session) {
+		return {
+			props: {
+				locations: result.locations,
+				categories: result.categories,
+				queryCity: context.query?.city || '',
+				queryCategory: context.query?.category || ''
+			}
+		};
+	}
+
+	const userId = session.user[auth0Config.metadata]?.user_id;
+	const { result: user } = await userServiceInstance.getUser(userId);
 
 	return {
 		props: {
+			user,
 			locations: result.locations,
 			categories: result.categories,
-			queryCity: query?.city || '',
-			queryCategory: query?.category || ''
+			queryCity: context.query?.city || '',
+			queryCategory: context.query?.category || ''
 		}
 	};
 }
 
 RestaurantPage.getLayout = function getLayout(page: ReactElement) {
-	return (
-		<Layout>
-			{page}
-		</Layout>
-	);
+	return <Layout>{page}</Layout>;
 };
 
 type Props = {
 	locations: Array<string>,
 	categories: Array<Category>,
 	queryCity: string,
-	queryCategory: string
+	queryCategory: string,
+	user?: User
 }
 
-export default function RestaurantPage({
-	locations,
-	categories,
-	queryCity,
-	queryCategory
-}: Props) {
+export default function RestaurantPage({ locations, categories, queryCity, queryCategory, user }: Props) {
 	const [timeoutId, setTimeoutId] = useState<ReturnType<typeof setTimeout>>();
 	const [restaurants, setRestaurants] = useState<Array<Restaurant>>([]);
 	const [isLoading, setIsLoading] = useState(false);
+	const [distanceFilter, setDistanceFilter] = useState(25);
 
 	const [name, setName] = useState('');
 	const [city, setCity] = useState(queryCity);
 	const [category, setCategory] = useState(queryCategory);
 	const [vegan, setVegan] = useState(false);
-	const [creditcard, setCreditcard] = useState(false);
+	const [creditCard, setCreditCard] = useState(false);
+
+	const { locationState, dispatch } = useLocation();
+
+	useEffect(() => {
+		const updateLocationContext = () => {
+			if (!user) return;
+			if (user?.location?.lat) {
+				dispatch({
+					type: LocationAction.UPDATE_LOCATION, payload: {
+						lat: user?.location?.lat || '',
+						lon: user?.location?.lon || '',
+						zip: user?.location?.zip || ''
+					}
+				});
+			}
+		};
+
+		updateLocationContext();
+	}, []);
 
 	useEffect(() => {
 		const getRestaurants = () => {
-			setIsLoading(true);
-
 			const searchParams = new URLSearchParams({
 				name: name,
 				city: city.replace('All', ''),
 				category: category.replace('All', ''),
 				vegan: vegan ? 'true' : '',
-				creditcard: creditcard ? 'true' : ''
+				creditCard: creditCard ? 'true' : ''
 			});
 
 			fetch(`/api/restaurants/filters?${searchParams}`)
@@ -89,19 +122,18 @@ export default function RestaurantPage({
 					} else {
 						return { restaurants: null };
 					}
-				})
-				.then(({ restaurants }) => {
-					restaurants && setRestaurants(restaurants);
-				}).finally(() => setIsLoading(false));
+				}).then(({ restaurants }) => {
+				restaurants && setRestaurants(restaurants);
+			});
 		};
 
 		clearTimeout(timeoutId);
 		setTimeoutId(setTimeout(getRestaurants, 500));
-	}, [city, category, vegan, creditcard, name]);
+	}, [city, category, vegan, creditCard, name]);
 
 	const breadcrumbList = [
-		{ label: "Home", url: '/' },
-		{ label: "Restaurants" }
+		{ label: 'Home', url: '/' },
+		{ label: 'Restaurants' }
 	];
 
 	return (
@@ -109,7 +141,7 @@ export default function RestaurantPage({
 			<div className={styles.imageContainer}>
 				<Image
 					src={'/images/background-food-list-1500px.webp'}
-					alt="Food truck background | image from Unsplash"
+					alt='Food truck background | image from Unsplash'
 					blurDataURL={'/images/homepage_background_800px.webp'}
 					placeholder='blur'
 					fill
@@ -128,15 +160,31 @@ export default function RestaurantPage({
 						<Text as='h1' variant={{ small: 'h4', medium: 'h3' }} bold>
 							Filters
 						</Text>
+						{user?.id && (
+							<div>
+								<Text grey variant={'small'}>Distance (km):</Text>
+								<Slider
+									step={1}
+									value={distanceFilter}
+									onChange={(e, value) => setDistanceFilter(value as number)}
+									// @ts-ignore
+									valueLabelFormat={((value: string) => `${value} km`) as unknown as ReactNode}
+									valueLabelDisplay="auto"
+									max={50}
+									min={1}
+								/>
+							</div>
+
+						)}
 						<TextField
 							id="restaurant-name"
-							label="Restaurant's name"
+							label="Food Truck's name"
 							variant="outlined"
 							sx={{ backgroundColor: 'white' }}
 							onChange={(e) => setName(e.target.value)}
 						/>
 						<FormControl>
-							<InputLabel id="demo-simple-select-label">
+							<InputLabel>
 								City
 							</InputLabel>
 							<Select
@@ -156,7 +204,7 @@ export default function RestaurantPage({
 							</Select>
 						</FormControl>
 						<FormControl>
-							<InputLabel id="demo-simple-select-label">
+							<InputLabel>
 								Food Type
 							</InputLabel>
 							<Select
@@ -187,8 +235,8 @@ export default function RestaurantPage({
 						<FormControlLabel
 							control={
 								<Switch
-									onChange={(e) => setCreditcard(e.target.checked)}
-									value={creditcard}
+									onChange={(e) => setCreditCard(e.target.checked)}
+									value={creditCard}
 								/>
 							}
 							label="accepts Credit Card"
@@ -201,12 +249,29 @@ export default function RestaurantPage({
 							</div>
 						) : (
 							restaurants.length > 0 ? (
-								restaurants?.map((restaurant: Restaurant) => (
-									<RestaurantListItem
-										key={restaurant.name}
-										restaurant={restaurant}
-									/>
-								))
+								restaurants?.map((restaurant: Restaurant) => {
+									const location = restaurant.locations[0];
+									const distance = calcCrow(
+										Number(locationState.lat),
+										Number(locationState.lon),
+										Number(location.lat),
+										Number(location.lon)
+									);
+
+									if (
+										!user
+										|| distance === 0
+										|| user && distance && distance < distanceFilter
+									) {
+										return (
+											<RestaurantListItem
+												key={restaurant.id}
+												restaurant={restaurant}
+												distance={distance}
+											/>
+										);
+									}
+								})
 							) : (
 								<div>
 									<Text>No Food Trucks found</Text>

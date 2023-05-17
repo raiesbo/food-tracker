@@ -22,7 +22,7 @@ export default function restaurantsService(instance: IDBClient['instance']) {
 				};
 			}
 
-			if (!!query?.creditcard) {
+			if (!!query?.creditCard) {
 				filters = {
 					...filters,
 					isCashOnly: false

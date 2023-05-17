@@ -8,6 +8,7 @@ import { Footer } from "../Footer";
 import { ToastAction } from "../ToastContext";
 import styles from './Layout.module.scss';
 import Head from "next/head";
+import { LocationContext } from "@/components/LocationContext";
 
 type Props = {
 	children: ReactNode,
@@ -22,7 +23,7 @@ export default function Layout({ children, withTopMargin = false }: Props) {
 	};
 
 	return (
-		<>
+		<LocationContext>
 			<Head>
 				<title>Food Tracker</title>
 				<meta name="author" content="Raimon Espasa Bou"/>
@@ -56,6 +57,6 @@ export default function Layout({ children, withTopMargin = false }: Props) {
 					{toastState.message}
 				</Alert>
 			</Snackbar>
-		</>
+		</LocationContext>
 	);
 }
