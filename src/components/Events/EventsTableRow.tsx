@@ -54,7 +54,7 @@ export default function EventsTableRow({ event, url }: Props) {
 			<TableCell component="th" scope="row" align="left">
 				{event?.name}
 			</TableCell>
-			<TableCell align='center'>
+			<TableCell align='center' sx={{ textTransform: 'capitalize' }}>
 				{formatDate(new Date(event.date || ''))}
 			</TableCell>
 			<TableCell align='center'>

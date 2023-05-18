@@ -6,7 +6,13 @@ export default function formatDateAndTime(date: string | number | Date): string 
 	const formatter = new Intl.DateTimeFormat('de', {
 		year: "2-digit",
 		month: '2-digit',
-		day: '2-digit'
+		day: '2-digit',
+		hour: 'numeric',
+		minute: 'numeric'
+	});
+	const timeFormatter = new Intl.DateTimeFormat('de', {
+		hour: 'numeric',
+		minute: 'numeric'
 	});
 
 	const dateToday = today.getDate();
@@ -16,7 +22,7 @@ export default function formatDateAndTime(date: string | number | Date): string 
 	if (dayDiff > -2 && dayDiff < -1 && dateToday !== dateValidated) dayDiff = Math.ceil(dayDiff);
 
 	if (dayDiff > -2) {
-		return `${relativeFormatter.format(Math.floor(dayDiff), 'day')}`;
+		return `${relativeFormatter.format(Math.floor(dayDiff), 'day')}, ${timeFormatter.format(validatedDate)}`;
 	}
 
 	return formatter.format(validatedDate);

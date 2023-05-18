@@ -1,6 +1,6 @@
 import { Review } from "@/types";
 import useToast from "@/utils/hooks/useToast";
-import formatDate from "@/utils/formatDate";
+import formatDateAndTime from "@/utils/formatDateAndTime";
 import CancelIcon from '@mui/icons-material/Cancel';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -114,7 +114,7 @@ export default function ProfileReviewsItem({ review, title, currentUserId, onRem
 					)}
 				</Text>
 				<Text className={styles.date} variant={'smallest'} grey>
-					{formatDate(review.createdAt)}
+					{formatDateAndTime(review.createdAt)}
 				</Text>
 			</div>
 			<div>

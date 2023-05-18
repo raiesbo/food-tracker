@@ -1,4 +1,4 @@
-import formatDate from './formatDate';
+import formatDateAndTime from './formatDateAndTime';
 import { expect, test, describe, beforeEach, vi } from "vitest";
 
 describe('formatDate', () => {
@@ -13,18 +13,18 @@ describe('formatDate', () => {
 	test('returns the correct date for today', () => {
 		const date = new Date();
 		date.setHours(14);
-		expect(formatDate(date)).toBe('today');
+		expect(formatDateAndTime(date)).toBe('today, 14:00');
 	});
 
 	test('returns the correct date for yesterday', () => {
 		const date = new Date();
 		const tomorrow = date.setHours(date.getHours() - 14);
-		expect(formatDate(tomorrow)).toBe('yesterday');
+		expect(formatDateAndTime(tomorrow)).toBe('yesterday, 10:00');
 	});
 
 	test('returns the correct date for more than one day of difference', () => {
 		const date = new Date();
 		const tomorrow = date.setDate(date.getDate() - 3);
-		expect(formatDate(tomorrow)).toBe('25.04.23');
+		expect(formatDateAndTime(tomorrow)).toBe('25.04.23, 00:00');
 	});
 });

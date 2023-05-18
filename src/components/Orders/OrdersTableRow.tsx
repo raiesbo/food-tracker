@@ -8,7 +8,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { OrderItem } from "@prisma/client";
 import Button from "@mui/material/Button";
 import { useToast } from "@/utils";
-import formatDate from "@/utils/formatDate";
+import formatDateAndTime from "@/utils/formatDateAndTime";
 import { Text } from '../Text';
 import styles from './OrdersTableRow.module.scss';
 import { ToastAction } from "@/components/ToastContext";
@@ -72,10 +72,10 @@ export default function OrderTableRow({ order, onUpdateOrder }: Props) {
 					{order.id}
 				</TableCell>
 				<TableCell align="right" className={styles.date}>
-					{formatDate(order?.createdAt)}
+					{formatDateAndTime(order?.createdAt)}
 				</TableCell>
 				<TableCell align="right" className={styles.date}>
-					{formatDate(order?.deliveryAt || '')}
+					{formatDateAndTime(order?.deliveryAt || '')}
 				</TableCell>
 				<TableCell align="right">
 					{totalPrice} €

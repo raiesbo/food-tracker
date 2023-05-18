@@ -15,7 +15,7 @@ import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import Table from "@mui/material/Table";
 import Chip from "@mui/material/Chip";
-import formatDate from "@/utils/formatDate";
+import formatDateAndTime from "@/utils/formatDateAndTime";
 import { ReactElement } from "react";
 
 const ordersServiceInstance = ordersService(PrismaDBClient.instance);
@@ -65,7 +65,7 @@ export default function OrdersPage({ orders }: Props) {
 										</Text>
 										{' '}
 										<Text semiBold as='span' variant={'small'} className={styles.date}>
-											{formatDate(order.createdAt)}
+											{formatDateAndTime(order.createdAt)}
 										</Text>
 									</Text>
 									<Text as='p'>
@@ -74,7 +74,7 @@ export default function OrdersPage({ orders }: Props) {
 										</Text>
 										{' '}
 										<Text semiBold as='span' variant={'small'} className={styles.date}>
-											{formatDate(order?.deliveryAt || '')}
+											{formatDateAndTime(order?.deliveryAt || '')}
 										</Text>
 									</Text>
 								</div>
