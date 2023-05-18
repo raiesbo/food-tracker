@@ -40,61 +40,59 @@ export default function EventsTable({ title, events, url }: Props) {
 						</TableCell>
 					</TableRow>
 				</TableHead>
-				<TableBody>
-					<Collapse in={isOpen} timeout="auto" unmountOnExit>
-						<Table>
-							<TableHead>
+				<Collapse component={TableBody} in={isOpen} timeout="auto" unmountOnExit>
+					<Table>
+						<TableHead>
+							<TableRow>
+								<TableCell align='left'>
+									<Text bold variant='h4'>
+										Name
+									</Text>
+								</TableCell>
+								<TableCell align='center'>
+									<Text bold variant='h4'>
+										Date
+									</Text>
+								</TableCell>
+								<TableCell align='center'>
+									<Text bold variant='h4'>
+										Opening Hour
+									</Text>
+								</TableCell>
+								<TableCell align='center'>
+									<Text bold variant='h4'>
+										Closing Hour
+									</Text>
+								</TableCell>
+								<TableCell align='center'>
+									<Text bold variant='h4'>
+										Locations
+									</Text>
+								</TableCell>
+								<TableCell align="right">
+									<Text bold variant='h4'>
+										Actions
+									</Text>
+								</TableCell>
+							</TableRow>
+						</TableHead>
+						<TableBody>
+							{events?.length > 0 ? (events.map(event => (
+								<EventsTableRow
+									key={event.id}
+									event={event}
+									url={url}
+								/>
+							))) : (
 								<TableRow>
-									<TableCell align='left'>
-										<Text bold variant='h4'>
-											Name
-										</Text>
-									</TableCell>
-									<TableCell align='center'>
-										<Text bold variant='h4'>
-											Date
-										</Text>
-									</TableCell>
-									<TableCell align='center'>
-										<Text bold variant='h4'>
-											Opening Hour
-										</Text>
-									</TableCell>
-									<TableCell align='center'>
-										<Text bold variant='h4'>
-											Closing Hour
-										</Text>
-									</TableCell>
-									<TableCell align='center'>
-										<Text bold variant='h4'>
-											Locations
-										</Text>
-									</TableCell>
-									<TableCell align="right">
-										<Text bold variant='h4'>
-											Actions
-										</Text>
+									<TableCell>
+										No Events Found
 									</TableCell>
 								</TableRow>
-							</TableHead>
-							<TableBody>
-								{events?.length > 0 ? (events.map(event => (
-									<EventsTableRow
-										key={event.id}
-										event={event}
-										url={url}
-									/>
-								))) : (
-									<TableRow>
-										<TableCell>
-											No Events Found
-										</TableCell>
-									</TableRow>
-								)}
-							</TableBody>
-						</Table>
-					</Collapse>
-				</TableBody>
+							)}
+						</TableBody>
+					</Table>
+				</Collapse>
 			</Table>
 		</Card>
 	);
