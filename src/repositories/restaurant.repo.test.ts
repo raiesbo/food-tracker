@@ -27,6 +27,15 @@ describe('prisma Restaurants client', () => {
 				locations: true,
 				menu: true,
 				schedules: true,
+				"events": {
+					"select": {
+						"closing_hour": true,
+						"date": true,
+						"id": true,
+						"location": true,
+						"opening_hour": true
+					}
+				},
 				"categories": {
 					"select": {
 						"id": true,
@@ -60,6 +69,15 @@ describe('prisma Restaurants client', () => {
 				locations: true,
 				menu: true,
 				schedules: true,
+				"events": {
+					"select": {
+						"closing_hour": true,
+						"date": true,
+						"id": true,
+						"location": true,
+						"opening_hour": true
+					}
+				},
 				"categories": {
 					"select": {
 						"id": true,

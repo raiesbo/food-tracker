@@ -4,7 +4,7 @@ import styles from "./EventsTableRow.module.scss";
 import { useToast } from "@/utils";
 import formatDate from "@/utils/formatDate";
 import formatTime from "@/utils/formatTime";
-import { Event } from '@prisma/client';
+import { Event, Location } from '@prisma/client';
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from "@mui/material/IconButton";
 import EditIcon from '@mui/icons-material/Edit';
@@ -15,7 +15,7 @@ import { ToastAction } from "@/components/ToastContext";
 import { useSWRConfig } from "swr";
 
 type Props = {
-	event: Event,
+	event: Partial<Event & {location: Location}>,
 	url: string
 }
 
@@ -68,7 +68,7 @@ export default function EventsTableRow({ event, url }: Props) {
 					: ''}
 			</TableCell>
 			<TableCell align='center'>
-				Location
+				{`${event.location?.streetName} ${event.location?.streetNumber} ${event.location?.city || ''} ${event.location?.country || ''}`}
 			</TableCell>
 			<TableCell align="right" className={styles.buttonContainer}>
 				<IconButton

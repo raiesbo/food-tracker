@@ -12,6 +12,7 @@ import { Collapse, IconButton } from "@mui/material";
 import { useState } from "react";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { Event } from "@prisma/client";
 
 type Props = {
 	title: string,
@@ -80,7 +81,7 @@ export default function EventsTable({ title, events, url }: Props) {
 							{events?.length > 0 ? (events.map(event => (
 								<EventsTableRow
 									key={event.id}
-									event={event}
+									event={event as Event}
 									url={url}
 								/>
 							))) : (

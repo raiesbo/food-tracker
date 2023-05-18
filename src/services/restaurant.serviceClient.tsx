@@ -101,6 +101,11 @@ export default function restaurantsService(instance: IDBClient['instance']) {
 								createdAt: `${dish?.createdAt}`,
 								updatedAt: `${dish?.updatedAt}`
 							}))
+						],
+						events: [
+							...restaurant.events.map(event => ({
+								...event, date: `${event?.date}`
+							}))
 						]
 					}
 				};
