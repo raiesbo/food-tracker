@@ -1,4 +1,3 @@
-import { Card } from "@/components/Card";
 import styles from "./RestaurantDetailsHoursEvent.module.scss";
 import { Text } from "@/components/Text";
 import formatTime from "@/utils/formatTime";

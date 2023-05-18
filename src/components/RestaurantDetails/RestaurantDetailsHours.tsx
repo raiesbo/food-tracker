@@ -4,8 +4,6 @@ import { Card } from '../Card';
 import { Text } from '../Text';
 import styles from './RestaurantDetailsHours.module.scss';
 import matchesWeekAndDay from "@/utils/matchesWeekAndDay";
-import formatTime from "@/utils/formatTime";
-import { createGoogleMapsUrl } from "@/utils";
 import RestaurantDetailsHoursEvent from "@/components/RestaurantDetails/RestaurantDetailsHoursEvent";
 
 type Props = {
