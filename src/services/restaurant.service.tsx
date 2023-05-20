@@ -50,6 +50,11 @@ export default function userService({ restaurantClient }: typeof prismaClients) 
 								createdAt: `${dish?.createdAt}`,
 								updatedAt: `${dish?.updatedAt}`
 							}))
+						],
+						events: [
+							...restaurant.events.map(event => ({
+								...event, date: `${event?.date}`
+							}))
 						]
 					}))
 				};
@@ -96,6 +101,11 @@ export default function userService({ restaurantClient }: typeof prismaClients) 
 								...dish,
 								createdAt: `${dish?.createdAt}`,
 								updatedAt: `${dish?.updatedAt}`
+							}))
+						],
+						events: [
+							...restaurant.events.map(event => ({
+								...event, date: `${event?.date}`
 							}))
 						]
 					}

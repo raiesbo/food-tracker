@@ -126,6 +126,29 @@ export default function ordersService({ order, restaurant }: IDBClient['instance
 					}
 				};
 			}
+		},
+		countOpenOrdersByUser: async (req: NextApiRequest) => {
+			const { userId } = req.query as { userId: string };
+
+			try {
+				const count = await order.count({
+					where: {
+						isAccepted: false,
+						isCancelled: false,
+						restaurant: {
+							userId: Number(userId)
+						}
+					}
+				});
+				return { result: count };
+			} catch (e) {
+				console.error(e);
+				const { message } = e as { message: string };
+				return {
+					result: 0,
+					error: { status: 400, message }
+				};
+			}
 		}
 	};
 }

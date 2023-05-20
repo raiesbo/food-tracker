@@ -10,6 +10,7 @@ import RestaurantWithOrders from "@/types/RestaurantWithOrders";
 import { OrdersTable } from "@/components/Orders";
 import { Text } from '@/components/Text';
 import { ReactElement } from "react";
+import User from "@/types/User";
 
 const ordersServiceInstance = ordersService(PrismaDBClient.instance);
 
@@ -18,7 +19,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
 	const userId = session && session?.user[auth0Config.metadata]?.user_id;
 
 	if (!userId) {
-		return { props: { restaurants: [] } };
+		return { props: { restaurants: [], userId } };
 	}
 
 	const {
@@ -26,7 +27,12 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
 		error
 	} = await ordersServiceInstance.getRestaurantsWithOrders(userId);
 
-	return { props: { restaurants: error ? [] : restaurants } };
+	return {
+		props: {
+			restaurants: error ? [] : restaurants,
+			userId
+		}
+	};
 };
 
 BusinessOrdersPage.getLayout = function getLayout(page: ReactElement) {
@@ -38,10 +44,11 @@ BusinessOrdersPage.getLayout = function getLayout(page: ReactElement) {
 };
 
 type Props = {
-	restaurants: Array<RestaurantWithOrders>
+	restaurants: Array<RestaurantWithOrders>,
+	userId: User['id']
 }
 
-export default function BusinessOrdersPage({ restaurants }: Props) {
+export default function BusinessOrdersPage({ restaurants, userId }: Props) {
 	const withOrders = restaurants.some(restaurant => restaurant.orders.length > 0);
 
 	return (
@@ -57,6 +64,7 @@ export default function BusinessOrdersPage({ restaurants }: Props) {
 							<OrdersTable
 								key={restaurant.id}
 								fetchedOrders={restaurant.orders}
+								userId={userId}
 							/>
 						</div>
 					);

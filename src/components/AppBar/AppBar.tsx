@@ -20,6 +20,8 @@ import styles from './AppBar.module.scss';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { usePathname } from "next/navigation";
 import Image from "next/image";
+import Badge from "@mui/material/Badge";
+import useSWR from "swr";
 
 type Props = {
 	window?: () => Window,
@@ -37,6 +39,10 @@ export default function AppBar({ window, withBackground = false, withFullNavigat
 	};
 
 	const isSP = userRole?.role === 'SP';
+
+	const { data } = useSWR(`/api/users/${userRole?.user_id}/orders/count`, (url: string) => {
+		return fetch(url).then(response => response.json());
+	});
 
 	const trigger = useScrollTrigger({
 		disableHysteresis: true,
@@ -128,7 +134,13 @@ export default function AppBar({ window, withBackground = false, withFullNavigat
 														href={item.url.replaceAll('{userId}', userRole?.user_id)}
 														className={styles.listItemLink}
 													>
-														<SideBarIcon url={item.url} size='small'/>
+														{item.name === 'Orders' ? (
+															<Badge badgeContent={data} color="error">
+																<SideBarIcon url={item.url} size='small'/>
+															</Badge>
+														) : (
+															<SideBarIcon url={item.url} size='small'/>
+														)}
 														<Text
 															bold={pathname === item.url.replaceAll('{userId}', userRole?.user_id)}
 															as='span'

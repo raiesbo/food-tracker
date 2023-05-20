@@ -27,6 +27,7 @@ export default function RestaurantDetailsHours({ schedules, events }: Props) {
                         <RestaurantDetailsHoursEvent
                             day={schedule.day || ''}
                             event={event as Partial<Event>}
+                            key={schedule.id}
                         />
                         ) : (
                         <div key={schedule.id} className={styles.scheduleListItem}>

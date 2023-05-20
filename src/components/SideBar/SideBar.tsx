@@ -1,5 +1,3 @@
-'use client';
-
 import { paths } from '@/utils/paths';
 import { auth0Config } from '@/utils/settings';
 import { useUser } from '@auth0/nextjs-auth0/client';
@@ -13,10 +11,18 @@ import styles from './SideBar.module.scss';
 import SideBarIcon from './SideBarIcon';
 import { usePathname } from "next/navigation";
 import Image from "next/image";
+import Badge from "@mui/material/Badge";
+import useSWR from "swr";
 
 export default function SideBar() {
 	const pathname = usePathname();
-	const { user } = useUser();
+	const { user } = useUser() as { user: { [key: string]: { user_id: string } } };
+
+	const userId = user && user[auth0Config.metadata as string].user_id;
+
+	const { data } = useSWR(`/api/users/${userId}/orders/count`, (url: string) => {
+		return fetch(url).then(response => response.json());
+	});
 
 	const userRole = user && user[auth0Config.metadata] as {
 		role: 'SP' | 'CUSTOMER',
@@ -69,7 +75,13 @@ export default function SideBar() {
 								className={styles.listItemLink}
 							>
 								<ListItemButton className={styles.listItemButton}>
-									<SideBarIcon url={item.url} size='small'/>
+									{item.name === 'Orders' ? (
+										<Badge badgeContent={data} color="error">
+											<SideBarIcon url={item.url} size='small'/>
+										</Badge>
+									) : (
+										<SideBarIcon url={item.url} size='small'/>
+									)}
 									<Text
 										bold={pathname === item.url.replaceAll('{userId}', userRole?.user_id)}
 										variant={'p'}
@@ -78,6 +90,7 @@ export default function SideBar() {
 									</Text>
 								</ListItemButton>
 							</Link>
+
 						))}
 					</List>
 				</>

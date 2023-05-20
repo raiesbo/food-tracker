@@ -8,25 +8,29 @@ import OrderTableRow from "@/components/Orders/OrdersTableRow";
 import { Card } from "@/components/Card";
 import { Text } from "@/components/Text";
 import styles from './OrdersTable.module.scss';
-import { Order } from ".prisma/client";
+import { Order, User } from ".prisma/client";
 import { OrderItem } from "@prisma/client";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { SyntheticEvent, useState } from "react";
+import { useSWRConfig } from "swr";
 
 type OrderDate = Order & {
 	items: Array<OrderItem & { dish: any }>
 }
 
 type Props = {
-	fetchedOrders: RestaurantWithOrders['orders']
+	fetchedOrders: RestaurantWithOrders['orders'],
+	userId: User['id'] | null
 }
 
-export default function OrderTable({ fetchedOrders }: Props) {
+export default function OrderTable({ fetchedOrders, userId }: Props) {
 	const [orders, setOrders] = useState(fetchedOrders);
 	const [value, setValue] = useState(0);
+	const { mutate } = useSWRConfig();
 
-	const onAcceptOrder = (orderId: Order['id']) => {
+	const onAcceptOrder = async (orderId: Order['id']) => {
+		await mutate(`/api/users/${userId}/orders/count`);
 		setOrders([...orders.map(order => {
 			return order.id === orderId
 				? { ...order, isAccepted: true }
