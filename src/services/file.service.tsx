@@ -15,7 +15,7 @@ export default function FileService() {
                 .storage
                 .from('food-truck')
                 .upload(`${userId}/${type}_${typeId}.${format}`, file, {
-                    // cacheControl: '3600',
+                    cacheControl: '3600',
                     upsert: true
                 });
 
