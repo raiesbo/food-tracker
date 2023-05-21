@@ -1,0 +1,37 @@
+@use "@/styles/theme" as *;
+
+.root {
+  background-color: white;
+  padding: 30px 20px;
+  margin-block: 50px;
+
+  @include matchSmall {
+    padding: 50px 20px;
+    margin-block: 100px;
+  }
+}
+
+.bulletsContainer {
+  max-width: 1000px;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  justify-content: space-between;
+  text-align: center;
+
+  @include matchSmall {
+    flex-direction: row;
+    gap: 75px;
+  }
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  @include matchSmall {
+    gap: 10px;
+  }
+}

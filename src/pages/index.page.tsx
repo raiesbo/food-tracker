@@ -12,8 +12,10 @@ import { ReactElement, useState } from 'react';
 import { Text } from '../components/Text';
 import styles from './Home.module.scss';
 import { Card } from "@/components/Card";
+import { HomeBullets } from "@/components/Home";
 
 const service = homepageService(PrismaDBClient);
+
 // const bgImageUrl = 'https://images.unsplash.com/photo-1565123409695-7b5ef63a2efb?w=1000';
 
 export async function getServerSideProps() {
@@ -73,10 +75,10 @@ export default function HomePage({ categories, locations }: Props) {
 					<Text as='h1' variant={{ small: 'h2', medium: 'h1' }} bold>
 						Food Tracker
 					</Text>
-					<Text italic semiBold variant={{ small: 'smallest', medium: 'label' }}>
-						Your free world wide Street Food finder tool
+					<Text grey italic semiBold variant={{ small: 'smallest', medium: 'label' }}>
+						Discover, Track, and Rate Food Trucks: Your Ultimate Foodie App
 					</Text>
-					<Text italic semiBold variant={{ small: 'smallest', medium: 'label' }}>
+					<Text grey italic semiBold variant={{ small: 'smallest', medium: 'label' }}>
 						Directly from the hands of the best cooks around the world
 					</Text>
 				</div>
@@ -126,6 +128,7 @@ export default function HomePage({ categories, locations }: Props) {
 					Find Your Next Street Food
 				</Button>
 			</Card>
+			<HomeBullets />
 		</>
 	);
 }
