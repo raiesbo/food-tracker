@@ -130,6 +130,8 @@ export default function ordersService({ order, restaurant }: IDBClient['instance
 		countOpenOrdersByUser: async (req: NextApiRequest) => {
 			const { userId } = req.query as { userId: string };
 
+			if (!userId || userId === 'undefined') return { result: 0 };
+
 			try {
 				const count = await order.count({
 					where: {
