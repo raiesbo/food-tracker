@@ -41,6 +41,7 @@ export default function AppBar({ window, withBackground = false, withFullNavigat
 	const isSP = userRole?.role === 'SP';
 
 	const { data } = useSWR(`/api/users/${userRole?.user_id}/orders/count`, (url: string) => {
+		if (!isSP) return 0;
 		return fetch(url).then(response => response.json());
 	});
 

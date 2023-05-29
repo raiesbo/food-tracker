@@ -20,16 +20,17 @@ export default function SideBar() {
 
 	const userId = user && user[auth0Config.metadata as string].user_id;
 
-	const { data } = useSWR(`/api/users/${userId}/orders/count`, (url: string) => {
-		return fetch(url).then(response => response.json());
-	});
-
 	const userRole = user && user[auth0Config.metadata] as {
 		role: 'SP' | 'CUSTOMER',
 		user_id: string
 	};
 
 	const isSP = userRole?.role === 'SP';
+
+	const { data } = useSWR(`/api/users/${userId}/orders/count`, (url: string) => {
+		if (!isSP) return 0;
+		return fetch(url).then(response => response.json());
+	});
 
 	return (
 		<Drawer

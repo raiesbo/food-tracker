@@ -61,8 +61,6 @@ export default function RestaurantDetailsPage({ restaurant }: Props) {
 	const { state: orderState, dispatch: orderDispatch } = userOrder();
 	const { dispatch } = useToast();
 
-	console.log({ restaurant });
-
 	const mainLocation = findMainLocation(restaurant.locations);
 	const rating = calcRating(restaurant.reviews);
 	const userMetadata = user && user[auth0Config.metadata] as { user_id: string };
