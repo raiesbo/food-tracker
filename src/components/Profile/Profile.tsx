@@ -43,7 +43,7 @@ export default function Profile({ user, auth0User }: Props) {
 			lastName: user.lastName || '',
 			email: user.email || '',
 			phone: user.phone || '',
-			imageUrl: user.imageUrl || ''
+			imageUrl: user.imageUrl || auth0User.picture || ''
 		}, location: {
 			streetName: user.location?.streetName,
 			streetNumber: user.location?.streetNumber,
