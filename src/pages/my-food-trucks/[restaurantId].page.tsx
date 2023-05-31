@@ -33,7 +33,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
 	return {
 		props: {
-			categories: categories.map(cat => ({
+			categories: (categories as Array<Category>).map(cat => ({
 				...cat,
 				createdAt: cat.createdAt.toISOString()
 			})),
