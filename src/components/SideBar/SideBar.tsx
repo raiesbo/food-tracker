@@ -12,9 +12,14 @@ import SideBarIcon from './SideBarIcon';
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import Badge from "@mui/material/Badge";
-import useSWR from "swr";
+import { useEffect } from "react";
 
-export default function SideBar() {
+type Props = {
+	initSocket?: (e: string) => Promise<void>,
+	count?: number
+}
+
+export default function SideBar({ initSocket, count = 0 }: Props) {
 	const pathname = usePathname();
 	const { user } = useUser() as { user: { [key: string]: { user_id: string } } };
 
@@ -27,10 +32,9 @@ export default function SideBar() {
 
 	const isSP = userRole?.role === 'SP';
 
-	const { data } = useSWR(`/api/users/${userId}/orders/count`, (url: string) => {
-		if (!isSP) return 0;
-		return fetch(url).then(response => response.json());
-	});
+	useEffect(() => {
+		isSP && initSocket && initSocket(userId);
+	}, [user]);
 
 	return (
 		<Drawer
@@ -77,7 +81,7 @@ export default function SideBar() {
 							>
 								<ListItemButton className={styles.listItemButton}>
 									{item.name === 'Orders' ? (
-										<Badge badgeContent={data} color="error">
+										<Badge badgeContent={count} color="error">
 											<SideBarIcon url={item.url} size='small'/>
 										</Badge>
 									) : (

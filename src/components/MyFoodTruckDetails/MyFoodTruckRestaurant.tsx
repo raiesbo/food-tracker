@@ -24,7 +24,7 @@ export default function MyFoodTruckRestaurant({ restaurant, allCategories }: Pro
     const [ slogan, setSlogan ] = useState(restaurant.slogan || '');
     const [ imageUrl, setImageUrl ] = useState(restaurant.imageUrl || '');
     const [ description, setDescription ] = useState(restaurant.description || '');
-    const [ categories, setCategories ] = useState(restaurant.categories || '');
+    const [ categories, setCategories ] = useState(restaurant.categories || []);
     const [ isCashOnly, setIsCashOnly ] = useState(restaurant.isCashOnly || false);
 
     const onCategorySelect = (e: SelectChangeEvent) => {
@@ -39,7 +39,7 @@ export default function MyFoodTruckRestaurant({ restaurant, allCategories }: Pro
         setName(restaurant.name || '');
         setSlogan(restaurant.slogan || '');
         setDescription(restaurant.description || '');
-        setCategories(restaurant.categories || '');
+        setCategories(restaurant.categories || []);
         setIsCashOnly(restaurant.isCashOnly || false);
 
         setIsUpdate(false);

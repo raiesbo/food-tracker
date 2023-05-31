@@ -13,7 +13,7 @@ import { OrderItem } from "@prisma/client";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { SyntheticEvent, useState } from "react";
-import { useSWRConfig } from "swr";
+import { io } from "socket.io-client";
 
 type OrderDate = Order & {
 	items: Array<OrderItem & { dish: any }>
@@ -27,10 +27,9 @@ type Props = {
 export default function OrderTable({ fetchedOrders, userId }: Props) {
 	const [orders, setOrders] = useState(fetchedOrders);
 	const [value, setValue] = useState(0);
-	const { mutate } = useSWRConfig();
 
 	const onAcceptOrder = async (orderId: Order['id']) => {
-		await mutate(`/api/users/${userId}/orders/count`);
+		io().emit('count');
 		setOrders([...orders.map(order => {
 			return order.id === orderId
 				? { ...order, isAccepted: true }

@@ -13,7 +13,7 @@ import Menu from '@mui/material/Menu';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import cc from 'classcat';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import SideBarIcon from '../SideBar/SideBarIcon';
 import { Text } from '../Text';
 import styles from './AppBar.module.scss';
@@ -21,15 +21,22 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import Badge from "@mui/material/Badge";
-import useSWR from "swr";
 
 type Props = {
 	window?: () => Window,
 	withBackground?: boolean
-	withFullNavigation?: boolean
+	withFullNavigation?: boolean,
+	initSocket?: (e: string) => Promise<void>,
+	count?: number
 }
 
-export default function AppBar({ window, withBackground = false, withFullNavigation = false }: Props) {
+export default function AppBar({
+	window,
+	withBackground = false,
+	withFullNavigation = false,
+	initSocket,
+	count
+}: Props) {
 	const pathname = usePathname();
 	const { user } = useUser();
 
@@ -40,10 +47,9 @@ export default function AppBar({ window, withBackground = false, withFullNavigat
 
 	const isSP = userRole?.role === 'SP';
 
-	const { data } = useSWR(`/api/users/${userRole?.user_id}/orders/count`, (url: string) => {
-		if (!isSP) return 0;
-		return fetch(url).then(response => response.json());
-	});
+	useEffect(() => {
+		isSP && initSocket && initSocket(userRole.user_id);
+	}, [user]);
 
 	const trigger = useScrollTrigger({
 		disableHysteresis: true,
@@ -136,7 +142,7 @@ export default function AppBar({ window, withBackground = false, withFullNavigat
 														className={styles.listItemLink}
 													>
 														{item.name === 'Orders' ? (
-															<Badge badgeContent={data} color="error">
+															<Badge badgeContent={count} color="error">
 																<SideBarIcon url={item.url} size='small'/>
 															</Badge>
 														) : (

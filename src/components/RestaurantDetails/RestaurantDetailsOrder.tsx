@@ -12,7 +12,7 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Card from "../Card/Card";
-import { OrderAction } from "../OrderContext/OrderReducer";
+import { OrderAction } from "@/components/OrderContext";
 import styles from './RestaurantDetailsOrder.module.scss';
 
 type Props = {
@@ -89,7 +89,8 @@ export default function RestaurantDetailsOrder({
                                         <IconButton
                                             size="small"
                                             onClick={() => orderDispatch({
-                                                type: OrderAction.REMOVE_ORDER, payload: {
+                                                type: OrderAction.REMOVE_ORDER,
+                                                payload: {
                                                     restaurantId: dishData.restaurantId || 0,
                                                     dishId: dishData.id
                                                 }
