@@ -13,13 +13,7 @@ async function main() {
             lastName: 'Muller',
             role: 'CUSTOMER',
             location: {
-                create: {
-                    streetName: '',
-                    streetNumber: '',
-                    zip: '',
-                    city: '',
-                    county: ''
-                }
+                create: { streetName: '' }
             }
         }
     });
@@ -34,13 +28,7 @@ async function main() {
             lastName: 'Madok',
             role: 'SP',
             location: {
-                create: {
-                    streetName: '',
-                    streetNumber: '',
-                    zip: '',
-                    city: '',
-                    county: ''
-                }
+                create: { streetName: '' }
             }
         }
     });
@@ -56,13 +44,7 @@ async function main() {
             lastName: 'Espasa',
             role: 'SP',
             location: {
-                create: {
-                    streetName: '',
-                    streetNumber: '',
-                    zip: '',
-                    city: '',
-                    county: ''
-                }
+                create: { streetName: '' }
             }
         }
     });

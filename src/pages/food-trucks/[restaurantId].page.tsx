@@ -28,7 +28,6 @@ import Image from "next/image";
 import restaurantsService from "@/services/restaurant.serviceClient";
 import PrismaDBClient from "@/repositories/prismaClient";
 import { SearchInput } from "@/components/SearchInput";
-import { io } from "socket.io-client";
 
 const restaurantServiceInstance = restaurantsService(PrismaDBClient.instance);
 
@@ -96,21 +95,16 @@ export default function RestaurantDetailsPage({ restaurant }: Props) {
 		}).then(response => {
 			if (response.ok) {
 				dispatch({
-					type: ToastAction.UPDATE_TOAST,
-					payload: {
+					type: ToastAction.UPDATE_TOAST, payload: {
 						message: 'Order successfully created',
 						severity: 'success'
 					}
 				});
 				orderDispatch({ type: OrderAction.CLEAR_ORDER, payload: { restaurantId: restaurant.id } });
 				setIsConfirmationOpen(false);
-
-				// Socket Event
-				io().emit('count');
 			} else {
 				dispatch({
-					type: ToastAction.UPDATE_TOAST,
-					payload: {
+					type: ToastAction.UPDATE_TOAST, payload: {
 						message: 'There has been a server error while placing the order',
 						severity: 'error'
 					}
