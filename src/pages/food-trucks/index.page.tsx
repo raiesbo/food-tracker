@@ -4,7 +4,6 @@ import { Text } from "@/components/Text";
 import PrismaDBClient from "@/repositories/prismaClient";
 import homepageService from "@/services/homepage.service";
 import { Restaurant } from "@/types";
-import CircularProgress from "@mui/material/CircularProgress";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import InputLabel from "@mui/material/InputLabel";
@@ -77,7 +76,6 @@ type Props = {
 export default function RestaurantPage({ locations, categories, queryCity, queryCategory, user }: Props) {
 	const [timeoutId, setTimeoutId] = useState<ReturnType<typeof setTimeout>>();
 	const [restaurants, setRestaurants] = useState<Array<Restaurant>>([]);
-	const [isLoading, setIsLoading] = useState(false);
 	const [distanceFilter, setDistanceFilter] = useState(25);
 
 	const [name, setName] = useState('');
@@ -243,40 +241,33 @@ export default function RestaurantPage({ locations, categories, queryCity, query
 						/>
 					</Card>
 					<div className={styles.listContainer}>
-						{isLoading ? (
-							<div className={styles.spinnerContainer}>
-								<CircularProgress/>
-							</div>
-						) : (
-							restaurants.length > 0 ? (
-								restaurants?.map((restaurant: Restaurant) => {
-									const location = restaurant.locations[0];
-									const distance = calcCrow(
-										Number(locationState.lat),
-										Number(locationState.lon),
-										Number(location.lat),
-										Number(location.lon)
-									);
+						{restaurants.length > 0 ? (
+							restaurants?.map((restaurant: Restaurant) => {
+								const distance = calcCrow(
+									Number(locationState.lat),
+									Number(locationState.lon),
+									Number(restaurant.location?.lat),
+									Number(restaurant.location?.lon)
+								);
 
-									if (
-										!user
-										|| distance === 0
-										|| user && distance && distance < distanceFilter
-									) {
-										return (
-											<RestaurantListItem
-												key={restaurant.id}
-												restaurant={restaurant}
-												distance={distance}
-											/>
-										);
-									}
-								})
-							) : (
-								<div>
-									<Text>No Food Trucks found</Text>
-								</div>
-							)
+								if (
+									!user
+									|| distance === 0
+									|| user && distance && distance < distanceFilter
+								) {
+									return (
+										<RestaurantListItem
+											key={restaurant.id}
+											restaurant={restaurant}
+											distance={distance}
+										/>
+									);
+								}
+							})
+						) : (
+							<div>
+								<Text>No Food Trucks found</Text>
+							</div>
 						)}
 					</div>
 				</div>

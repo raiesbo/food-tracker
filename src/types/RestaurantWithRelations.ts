@@ -1,7 +1,7 @@
 import { Prisma } from "@prisma/client";
 
 export const restaurantRelations = Prisma.validator<Prisma.RestaurantInclude>()({
-    locations: true,
+    location: true,
     menu: true,
     schedules: true,
     categories: {

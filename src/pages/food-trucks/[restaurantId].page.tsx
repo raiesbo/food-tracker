@@ -9,7 +9,7 @@ import RestaurantDetailsReview from "@/components/RestaurantDetails/RestaurantDe
 import RestaurantDetailsOrderConfirmation from "@/components/RestaurantDetails/RestaurantDetailsOrderConfirmation";
 import { ToastAction } from "@/components/ToastContext";
 import { Dish, Restaurant } from "@/types";
-import { calcRating, findMainLocation, useToast } from "@/utils";
+import { calcRating, useToast } from "@/utils";
 import userOrder from "@/utils/hooks/useOrder";
 import { auth0Config, imagesConfig } from "@/utils/settings";
 import { useUser } from "@auth0/nextjs-auth0/client";
@@ -61,7 +61,6 @@ export default function RestaurantDetailsPage({ restaurant }: Props) {
 	const { state: orderState, dispatch: orderDispatch } = userOrder();
 	const { dispatch } = useToast();
 
-	const mainLocation = findMainLocation(restaurant.locations);
 	const rating = calcRating(restaurant.reviews);
 	const userMetadata = user && user[auth0Config.metadata] as { user_id: string };
 
@@ -180,7 +179,7 @@ export default function RestaurantDetailsPage({ restaurant }: Props) {
 					])}>
 						<RestaurantDetailsContact
 							user={restaurant.user}
-							location={mainLocation}
+							location={restaurant.location}
 						/>
 						<RestaurantDetailsHours
 							schedules={restaurant.schedules}

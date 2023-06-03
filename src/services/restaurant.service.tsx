@@ -161,16 +161,14 @@ export default function userService({ restaurantClient }: typeof prismaClients) 
 					userId: Number(userId),
 					name: 'New Food Truck',
 					isVisible: false,
-					locations: {
-						create: [
-							{
-								isMainLocation: true,
-								country: '',
-								city: '',
-								streetName: '',
-								streetNumber: ''
-							}
-						]
+					location: {
+						create: {
+							country: '',
+							city: '',
+							zip: '',
+							streetName: '',
+							streetNumber: ''
+						}
 					},
 					schedules: {
 						create: [

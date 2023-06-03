@@ -1,4 +1,3 @@
-import { findMainLocation } from "@/utils";
 import calcRating from "@/utils/calcRating";
 import { paths } from "@/utils/paths";
 import { imagesConfig } from "@/utils/settings";
@@ -24,7 +23,6 @@ export default function RestaurantListItem({ restaurant, distance }: Props) {
 		setRating(calcRating(restaurant.reviews));
 	}, [restaurant]);
 
-	const mainLocation = findMainLocation(restaurant.locations);
 	const withVeganOptions = restaurant.menu.some((dish: Dish) => dish.isVegan);
 
 	return (
@@ -73,11 +71,9 @@ export default function RestaurantListItem({ restaurant, distance }: Props) {
 									{`Distance: ${distance.toFixed(2)} km`}
 								</Text>
 							)}
-							{mainLocation && (
-								<Text semiBold variant={"smallest"}>
-									{`${mainLocation?.streetName} ${mainLocation?.streetNumber}, ${mainLocation?.city}`}
-								</Text>
-							)}
+							<Text semiBold variant={"smallest"}>
+								{`${restaurant.location?.streetName} ${restaurant.location?.streetNumber}, ${restaurant.location?.city}`}
+							</Text>
 						</div>
 						<div className={styles.badges}>
 							{restaurant.isCashOnly && (

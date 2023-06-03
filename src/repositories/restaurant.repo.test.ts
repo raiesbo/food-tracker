@@ -24,7 +24,7 @@ describe('prisma Restaurants client', () => {
 		expect(getRestaurantMock).toHaveBeenCalledWith({
 			'where': { 'id': 6 },
 			'include': {
-				locations: true,
+				location: true,
 				menu: true,
 				schedules: true,
 				"events": {
@@ -66,7 +66,7 @@ describe('prisma Restaurants client', () => {
 		expect(getRestaurantsMock).toHaveBeenCalledWith({
 			'where': { 'name': 'test_name' },
 			'include': {
-				locations: true,
+				location: true,
 				menu: true,
 				schedules: true,
 				"events": {

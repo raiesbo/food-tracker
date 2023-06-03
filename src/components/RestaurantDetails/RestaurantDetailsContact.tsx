@@ -7,7 +7,7 @@ import styles from './RestaurantDetailsContact.module.scss';
 
 type Props = {
     user: Restaurant['user'],
-    location: Location,
+    location: Location | null,
 }
 
 export default function RestaurantDetailsContact({ user, location }: Props) {

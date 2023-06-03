@@ -14,7 +14,6 @@ import { InfoSection } from "@/components/InfoSection";
 import { Card } from "@/components/Card";
 import Image from "next/image";
 import { MyFoodTruckLocations, MyFoodTruckMenu, MyFoodTruckRestaurant } from "@/components/MyFoodTruckDetails/index";
-import { Location } from "@prisma/client";
 import { Text } from "@/components/Text";
 import { Category, Restaurant } from "@/types";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -95,12 +94,14 @@ export default function MyFoodTruckDetails({ restaurant, categories }: Props) {
 	const onToggleFoodTruckVisibility = (event: ChangeEvent<HTMLInputElement>) => {
 		if (
 			event.target.checked &&
-			(!restaurant.locations?.at(0)?.streetName || !restaurant.locations?.at(0)?.streetNumber)
+			(!restaurant.location?.streetName || !restaurant.location?.streetNumber)
 		) {
-			dispatch({ type: ToastAction.UPDATE_TOAST, payload: {
+			dispatch({
+				type: ToastAction.UPDATE_TOAST, payload: {
 					message: 'The location data needs to be completed',
 					severity: 'error'
-				} });
+				}
+			});
 			return;
 		}
 		fetch(`/api/restaurants/${restaurant.id}`, {
@@ -144,9 +145,7 @@ export default function MyFoodTruckDetails({ restaurant, categories }: Props) {
 							/>
 						</Card>
 					</InfoSection>
-					<MyFoodTruckLocations
-						location={restaurant.locations.find(loc => loc.isMainLocation) || {} as Location}
-					/>
+					<MyFoodTruckLocations location={restaurant.location}/>
 					<Card className={styles.scheduleList}>
 						<InfoSection title="Opening Hours" childrenClassName={styles.item}>
 							{restaurant.schedules?.map((schedule) => (

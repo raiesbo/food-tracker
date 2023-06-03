@@ -9,10 +9,10 @@ import GeocodeLocation from "@/types/GeocodeLocation";
 import geocodeService from "@/services/geocode.service";
 import { useData } from "@/utils";
 
-type Props = { location: Location }
+type Props = { location: Location | null }
 
 export default function MyFoodTruckLocations({ location }: Props) {
-	const { mutate } = useData(`/api/restaurants/${location.restaurantId}`, {});
+	const { mutate } = useData(`/api/restaurants/${location?.restaurantId}`, {});
 	const [isLoading, setIsLoading] = useState(false);
 	const [isUpdate, setIsUpdate] = useState(false);
 	const [openGeocode, setOpenGeocode] = useState(false);
@@ -21,22 +21,22 @@ export default function MyFoodTruckLocations({ location }: Props) {
 	const [locationData, updateLocationData] = useReducer((previous: Partial<Location>, payload: Partial<Location>) => {
 		return { ...previous, ...payload };
 	}, {
-		streetName: location.streetName || '',
-		streetNumber: location.streetNumber || '',
-		city: location.city || '',
-		country: location.country || '',
-		zip: location.zip || ''
+		streetName: location?.streetName || '',
+		streetNumber: location?.streetNumber || '',
+		city: location?.city || '',
+		country: location?.country || '',
+		zip: location?.zip || ''
 	});
 
 	const onCancel = () => {
-		updateLocationData(location);
+		updateLocationData(location || {});
 		setIsUpdate(false);
 	};
 
 	const onSave = async () => {
 		setIsLoading(true);
 
-		fetch(`/api/locations/${location.id}`, {
+		fetch(`/api/locations/${location?.id}`, {
 			method: 'PUT',
 			body: JSON.stringify({
 				streetName: locationData.streetName,
@@ -141,7 +141,7 @@ export default function MyFoodTruckLocations({ location }: Props) {
 				isOpen={openGeocode}
 				onClose={() => setOpenGeocode(false)}
 				geolocations={geocodeLocations}
-				locationId={location.id || 0}
+				locationId={location?.id || 0}
 			/>
 		</InfoSection>
 	);
