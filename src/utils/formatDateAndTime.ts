@@ -1,29 +1,48 @@
-export default function formatDateAndTime(date: string | number | Date): string {
-	const today = new Date();
-	const validatedDate = new Date(date);
-	let dayDiff = (validatedDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24);
-	const relativeFormatter = new Intl.RelativeTimeFormat('en', { numeric: 'auto' });
-	const formatter = new Intl.DateTimeFormat('de', {
-		year: "2-digit",
-		month: '2-digit',
-		day: '2-digit',
-		hour: 'numeric',
-		minute: 'numeric'
-	});
-	const timeFormatter = new Intl.DateTimeFormat('de', {
-		hour: 'numeric',
-		minute: 'numeric'
-	});
+type Unit = 'year' | 'month' | 'day' | 'hour' | 'minute' | 'second';
 
-	const dateToday = today.getDate();
-	const dateValidated = validatedDate.getDate();
+const dateUnits = { // in seconds
+	year: 31536000,
+	month: 2629800,
+	day: 86400,
+	hour: 3600,
+	minute: 60,
+	second: 1
+};
 
-	if (dayDiff > 0 && dayDiff < 1 && dateToday !== dateValidated) dayDiff = 1;
-	if (dayDiff > -2 && dayDiff < -1 && dateToday !== dateValidated) dayDiff = Math.ceil(dayDiff);
+const standardTF = new Intl.DateTimeFormat('de', {
+	year: "2-digit",
+	month: '2-digit',
+	day: '2-digit',
+	hour: 'numeric',
+	minute: 'numeric'
+});
 
-	if (dayDiff > -2) {
-		return `${relativeFormatter.format(Math.floor(dayDiff), 'day')}, ${timeFormatter.format(validatedDate)}`;
+const rtf = new Intl.RelativeTimeFormat(
+	'en',
+	{ numeric: 'auto' }
+);
+
+export default function formatDateAndTime(timestamp: string | number | Date) {
+	const from = new Date(timestamp).getTime();
+	const now = new Date().getTime();
+
+	const elapsed = (from - now) / 1000;
+
+	console.log(from, now, (from - now) / 1000);
+
+	if (elapsed < dateUnits.day * -2) {
+		return standardTF.format(from);
 	}
 
-	return formatter.format(validatedDate);
+	for (const unit in dateUnits) {
+		if (Math.abs(elapsed) > dateUnits[unit as Unit]) {
+			return rtf.format(
+				Math.floor(elapsed / dateUnits[unit as Unit]),
+				unit as Unit
+			);
+		}
+	}
+
+	// if less than one second, then is now
+	return rtf.format(0, 'second');
 }
