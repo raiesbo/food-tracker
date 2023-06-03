@@ -68,8 +68,8 @@ CREATE TABLE "Dish" (
 -- CreateTable
 CREATE TABLE "Schedule" (
     "id" SERIAL NOT NULL,
-    "opening_hour" TEXT DEFAULT '9:00',
-    "closing_hour" TEXT DEFAULT '11:30',
+    "openingHour" TEXT DEFAULT '9:00',
+    "closingHour" TEXT DEFAULT '11:30',
     "day" "WeekDay",
     "isOpen" BOOLEAN DEFAULT true,
     "restaurantId" INTEGER,
@@ -121,8 +121,8 @@ CREATE TABLE "Event" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "date" TIMESTAMP(3),
-    "opening_hour" TEXT DEFAULT '9:00',
-    "closing_hour" TEXT DEFAULT '11:30',
+    "openingHour" TEXT DEFAULT '9:00',
+    "closingHour" TEXT DEFAULT '11:30',
     "restaurantId" INTEGER,
     "locationId" INTEGER,
 

@@ -178,13 +178,13 @@ async function main() {
             },
             schedules: {
                 create: [
-                    { day: 'MONDAY', opening_hour: '12:30', closing_hour: '01:00' },
-                    { day: 'TUESDAY', opening_hour: '10:30', closing_hour: '12:00' },
+                    { day: 'MONDAY', openingHour: '12:30', closingHour: '01:00' },
+                    { day: 'TUESDAY', openingHour: '10:30', closingHour: '12:00' },
                     { day: 'WEDNESDAY', isOpen: false },
-                    { day: 'THURSDAY', opening_hour: '12:30', closing_hour: '01:00' },
-                    { day: 'FRIDAY', opening_hour: '12:30', closing_hour: '01:00' },
-                    { day: 'SATURDAY', opening_hour: '12:30', closing_hour: '01:00' },
-                    { day: 'SUNDAY', opening_hour: '12:30', closing_hour: '01:00' }
+                    { day: 'THURSDAY', openingHour: '12:30', closingHour: '01:00' },
+                    { day: 'FRIDAY', openingHour: '12:30', closingHour: '01:00' },
+                    { day: 'SATURDAY', openingHour: '12:30', closingHour: '01:00' },
+                    { day: 'SUNDAY', openingHour: '12:30', closingHour: '01:00' }
                 ]
             }
         }
@@ -265,13 +265,13 @@ async function main() {
             },
             schedules: {
                 create: [
-                    { day: 'MONDAY', opening_hour: '12:30', closing_hour: '01:00' },
-                    { day: 'TUESDAY', opening_hour: '10:30', closing_hour: '12:00' },
+                    { day: 'MONDAY', openingHour: '12:30', closingHour: '01:00' },
+                    { day: 'TUESDAY', openingHour: '10:30', closingHour: '12:00' },
                     { day: 'WEDNESDAY', isOpen: false },
-                    { day: 'THURSDAY', opening_hour: '12:30', closing_hour: '01:00' },
-                    { day: 'FRIDAY', opening_hour: '12:30', closing_hour: '01:00' },
-                    { day: 'SATURDAY', opening_hour: '12:30', closing_hour: '01:00' },
-                    { day: 'SUNDAY', opening_hour: '12:30', closing_hour: '01:00' }
+                    { day: 'THURSDAY', openingHour: '12:30', closingHour: '01:00' },
+                    { day: 'FRIDAY', openingHour: '12:30', closingHour: '01:00' },
+                    { day: 'SATURDAY', openingHour: '12:30', closingHour: '01:00' },
+                    { day: 'SUNDAY', openingHour: '12:30', closingHour: '01:00' }
                 ]
             }
         }
@@ -345,13 +345,13 @@ async function main() {
             },
             schedules: {
                 create: [
-                    { day: 'MONDAY', opening_hour: '12:30', closing_hour: '01:00' },
-                    { day: 'TUESDAY', opening_hour: '10:30', closing_hour: '12:00' },
+                    { day: 'MONDAY', openingHour: '12:30', closingHour: '01:00' },
+                    { day: 'TUESDAY', openingHour: '10:30', closingHour: '12:00' },
                     { day: 'WEDNESDAY', isOpen: false },
-                    { day: 'THURSDAY', opening_hour: '12:30', closing_hour: '01:00' },
-                    { day: 'FRIDAY', opening_hour: '12:30', closing_hour: '01:00' },
-                    { day: 'SATURDAY', opening_hour: '12:30', closing_hour: '01:00' },
-                    { day: 'SUNDAY', opening_hour: '12:30', closing_hour: '01:00' }
+                    { day: 'THURSDAY', openingHour: '12:30', closingHour: '01:00' },
+                    { day: 'FRIDAY', openingHour: '12:30', closingHour: '01:00' },
+                    { day: 'SATURDAY', openingHour: '12:30', closingHour: '01:00' },
+                    { day: 'SUNDAY', openingHour: '12:30', closingHour: '01:00' }
                 ]
             }
         }

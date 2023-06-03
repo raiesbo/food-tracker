@@ -18,8 +18,8 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 type EventState = {
 	name: string,
 	date: string,
-	opening_hour: string,
-	closing_hour: string,
+	openingHour: string,
+	closingHour: string,
 	streetName: string,
 	streetNumber: string,
 	zip: string,
@@ -42,8 +42,8 @@ export default function EventsCreateModal({ isOpen, onClose, restaurants }: Prop
 	}, {
 		name: '',
 		date: '',
-		opening_hour: '',
-		closing_hour: '',
+		openingHour: '',
+		closingHour: '',
 		streetName: '',
 		streetNumber: '',
 		zip: '',
@@ -111,13 +111,13 @@ export default function EventsCreateModal({ isOpen, onClose, restaurants }: Prop
 						/>
 						<TimePicker
 							label="Opening Hour"
-							value={event.opening_hour}
-							onChange={val => updateEvent({ opening_hour: val || '' })}
+							value={event.openingHour}
+							onChange={val => updateEvent({ openingHour: val || '' })}
 						/>
 						<TimePicker
 							label="Closing Hour"
-							value={event.closing_hour}
-							onChange={val => updateEvent({ closing_hour: val || '' })}
+							value={event.closingHour}
+							onChange={val => updateEvent({ closingHour: val || '' })}
 						/>
 					</div>
 					<TextField

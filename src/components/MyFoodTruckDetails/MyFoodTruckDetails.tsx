@@ -156,7 +156,7 @@ export default function MyFoodTruckDetails({ restaurant, categories }: Props) {
 									</Text>
 									{schedule.isOpen ? (
 										<Text variant={'smallest'}>
-											{`${schedule.opening_hour} ${schedule.closing_hour}`}
+											{`${schedule.openingHour} ${schedule.closingHour}`}
 										</Text>
 									) : (
 										<Text variant={'smallest'}>

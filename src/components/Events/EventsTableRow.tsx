@@ -58,13 +58,13 @@ export default function EventsTableRow({ event, url }: Props) {
 				{formatDate(new Date(event.date || ''))}
 			</TableCell>
 			<TableCell align='center'>
-				{event?.opening_hour
-					? formatTime((new Date(event.opening_hour)).getTime())
+				{event?.openingHour
+					? formatTime((new Date(event.openingHour)).getTime())
 					: ''}
 			</TableCell>
 			<TableCell align='center'>
-				{event?.closing_hour
-					? formatTime((new Date(event.closing_hour)).getTime())
+				{event?.closingHour
+					? formatTime((new Date(event.closingHour)).getTime())
 					: ''}
 			</TableCell>
 			<TableCell align='center'>

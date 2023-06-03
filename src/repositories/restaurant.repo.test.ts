@@ -29,11 +29,11 @@ describe('prisma Restaurants client', () => {
 				schedules: true,
 				"events": {
 					"select": {
-						"closing_hour": true,
+						"closingHour": true,
 						"date": true,
 						"id": true,
 						"location": true,
-						"opening_hour": true
+						"openingHour": true
 					}
 				},
 				"categories": {
@@ -71,11 +71,11 @@ describe('prisma Restaurants client', () => {
 				schedules: true,
 				"events": {
 					"select": {
-						"closing_hour": true,
+						"closingHour": true,
 						"date": true,
 						"id": true,
 						"location": true,
-						"opening_hour": true
+						"openingHour": true
 					}
 				},
 				"categories": {

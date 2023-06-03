@@ -10,8 +10,8 @@ const validateCreateRequestProps = (props: Prisma.EventUncheckedCreateInput & Pr
 
 	if (props.name) validatedProps.event.name = props.name;
 	if (props.date) validatedProps.event.date = props.date;
-	if (props.opening_hour) validatedProps.event.opening_hour = props.opening_hour;
-	if (props.closing_hour) validatedProps.event.closing_hour = props.closing_hour;
+	if (props.openingHour) validatedProps.event.openingHour = props.openingHour;
+	if (props.closingHour) validatedProps.event.closingHour = props.closingHour;
 	if (props.streetName) validatedProps.location.streetName = props.streetName;
 	if (props.streetNumber) validatedProps.location.streetNumber = props.streetNumber;
 	if (props.zip) validatedProps.location.zip = props.zip;

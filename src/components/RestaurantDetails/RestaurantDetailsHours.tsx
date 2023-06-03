@@ -36,7 +36,7 @@ export default function RestaurantDetailsHours({ schedules, events }: Props) {
                             </Text>
                             {schedule.isOpen ? (
                                 <Text variant={'smallest'}>
-                                    {`${schedule.opening_hour} ${schedule.closing_hour}`}
+                                    {`${schedule.openingHour} ${schedule.closingHour}`}
                                 </Text>
                             ) : (
                                 <Text variant={'smallest'}>

@@ -15,8 +15,8 @@ export const restaurantRelations = Prisma.validator<Prisma.RestaurantInclude>()(
         select: {
             id: true,
             date: true,
-            opening_hour: true,
-            closing_hour: true,
+            openingHour: true,
+            closingHour: true,
             location: true
         }
     },

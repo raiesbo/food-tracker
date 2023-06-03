@@ -28,7 +28,7 @@ export default function RestaurantDetailsHoursEvent({ day, event }: Props) {
 					</Text>
 				</header>
 				<Text variant={'smallest'}>
-					{`${formatTime(event.opening_hour)} ${formatTime(event.closing_hour)}`}
+					{`${formatTime(event.openingHour)} ${formatTime(event.closingHour)}`}
 				</Text>
 			</div>
 			{isCollapsed && (

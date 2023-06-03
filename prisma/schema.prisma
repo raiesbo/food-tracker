@@ -11,20 +11,19 @@ datasource db {
 }
 
 model User {
-  id              Int          @id @default(autoincrement())
-  firstName       String
-  lastName        String?
-  email           String       @unique
-  phone           String?
-  imageUrl        String?
-  withVisibleData Boolean?     @default(true)
-  role            UserType     @default(CUSTOMER)
-  location        Location?
-  reviews         Review[]
-  resturants      Restaurant[]
-  categories      Category[]
-  likes           Like[]
-  orders          Order[]
+  id         Int          @id @default(autoincrement())
+  firstName  String
+  lastName   String?
+  email      String       @unique
+  phone      String?
+  imageUrl   String?
+  role       UserType     @default(CUSTOMER)
+  location   Location?
+  reviews    Review[]
+  resturants Restaurant[]
+  categories Category[]
+  likes      Like[]
+  orders     Order[]
 }
 
 enum UserType {
@@ -43,10 +42,6 @@ model Review {
   restaurant   Restaurant? @relation(fields: [restaurantId], references: [id])
   restaurantId Int?
   likes        Like[]
-  // TODO To be implemented
-  // answers      Comment[]   @relation("answers")
-  // responseToId String?
-  // responseTo   Comment?    @relation("answers", fields: [responseToId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model Restaurant {
@@ -99,8 +94,8 @@ enum WeekDay {
 
 model Schedule {
   id           Int         @id @default(autoincrement())
-  opening_hour String?     @default("9:00")
-  closing_hour String?     @default("11:30")
+  openingHour  String?     @default("9:00")
+  closingHour  String?     @default("11:30")
   day          WeekDay?
   isOpen       Boolean?    @default(true)
   restaurant   Restaurant? @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
@@ -148,8 +143,8 @@ model Event {
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
   date         DateTime?
-  opening_hour String?     @default("9:00")
-  closing_hour String?     @default("11:30")
+  openingHour  String?     @default("9:00")
+  closingHour  String?     @default("11:30")
   restaurant   Restaurant? @relation(fields: [restaurantId], references: [id])
   restaurantId Int?
   location     Location?   @relation(fields: [locationId], references: [id])
