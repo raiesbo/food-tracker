@@ -12,7 +12,6 @@ CREATE TABLE "User" (
     "email" TEXT NOT NULL,
     "phone" TEXT,
     "imageUrl" TEXT,
-    "withVisibleData" BOOLEAN DEFAULT true,
     "role" "UserType" NOT NULL DEFAULT 'CUSTOMER',
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
@@ -41,7 +40,7 @@ CREATE TABLE "Restaurant" (
     "description" TEXT,
     "imageUrl" TEXT,
     "isCashOnly" BOOLEAN NOT NULL DEFAULT false,
-    "isVisible" BOOLEAN NOT NULL DEFAULT true,
+    "isVisible" BOOLEAN NOT NULL DEFAULT false,
     "offer" TEXT,
     "userId" INTEGER,
 
@@ -88,7 +87,6 @@ CREATE TABLE "Location" (
     "lat" TEXT,
     "lon" TEXT,
     "formattedAddress" TEXT,
-    "isMainLocation" BOOLEAN NOT NULL DEFAULT false,
     "restaurantId" INTEGER,
     "userId" INTEGER,
 
@@ -161,6 +159,9 @@ CREATE TABLE "_CategoryToRestaurant" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Location_restaurantId_key" ON "Location"("restaurantId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Location_userId_key" ON "Location"("userId");

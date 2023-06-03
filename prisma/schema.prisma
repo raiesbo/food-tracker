@@ -53,10 +53,10 @@ model Restaurant {
   description String?
   imageUrl    String?
   isCashOnly  Boolean    @default(false)
-  isVisible   Boolean    @default(true)
+  isVisible   Boolean    @default(false)
   offer       String?
   menu        Dish[]
-  locations   Location[]
+  location    Location?
   schedules   Schedule[]
   user        User?      @relation(fields: [userId], references: [id])
   userId      Int?
@@ -112,9 +112,8 @@ model Location {
   lat              String?
   lon              String?
   formattedAddress String?
-  isMainLocation   Boolean     @default(false)
   restaurant       Restaurant? @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
-  restaurantId     Int?
+  restaurantId     Int?        @unique
   event            Event?
   user             User?       @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId           Int?        @unique

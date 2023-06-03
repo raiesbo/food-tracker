@@ -13,7 +13,13 @@ async function main() {
             lastName: 'Muller',
             role: 'CUSTOMER',
             location: {
-                create: { streetName: '' }
+                create: {
+                    country: '',
+                    city: '',
+                    zip: '',
+                    streetName: '',
+                    streetNumber: ''
+                }
             }
         }
     });
@@ -28,7 +34,13 @@ async function main() {
             lastName: 'Madok',
             role: 'SP',
             location: {
-                create: { streetName: '' }
+                create: {
+                    country: '',
+                    city: '',
+                    zip: '',
+                    streetName: '',
+                    streetNumber: ''
+                }
             }
         }
     });
@@ -44,7 +56,13 @@ async function main() {
             lastName: 'Espasa',
             role: 'SP',
             location: {
-                create: { streetName: '' }
+                create: {
+                    country: '',
+                    city: '',
+                    zip: '',
+                    streetName: '',
+                    streetNumber: ''
+                }
             }
         }
     });
@@ -54,24 +72,6 @@ async function main() {
         update: {},
         create: {
             name: 'Spanish',
-            userId: bob.id
-        }
-    });
-
-    const categoryGerman = await prisma.category.upsert({
-        where: { name: 'German' },
-        update: {},
-        create: {
-            name: 'German',
-            userId: alice.id
-        }
-    });
-
-    const categoryFrench = await prisma.category.upsert({
-        where: { name: 'French' },
-        update: {},
-        create: {
-            name: 'French',
             userId: bob.id
         }
     });
@@ -112,7 +112,8 @@ async function main() {
         }
     });
 
-    const restaurantBurger = await prisma.restaurant.create({
+    // BURGER RESTAURANT
+    await prisma.restaurant.create({
         data: {
             name: 'Main Burger',
             description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
@@ -120,6 +121,7 @@ async function main() {
             imageUrl: 'https://images.unsplash.com/photo-1570441262582-a2d4b9a916a5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80',
             userId: mainUser.id,
             isCashOnly: true,
+            isVisible: true,
             categories: {
                 connect: [
                     { id: categoryAmerican.id },
@@ -146,26 +148,17 @@ async function main() {
                     }
                 ]
             },
-            locations: {
-                create: [
-                    {
-                        isMainLocation: true,
-                        country: "German",
-                        city: 'Berlin',
-                        streetName: 'Blücherstraße',
-                        streetNumber: '61B'
-                    }
-                    // {
-                    //     country: "Spain",
-                    //     city: 'Barcelona',
-                    //     streetName: 'Blücherstraße',
-                    //     streetNumber: '61B'
-                    // }
-                ]
+            location: {
+                create: {
+                    country: "German",
+                    city: 'Berlin',
+                    streetName: 'Blücherstraße',
+                    streetNumber: '61B'
+                }
             },
             reviews: {
                 create: [
-                    { comment: 'Really delicious, 100% recomended!', rating: 1, userId: bob.id },
+                    { comment: 'Really delicious, 100% recommended!', rating: 1, userId: bob.id },
                     {
                         comment: 'The food was good, but the service could improve quite a lot.',
                         rating: 5,
@@ -190,7 +183,8 @@ async function main() {
         }
     });
 
-    const restaurantSpanish = await prisma.restaurant.create({
+    // SPANISH RESTAURANT
+    await prisma.restaurant.create({
         data: {
             name: 'Paellaland',
             description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
@@ -198,6 +192,7 @@ async function main() {
             imageUrl: 'https://images.unsplash.com/photo-1570441262582-a2d4b9a916a5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80',
             userId: alice.id,
             isCashOnly: true,
+            isVisible: true,
             categories: {
                 connect: [
                     { id: categorySpanish.id },
@@ -231,28 +226,18 @@ async function main() {
                     }
                 ]
             },
-            locations: {
-                create: [
-                    // {
-                    //     country: "German",
-                    //     city: 'Berlin',
-                    //     streetName: 'Oranienstraße',
-                    //     streetNumber: '110',
-                    //     zip: '10969'
-                    // },
-                    {
-                        isMainLocation: true,
-                        country: "Spain",
-                        city: 'Barcelona',
-                        streetName: 'Travessera de Gràcia',
-                        streetNumber: '289',
-                        zip: '08025'
-                    }
-                ]
+            location: {
+                create: {
+                    country: "Spain",
+                    city: 'Barcelona',
+                    streetName: 'Travessera de Gràcia',
+                    streetNumber: '289',
+                    zip: '08025'
+                }
             },
             reviews: {
                 create: [
-                    { comment: 'Really delicious, 100% recomended!', rating: 5, userId: bob.id },
+                    { comment: 'Really delicious, 100% recommended!', rating: 5, userId: bob.id },
                     {
                         comment: 'The food was good, but the service could improve quite a lot.',
                         rating: 5,
@@ -277,7 +262,8 @@ async function main() {
         }
     });
 
-    const restaurantTaps = await prisma.restaurant.create({
+    // TAPAS RESTAURANT
+    await prisma.restaurant.create({
         data: {
             name: 'Tapas Bar',
             description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
@@ -285,6 +271,7 @@ async function main() {
             imageUrl: 'https://images.unsplash.com/photo-1570441262582-a2d4b9a916a5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80',
             userId: bob.id,
             isCashOnly: true,
+            isVisible: true,
             categories: {
                 connect: [
                     { id: categoryThai.id },
@@ -294,12 +281,12 @@ async function main() {
             menu: {
                 create: [
                     {
-                        name: 'Tortilla patata',
+                        name: 'Tortilla de patata',
                         isGlutenFree: false,
                         imageUrl: 'https://images.unsplash.com/photo-1551730707-ae4fde676aae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80',
                         isVegan: false,
                         price: 13.30,
-                        ingredients: 'Meet;Bread;Ketchup;Fries;Letuce;Tomato'
+                        ingredients: 'Meet;Bread;Ketchup;Fries;Lettuce;Tomato'
                     },
                     {
                         name: 'Pimientos del padrón',
@@ -307,39 +294,29 @@ async function main() {
                         imageUrl: 'https://images.unsplash.com/photo-1551730707-ae4fde676aae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80',
                         isVegan: true,
                         price: 11.30,
-                        ingredients: 'Vegan Meet;Bread;Ketchup;Fries;Letuce;Tomato'
+                        ingredients: 'Vegan Meet;Bread;Ketchup;Fries;Lettuce;Tomato'
                     }
                 ]
             },
-            locations: {
-                create: [
-                    {
-                        isMainLocation: true,
-                        country: "German",
-                        city: 'Berlin',
-                        streetName: 'Wassertorstraße',
-                        streetNumber: '19',
-                        zip: '10969'
-                    }
-                    // {
-                    //     country: "Spain",
-                    //     city: 'Barcelona',
-                    //     streetName: 'Carrer de Pi i Margall',
-                    //     streetNumber: '19',
-                    //     zip: '08024'
-                    // }
-                ]
+            location: {
+                create: {
+                    country: "German",
+                    city: 'Berlin',
+                    streetName: 'Wassertorstraße',
+                    streetNumber: '19',
+                    zip: '10969'
+                }
             },
             reviews: {
                 create: [
-                    { comment: 'Really delicious, 100% recomended!', rating: 1, userId: bob.id },
+                    { comment: 'Really delicious, 100% recommended!', rating: 1, userId: bob.id },
                     {
                         comment: 'The food was good, but the service could improve quite a lot.',
                         rating: 5,
                         userId: alice.id
                     },
-                    { rating: 1, userId: alice.id },
-                    { rating: 1, userId: alice.id },
+                    { comment: 'Better go somewhere else', rating: 1, userId: alice.id },
+                    { comment: 'Really good, recommended!', rating: 1, userId: alice.id },
                     { comment: 'So so...', rating: 3, userId: mainUser.id }
                 ]
             },
@@ -358,12 +335,10 @@ async function main() {
     });
 }
 
-main()
-    .then(async () => {
-        await prisma.$disconnect();
-    })
-    .catch(async (e) => {
-        console.error(e);
-        await prisma.$disconnect();
-        process.exit(1);
-    });
+main().then(async () => {
+    await prisma.$disconnect();
+}).catch(async (e) => {
+    console.error(e);
+    await prisma.$disconnect();
+    process.exit(1);
+});
