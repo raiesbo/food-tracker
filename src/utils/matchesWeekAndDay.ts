@@ -9,7 +9,6 @@ type Props = {
 export default function matchesWeekAndDay({ scheduleDay, eventDate }: Props) {
 	if (!eventDate || !scheduleDay) return false;
 	const currentWeek = getDateWeek(new Date());
-	// console.log(getDateWeek(eventDate), currentWeek, scheduleDay.toLowerCase(), getDayOfWeek(eventDate).toLowerCase());
 	return getDateWeek(eventDate) === currentWeek
 		&& scheduleDay.toLowerCase() === getDayOfWeek(eventDate).toLowerCase();
 }

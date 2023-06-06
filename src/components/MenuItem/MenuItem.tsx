@@ -6,7 +6,7 @@ import Chip from "@mui/material/Chip";
 import IconButton from "@mui/material/IconButton";
 import cc from 'classcat';
 import Image from "next/image";
-import { useId, useState } from "react";
+import { useState } from "react";
 import { Card } from "../Card";
 import { Text } from "../Text";
 import styles from './MenuItem.module.scss';
@@ -17,7 +17,6 @@ type Props = {
 }
 
 export default function MenuItem({ dish, onAddToOrder }: Props) {
-    const id = useId();
     const [ isOpen, setIsOpen ] = useState(false);
 
     return (
@@ -51,6 +50,7 @@ export default function MenuItem({ dish, onAddToOrder }: Props) {
                     alt={dish.name + ' | default image from Unsplash'}
                     fill
                     style={{ objectFit: 'cover' }}
+                    sizes="(max-width: 500px) 100vw, 440px"
                 />
             </div>
             <div className={cc([ styles.ingredientList, !isOpen && styles.ingredientList_closed ])}>

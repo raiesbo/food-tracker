@@ -40,6 +40,7 @@ export default function RestaurantListItem({ restaurant, distance }: Props) {
 						fill
 						priority
 						placeholder='blur'
+						sizes="(max-width: 768px) 100vw, 670px"
 					/>
 				</div>
 				<div className={styles.cardBody}>

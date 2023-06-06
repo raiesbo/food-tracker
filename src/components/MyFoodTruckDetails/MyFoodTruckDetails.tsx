@@ -135,6 +135,7 @@ export default function MyFoodTruckDetails({ restaurant, categories }: Props) {
 									className={styles.image}
 									style={{ objectFit: 'cover' }}
 									priority
+									sizes="(max-width: 900px) 100vw, 300px"
 								/>
 							</label>
 							<input

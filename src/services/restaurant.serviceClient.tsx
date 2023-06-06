@@ -47,8 +47,6 @@ export default function restaurantsService(instance: IDBClient['instance']) {
 				location: { city: query.city as string }
 			};
 
-			console.log(filters);
-
 			try {
 				const restaurants = await instance.restaurant.findMany({
 					where: filters,

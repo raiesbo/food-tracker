@@ -216,6 +216,7 @@ export default function MyGoodTruckDish({ dish }: Props) {
                                     fill
                                     className={styles.image}
                                     style={{ objectFit: 'cover' }}
+                                    sizes="(max-width: 900px) 100vw, 295px"
                                 />
                             </label>
                             <input

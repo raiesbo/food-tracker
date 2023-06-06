@@ -28,8 +28,6 @@ export default function formatDateAndTime(timestamp: string | number | Date) {
 
 	const elapsed = (from - now) / 1000;
 
-	console.log(from, now, (from - now) / 1000);
-
 	if (elapsed < dateUnits.day * -2) {
 		return standardTF.format(from);
 	}

@@ -50,6 +50,8 @@ export default function MyFoodTruckList({ restaurants }: Props) {
 									alt='Restaurant image'
 									fill
 									className={styles.backgroundImage}
+									sizes="(max-width: 600px) 220px, 235px"
+									priority
 								/>
 							</div>
 							<div className={styles.cardText}>

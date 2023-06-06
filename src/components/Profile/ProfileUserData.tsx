@@ -30,6 +30,7 @@ export default function ProfileUserData({ userData, updateUserData, isLoading, i
 							className={styles.image}
 							style={{ objectFit: 'cover' }}
 							sizes="(max-width: 600px) 100px,(max-width: 900px) 150px, 200px"
+							priority
 						/>
 					</label>
 					<input

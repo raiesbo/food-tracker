@@ -68,6 +68,7 @@ export default function HomePage({ categories, locations }: Props) {
 					priority
 					fill
 					loading='eager'
+					sizes="100vw"
 				/>
 			</div>
 			<Card className={styles.headerContent}>
