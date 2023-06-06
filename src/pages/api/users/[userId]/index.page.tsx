@@ -1,6 +1,6 @@
 import { withApiAuthRequired } from '@auth0/nextjs-auth0';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import userService from "@/services/user.serviceClient";
+import userService from "@/services/user.service";
 import PrismaDBClient from "@/repositories/prismaClient";
 
 const userServiceInstance = userService(PrismaDBClient);

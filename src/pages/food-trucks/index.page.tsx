@@ -21,7 +21,7 @@ import { Slider, Switch } from "@mui/material";
 import useLocation from "@/utils/hooks/useLocation";
 import { getSession } from "@auth0/nextjs-auth0";
 import { auth0Config } from "@/utils/settings";
-import userService from "@/services/user.serviceClient";
+import userService from "@/services/user.service";
 import User from "@/types/User";
 import { LocationAction } from "@/components/LocationContext";
 import calcCrow from "@/utils/calcCoordsDistance";

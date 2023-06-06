@@ -6,7 +6,6 @@ import fileService from './file.service';
 import locationsService from "./location.service";
 import restaurantService from "./restaurant.service";
 import reviewsService from "./review.service";
-import userService from "./user.service";
 
 type Props = {
     prismaClient: typeof prismaClient,
@@ -17,7 +16,6 @@ function services({ prismaClient, auth0Client }: Props) {
     return {
         auth0Service: auth0Service({ auth0Client }),
         restaurantService: restaurantService(prismaClient),
-        userService: userService(prismaClient),
         reviewsService: reviewsService(prismaClient),
         categoriesService: categoriesService(prismaClient),
         dishesService: dishesService(prismaClient),

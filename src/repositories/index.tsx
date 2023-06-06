@@ -4,11 +4,9 @@ import locationClient from './location.repo';
 import PrismaDBClient, { IDBClient } from './prismaClient';
 import restaurantClient from './restaurant.repo';
 import reviewClient from './review.repo';
-import userClient from './user.repo';
 
 function prismaClients(prismaInstance: IDBClient) {
     return {
-        userClient: userClient(prismaInstance),
         restaurantClient: restaurantClient(prismaInstance),
         dishClient: dishClient(prismaInstance),
         reviewClient: reviewClient(prismaInstance),

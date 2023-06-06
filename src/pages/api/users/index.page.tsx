@@ -1,7 +1,10 @@
 import services from '@/services';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import userService from "@/services/user.service";
+import PrismaDBClient from "@/repositories/prismaClient";
 
-const { userService, auth0Service } = services;
+const { auth0Service } = services;
+const userServiceInstance = userService(PrismaDBClient);
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 
@@ -9,7 +12,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const {
             result: createNewUserResult,
             error: createNewUserError
-        } = await userService.createNewUser(req);
+        } = await userServiceInstance.createNewUser(req);
 
         if (createNewUserError) {
             return res.status(createNewUserError.status).json({ errorMessage: createNewUserError.message });

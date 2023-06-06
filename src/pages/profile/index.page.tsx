@@ -6,7 +6,7 @@ import { GetServerSidePropsContext } from "next";
 import { ReactElement } from "react";
 import { Profile } from '@/components/Profile';
 import User from "@/types/User";
-import userService from "@/services/user.serviceClient";
+import userService from "@/services/user.service";
 import PrismaDBClient from "@/repositories/prismaClient";
 
 const userServiceInstance = userService(PrismaDBClient);
