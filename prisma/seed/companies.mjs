@@ -48,8 +48,8 @@ export default async function companiesSeedData() {
                     city: 'Berlin',
                     streetName: 'Blücherstraße',
                     streetNumber: '61B',
-                    lat: 52.494750,
-                    lon: 13.399350
+                    lat: '52.494750',
+                    lon: '13.399350'
                 }
             },
             reviews: {
@@ -133,8 +133,8 @@ export default async function companiesSeedData() {
                     streetName: 'Travessera de Gràcia',
                     streetNumber: '289',
                     zip: '08025',
-                    lat: 41.4057983,
-                    lon: 2.1647421
+                    lat: '41.4057983',
+                    lon: '2.1647421'
                 }
             },
             reviews: {
@@ -211,8 +211,8 @@ export default async function companiesSeedData() {
                     streetName: 'Karl-Marx-Allee',
                     streetNumber: '62',
                     zip: '10243',
-                    lat: 52.482560,
-                    lon: 13.432160
+                    lat: '52.482560',
+                    lon: '13.432160'
                 }
             },
             reviews: {
@@ -301,8 +301,8 @@ export default async function companiesSeedData() {
                     streetName: 'Wassertorstraße',
                     streetNumber: '19',
                     zip: '10969',
-                    lat: 52.500120,
-                    lon: 13.407610
+                    lat: '52.500120',
+                    lon: '13.407610'
                 }
             },
             reviews: {
@@ -399,8 +399,8 @@ export default async function companiesSeedData() {
                     streetName: 'Wrangelstraße',
                     streetNumber: '42',
                     zip: '10997',
-                    lat: 52.499690,
-                    lon: 13.438910
+                    lat: '52.499690',
+                    lon: '13.438910'
                 }
             },
             reviews: {
@@ -473,8 +473,8 @@ export default async function companiesSeedData() {
                     streetName: 'Wassertorstraße',
                     streetNumber: '19',
                     zip: '10969',
-                    lat: 52.500118,
-                    lon: 13.407610
+                    lat: '52.500118',
+                    lon: '13.407610'
                 }
             },
             reviews: {
