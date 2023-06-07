@@ -8,7 +8,7 @@ type Props = {
 	isUpdate?: boolean,
 	isLoading?: boolean,
 	location: Partial<User['location']>,
-	updateLocation: (e: {location: Partial<User['location']>}) => void
+	updateLocation: (e: { location: Partial<User['location']> }) => void
 }
 export default function ProfileLocation({ location, updateLocation, isUpdate, isLoading }: Props) {
 
@@ -19,64 +19,64 @@ export default function ProfileLocation({ location, updateLocation, isUpdate, is
 			childrenClassName={styles.userLocation}
 		>
 			<div className={styles.name}>
-				<Text variant={'h4'} bold>
+				<Text variant={'h4'} bold as='label'>
 					Street Name
+					<TextField
+						value={location?.streetName}
+						onChange={(e) => updateLocation({ location: { streetName: e.target.value } })}
+						fullWidth
+						sx={{ mt: 1, backgroundColor: 'white' }}
+						disabled={!isUpdate || isLoading}
+					/>
 				</Text>
-				<TextField
-					value={location?.streetName}
-					onChange={(e) => updateLocation({ location: { streetName: e.target.value } })}
-					fullWidth
-					sx={{ mt: 1, backgroundColor: 'white' }}
-					disabled={!isUpdate || isLoading}
-				/>
 			</div>
 			<div className={styles.name}>
-				<Text variant={'h4'} bold>
+				<Text variant={'h4'} bold as='label'>
 					Street Number
+					<TextField
+						value={location?.streetNumber}
+						onChange={(e) => updateLocation({ location: { streetNumber: e.target.value } })}
+						fullWidth
+						sx={{ mt: 1, backgroundColor: 'white' }}
+						disabled={!isUpdate || isLoading}
+					/>
 				</Text>
-				<TextField
-					value={location?.streetNumber}
-					onChange={(e) => updateLocation({ location: { streetNumber: e.target.value } })}
-					fullWidth
-					sx={{ mt: 1, backgroundColor: 'white' }}
-					disabled={!isUpdate || isLoading}
-				/>
 			</div>
 			<div className={styles.name}>
-				<Text variant={'h4'} bold>
+				<Text variant={'h4'} bold as='label'>
 					Zip Code
+					<TextField
+						value={location?.zip}
+						onChange={(e) => updateLocation({ location: { zip: e.target.value } })}
+						fullWidth
+						sx={{ mt: 1, backgroundColor: 'white' }}
+						disabled={!isUpdate || isLoading}
+					/>
 				</Text>
-				<TextField
-					value={location?.zip}
-					onChange={(e) => updateLocation({ location: { zip: e.target.value } })}
-					fullWidth
-					sx={{ mt: 1, backgroundColor: 'white' }}
-					disabled={!isUpdate || isLoading}
-				/>
 			</div>
 			<div className={styles.name}>
-				<Text variant={'h4'} bold>
+				<Text variant={'h4'} bold as='label'>
 					City
+					<TextField
+						value={location?.city}
+						onChange={(e) => updateLocation({ location: { city: e.target.value } })}
+						fullWidth
+						sx={{ mt: 1, backgroundColor: 'white' }}
+						disabled={!isUpdate || isLoading}
+					/>
 				</Text>
-				<TextField
-					value={location?.city}
-					onChange={(e) => updateLocation({ location: { city: e.target.value } })}
-					fullWidth
-					sx={{ mt: 1, backgroundColor: 'white' }}
-					disabled={!isUpdate || isLoading}
-				/>
 			</div>
 			<div className={styles.name}>
-				<Text variant={'h4'} bold>
+				<Text variant={'h4'} bold as='label'>
 					Country
+					<TextField
+						value={location?.country}
+						onChange={(e) => updateLocation({ location: { country: e.target.value } })}
+						fullWidth
+						sx={{ mt: 1, backgroundColor: 'white' }}
+						disabled={!isUpdate || isLoading}
+					/>
 				</Text>
-				<TextField
-					value={location?.country}
-					onChange={(e) => updateLocation({ location: { country: e.target.value } })}
-					fullWidth
-					sx={{ mt: 1, backgroundColor: 'white' }}
-					disabled={!isUpdate || isLoading}
-				/>
 			</div>
 		</InfoSection>
 	);

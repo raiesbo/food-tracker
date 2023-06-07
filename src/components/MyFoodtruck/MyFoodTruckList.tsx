@@ -74,6 +74,7 @@ export default function MyFoodTruckList({ restaurants }: Props) {
 				<IconButton
 					className={styles.cardLinkPlus}
 					onClick={onCreateNewRestaurant}
+					aria-label='create new food truck'
 				>
 					<AddIcon/>
 				</IconButton>

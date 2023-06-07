@@ -73,82 +73,83 @@ export default function MyFoodTruckRestaurant({ restaurant, allCategories }: Pro
             childrenClassName={styles.root}
         >
             <div>
-                <Text variant={'h4'} bold>
+                <Text variant={'h4'} bold as='label'>
                     Name
+                    <TextField
+                        value={name}
+                        label=''
+                        onChange={(e) => setName(e.target.value)}
+                        fullWidth
+                        sx={{ mt: 1, backgroundColor: 'white' }}
+                        disabled={!isUpdate || isLoading}
+                    />
                 </Text>
-                <TextField
-                    value={name}
-                    label=''
-                    onChange={(e) => setName(e.target.value)}
-                    fullWidth
-                    sx={{ mt: 1, backgroundColor: 'white' }}
-                    disabled={!isUpdate || isLoading}
-                />
             </div>
             <div>
-                <Text variant={'h4'} bold>
+                <Text variant={'h4'} bold as='label'>
                     Food Truck Slogan
+                    <TextField
+                        value={slogan}
+                        label=''
+                        onChange={(e) => setSlogan(e.target.value)}
+                        fullWidth
+                        sx={{ mt: 1, backgroundColor: 'white' }}
+                        disabled={!isUpdate || isLoading}
+                    />
                 </Text>
-                <TextField
-                    value={slogan}
-                    label=''
-                    onChange={(e) => setSlogan(e.target.value)}
-                    fullWidth
-                    sx={{ mt: 1, backgroundColor: 'white' }}
-                    disabled={!isUpdate || isLoading}
-                />
             </div>
             <div>
-                <Text variant={'h4'} bold>
+                <Text variant={'h4'} bold as='label'>
                     Food Type
+                    <Select
+                        id="demo-simple-select"
+                        value={categories.map(cat => cat?.id) as unknown as string}
+                        onChange={onCategorySelect}
+                        fullWidth
+                        sx={{ mt: 1, backgroundColor: 'white' }}
+                        disabled={!isUpdate || isLoading}
+                        multiple
+                    >
+                        {allCategories.map(category => {
+                            return (
+                                <MenuItem
+                                    key={category.id}
+                                    value={category.id}
+                                >
+                                    {category.name}
+                                </MenuItem>
+                            );
+                        })}
+                    </Select>
                 </Text>
-                <Select
-                    id="demo-simple-select"
-                    value={categories.map(cat => cat?.id) as unknown as string}
-                    onChange={onCategorySelect}
-                    fullWidth
-                    sx={{ mt: 1, backgroundColor: 'white' }}
-                    disabled={!isUpdate || isLoading}
-                    multiple
-                >
-                    {allCategories.map(category => {
-                        return (
-                            <MenuItem
-                                key={category.id}
-                                value={category.id}
-                            >
-                                {category.name}
-                            </MenuItem>
-                        );
-                    })}
-                </Select>
             </div>
             <div>
-                <Text variant={'h4'} bold>
+                <Text variant={'h4'} bold as='label'>
                     Thumbnail URL
+                    <TextField
+                        value={imageUrl}
+                        label=''
+                        onChange={(e) => setImageUrl(e.target.value)}
+                        fullWidth
+                        multiline={isUpdate}
+                        disabled={!isUpdate || isLoading}
+                        sx={{ mt: 1, backgroundColor: 'white', wordBreak: 'break-all', maxWidth: '100%' }}
+                    />
                 </Text>
-                <TextField
-                    value={imageUrl}
-                    label=''
-                    onChange={(e) => setImageUrl(e.target.value)}
-                    fullWidth
-                    multiline={isUpdate}
-                    disabled={!isUpdate || isLoading}
-                    sx={{ mt: 1, backgroundColor: 'white', wordBreak: 'break-all', maxWidth: '100%' }}
-                />
+
             </div>
             <div>
-                <Text variant={'h4'} bold>
+                <Text variant={'h4'} bold as='label'>
                     Description
+                    <TextField
+                        value={description}
+                        multiline
+                        onChange={(e) => setDescription(e.target.value)}
+                        fullWidth
+                        sx={{ mt: 1, backgroundColor: 'white' }}
+                        disabled={!isUpdate || isLoading}
+                    />
                 </Text>
-                <TextField
-                    value={description}
-                    multiline
-                    onChange={(e) => setDescription(e.target.value)}
-                    fullWidth
-                    sx={{ mt: 1, backgroundColor: 'white' }}
-                    disabled={!isUpdate || isLoading}
-                />
             </div>
             <div className={styles.footerContainer}>
                 <FormControlLabel control={
@@ -189,7 +190,6 @@ export default function MyFoodTruckRestaurant({ restaurant, allCategories }: Pro
                     )}
                 </div>
             </div>
-
         </InfoSection >
     );
 }

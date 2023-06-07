@@ -52,17 +52,19 @@ export default function SideBar() {
 			<Divider/>
 			<List>
 				{paths.components.Dashboard.basic?.map(item => (
-					<Link href={item.url} key={item.name} className={styles.listItemLink}>
-						<ListItemButton className={styles.listItemButton}>
-							<SideBarIcon url={item.url} size='small'/>
-							<Text
-								bold={pathname === item.url}
-								variant={'p'}
-							>
-								{item.name}
-							</Text>
-						</ListItemButton>
-					</Link>
+					<li key={item.name}>
+						<Link href={item.url} className={styles.listItemLink}>
+							<ListItemButton className={styles.listItemButton}>
+								<SideBarIcon url={item.url} size='small'/>
+								<Text
+									bold={pathname === item.url}
+									variant={'p'}
+								>
+									{item.name}
+								</Text>
+							</ListItemButton>
+						</Link>
+					</li>
 				))}
 			</List>
 			{isSP && (
@@ -70,42 +72,45 @@ export default function SideBar() {
 					<Divider/>
 					<List>
 						{paths.components.Dashboard.business?.map(item => (
-							<Link
-								href={item.url.replaceAll('{userId}', userRole?.user_id)}
-								key={item.name}
-								className={styles.listItemLink}
-							>
-								<ListItemButton className={styles.listItemButton}>
-									{item.name === 'Orders' ? (
-										<Badge badgeContent={data} color="error">
+							<li key={item.name}>
+								<Link
+									href={item.url.replaceAll('{userId}', userRole?.user_id)}
+									key={item.name}
+									className={styles.listItemLink}
+								>
+									<ListItemButton className={styles.listItemButton}>
+										{item.name === 'Orders' ? (
+											<Badge badgeContent={data} color="error">
+												<SideBarIcon url={item.url} size='small'/>
+											</Badge>
+										) : (
 											<SideBarIcon url={item.url} size='small'/>
-										</Badge>
-									) : (
-										<SideBarIcon url={item.url} size='small'/>
-									)}
-									<Text
-										bold={pathname === item.url.replaceAll('{userId}', userRole?.user_id)}
-										variant={'p'}
-									>
-										{item.name}
-									</Text>
-								</ListItemButton>
-							</Link>
-
+										)}
+										<Text
+											bold={pathname === item.url.replaceAll('{userId}', userRole?.user_id)}
+											variant={'p'}
+										>
+											{item.name}
+										</Text>
+									</ListItemButton>
+								</Link>
+							</li>
 						))}
 					</List>
 				</>
 			)}
 			<Divider/>
 			<List>
-				<Link href={paths.auth0.logout} className={styles.listItemLink}>
-					<ListItemButton className={styles.listItemButton}>
-						<SideBarIcon url='/api/auth/logout' size='small'/>
-						<Text variant={'p'}>
-							Logout
-						</Text>
-					</ListItemButton>
-				</Link>
+				<li>
+					<Link href={paths.auth0.logout} className={styles.listItemLink}>
+						<ListItemButton className={styles.listItemButton}>
+							<SideBarIcon url='/api/auth/logout' size='small'/>
+							<Text variant={'p'}>
+								Logout
+							</Text>
+						</ListItemButton>
+					</Link>
+				</li>
 			</List>
 		</Drawer>
 	);

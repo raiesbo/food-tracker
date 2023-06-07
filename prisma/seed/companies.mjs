@@ -10,7 +10,7 @@ export default async function companiesSeedData() {
         create: {
             id: 1,
             name: 'Main Burger',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+            description: 'Savor the ultimate blend of flavor and quality with our mouthwatering gourmet burgers, crafted with love to satisfy your taste buds and create an unforgettable dining experience.',
             slogan: 'Beef burgers like in no other place',
             imageUrl: 'https://images.unsplash.com/photo-1570441262582-a2d4b9a916a5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80',
             userId: 804929,
@@ -86,7 +86,7 @@ export default async function companiesSeedData() {
         create: {
             id: 2,
             name: 'Paellaland',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+            description: 'Embark on a culinary journey to Spain with our authentic flavors, where traditional recipes and warm hospitality come together to transport you to the vibrant streets of España.',
             slogan: 'The original Paella Valenciana',
             imageUrl: 'https://images.unsplash.com/photo-1570441262582-a2d4b9a916a5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80',
             userId: 804931,
@@ -171,7 +171,7 @@ export default async function companiesSeedData() {
         create: {
             id: 3,
             name: 'Tapas Bar',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+            description: 'Indulge in the art of Spanish small plates, where every bite tells a flavorful story, accompanied by a lively ambiance that celebrates the spirit of sharing and savoring the best of tapas culture.',
             slogan: 'Tapas for every moment',
             imageUrl: 'https://images.unsplash.com/photo-1570441262582-a2d4b9a916a5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80',
             userId: 804930,
@@ -437,7 +437,7 @@ export default async function companiesSeedData() {
         create: {
             id: 6,
             name: 'Hofbräu Wirtshaus',
-            description: 'Bar-restaurant with wooden benches, Bavarian-style food & beer, show band & staff in regional dress.',
+            description: 'Experience the true essence of German cuisine at our restaurant, where time-honored recipes, brimming with flavors and served with genuine warmth, invite you to indulge in savory delights and raise a glass to the joyous spirit of Gemütlichkeit.',
             slogan: 'The original experience',
             imageUrl: 'https://images.unsplash.com/photo-1570441262582-a2d4b9a916a5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80',
             userId: 804934,

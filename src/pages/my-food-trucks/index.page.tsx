@@ -1,5 +1,5 @@
 import LayoutWithSideBar from '@/components/Layout/LayoutWithSideBar';
-import MyFoodTruckList from '@/components/MyFoodtruck/MyFoodTruckList';
+import { MyFoodTruckList } from '@/components/MyFoodtruck';
 import services from "@/services";
 import { Restaurant } from '@/types';
 import { auth0Config } from "@/utils/settings";
@@ -52,7 +52,6 @@ type Props = {
 }
 
 export default function MyFoodTrucksPage({ restaurants, userId }: Props) {
-
 	return (
 		<div className={styles.root}>
 			<PageHeader title={'My Food Trucks'}></PageHeader>

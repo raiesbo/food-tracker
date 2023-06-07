@@ -14,7 +14,7 @@ type Props = {
 export default function RestaurantDetailsHours({ schedules, events }: Props) {
     return (
         <Card className={styles.root} withHover={false}>
-            <Text as='h3'>
+            <Text as='h2' variant='h5' bold>
                 Opening Hours
             </Text>
             <div className={styles.scheduleList}>

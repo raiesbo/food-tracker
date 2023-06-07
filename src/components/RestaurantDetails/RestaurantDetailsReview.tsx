@@ -57,7 +57,7 @@ export default function RestaurantDetailsReview({ reviews, ownerId, restaurantId
     return (
         <>
             <div className={styles.root}>
-                <Text as='h3'>
+                <Text as='h2' variant='h5' bold>
                     Reviews
                 </Text>
                 <div className={styles.commentList}>

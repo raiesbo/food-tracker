@@ -170,6 +170,7 @@ export default function RestaurantPage({ locations, categories, queryCity, query
 									valueLabelDisplay="auto"
 									max={50}
 									min={1}
+									aria-label='Slider to filter by distance to food truck'
 								/>
 							</div>
 

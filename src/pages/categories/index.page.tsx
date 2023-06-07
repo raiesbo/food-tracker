@@ -133,7 +133,7 @@ export default function CategoriesPage({ categories, userId }: Props) {
 		<div className={styles.root}>
 			<PageHeader
 				title={'Food Types'}
-				description={'Create as many categories as you need to perfectly describe your food trucks.'}
+				description={'Create as many categories as you need to perfectly describe your food trucks. *After being assigned to a food truck, can not be removed.'}
 			/>
 			<Card className={styles.card}>
 				<Table>
@@ -202,6 +202,7 @@ export default function CategoriesPage({ categories, userId }: Props) {
 											size='small'
 											onClick={() => onRemoveCategory(Number(category.id))}
 											disabled={isLoading || !!category._count.restaurants}
+											aria-label='remove category'
 										>
 											<DeleteIcon/>
 										</IconButton>

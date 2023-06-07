@@ -152,6 +152,7 @@ export default function RestaurantDetailsPage({ restaurant }: Props) {
 							<IconButton
 								onClick={handleClick}
 								disabled={!numberOfOrders || numberOfOrders === 0}
+								aria-label='shopping order confirmation'
 							>
 								<Badge
 									badgeContent={numberOfOrders}
@@ -194,7 +195,7 @@ export default function RestaurantDetailsPage({ restaurant }: Props) {
 							{restaurant.description}
 						</Text>
 						<div className={styles.menuHeader}>
-							<Text as='h3'>
+							<Text as='h2' variant='h5' bold>
 								Menu
 							</Text>
 							<SearchInput
@@ -222,10 +223,11 @@ export default function RestaurantDetailsPage({ restaurant }: Props) {
 						styles.rightContainer
 					])}>
 						<Card className={styles.infoCard} withHover={false}>
-							<Text as='h3'>
+							<Text as='h2' variant='h5' bold>
 								Rating
 							</Text>
-							<div>
+							<div className={styles.ratingContainer}>
+								<Text semiBold>{`${rating} (${restaurant.reviews.length})`}</Text>
 								<RatingStars rating={rating}/>
 							</div>
 						</Card>

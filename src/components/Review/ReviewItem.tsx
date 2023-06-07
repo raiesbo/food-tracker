@@ -145,6 +145,7 @@ export default function ProfileReviewsItem({ review, title, currentUserId, onRem
 						<IconButton
 							onClick={onLikeComment}
 							size={'small'}
+							aria-label='like action'
 						>
 							{isLiked ? (
 								<ThumbUpIcon fontSize="small"/>
@@ -152,10 +153,6 @@ export default function ProfileReviewsItem({ review, title, currentUserId, onRem
 								<ThumbUpOffAltIcon fontSize="small"/>
 							)}
 						</IconButton>
-						{/* TODO Implement review answer feature */}
-						{/* <IconButton>
-                            <QuestionAnswerIcon fontSize="small" />
-                        </IconButton> */}
 					</div>
 					{isOwner && (
 						<div>

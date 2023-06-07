@@ -32,7 +32,7 @@ export default function Footer({ withSideBar = false }: Props) {
 						Check out the Code
 					</Text>
 					<div className={styles.linksContainer}>
-						<Link href='https://github.com/raiesbo/food-tracker' className={styles.link}>
+						<Link href='https://github.com/raiesbo/food-tracker' className={styles.link} aria-label='git hub repo link'>
 							<GitHubIcon />
 						</Link>
 					</div>

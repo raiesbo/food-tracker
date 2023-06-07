@@ -13,12 +13,12 @@ type Props = {
 export default function RestaurantDetailsContact({ user, location }: Props) {
     return (
         <Card className={styles.root} withHover={false}>
-            <Text as='h3'>
+            <Text as='h2' variant='h5' bold>
                 Contact Information
             </Text>
 
             <div className={styles.infoSlot}>
-                <Text as='h4' variant='smallest' bold>
+                <Text as='h3' variant='smallest' bold>
                     Manager
                 </Text>
                 <Text>
@@ -26,7 +26,7 @@ export default function RestaurantDetailsContact({ user, location }: Props) {
                 </Text>
             </div>
             <div className={styles.infoSlot}>
-                <Text as='h4' variant='smallest' bold>
+                <Text as='h3' variant='smallest' bold>
                     Email
                 </Text>
                 <Text>
@@ -35,7 +35,7 @@ export default function RestaurantDetailsContact({ user, location }: Props) {
             </div>
             {user?.phone && (
                 <div className={styles.infoSlot}>
-                    <Text as='h4' variant='smallest' bold>
+                    <Text as='h3' variant='smallest' bold>
                         Phone Number
                     </Text>
                     <Text>
@@ -45,7 +45,7 @@ export default function RestaurantDetailsContact({ user, location }: Props) {
             )}
             {location && (
                 <div className={styles.infoSlot}>
-                    <Text as='h4' variant='smallest' bold>
+                    <Text as='h3' variant='smallest' bold>
                         Address
                     </Text>
                     <a

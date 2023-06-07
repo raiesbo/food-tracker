@@ -78,7 +78,7 @@ export default function RestaurantListItem({ restaurant, distance }: Props) {
 						</div>
 						<div className={styles.badges}>
 							{restaurant.isCashOnly && (
-								<Chip label="Cash Only" variant="filled" color="info" size="small"/>
+								<Chip label="Cash Only" variant="filled" color="primary" size="small"/>
 							)}
 							{withVeganOptions && (
 								<Chip label="Vegan Options" variant="filled" color="success" size="small"/>

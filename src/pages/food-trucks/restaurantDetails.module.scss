@@ -94,3 +94,12 @@
     justify-content: space-between;
     align-items: center;
 }
+
+.ratingContainer {
+    display: flex;
+    gap: 10px;
+
+    p {
+        line-height: 24px;
+    }
+}

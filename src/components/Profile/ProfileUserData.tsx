@@ -41,66 +41,67 @@ export default function ProfileUserData({ userData, updateUserData, isLoading, i
 					/>
 				</div>
 				<div className={styles.name}>
-					<Text variant={'h4'} bold>
+					<Text variant={'h4'} bold as='label'>
 						First Name
+						<TextField
+							value={userData.firstName}
+							onChange={(e) => updateUserData({ user: { firstName: e.target.value } })}
+							fullWidth
+							sx={{ mt: 1, backgroundColor: 'white' }}
+							disabled={!isUpdate || isLoading}
+						/>
 					</Text>
-					<TextField
-						value={userData.firstName}
-						onChange={(e) => updateUserData({ user: { firstName: e.target.value } })}
-						fullWidth
-						sx={{ mt: 1, backgroundColor: 'white' }}
-						disabled={!isUpdate || isLoading}
-					/>
 				</div>
 				<div className={styles.last}>
-					<Text variant={'h4'} bold>
+					<Text variant={'h4'} bold as='label'>
 						Last Name
+						<TextField
+							label=''
+							value={userData.lastName}
+							onChange={(e) => updateUserData({ user: { lastName: e.target.value } })}
+							fullWidth
+							sx={{ mt: 1, backgroundColor: 'white' }}
+							disabled={!isUpdate || isLoading}
+						/>
 					</Text>
+				</div>
+			</div>
+			<div>
+				<Text variant={'h4'} bold as='label'>
+					Email
 					<TextField
-						value={userData.lastName}
-						onChange={(e) => updateUserData({ user: { lastName: e.target.value } })}
+						value={userData.email}
+						onChange={(e) => updateUserData({ user: { email: e.target.value } })}
 						fullWidth
 						sx={{ mt: 1, backgroundColor: 'white' }}
 						disabled={!isUpdate || isLoading}
 					/>
-				</div>
-			</div>
-			<div>
-				<Text variant={'h4'} bold>
-					Email
 				</Text>
-				<TextField
-					value={userData.email}
-					onChange={(e) => updateUserData({ user: { email: e.target.value } })}
-					fullWidth
-					sx={{ mt: 1, backgroundColor: 'white' }}
-					disabled={!isUpdate || isLoading}
-				/>
 			</div>
 			<div>
-				<Text variant={'h4'} bold>
+				<Text variant={'h4'} bold as='label'>
 					Phone Number
+					<TextField
+						value={userData.phone}
+						onChange={(e) => updateUserData({ user: { phone: e.target.value } })}
+						fullWidth
+						sx={{ mt: 1, backgroundColor: 'white' }}
+						disabled={!isUpdate || isLoading}
+					/>
 				</Text>
-				<TextField
-					value={userData.phone}
-					onChange={(e) => updateUserData({ user: { phone: e.target.value } })}
-					fullWidth
-					sx={{ mt: 1, backgroundColor: 'white' }}
-					disabled={!isUpdate || isLoading}
-				/>
 			</div>
 			<div>
-				<Text variant={'h4'} bold>
+				<Text variant={'h4'} bold as='label'>
 					Profile Picture URL
+					<TextField
+						value={userData.imageUrl}
+						onChange={(e) => updateUserData({ user: { imageUrl: e.target.value } })}
+						fullWidth
+						sx={{ mt: 1, backgroundColor: 'white' }}
+						disabled={!isUpdate || isLoading}
+						multiline={isUpdate}
+					/>
 				</Text>
-				<TextField
-					value={userData.imageUrl}
-					onChange={(e) => updateUserData({ user: { imageUrl: e.target.value } })}
-					fullWidth
-					sx={{ mt: 1, backgroundColor: 'white' }}
-					disabled={!isUpdate || isLoading}
-					multiline={isUpdate}
-				/>
 			</div>
 		</InfoSection>
 	);

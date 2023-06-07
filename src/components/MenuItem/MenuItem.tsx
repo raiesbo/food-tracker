@@ -32,13 +32,17 @@ export default function MenuItem({ dish, onAddToOrder }: Props) {
                         </Text>
                     )}
                     {onAddToOrder && (
-                        <IconButton onClick={() => onAddToOrder(dish.id)}>
+                        <IconButton
+                            onClick={() => onAddToOrder(dish.id)}
+                            aria-label='add dish to food truck order'
+                        >
                             <AddShoppingCartIcon fontSize="small" />
                         </IconButton>
                     )}
                     <IconButton
                         onClick={() => setIsOpen(!isOpen)}
                         className={cc([ isOpen && styles.rotateChevron ])}
+                        aria-label='unfold ingredients section'
                     >
                         <ExpandMoreIcon />
                     </IconButton>

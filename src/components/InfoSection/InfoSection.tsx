@@ -28,6 +28,7 @@ export default function InfoSection({ children, title, className, childrenClassN
                 <IconButton size='small'
                     className={cc([ isCollapsed && styles.rotateChevron ])}
                     onClick={() => setIsCollapsed(!isCollapsed)}
+                            aria-label='unfold info section'
                 >
                     <ExpandMoreIcon />
                 </IconButton>
