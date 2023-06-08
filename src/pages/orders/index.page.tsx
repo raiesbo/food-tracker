@@ -79,8 +79,8 @@ export default function OrdersPage({ orders }: Props) {
 									</Text>
 								</div>
 								<Chip
-									label={order.isAccepted ? 'ACCEPTED' : 'PENDING'}
-									color={order.isAccepted ? 'success' : 'info'}
+									label={order.isAccepted ? 'ACCEPTED' : order.isCancelled ? 'DECLINED' : 'PENDING'}
+									color={order.isAccepted ? 'success' : order.isCancelled ? 'error' : 'info'}
 								/>
 							</header>
 							<div>

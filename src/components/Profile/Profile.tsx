@@ -176,6 +176,7 @@ export default function Profile({ user, auth0User }: Props) {
 		<div className={styles.root}>
 			<PageHeader
 				title={'User Profile'}
+				description='Update here your personal information. After completing the Location, the distance filter will be available in search page.'
 				childrenClassName={styles.buttonContainer}
 				className={styles.headerContainer}
 			>

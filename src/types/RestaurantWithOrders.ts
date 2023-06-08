@@ -5,6 +5,7 @@ export const restaurantWithOrdersInclude = Prisma.validator<Prisma.RestaurantInc
         select: {
             id: true,
             isAccepted: true,
+            isCancelled: true,
             createdAt: true,
             deliveryAt: true,
             items: {

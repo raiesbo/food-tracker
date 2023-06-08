@@ -12,12 +12,14 @@ import formatDateAndTime from "@/utils/formatDateAndTime";
 import { Text } from '../Text';
 import styles from './OrdersTableRow.module.scss';
 import { ToastAction } from "@/components/ToastContext";
+import CheckIcon from '@mui/icons-material/Check';
+import ClearIcon from '@mui/icons-material/Clear';
 
 type Props = {
 	order: Order & {
 		items: Array<OrderItem & { dish: any }>
 	},
-	onUpdateOrder: (id: Order['id']) => void
+	onUpdateOrder: (id: Order['id'], e: boolean) => void
 }
 
 export default function OrderTableRow({ order, onUpdateOrder }: Props) {
@@ -29,29 +31,23 @@ export default function OrderTableRow({ order, onUpdateOrder }: Props) {
 		return acc + item.units * item.dish.price;
 	}, 0);
 
-	const onAcceptOrder = () => {
+	const onUpdatingOrder = (isAccepted: boolean = true) => {
 		setIsLoading(true);
 		fetch(`/api/orders/${order.id}`, {
 			method: 'PUT',
-			body: JSON.stringify({ isAccepted: true })
+			body: JSON.stringify(isAccepted ? { isAccepted: true } : { isCancelled: true })
 		}).then(response => response.json())
 			.then(({ order }) => {
-				if (order.id) {
-					dispatch({
-						type: ToastAction.UPDATE_TOAST, payload: {
-							message: 'Order successfully updated',
-							severity: 'success'
-						}
-					});
-					onUpdateOrder(order.id);
-				} else {
-					dispatch({
-						type: ToastAction.UPDATE_TOAST, payload: {
-							message: 'Server Error. Unable to accept the order',
-							severity: 'error'
-						}
-					});
-				}
+				dispatch({
+					type: ToastAction.UPDATE_TOAST, payload: order?.id ? {
+						message: 'Order successfully updated',
+						severity: 'success'
+					} : {
+						message: 'Server Error. Unable to update the order',
+						severity: 'error'
+					}
+				});
+				if (order.id) onUpdateOrder(order.id, isAccepted);
 			})
 			.finally(() => setIsLoading(false));
 	};
@@ -81,19 +77,39 @@ export default function OrderTableRow({ order, onUpdateOrder }: Props) {
 					{totalPrice} €
 				</TableCell>
 				<TableCell align="right">
-					{order.isAccepted ? (
+					{order.isAccepted && (
+							<Text semiBold variant='h4'>
+								ACCEPED
+							</Text>
+						)}
+					{order.isCancelled && (
 						<Text semiBold variant='h4'>
-							ACCEPED
+							DECLINED
 						</Text>
-					) : (
-						<Button
-							variant='contained'
-							color='warning'
-							disabled={isLoading}
-							onClick={onAcceptOrder}
-						>
-							Accept Order
-						</Button>
+					)}
+					{!order.isAccepted && !order.isCancelled && (
+						<div className={styles.buttonContainer}>
+							<Button
+								variant='contained'
+								color='success'
+								disabled={isLoading}
+								onClick={() => onUpdatingOrder(true)}
+								title='Accept'
+								aria-label='Accept order'
+							>
+								<CheckIcon/>
+							</Button>
+							<Button
+								variant='contained'
+								color='warning'
+								disabled={isLoading}
+								onClick={() => onUpdatingOrder(false)}
+								title='Decline'
+								aria-label='Decline order'
+							>
+								<ClearIcon/>
+							</Button>
+						</div>
 					)}
 				</TableCell>
 			</TableRow>

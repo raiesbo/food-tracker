@@ -53,7 +53,6 @@ export default function ordersService({ order, restaurant }: IDBClient['instance
 			}
 		},
 		getRestaurantsWithOrders: async (userId: User['id']) => {
-
 			try {
 				const restaurants = await restaurant.findMany({
 					where: { userId: Number(userId) },
@@ -64,6 +63,7 @@ export default function ordersService({ order, restaurant }: IDBClient['instance
 							select: {
 								id: true,
 								isAccepted: true,
+								isCancelled: true,
 								createdAt: true,
 								deliveryAt: true,
 								items: {

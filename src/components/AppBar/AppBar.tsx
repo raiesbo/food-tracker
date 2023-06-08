@@ -84,6 +84,7 @@ export default function AppBar({ window, withBackground = false, withFullNavigat
 							<IconButton
 								onClick={handleOpenNavMenu}
 								color="inherit"
+								aria-label='open settings menu'
 							>
 								<MenuIcon sx={{ fill: 'black' }}/>
 							</IconButton>

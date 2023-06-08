@@ -26,29 +26,35 @@ type Props = {
 
 export default function OrderTable({ fetchedOrders, userId }: Props) {
 	const [orders, setOrders] = useState(fetchedOrders);
-	const [value, setValue] = useState(0);
+	const [tab, setTab] = useState<'accepted' | 'open' | 'cancelled'>('open');
 	const { mutate } = useSWRConfig();
 
-	const onAcceptOrder = async (orderId: Order['id']) => {
+	const onUpdateOrder = async (orderId: Order['id'], isAccepted: boolean) => {
 		await mutate(`/api/users/${userId}/orders/count`);
 		setOrders([...orders.map(order => {
 			return order.id === orderId
-				? { ...order, isAccepted: true }
+				? { ...order, isAccepted: isAccepted, isCancelled: !isAccepted }
 				: order;
 		})]);
 	};
 
-	const handleChange = (event: SyntheticEvent, newValue: number) => {
-		setValue(newValue);
+	const onChangeTab = (event: SyntheticEvent, newValue: 'accepted' | 'open' | 'cancelled') => {
+		setTab(newValue);
 	};
 
-	const sortedOrders = orders.reduce((acc: { open: Array<any>, accepted: Array<any> }, order) => {
+	const sortedOrders = orders.reduce((acc: {
+		open: Array<any>,
+		accepted: Array<any>,
+		cancelled: Array<any>
+	}, order) => {
 		return order.isAccepted
 			? { ...acc, accepted: [...acc.accepted, order] }
-			: { ...acc, open: [...acc.open, order] };
-	}, { open: [], accepted: [] });
+			: order.isCancelled
+				? { ...acc, cancelled: [...acc.cancelled, order] }
+				: { ...acc, open: [...acc.open, order] };
+	}, { open: [], accepted: [], cancelled: [] });
 
-	const selectedOrders = sortedOrders[value ? 'accepted' : 'open'];
+	const selectedOrders = sortedOrders[tab];
 
 	return (
 		<Card className={styles.root}>
@@ -56,9 +62,10 @@ export default function OrderTable({ fetchedOrders, userId }: Props) {
 				<TableHead>
 					<TableRow>
 						<TableCell align="center" colSpan={6} className={styles.tabsContainer}>
-							<Tabs value={value} onChange={handleChange}>
-								<Tab label="Open Orders"/>
-								<Tab label="Accepted"/>
+							<Tabs value={tab} onChange={onChangeTab}>
+								<Tab value='open' label="Open"/>
+								<Tab value='accepted' label="Accepted"/>
+								<Tab value='cancelled' label="Declined"/>
 							</Tabs>
 						</TableCell>
 					</TableRow>
@@ -98,7 +105,7 @@ export default function OrderTable({ fetchedOrders, userId }: Props) {
 								<OrderTableRow
 									key={order.id}
 									order={order as OrderDate}
-									onUpdateOrder={onAcceptOrder}
+									onUpdateOrder={onUpdateOrder}
 								/>
 							);
 						}
