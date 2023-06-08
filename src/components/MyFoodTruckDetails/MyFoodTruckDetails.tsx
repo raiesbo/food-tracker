@@ -14,11 +14,11 @@ import { InfoSection } from "@/components/InfoSection";
 import { Card } from "@/components/Card";
 import Image from "next/image";
 import { MyFoodTruckLocations, MyFoodTruckMenu, MyFoodTruckRestaurant } from "@/components/MyFoodTruckDetails/index";
-import { Text } from "@/components/Text";
 import { Category, Restaurant } from "@/types";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { Switch } from "@mui/material";
 import Divider from "@mui/material/Divider";
+import MyFoodTruckHours from "@/components/MyFoodTruckDetails/MyFoodTruckHours";
 
 type Props = {
 	restaurant: Restaurant,
@@ -147,26 +147,10 @@ export default function MyFoodTruckDetails({ restaurant, categories }: Props) {
 						</Card>
 					</InfoSection>
 					<MyFoodTruckLocations location={restaurant.location}/>
-					<Card className={styles.scheduleList}>
-						<InfoSection title="Opening Hours" childrenClassName={styles.item}>
-							{restaurant.schedules?.map((schedule) => (
-								<div key={schedule.id} className={styles.scheduleListItem}>
-									<Text bold variant={'smallest'}>
-										{schedule.day}
-									</Text>
-									{schedule.isOpen ? (
-										<Text variant={'smallest'}>
-											{`${schedule.openingHour} ${schedule.closingHour}`}
-										</Text>
-									) : (
-										<Text variant={'smallest'}>
-											Closed
-										</Text>
-									)}
-								</div>
-							))}
-						</InfoSection>
-					</Card>
+					<MyFoodTruckHours
+						schedules={restaurant.schedules}
+						restaurantId={restaurant.id}
+					/>
 				</div>
 				<div className={cc([styles.container, styles.mainColumn])}>
 					<MyFoodTruckRestaurant

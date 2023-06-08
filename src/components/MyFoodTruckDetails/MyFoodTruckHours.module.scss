@@ -1,0 +1,48 @@
+.root {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.scheduleListItem {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  &_update {
+    flex-direction: column;
+  }
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.updateHoursContainer {
+  display: grid;
+  grid-template-columns: 1fr min-content 1fr;
+  gap: 10px;
+  align-items: center;
+}
+
+.buttonsContainer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.textInput {
+  & > div {
+    padding: 5px 8px;
+  }
+}
+
+.dayHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
