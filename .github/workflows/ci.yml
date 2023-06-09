@@ -50,6 +50,8 @@ jobs:
         run: npm run test:ci
       - name: Migrate and seed DB
         run: npm run prisma:migrate && npm run prisma:seed
+      - name: Run Build
+        run: npm run build
       - name: Install Playwright Browsers
         run: npx playwright install chromium --with-deps
       - name: Run Playwright tests
