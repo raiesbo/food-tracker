@@ -2,9 +2,27 @@ name: CI
 
 on: [push]
 
+env:
+  CI: true
+  DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
 jobs:
   CI:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:14
+        env:
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
     steps:
       - name: Get Code
         uses: actions/checkout@v3
@@ -30,6 +48,25 @@ jobs:
         run: npm run lint
       - name: Run Unit Tests
         run: npm run test:ci
+      - name: Migrate and seed DB
+        run: npm run prisma:migrate && npm run prisma:seed
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+      - name: Run Playwright tests
+        run: npx playwright test
+        env:
+          AUTH0_POST_LOGOUT_REDIRECT: ${{ secrets.AUTH0_POST_LOGOUT_REDIRECT }}
+          AUTH0_SECRET: ${{ secrets.AUTH0_SECRET }}
+          AUTH0_BASE_URL: ${{ secrets.AUTH0_BASE_URL }}
+          AUTH0_ISSUER_BASE_URL: ${{ secrets.AUTH0_ISSUER_BASE_URL }}
+          AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
+          AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_CLIENT_SECRET }}
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
       
   CD:
     needs: CI
@@ -37,4 +74,3 @@ jobs:
     steps:
       - name: Deploy Application
         run: curl -X GET ${{ secrets.DEPLOY_WEBHOOK }}
-        
