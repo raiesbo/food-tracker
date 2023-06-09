@@ -31,3 +31,9 @@
 .date {
     text-transform: capitalize;
 }
+
+.likesContainer {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}

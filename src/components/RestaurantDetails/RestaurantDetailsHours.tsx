@@ -4,7 +4,12 @@ import { Card } from '../Card';
 import { Text } from '../Text';
 import styles from './RestaurantDetailsHours.module.scss';
 import matchesWeekAndDay from "@/utils/matchesWeekAndDay";
-import RestaurantDetailsHoursEvent from "@/components/RestaurantDetails/RestaurantDetailsHoursEvent";
+import dynamic from "next/dynamic";
+
+const RestaurantDetailsHoursEvent = dynamic(
+    () => import('@/components/RestaurantDetails/RestaurantDetailsHoursEvent'),
+    { ssr: false }
+);
 
 type Props = {
     schedules: Restaurant['schedules'],
@@ -36,7 +41,7 @@ export default function RestaurantDetailsHours({ schedules, events }: Props) {
                             </Text>
                             {schedule.isOpen ? (
                                 <Text variant={'smallest'}>
-                                    {`${schedule.openingHour} ${schedule.closingHour}`}
+                                    {`${schedule.openingHour} - ${schedule.closingHour}`}
                                 </Text>
                             ) : (
                                 <Text variant={'smallest'}>

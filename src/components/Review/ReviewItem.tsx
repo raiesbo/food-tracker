@@ -8,7 +8,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import { IconButton, TextField } from "@mui/material";
 import { User } from "@prisma/client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Card } from "../Card";
 import { RatingStars, RatingStarsEdit } from "../RatingStars";
 import { Text } from "../Text";
@@ -28,12 +28,17 @@ export default function ProfileReviewsItem({ review, title, currentUserId, onRem
 
 	const [rating, setRating] = useState(review.rating || 0);
 	const [comment, setComment] = useState(review.comment || '');
-	const [isLiked, setIsLiked] = useState(review.likes.some(({ userId }) => userId === currentUserId));
+	const [isLiked, setIsLiked] = useState(false);
+	const [likesCount, setLikesCount] = useState(review.likes.length);
 
 	const [isLoading, setIsLoading] = useState(false);
 	const [isEdit, setIsEdit] = useState(false);
 
 	const isOwner = review.userId === currentUserId;
+
+	useEffect(() => {
+		setIsLiked(review.likes.some(({ userId }) => userId === currentUserId));
+	}, [currentUserId]);
 
 	const onRemoveReview = (reviewId: Review['id']) => {
 		setIsLoading(true);
@@ -76,21 +81,15 @@ export default function ProfileReviewsItem({ review, title, currentUserId, onRem
 			method: 'PUT',
 			body: JSON.stringify({ rating, comment })
 		}).then(response => {
-			if (response.ok) {
-				dispatch({
-					type: ToastAction.UPDATE_TOAST, payload: {
-						message: 'Review updated successfully',
-						severity: 'success'
-					}
-				});
-			} else {
-				dispatch({
-					type: ToastAction.UPDATE_TOAST, payload: {
-						message: 'There has been server error, please try again later.',
-						severity: 'error'
-					}
-				});
-			}
+			dispatch({
+				type: ToastAction.UPDATE_TOAST, payload: response.ok ? {
+					message: 'Review updated successfully',
+					severity: 'success'
+				} : {
+					message: 'There has been server error, please try again later.',
+					severity: 'error'
+				}
+			});
 		}).finally(() => {
 			setIsLoading(false);
 			setIsEdit(false);
@@ -101,7 +100,10 @@ export default function ProfileReviewsItem({ review, title, currentUserId, onRem
 		fetch(`/api/users/${currentUserId}/reviews/${review.id}/${isLiked ? 'dislike' : 'like'}`, {
 			method: 'POST'
 		}).then(response => {
-			if (response.status === 204) setIsLiked(!isLiked);
+			if (response.status === 204) {
+				setIsLiked(!isLiked);
+				setLikesCount(prevState => !isLiked ? prevState + 1 : prevState - 1);
+			}
 		});
 	};
 
@@ -141,10 +143,15 @@ export default function ProfileReviewsItem({ review, title, currentUserId, onRem
 			)}
 			{currentUserId && (
 				<div className={styles.iconsSection}>
-					<div>
+					<div className={styles.likesContainer}>
+						{!!likesCount && (
+							<Text variant={'small'} semiBold>
+								{likesCount}
+							</Text>
+						)}
 						<IconButton
 							onClick={onLikeComment}
-							size={'small'}
+							size='small'
 							aria-label='like action'
 						>
 							{isLiked ? (
