@@ -17,7 +17,7 @@ test.describe('header', () => {
 
 		await page.waitForTimeout(150);
 
-		await expect(page.url()).not.toContain('3');
+		await expect(page.url()).not.toContain('/3');
 	});
 });
 
