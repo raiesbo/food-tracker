@@ -21,7 +21,7 @@ test.describe('header', () => {
 	});
 });
 
-test.describe.only('filters', () => {
+test.describe('filters', () => {
 	test('renders the food truck description', async ({ page }) => {
 		const description = await page.getByText('Indulge in the art of Spanish small plates, where every bite tells a flavorful');
 		await expect(description !== undefined).toBeTruthy();
