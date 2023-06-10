@@ -1,11 +1,10 @@
 @use '@/styles/theme' as *;
 
 .main {
-    // margin-top: calc($appBarHeight / 2);
-    // margin-left: $sideBarWidth;
-    min-height: calc(100vh - $appBarHeight - $footerHeight);
+    min-height: calc(100vh - $footerHeight);
 
     &_withTopMargin {
+        min-height: calc(100vh - $appBarHeight - $footerHeight);
         margin-top: $appBarHeight;
     }
 }

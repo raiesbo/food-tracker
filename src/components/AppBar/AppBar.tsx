@@ -174,6 +174,7 @@ export default function AppBar({ window, withBackground = false, withFullNavigat
 				<IconButton
 					onClick={handleOpenAvMenu}
 					color="inherit"
+					aria-label='open settings menu'
 				>
 					{user ? (
 						<Avatar
