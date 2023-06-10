@@ -25,6 +25,8 @@ import userService from "@/services/user.service";
 import User from "@/types/User";
 import { LocationAction } from "@/components/LocationContext";
 import calcCrow from "@/utils/calcCoordsDistance";
+import { useToast } from "@/utils";
+import { ToastAction } from "@/components/ToastContext";
 
 const homepageServiceInstance = homepageService(PrismaDBClient);
 const userServiceInstance = userService(PrismaDBClient);
@@ -76,6 +78,7 @@ type Props = {
 export default function RestaurantPage({ locations, categories, queryCity, queryCategory, user }: Props) {
 	const [timeoutId, setTimeoutId] = useState<ReturnType<typeof setTimeout>>();
 	const [restaurants, setRestaurants] = useState<Array<Restaurant>>([]);
+	const [withDistanceFilter, setWithDistanceFilter] = useState(false);
 	const [distanceFilter, setDistanceFilter] = useState(25);
 
 	const [name, setName] = useState('');
@@ -85,11 +88,24 @@ export default function RestaurantPage({ locations, categories, queryCity, query
 	const [creditCard, setCreditCard] = useState(false);
 
 	const { locationState, dispatch } = useLocation();
+	const { dispatch: toastDispatch } = useToast();
+
+	const onAddDistanceFilter = (withFilter: boolean) => {
+		if (withFilter && !locationState?.lat) {
+			toastDispatch({
+				type: ToastAction.UPDATE_TOAST, payload: {
+					severity: 'error',
+					message: "To activate the distance filter is required to add a VALID LOCATION in the PROFILE's section."
+				}
+			});
+		} else {
+			setWithDistanceFilter(withFilter);
+		}
+	};
 
 	useEffect(() => {
 		const updateLocationContext = () => {
-			if (!user) return;
-			if (user?.location?.lat) {
+			if (user?.location?.lat && user?.location.lat !== locationState.lat) {
 				dispatch({
 					type: LocationAction.UPDATE_LOCATION, payload: {
 						lat: user?.location?.lat || '',
@@ -101,7 +117,7 @@ export default function RestaurantPage({ locations, categories, queryCity, query
 		};
 
 		updateLocationContext();
-	}, []);
+	}, [user]);
 
 	useEffect(() => {
 		const getRestaurants = () => {
@@ -159,21 +175,33 @@ export default function RestaurantPage({ locations, categories, queryCity, query
 							Filters
 						</Text>
 						{user?.id && (
-							<div>
-								<Text grey variant={'small'}>Distance (km):</Text>
-								<Slider
-									step={1}
-									value={distanceFilter}
-									onChange={(e, value) => setDistanceFilter(value as number)}
-									// @ts-ignore
-									valueLabelFormat={((value: string) => `${value} km`) as unknown as ReactNode}
-									valueLabelDisplay="auto"
-									max={50}
-									min={1}
-									aria-label='Slider to filter by distance to food truck'
+							<>
+								<FormControlLabel
+									control={
+										<Switch
+											onChange={(e) => onAddDistanceFilter(e.target.checked)}
+											checked={withDistanceFilter}
+										/>
+									}
+									label="Filter by distance"
 								/>
-							</div>
-
+								{withDistanceFilter && (
+									<div>
+										<Text grey variant={'small'}>Distance (km):</Text>
+										<Slider
+											step={1}
+											value={distanceFilter}
+											onChange={(e, value) => setDistanceFilter(value as number)}
+											// @ts-ignore
+											valueLabelFormat={((value: string) => `${value} km`) as unknown as ReactNode}
+											valueLabelDisplay="auto"
+											max={50}
+											min={1}
+											aria-label='Slider to filter by distance to food truck'
+										/>
+									</div>
+								)}
+							</>
 						)}
 						<TextField
 							id="restaurant-name"
@@ -254,6 +282,7 @@ export default function RestaurantPage({ locations, categories, queryCity, query
 								if (
 									!user
 									|| distance === 0
+									|| !withDistanceFilter && distance > distanceFilter
 									|| user && distance && distance < distanceFilter
 								) {
 									return (
