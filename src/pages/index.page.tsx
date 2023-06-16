@@ -16,8 +16,6 @@ import { HomeBullets } from "@/components/Home";
 
 const service = homepageService(PrismaDBClient);
 
-// const bgImageUrl = 'https://images.unsplash.com/photo-1565123409695-7b5ef63a2efb?w=1000';
-
 export async function getServerSideProps() {
 	const { result, error } = await service.getLocationsAndCategories();
 
@@ -73,11 +71,17 @@ export default function HomePage({ categories, locations }: Props) {
 			</div>
 			<Card className={styles.headerContent}>
 				<div className={styles.headerTextContent}>
-					<Text as='h1' variant={{ small: 'h2', medium: 'h1' }} bold>
-						Food Tracker
-					</Text>
+					<div className={styles.logoContainer}>
+						<Image
+							src={'/images/icon.svg'}
+							alt={'food trucker logo'}
+							fill
+							priority
+							sizes="(max-width: 768px) 140px, 240px"
+						/>
+					</div>
 					<Text grey italic semiBold variant={{ small: 'smallest', medium: 'label' }}>
-						Discover, Track, and Rate Food Trucks: Your Ultimate Foodie App
+						<strong>Discover, Enjoy and Rate Food Trucks:</strong> Your Ultimate Foodie App
 					</Text>
 					<Text grey italic semiBold variant={{ small: 'smallest', medium: 'label' }}>
 						Directly from the hands of the best cooks around the world
@@ -129,7 +133,7 @@ export default function HomePage({ categories, locations }: Props) {
 					Find Your Next Street Food
 				</Button>
 			</Card>
-			<HomeBullets />
+			<HomeBullets/>
 		</>
 	);
 }

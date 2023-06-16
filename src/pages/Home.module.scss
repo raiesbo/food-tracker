@@ -11,7 +11,7 @@
 }
 
 .headerContent {
-  padding:  10px 15px 15px;
+  padding: 10px 15px 15px;
   margin-inline: 20px;
   margin-top: -150px;
   display: flex;
@@ -21,7 +21,7 @@
 
   @include matchMedium {
     max-width: 800px;
-    padding:  25px 40px 30px;
+    padding: 25px 40px 30px;
     margin-inline: auto;
     margin-top: -170px;
     gap: 25px;
@@ -32,6 +32,25 @@
   display: flex;
   flex-direction: column;
   gap: 3px;
+
+  @include matchMedium {
+    align-items: center;
+  }
+}
+
+.logoContainer {
+  position: relative;
+  height: 50px;
+  width: 140px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+  @include matchMedium {
+    align-self: center;
+    margin-top: 0;
+    width: 240px;
+    height: 80px;
+  }
 }
 
 .filterContainer {
