@@ -3,18 +3,18 @@ import { User } from "@prisma/client";
 
 export default function FileService() {
     return {
-        createFile: async ({ token, file, userId, type, typeId, format }: {
+        createFile: async ({ token, file, userId }: {
             token: string,
             file: File,
             userId: string | User['id'],
             type: 'restaurants' | 'dishes' | 'users',
-            format: 'png' | 'jpg' | 'webp' | 'svg'
             typeId: User['id']
         }) => {
+            const fileName = file.name.replaceAll(' ', '_');
             const { data, error } = await supabaseClient(token)
                 .storage
                 .from('food-truck')
-                .upload(`${userId}/${type}_${typeId}.${format}`, file, {
+                .upload(`${userId}/${fileName}`, file, {
                     cacheControl: '3600',
                     upsert: true
                 });

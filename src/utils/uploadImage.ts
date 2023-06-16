@@ -2,19 +2,18 @@ import { User } from "@prisma/client";
 import { supagaseConfig } from "./settings";
 
 type Props = {
-    userId: string | User['id'],
+    fileNamePath: string,
     type: 'restaurants' | 'dishes' | 'users',
     typeId: string | User['id'],
-    extension: string
 }
 
-export default async function uploadImage({ userId, type, typeId, extension }: Props) {
-    const imageUrl = `${supagaseConfig.url}/storage/v1/object/public/food-truck/${userId}/${type}_${typeId}.${extension}`;
+export default async function uploadImage({ fileNamePath, type, typeId }: Props) {
+    const imageUrl = `${supagaseConfig.url}/storage/v1/object/public/food-truck/${fileNamePath}`;
 
     try {
         const response = await fetch(`/api/${type}/${typeId}`, {
             method: 'PUT',
-            body: JSON.stringify({ imageUrl })
+            body: JSON.stringify(type === 'users' ? { user: { imageUrl } } : { imageUrl })
         });
 
         if (!response.ok) {

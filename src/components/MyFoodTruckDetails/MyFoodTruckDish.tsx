@@ -113,7 +113,6 @@ export default function MyGoodTruckDish({ dish }: Props) {
 
 		if (user?.accessToken && files && userMetadata?.user_id && dish.restaurantId) {
 			const file = files[0];
-			const extension = file?.name?.split('.')?.at(-1)?.toLowerCase() as "png" | "jpg";
 			const type = 'dishes';
 
 			const { result, error } = await FileService().createFile({
@@ -121,7 +120,6 @@ export default function MyGoodTruckDish({ dish }: Props) {
 				file,
 				userId: userMetadata.user_id,
 				type,
-				format: extension,
 				typeId: dish.id
 			});
 
@@ -136,7 +134,7 @@ export default function MyGoodTruckDish({ dish }: Props) {
 			});
 
 			if (result) {
-				const newImageUrl = await uploadImage({ userId: userMetadata.user_id, type, typeId: dish.id, extension });
+				const newImageUrl = await uploadImage({ fileNamePath: result.path, type, typeId: dish.id });
 				if (newImageUrl) setImageUrl(newImageUrl);
 			}
 

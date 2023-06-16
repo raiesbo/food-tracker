@@ -60,7 +60,6 @@ export default function MyFoodTruckDetails({ restaurant, categories }: Props) {
 
 		if (user?.accessToken && files && userMetadata?.user_id) {
 			const file = files[0];
-			const extension = file?.name?.split('.')?.at(-1)?.toLowerCase() as "png" | "jpg";
 			const type = 'restaurants';
 
 			const { result, error } = await FileService().createFile({
@@ -68,7 +67,6 @@ export default function MyFoodTruckDetails({ restaurant, categories }: Props) {
 				file,
 				userId: userMetadata.user_id,
 				type,
-				format: extension,
 				typeId: restaurant.id
 			});
 
@@ -84,7 +82,7 @@ export default function MyFoodTruckDetails({ restaurant, categories }: Props) {
 
 			if (result) {
 				const newImageUrl = await uploadImage({
-					userId: userMetadata.user_id, type, typeId: restaurant.id, extension
+					fileNamePath: result.path, type, typeId: restaurant.id
 				});
 				if (newImageUrl) setImageUrl(newImageUrl);
 			}

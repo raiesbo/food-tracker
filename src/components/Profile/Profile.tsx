@@ -141,16 +141,14 @@ export default function Profile({ user, auth0User }: Props) {
 
 		const files = event.target.files;
 
-		if (auth0User?.accessToken && files && user.id) {
+		if (auth0User?.accessToken && files && files.length > 0 && user.id) {
 			const file = files[0];
-			const extension = file?.name?.split('.')?.at(-1)?.toLowerCase() as "png" | "jpg";
 			const type = 'users';
 			const { result, error } = await FileService().createFile({
 				token: auth0User.accessToken as string,
 				file,
 				userId: user.id,
 				type,
-				format: extension,
 				typeId: user.id
 			});
 			dispatch({
@@ -164,7 +162,7 @@ export default function Profile({ user, auth0User }: Props) {
 			});
 
 			if (result) {
-				const newImageUrl = await uploadImage({ userId: user.id, type, typeId: user.id, extension });
+				const newImageUrl = await uploadImage({ fileNamePath: result.path, type, typeId: user.id });
 				if (newImageUrl) updateUserData({ user: { imageUrl: newImageUrl } });
 			}
 
