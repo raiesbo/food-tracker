@@ -135,7 +135,7 @@ export default function SignIn() {
                             name="row-radio-buttons-group"
                             onChange={(e) => setIsSp(e.target.value)}
                         >
-                            <FormControlLabel value={"CUSTOMER"} control={<Radio />} label="Private" defaultChecked />
+                            <FormControlLabel value={"CUSTOMER"} control={<Radio />} label="Customer" defaultChecked />
                             <FormControlLabel value={"SP"} control={<Radio />} label="Business" />
                         </RadioGroup>
                         <Button

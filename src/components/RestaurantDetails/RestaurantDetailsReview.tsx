@@ -61,6 +61,11 @@ export default function RestaurantDetailsReview({ reviews, ownerId, restaurantId
                     Reviews
                 </Text>
                 <div className={styles.commentList}>
+                    {!isYourFoodTruck && user && (
+                        <Button variant="outlined" onClick={() => setIsDialogOpen(true)}>
+                            Write a Review
+                        </Button>
+                    )}
                     {localReviews?.map(review => (
                         <ReviewItem
                             key={review.id}
@@ -70,11 +75,6 @@ export default function RestaurantDetailsReview({ reviews, ownerId, restaurantId
                             onRemove={onDeleteOne}
                         />
                     ))}
-                    {!isYourFoodTruck && user && (
-                        <Button variant="outlined" onClick={() => setIsDialogOpen(true)}>
-                            Write a Review
-                        </Button>
-                    )}
                 </div>
             </div>
             <Dialog
