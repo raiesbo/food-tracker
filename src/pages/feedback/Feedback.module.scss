@@ -1,4 +1,4 @@
-@use '@/styles/theme' as *;
+@use '../../styles/theme' as *;
 
 .root {
   max-width: 1040px;
@@ -10,5 +10,15 @@
 
   @include matchSmall {
     gap: 30px;
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  @include matchSmall {
+    gap: 20px;
   }
 }
